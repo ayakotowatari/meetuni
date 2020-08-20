@@ -1,0 +1,100 @@
+1. user登録時に、timezoneを登録する。
+userテーブルにカラムを追加。
+
+Register.bladeでもいいような気がする。
+
+@extends('layouts.app')
+@section('content')
+
+<form method="POST" action="{{ route('login') }}">
+@csrf
+<input type="hidden" name="timezone" id="timezone">
+
+...
+@endsection
+
+@push('app.js')
+<script>
+    $(function () {
+        // get user timezone
+        $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    })
+</script>
+@
+
+//Controller
+protected function authenticated(Request $request, $user)
+    {
+      if ($timezone = $request->get('timezone')) {
+        $user->timezone = $request->get('timezone');
+        $user->save();
+      }
+    }
+
+
+２. Create Events
+VuetifyでDateとTimeを別々に取得。
+Date: 2020-11-20 
+Start Time: 13:00
+End Time: 14:00
+
+イベント登録時に、comrncade/timzoneで、セレクトボックスによりtimezoneも取得しておく。
+
+（３. Event Tableでは、日+時間で値を登録。
+
+$event->date = request("date");
+$date = request("date");
+$start_time = request("start_time");
+$date_starttime = date('Y-m-d H:i:00', strtotime("$date $start_time”));
+$event->start_time = $date_starttime
+
+$end_time = request("end_time);
+$date_endtime = date('Y-m-d H:i:00', strtotime("$date $end_time));
+$event->end_time = $date_endtime）
+
+4. Laravel Eloquenst mutator functionを使って、データが登録されるさいの値を操作する。
+
+
+/**
+ * Set attribute to date format
+ * @param $input
+ */
+public function setStartTimeAttribute($value)
+{
+    $this->attributes['start_time'] = Carbon::parse($value, Auth::user()->timezone)
+                ->setTimezone('UTC)->format('H:i');      
+}
+
+public function setEndTimeAttribute($value)
+{
+    $this->attributes['end_time'] = Carbon::parse($value, Auth::user()->timezone)
+                ->setTimezone('UTC')->format('H:i');      
+}
+
+5. Laravel Eloquent Accessor functionを使って、データを読み取るさいの値を操作する。
+
+/**
+ * Get attribute from date format
+ * @param $input
+ *
+ * @return string
+ */
+public function getStartTimeAttribute($value)
+{
+    return Carbon::parse($value)->setTimezone(Auth::user()->timezone)->format('H:i');}
+}
+
+public function getEndTimeAttribute($value)
+{
+    return Carbon::parse($value)->setTimezone(Auth::user()->timezone)->format('H:i');}
+}
+
+public function index()
+{
+    $events = Event::all();
+    return response()->json(['events'=>$events],200);
+}
+
+6. Vueで読み出す。
+
+{{ $event->start_time }}

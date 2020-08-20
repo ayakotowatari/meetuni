@@ -1,0 +1,8 @@
+*.sqlite
+*.sqlite-journal
+
+#外す
+.DS_Store
+#mixの度にコンフリクトになる（mix使用時→VueやReactでは絶対になる）
+/public/js/app.js
+/public/css/app.css

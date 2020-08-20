@@ -1,0 +1,134 @@
+1. user登録時に、timezoneを登録する。
+userテーブルにカラムを追加。
+
+Register.bladeで。
+
+@extends('layouts.app')
+@section('content')
+
+<form method="POST" action="{{ route('login') }}">
+@csrf
+<input type="hidden" name="timezone" id="timezone">
+
+...
+@endsection
+
+@push('js')
+<script>
+    $(function () {
+        // get user timezone
+        $('#timezone').val(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    })
+</script>
+@endpush
+
+//layouts/app.jsで以下のように
+<!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    @stack('js')
+
+2. RegisterControllerに追記。
+
+protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'timezone' => ['required']
+        ]);
+    }
+
+protected function create(array $data)
+    {
+        return User::create([
+            'user_type_id' => 1,
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'timezone' => $data['timezone'],
+            'life' => 1,
+            'remember_token' => '1234567890abcdefg',
+        ]);
+    }
+
+3. Create Events
+VuetifyでDateとTimeを別々に取得。
+Date: 2020-11-20 
+Start Time: 13:00
+End Time: 14:00
+
+イベント登録時に、comrncade/timzoneで、セレクトボックスによりtimezoneも取得しておく。
+
+//Event Tableでは、日+時間で値を登録。
+
+$event->date = request("date");
+$event->start_time = request("start_time");
+$event->end_time = request("end_time");
+
+$date = request("date");
+$start_time = request("start_time");
+$date_starttime = $date.' '.$start_time.':00';
+$event->start_utc = $date_starttime
+
+$end_time = request("end_time);
+$date_endtime = $date.' '.$end_time.':00';
+$event->end_utc = $date_endtime;
+
+4. Vue側で表示
+Moment Timezoneを利用。
+<template>
+    {{ formattedTime(event.start_time, user->timezone) }} - {{ formattedEndTime(event.end_time, user->timezone )}}
+</template>
+
+<script>
+import moment from 'moment-timezone'
+export default {
+    props: {
+        event: Object,
+        user: Object,
+    },
+    data: () => ({
+    }),
+    computed: {
+        formatDate(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY h:mm a z");
+        }
+    }
+}
+</script> 
+
+今日もお疲れ様です。先程のweekly pitchで触れた、タイムゾーンの件、DBから取ってきたUTCの時間を、Vue側でMoment.jsというライブラリを使って、UTC→ローカルタイムに変換し表示に成功しました♪ ご参考までにシェアします。
+これで、変換なしだと2020-08-17 07:42:34と表示されるところを、Mon Aug 17 2020 16:42:34 GMT+0900に変更できます（フォーマットは自由に変えられる）。
+Javascriptの日付ライブラリはいくつかあり、形式の変更のみであればdate-fnsなどでも良いですが、timezoneの管理が関わる場合は、Moment.jsがベターだという結論に至りました。
+【追記】
+moment timezoneという姉妹ライブラリを使うと、日時表記のフォーマットでさらに可読性が高まることがわかったので、コードをさらに編集しました。以下のコードで、下記のフォーマットが実現できます。この例だとJSTがつくことで、日本時間であることを明示できます。
+Mon, Aug 17th 2020 4:42 pm JST
+例：前提として、User情報にしかるべきtimezone情報が入っている必要あり。
+<template>
+  <v-container>
+      <h1 class="subheading grey--text">My Profile</h1>
+      <span>{{ user.first_name}} </span> 
+      <span>{{ user.last_name}}</span>
+      <p>{{ user.email }}</p>
+      <p>{{ formatDate(user.created_at, user.timezone) }}</p>
+  </v-container>
+</template>
+<script>
+import moment from 'moment-timezone'
+export default {
+    props: {
+        user: Object,
+    },
+    data: () => ({
+    }),
+    methods: {
+        formatDate(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY h:mm a z");
+        }
+    }
+}
+</script> （編集済み） 

@@ -1,0 +1,26 @@
+Event title
+subtitles-outline
+Google @... 
+
+icons for level
+layers-triple-outline
+GreenTurtwig @greenturtwig 
+
+icons for regions
+map-marker-radius-outline
+Michael Irigoyen @mririgo 
+
+icons for subjects
+book-multiple-outline
+Michael Richins @MrGrigri 
+
+icon for details
+message-outline
+
+clock-outline
+Google @Google 
+
+clock-time-seven-outline
+Michael Irigoyen @mririgo 
+
+open-in-new
