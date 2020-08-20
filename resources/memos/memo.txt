@@ -7,7 +7,7 @@ layers-triple-outline
 GreenTurtwig @greenturtwig 
 
 icons for regions
-map-marker-radius-outline
+earth
 Michael Irigoyen @mririgo 
 
 icons for subjects

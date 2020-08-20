@@ -6,35 +6,35 @@
             <v-row justify="center">
               <v-col cols="12" sm="12" md="8">
                 <v-text-field 
-                  label="Event Title" 
-                  prepend-icon="mdi-subtitles-outline"
-                  v-model="title" 
-                  :rules="titleRules" 
-                  required
+                    label="Event Title" 
+                    prepend-icon="mdi-subtitles-outline"
+                    v-model="title" 
+                    :rules="titleRules" 
+                    required
                 ></v-text-field>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col cols="12" sm="12" md="4">
                 <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="date"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="date"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="date"
-                      label="Date"
-                      prepend-icon="mdi-calendar-month-outline"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      :rules="dateRules"
-                      required
+                        v-model="date"
+                        label="Date"
+                        prepend-icon="mdi-calendar-month-outline"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        :rules="dateRules"
+                        required
                     ></v-text-field>
                   </template>
                   <v-date-picker v-model="date" no-title scrollable>
@@ -46,91 +46,162 @@
               </v-col>
               <v-col cols="12" sm="12" md="4">
                 <v-select
-                  v-model="timezone"
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone"
-                  :rules="timezoneRules" 
-                  prepend-icon="mdi-map-marker-radius-outline"
-                  required
+                    v-model="timezone"
+                    :items="['0-17', '18-29', '30-54', '54+']"
+                    label="Timezone"
+                    :rules="timezoneRules" 
+                    prepend-icon="mdi-map-marker-radius-outline"
+                    hint="What is your timezone?"
+                    persistent-hint
+                    required
                 ></v-select>
+                    <!-- <v-select
+                        v-model="timezone"
+                        :items="['0-17', '18-29', '30-54', '54+']"
+                        label="Timezone"
+                        :rules="timezoneRules" 
+                        chips
+                        prepend-icon="mdi-map-marker-radius-outline"
+                        hint="What is your timezone?"
+                        persistent-hint
+                    ></v-select> -->
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col cols="12" sm="12" md="4">
                 <v-menu
-                  ref="menu2"
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="time"
-                  transition="scale-transition"
-                  offset-y
-                  max-width="290px"
-                  min-width="290px"
+                    ref="menu2"
+                    v-model="menu2"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="time"
-                      label="Start Time"
-                      prepend-icon="mdi-clock-outline"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      required
+                        v-model="time"
+                        label="Start Time"
+                        prepend-icon="mdi-clock-outline"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                        required
                     ></v-text-field>
                   </template>
                   <v-time-picker
-                    v-if="menu2"
-                    v-model="time"
-                    full-width
-                    :allowed-minutes="allowedSteps"
-                    :max="time2"
-                    @click:minute="$refs.menu2.save(time)"
+                      v-if="menu2"
+                      v-model="time"
+                      full-width
+                      :allowed-minutes="allowedSteps"
+                      :max="time2"
+                      @click:minute="$refs.menu2.save(time)"
                   ></v-time-picker>
                 </v-menu>
               </v-col>
               <v-col cols="12" sm="12" md="4">
                 <v-menu
-                  ref="menu3"
-                  v-model="menu3"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  :return-value.sync="time"
-                  transition="scale-transition"
-                  offset-y
-                  max-width="290px"
-                  min-width="290px"
+                    ref="menu3"
+                    v-model="menu3"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="time2"
-                      label="End Time"
-                      prepend-icon="mdi-clock-outline"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
+                        v-model="time2"
+                        label="End Time"
+                        prepend-icon="mdi-clock-outline"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
                     ></v-text-field>
                   </template>
                   <v-time-picker
-                    v-if="menu3"
-                    v-model="time2"
-                    full-width
-                    :allowed-minutes="allowedSteps"
-                    :min="time"
-                    @click:minute="$refs.menu3.save(time)"
+                      v-if="menu3"
+                      v-model="time2"
+                      full-width
+                      :allowed-minutes="allowedSteps"
+                      :min="time"
+                      @click:minute="$refs.menu3.save(time)"
                   ></v-time-picker>
                 </v-menu>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col col="12" sm="12" md="8">
+                <v-select
+                    v-model="regions"
+                    :items="['All', 'Americas', 'East Asia', 'Middle East']"
+                    label="Regions"
+                    :rules="regionRules" 
+                    multiple
+                    chips
+                    prepend-icon="mdi-globe-model"
+                    hint="What are target regions?"
+                    persistent-hint
+                    required
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col col="12" sm="12" md="8">
+                <v-select
+                    v-model="levels"
+                    :items="['All', 'Undergraduate', 'Postgraduate', 'MBA']"
+                    label="Levels"
+                    :rules="levelRules" 
+                    multiple
+                    chips
+                    prepend-icon="mdi-layers-triple-outline"
+                    hint="What are target levels?"
+                    persistent-hint
+                    required
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col col="12" sm="12" md="8">
+                <v-select
+                    v-model="subjectAreas"
+                    :items="['All', 'Agricultural Science', 'Engineering', 'Social Sciences']"
+                    label="Subject Areas"
+                    :rules="subjectRules" 
+                    multiple
+                    chips
+                    prepend-icon="mdi-school-outline"
+                    hint="What are target subject areas?"
+                    persistent-hint
+                    required
+                ></v-select>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col cols="12" sm="12" md="8">
                 <v-textarea
-                  v-model="description"
-                  counter
-                  label="Event Description"
-                  prepend-icon="mdi-pencil-outline"
-                  :rules="textareaRules"
+                    v-model="description"
+                    counter
+                    label="Event Description"
+                    prepend-icon="mdi-pencil-outline"
+                    :rules="textareaRules"
                 ></v-textarea>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col col="12" sm="12" md="8">
+                <v-file-input
+                    :rules="imageRules"
+                    accept="image/png, image/jpeg, image/bmp"
+                    placeholder="Pick an image"
+                    prepend-icon="mdi-camera-outline"
+                    label="Event Image"
+                ></v-file-input>
               </v-col>
             </v-row>
               <!-- <v-col cols="12">
@@ -191,8 +262,24 @@ export default {
     ],
     menu3: false,
     time2: null,
+    regions: [],
+    regionRules: [
+       v => !!v || 'Region is required',
+    ],
+    levels: [],
+    levelRules: [
+       v => !!v || 'Level is required',
+    ],
+    subjectAreas: [],
+    subjectRules: [
+       v => !!v || 'Subject Area is required',
+    ],
     description: '',
     textareaRules: [v => v.length <= 300 || 'Max 300 characters'],
+    file: [],
+    imageRules: [
+        value => !value || value.size < 2000000 || 'Image size should be less than 2 MB.',
+      ],
   }),
   methods: {
     validate(){
