@@ -38,7 +38,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// ログインしているユーザー情報と大学情報を取得
+// 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
 
 Route::get('/inst/fetch-inst','InstUsersController@fetchInst');
@@ -50,6 +50,12 @@ Route::get('/inst/fetch-projects', 'InstUsersController@fetchProjects');
 Route::get('/inst/fetch-single-project/{id}', 'InstUsersController@fetchSingleProject');
 
 Route::post('/inst/create-events/store', 'EventsController@store');
+
+Route::get('/inst/fetch-levels', 'LevelsController@fetchLevels');
+
+Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
+
+Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
 
 // Vue
 //Only inst user can access.

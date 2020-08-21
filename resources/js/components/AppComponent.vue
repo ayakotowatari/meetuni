@@ -9,6 +9,9 @@
             <router-view 
                 v-bind:projects="projects"
                 v-bind:user="user" 
+                v-bind:levels="levels"
+                v-bind:subjects="subjects"
+                v-bind:regions="regions"
             >
             </router-view>
         </v-main>
@@ -24,6 +27,9 @@ export default {
        inst: {},
        initials: '',
        projects: [],
+       levels:[],
+       subjects:[],
+       regions:[],
 
    }),
    created(){
@@ -32,6 +38,9 @@ export default {
       this.fetchInst();
       this.fetchInitials();
       this.fetchProjects();
+      this.fetchLevels();
+      this.fetchSubjects();
+      this.fetchRegions();
 
    },
    methods: {
@@ -56,6 +65,21 @@ export default {
       fetchProjects: function() {
           axios.get("/inst/fetch-projects").then(res => {
             this.projects = res.data.projects;
+          })
+      },
+      fetchLevels: function() {
+          axios.get("/inst/fetch-levels").then(res => {
+            this.levels = res.data.levels;
+          })
+      },
+      fetchSubjects: function() {
+          axios.get("/inst/fetch-subjects").then(res => {
+            this.subjects = res.data.subjects;
+          })
+      },
+      fetchRegions: function() {
+          axios.get("/inst/fetch-regions").then(res => {
+            this.regions = res.data.regions;
           })
       },
    }

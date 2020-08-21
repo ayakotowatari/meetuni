@@ -43,6 +43,17 @@ class EventsController extends Controller
                 ->where('inst_users.id', $user_id)
                 ->select('insts.id')
                 ->first();
+
+        $validatedData = $request->validate([
+                'title' => 'required | max:191',
+                'date' => 'required',
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'regions' => 'required',
+                'levels' => 'required',
+                "subjects" => 'required',
+                'description' => 'required | max:300',
+        ]);
         
         //store event
         $event = new Event();
@@ -75,6 +86,9 @@ class EventsController extends Controller
         $event->inst_user_id = $user_id;
 
         $event->save();
+
+        //event_regionテーブルへの挿入
+        
 
     }
 

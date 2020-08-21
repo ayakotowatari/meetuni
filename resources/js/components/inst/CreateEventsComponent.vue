@@ -137,8 +137,9 @@
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
-                    v-model="regions"
-                    :items="['All', 'Americas', 'East Asia', 'Middle East']"
+                    :items="regions"
+                    item-text="region"
+                    item-value='id'
                     label="Regions"
                     :rules="regionRules" 
                     multiple
@@ -153,8 +154,9 @@
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
-                    v-model="levels"
-                    :items="['All', 'Undergraduate', 'Postgraduate', 'MBA']"
+                    :items="levels"
+                    item-text="level"
+                    item-value="id"
                     label="Levels"
                     :rules="levelRules" 
                     multiple
@@ -169,8 +171,9 @@
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
-                    v-model="subjectAreas"
-                    :items="['All', 'Agricultural Science', 'Engineering', 'Social Sciences']"
+                    :items="subjects"
+                    item-text="subject"
+                    item-value="id"
                     label="Subject Areas"
                     :rules="subjectRules" 
                     multiple
@@ -240,8 +243,14 @@
 import moment from 'moment'
 
 export default {
+  props: {
+    levels: Array,
+    subjects: Array,
+    regions: Array,
+  },
   data: () => ({
     valid: true,
+    loading: false,
     title: '',
     titleRules: [
       v => !!v || 'Event title is required',
@@ -262,15 +271,12 @@ export default {
     ],
     menu3: false,
     time2: null,
-    regions: [],
     regionRules: [
        v => !!v || 'Region is required',
     ],
-    levels: [],
     levelRules: [
        v => !!v || 'Level is required',
     ],
-    subjectAreas: [],
     subjectRules: [
        v => !!v || 'Subject Area is required',
     ],
@@ -288,6 +294,7 @@ export default {
     allowedSteps: m => m % 10 === 0,
     submit(){
       if(this.$refs.form.validate()){
+          this.loading = true;
           axios
             .post("/inst/create-events/store", {
                 title: this.title,
@@ -298,6 +305,7 @@ export default {
                 description:this.description
             })
             .then(response => {
+                this.loading = false;
                 this.title='';
                 this.date='';
                 this.timezone='';
@@ -308,24 +316,7 @@ export default {
             .catch(err => {
                 this.message = err;
             })
-      }
-          // validation
-          // if(this.$refs.form.validate()){
-          //   this.loading = true;
-
-          //   const project = {
-          //     title: this.title,
-          //     content: this.content,
-          //     due: format(parseISO(this.due), 'do MMM yyyy'),
-          //     person: 'The Net Ninja',
-          //     status: 'ongoing'
-          //   }
-          //   db.collection('projects').add(project).then(() => {
-          //     this.loading = false;      
-          //     this.dialog = false; 
-          //     this.$emit('projectAdded')     
-          // })
-          // }
+        }
       }
   },
   computed: {
