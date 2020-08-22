@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+
+    protected $fillable = [
+        'title', 'inst_id', 'date', 'timezone', 'start_time', 'end_time','start_utc', 'end_utc', 'description', 'img', 'status_id', 'inst_user_id'
+    ];
+
     // //開始時間のミューテータ
     public function setStartUtcAttribute($value) {
 
