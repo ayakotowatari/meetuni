@@ -360,7 +360,7 @@ export default {
                 this.selectedLevels="";
                 this.selectedSubjects="";
                 this.description='';
-                this.files='';
+                this.file='';
             })
             // .catch(error => 
             //     this.allerror = error.response.data.errors
