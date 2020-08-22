@@ -10,6 +10,7 @@ use App\Models\EventRegion;
 use App\Models\EventLevel;
 use App\Models\EventSubject;
 use Illuminate\Http\Request;
+use Storage;
 use Validator;
 
 class EventsController extends Controller
@@ -58,9 +59,25 @@ class EventsController extends Controller
                 'levels' => 'required',
                 "subjects" => 'required',
                 'description' => 'required | max:300',
-                // 'img' => 'required'
+                'image' => 'required | max:5000'
         ]);
-        
+
+        $image = $request->file('image');
+        $disk = Storage::disk('local');
+        // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
+        // $disk = Storage::disk('s3');
+
+        $path = $dist->put('image', $image);
+
+        // if($image){
+            
+        //     $file_name = time().'.'.$request->file->getClientOriginalName();
+
+        //     //putAsは自分で名前を決められる
+        //     //（第一引数：保存場所、第二引数：画像ファイル、第三引数：ファイル名）
+        //     $path = $disk->putFileAs('image', $image, $file_name);
+        // }
+
         //store event
         $event = new Event();
         
@@ -86,7 +103,7 @@ class EventsController extends Controller
 
         $event->description = request('description');
 
-        $event->img = NULL; 
+        $event->image = $path; 
 
         $event->capacity_id = 1;
         $event->status_id = 3;

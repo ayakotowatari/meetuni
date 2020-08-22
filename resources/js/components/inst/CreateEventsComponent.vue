@@ -236,13 +236,14 @@
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-file-input
+                    v-model="file"
                     :rules="imageRules"
                     accept="image/png, image/jpeg, image/bmp"
                     placeholder="Pick an image"
                     prepend-icon="mdi-camera-outline"
                     label="Event Image"
-                    :error="allerror.img"
-                    :error-messages="allerror.img"
+                    :error="allerror.image"
+                    :error-messages="allerror.image"
                 ></v-file-input>
               </v-col>
             </v-row>
@@ -254,7 +255,7 @@
                     block 
                     color="primary" 
                     class="mx-0 mt-3" 
-                    @click.prevent="submit"
+                    @click="submit"
                   >Add project
                   </v-btn>
              </v-col>
@@ -314,9 +315,9 @@ export default {
     textareaRules: [v => v.length <= 300 || 'Max 300 characters'],
     file: [],
     imageRules: [
-        value => !value || value.size < 2000000 || 'Image size should be less than 2 MB.',
+        value => !value || value.size < 3000000 || 'Image size should be less than 3 MB.',
     ],
-    allerror: {},
+    allerror: [],
     snackbar: false
   }),
   methods: {
@@ -327,8 +328,15 @@ export default {
     submit(){
       if(this.$refs.form.validate()){
           this.loading = true;
+
+          let data = new FormData();
+          data.append("image", this.file);
+
+          let config = {headers: {'Content-Type': 'multipart/form-data'}};
+
           axios
             .post("/inst/create-events/store", {
+                
                 title: this.title,
                 date: this.date,
                 timezone: this.timezone,
@@ -337,8 +345,9 @@ export default {
                 regions:this.selectedRegions,
                 levels:this.selectedLevels,
                 subjects:this.selectedSubjects,
-                description:this.description
-            })
+                description:this.description, 
+
+            }, data, config)
             .then(response => {
                 this.loading = false;
                 this.snackbar = true;
@@ -351,6 +360,7 @@ export default {
                 this.selectedLevels="";
                 this.selectedSubjects="";
                 this.description='';
+                this.files='';
             })
             // .catch(error => 
             //     this.allerror = error.response.data.errors
