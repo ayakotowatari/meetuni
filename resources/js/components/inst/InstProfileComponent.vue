@@ -20,15 +20,15 @@ export default {
        
     }),
     methods: {
-        // formatDate(value){
-        //     return moment.utc(value).local().format("ddd, MMM Do YYYY h:mm a Z")
-        // },
+        formatDate(value){
+            return moment.utc(value).local().format("ddd, MMM Do YYYY h:mm a Z")
+        },
         
     },
     computed:{
-        formatDate(value, timezone){
-            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY h:mm a ([GMT] Z)")
-        },
+        // formatDate(value, timezone){
+        //     return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY h:mm a ([GMT] Z)")
+        // },
     }
 }
 </script>

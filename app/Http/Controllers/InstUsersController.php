@@ -66,8 +66,8 @@ class InstUsersController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $projects = Event::join('event_region', 'events.id', '=', 'event_region.event_id')
-                    ->join('regions', 'regions.id', '=', 'event_region.region_id')
+        $projects = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                    ->join('regions', 'regions.id', '=', 'event_regions.region_id')
                     ->join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where('events.inst_user_id', $user_id)
                     ->select('events.id', 'events.title', 'events.date', 'statuses.status', 'regions.region')
@@ -81,8 +81,8 @@ class InstUsersController extends Controller
         $user_id = Auth::user()->id;
 
         $project_id = $id;
-        $project = Event::join('event_region', 'events.id', '=', 'event_region.event_id')
-                    ->join('regions', 'regions.id', '=', 'event_region.region_id')
+        $project = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                    ->join('regions', 'regions.id', '=', 'event_regions.region_id')
                     ->join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where([['events.id', $project_id], ['events.inst_user_id', $user_id]])
                     ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'statuses.status', 'regions.region')

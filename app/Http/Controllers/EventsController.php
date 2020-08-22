@@ -6,7 +6,11 @@ use Auth;
 use App\Models\InstUser;
 use App\Models\Inst;
 use App\Models\Event;
+use App\Models\EventRegion;
+use App\Models\EventLevel;
+use App\Models\EventSubject;
 use Illuminate\Http\Request;
+use Validator;
 
 class EventsController extends Controller
 {
@@ -44,15 +48,17 @@ class EventsController extends Controller
                 ->select('insts.id')
                 ->first();
 
-        $validatedData = $request->validate([
+        $request->validate([
                 'title' => 'required | max:191',
                 'date' => 'required',
+                'timezone' => 'required',
                 'start_time' => 'required',
                 'end_time' => 'required',
                 'regions' => 'required',
                 'levels' => 'required',
                 "subjects" => 'required',
                 'description' => 'required | max:300',
+                // 'img' => 'required'
         ]);
         
         //store event
@@ -62,6 +68,7 @@ class EventsController extends Controller
         $event->inst_id = $inst->id;
         $date = request("date");
         $event->date = $date;
+        $event->timezone = request("timezone");
         $start_time = request("start_time");
         $event->start_time = $start_time;
         $end_time = request("end_time");
@@ -79,7 +86,7 @@ class EventsController extends Controller
 
         $event->description = request('description');
 
-        $event->img = ''; 
+        $event->img = NULL; 
 
         $event->capacity_id = 1;
         $event->status_id = 3;
@@ -87,8 +94,38 @@ class EventsController extends Controller
 
         $event->save();
 
+        //event_idの取得
+        $event_id = $event->id;
+
         //event_regionテーブルへの挿入
-        
+        $regions = request("regions");
+
+        foreach($regions as $region){
+            $event_region = new EventRegion();
+            $event_region->event_id = $event_id;
+            $event_region->region_id = $region;
+            $event_region->save();
+        }
+
+        //event_levelテーブルへの挿入
+        $levels = request("levels");
+
+        foreach($levels as $level){
+            $event_level = new EventLevel();
+            $event_level->event_id = $event_id;
+            $event_level->level_id = $level;
+            $event_level->save();
+        }
+
+        //event_subjectテーブルへの挿入
+        $subjects = request("subjects");
+
+        foreach($subjects as $subject){
+            $event_subject = new EventSubject();
+            $event_subject->event_id = $event_id;
+            $event_subject->subject_id = $subject;
+            $event_subject->save();
+        }
 
     }
 

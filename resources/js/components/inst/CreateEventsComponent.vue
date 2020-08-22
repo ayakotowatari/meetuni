@@ -1,4 +1,19 @@
 <template>
+<div>
+  <v-snackbar v-model="snackbar" :timeout="4000" color="info">
+          <span>A new project has been added.</span>
+          <template v-slot:action="{ attrs }">
+              <v-btn 
+                depressed 
+                text 
+                class="white--text" 
+                v-bind="attrs" 
+                @click="snackbar = false"
+              >Close
+              </v-btn>
+          </template>
+  </v-snackbar>
+
   <v-container>
     <h1 class="subheading grey--text">Create Events</h1>
     <v-container>
@@ -11,6 +26,8 @@
                     v-model="title" 
                     :rules="titleRules" 
                     required
+                    :error="allerror.title"
+                    :error-messages="allerror.title"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -35,6 +52,8 @@
                         v-on="on"
                         :rules="dateRules"
                         required
+                        :error="allerror.date"
+                        :error-messages="allerror.date"
                     ></v-text-field>
                   </template>
                   <v-date-picker v-model="date" no-title scrollable>
@@ -54,6 +73,8 @@
                     hint="What is your timezone?"
                     persistent-hint
                     required
+                    :error="allerror.timezone"
+                    :error-messages="allerror.timezone"
                 ></v-select>
                     <!-- <v-select
                         v-model="timezone"
@@ -89,6 +110,8 @@
                         v-bind="attrs"
                         v-on="on"
                         required
+                        :error="allerror.start_time"
+                        :error-messages="allerror.start_time"
                     ></v-text-field>
                   </template>
                   <v-time-picker
@@ -121,6 +144,9 @@
                         readonly
                         v-bind="attrs"
                         v-on="on"
+                        required
+                        :error="allerror.end_time"
+                        :error-messages="allerror.end_time"
                     ></v-text-field>
                   </template>
                   <v-time-picker
@@ -137,6 +163,7 @@
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
+                    v-model="selectedRegions"
                     :items="regions"
                     item-text="region"
                     item-value='id'
@@ -148,12 +175,15 @@
                     hint="What are target regions?"
                     persistent-hint
                     required
+                    :error="allerror.regions"
+                    :error-messages="allerror.regions"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
+                    v-model="selectedLevels"
                     :items="levels"
                     item-text="level"
                     item-value="id"
@@ -165,12 +195,15 @@
                     hint="What are target levels?"
                     persistent-hint
                     required
+                    :error="allerror.levels"
+                    :error-messages="allerror.levels"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
                 <v-select
+                    v-model="selectedSubjects"
                     :items="subjects"
                     item-text="subject"
                     item-value="id"
@@ -182,6 +215,8 @@
                     hint="What are target subject areas?"
                     persistent-hint
                     required
+                    :error="allerror.subjects"
+                    :error-messages="allerror.subjects"
                 ></v-select>
               </v-col>
             </v-row>
@@ -193,6 +228,8 @@
                     label="Event Description"
                     prepend-icon="mdi-pencil-outline"
                     :rules="textareaRules"
+                    :error="allerror.description"
+                    :error-messages="allerror.description"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -204,22 +241,11 @@
                     placeholder="Pick an image"
                     prepend-icon="mdi-camera-outline"
                     label="Event Image"
+                    :error="allerror.img"
+                    :error-messages="allerror.img"
                 ></v-file-input>
               </v-col>
             </v-row>
-              <!-- <v-col cols="12">
-                <v-text-field label="Email*" required></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="Password*" type="password" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col> -->              
             <v-row justify="center">
              <v-col col="12" sm="12" md="8">
                   <v-btn 
@@ -236,6 +262,7 @@
           </v-form>
       </v-container>
   </v-container>
+</div>
 </template>
 
 <script>
@@ -271,12 +298,15 @@ export default {
     ],
     menu3: false,
     time2: null,
+    selectedRegions: [],
     regionRules: [
        v => !!v || 'Region is required',
     ],
+    selectedLevels: [],
     levelRules: [
        v => !!v || 'Level is required',
     ],
+    selectedSubjects: [],
     subjectRules: [
        v => !!v || 'Subject Area is required',
     ],
@@ -285,7 +315,9 @@ export default {
     file: [],
     imageRules: [
         value => !value || value.size < 2000000 || 'Image size should be less than 2 MB.',
-      ],
+    ],
+    allerror: {},
+    snackbar: false
   }),
   methods: {
     validate(){
@@ -302,39 +334,35 @@ export default {
                 timezone: this.timezone,
                 start_time:this.time,
                 end_time:this.time2,
+                regions:this.selectedRegions,
+                levels:this.selectedLevels,
+                subjects:this.selectedSubjects,
                 description:this.description
             })
             .then(response => {
                 this.loading = false;
+                this.snackbar = true;
                 this.title='';
                 this.date='';
                 this.timezone='';
                 this.time='';
                 this.time2='';
-                this.description=''
+                this.selectedRegions="";
+                this.selectedLevels="";
+                this.selectedSubjects="";
+                this.description='';
             })
-            .catch(err => {
-                this.message = err;
-            })
+            // .catch(error => 
+            //     this.allerror = error.response.data.errors
+            // );
+            .catch(error => 
+                    this.allerror = error.response.data.errors
+                )
         }
       }
   },
   computed: {
-    //change date format
-    // formattedTime(){
-    //   return this.time ? moment(this.time).format('hh:mm') : ''
-    // },
-    // formattedTimeTwo(){
-    //   return this.time2 ? moment(this.time2).format('HH:mm:ss') : ''
-    // },
-    // formattedDate(){
-    //   return this.date ? format(parseISO(this.date), 'EEE, MMM do, yyyy, zzz') : ''
-    // },
-    // formattedTime(){
-    //   return this.time ? format(parseISO(this.time), 'h:mm bbb') : ''
-    // },
-    // allowedStep: m => m % 10 === 0,
-
+   
   }
 
 }
