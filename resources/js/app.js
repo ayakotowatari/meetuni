@@ -28,6 +28,7 @@ Vue.use(Vuetify);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-component', require('./components/inst/parts/NavbarComponent.vue').default);
+Vue.component('dashboardmenu-component', require('./components/inst/parts/DashboardMenuComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

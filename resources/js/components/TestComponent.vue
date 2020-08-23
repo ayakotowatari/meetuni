@@ -1,7 +1,7 @@
 <template>
 <v-form>
   <v-file-input
-    v-model="file"
+    v-model="files"
     :rules="rules"
     accept="image/png, image/jpeg, image/bmp"
     placeholder="Pick an avatar"
@@ -27,27 +27,42 @@
       rules: [
         value => !value || value.size < 3000000 || 'Avatar size should be less than 3 MB!',
       ],
-      file: [],
+      files: [],
       allerror: [],
     }),
     methods: {
     submit(){
           let data = new FormData();
-          data.append("image", this.file[0]);
+          data.append("image", this.files[0]);
 
-          let config = {headers: {'Content-Type': 'multipart/form-data'}};
+          const requestOptions = {
+          method: "POST", 
+          headers: {'Content-Type': 'multipart/form-data'},
+          body: data
+          };
+          fetch("/inst/test/store", requestOptions)
+          .then(response => {
+              this.file=''
+          })
+          .catch(error => 
+            this.allerror = error.response.data.errors
+          )
+
+          // let config = {headers: {'Content-Type': 'multipart/form-data'}};
          
-          axios
-            .post("/inst/test/store", data, config)
-            .then(response => {
-                this.file='';
-            })
-            // .catch(error => 
-            //     this.allerror = error.response.data.errors
-            // );
-            .catch(error => 
-                    this.allerror = error.response.data.errors
-                )
+          // axios
+          //   .post("/inst/test/store", data, config)
+          //   .then(response => {
+          //       this.file='';
+          //   })
+          //   // .catch(error => 
+          //   //     this.allerror = error.response.data.errors
+          //   // );
+          //   .catch(error => 
+          //           this.allerror = error.response.data.errors
+          //       )
+
+         
         }
       }
   }

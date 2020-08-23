@@ -1,38 +1,24 @@
 <template>
   <v-container>
-      <h1 class="subheading grey--text">Dashboard</h1>
       <v-row>
-          <v-col col="12" sm="4">
-              <p class="heading">{{ project.title }}</p>
-              <p>{{ project.date }} </p>
+        <v-col>
+            <h1 class="grey--text">Dashboard</h1>
+        </v-col>
+        <v-col>
+            <dashboardmenu-component />
+        </v-col>
+      </v-row>
+      <v-row class="my-5">
+          <v-col col="12" sm="12" md="6">
+              <h3 class="grey--text text--darken-4">{{ project.title }}</h3>
+              <span>{{ formattedDate(project.date, user.timezone) }} </span>
+              <span class="ml-3">
+                  {{ formattedStartTime(project.start_utc, user.timezone) }} - 
+                  {{ formattedEndTime(project.end_utc, user.timezone) }}
+              </span>
               <p>{{ project.region }}</p>
-              <p>{{ formatDate(project.start_utc, user.timezone) }}</p>
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-menu bottom left offset-y>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn 
-                    text 
-                    color="grey darken"
-                    v-bind="attrs"
-                    v-on="on"
-                >
-                <v-icon left>mdi-chevron-down</v-icon>
-                <span>Menu</span>
-                </v-btn>
-            </template>
-
-            <v-list>
-                <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-                </v-list-item>
-            </v-list>
-          </v-menu>
-         
-         
+              
+          </v-col>         
       </v-row>
       
   </v-container>
@@ -40,9 +26,10 @@
 
 <script>
 import moment from 'moment-timezone'
+import DashboardMenu from './parts/DashboardMenuComponent'
 
 export default {
-
+components: { DashboardMenu },
 props: {
     user: Object,
 },
@@ -51,12 +38,6 @@ data: function(){
     return{
         id: this.$route.params.id,
         project:{},
-        items: [
-            { title: 'Click Me' },
-            { title: 'Click Me' },
-            { title: 'Click Me' },
-            { title: 'Click Me 2' },
-         ],
     }
     console.log(id);
 },
@@ -70,9 +51,15 @@ methods: {
             this.project = res.data.project;
           })
     },
-    formatDate(value, timezone){
-            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY h:mm a ([GMT] Z)")
+    formattedDate(value, timezone){
+        return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
     },
+    formattedStartTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a")
+    },
+    formattedEndTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
+    }
 }
 }
 </script>
