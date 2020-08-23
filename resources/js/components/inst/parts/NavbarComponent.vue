@@ -71,7 +71,7 @@
       initials: String,
     },
     data: () => ({
-      drawer: false,
+      drawer: true,
       links: [
         { icon: 'mdi-home-outline', text: 'My Projects', route: '/inst/projects' },
         { icon: 'mdi-pencil-outline', text: 'Create Events', route: '/inst/create-events' },

@@ -57,6 +57,9 @@ Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
 
 Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
 
+// テスト
+Route::post('inst/test/store', 'ImagesController@store');
+
 // Vue
 //Only inst user can access.
 Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){

@@ -10,6 +10,7 @@ import CreateEvents from "./components/inst/CreateEventsComponent";
 import Drafts from "./components/inst/DraftsComponent";
 import Dashboard from "./components/inst/DashboardComponent";
 import InstProfile from "./components/inst/InstProfileComponent";
+import Test from "./components/TestComponent"
  
 const routes = [
     {
@@ -46,6 +47,11 @@ const routes = [
         path: "/inst/profile",
         name: "inst-profile",
         component: InstProfile
+    },
+    {
+        path: "/inst/test",
+        name: "test",
+        component: Test
     },
 ];
  

@@ -12,4 +12,12 @@ class InstUser extends Model
         'job_title',
         'department'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function inst(){
+        return $this->belongsTo('App\Models\Inst');
+    }
 }

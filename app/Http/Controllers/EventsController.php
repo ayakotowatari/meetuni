@@ -59,7 +59,7 @@ class EventsController extends Controller
                 'levels' => 'required',
                 "subjects" => 'required',
                 'description' => 'required | max:300',
-                'image' => 'required | max:5000'
+                'image' => 'required | image | max:5000'
         ]);
 
         $image = $request->file('image');
@@ -67,7 +67,7 @@ class EventsController extends Controller
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
         // $disk = Storage::disk('s3');
 
-        $path = $dist->put('image', $image);
+        $path = $disk->put('image', $image);
 
         // if($image){
             

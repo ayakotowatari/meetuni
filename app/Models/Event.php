@@ -41,4 +41,21 @@ class Event extends Model
         $datetime->setTimezone('UTC');
         $this->attributes['end_utc'] = $datetime;
     }
+
+    public function status(){
+        return $this->belongsTo('App\Models\Status');
+    }
+
+    public function levels(){
+        return $this->hasMany('App\Models\Level', 'event_levels');
+    }
+
+    public function regions(){
+        return $this->hasMany('App\Models\Region', 'event_regions', 'event_id');
+    }
+
+
+    public function subjects(){
+        return $this->hasMany('App\Models\Subject', 'event_subjects');
+    }
 }
