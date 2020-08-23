@@ -235,16 +235,16 @@
             </v-row>
             <v-row justify="center">
               <v-col col="12" sm="12" md="8">
-                <v-file-input
-                    v-model="file"
-                    :rules="imageRules"
-                    accept="image/png, image/jpeg, image/bmp"
+                <v-file-input 
+                    v-model="files"
+                    accept="image/*" 
+                    label="Event Image"
                     placeholder="Pick an image"
                     prepend-icon="mdi-camera-outline"
-                    label="Event Image"
+                    :rules="imageRules"
                     :error="allerror.image"
-                    :error-messages="allerror.image"
-                ></v-file-input>
+                    :error-messages="allerror.image">
+                </v-file-input>
               </v-col>
             </v-row>
             <v-row justify="center">
@@ -313,7 +313,7 @@ export default {
     ],
     description: '',
     textareaRules: [v => v.length <= 300 || 'Max 300 characters'],
-    file: [],
+    files: [],
     imageRules: [
         value => !value || value.size < 3000000 || 'Image size should be less than 3 MB.',
     ],
@@ -330,7 +330,7 @@ export default {
           this.loading = true;
 
           let data = new FormData();
-          data.append("image", this.file[0]);
+          data.append("image", this.files);
           data.append("title", this.title);
           data.append("date", this.date);
           data.append("timezone", this.timezone);

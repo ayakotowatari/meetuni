@@ -39,11 +39,6 @@ const routes = [
         component: Drafts
     },
     {
-        path: "/inst/drafts",
-        name: "drafts",
-        component: Drafts
-    },
-    {
         path: "/inst/profile",
         name: "inst-profile",
         component: InstProfile

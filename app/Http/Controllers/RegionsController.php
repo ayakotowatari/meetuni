@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class RegionsController extends Controller
@@ -24,7 +25,20 @@ class RegionsController extends Controller
         return response()->json(['regions'=>$regions],200);
     }
 
-    
+    public function fetchProjectRegions(Request $request, $id)
+    {
+        $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                    ->join('regions', 'event_regions.region_id', '=', 'regions.id')
+                    ->where('events.id', $id)
+                    ->select('regions.region')
+                    ->get();
+
+        // $regions = Event::with('regions', 'event_regions')
+        //             ->where('events.id', $id)
+        //             ->get();
+
+        return response()->json(['regions'=>$regions],200);
+    }
 
     /**
      * Show the form for creating a new resource.
