@@ -44,9 +44,6 @@ export default {
           let selected = this.selectedRegions;
           console.log(selected);
 
-          // let data = new FormData();
-          // data.append('regions', this.SelectedRegions);
-
           axios
           .post('/inst/region',
               {
@@ -58,6 +55,18 @@ export default {
               .catch(err => {
                   this.message = err;
               })
+
+          // let data = new FormData();
+          // data.append('regions', this.SelectedRegions);
+          
+          // axios
+          // .post('/inst/region', data)
+          //     .then(response => {
+          //           this.selectedRegions='';
+          //     })
+          //     .catch(err => {
+          //         this.message = err;
+          //     })
       }
   }
 
