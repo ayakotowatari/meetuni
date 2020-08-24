@@ -115,29 +115,33 @@ class EventsController extends Controller
         //event_idの取得
         $event_id = $event->id;
 
-        $regions = request('regions');
+        $regions = request("regions");
 
         //event_regionテーブルへの挿入
-        foreach($regions as $key=>$value){
+        foreach($regions as $region){
             $event_region = new EventRegion();
             $event_region->event_id = $event_id;
-            $event_region->region_id = $value;
+            $event_region->region_id = $region;
             $event_region->save();
         }
 
+        $levels = request('levels');
+
         //event_levelテーブルへの挿入
-        foreach($request->levels as $key => $value){
+        foreach($levels as $level){
             $event_level = new EventLevel();
             $event_level->event_id = $event_id;
-            $event_level->level_id = $value;
+            $event_level->level_id = $level;
             $event_level->save();
         }
 
+        $subjects = request('subjects');
+
         //event_subjectテーブルへの挿入
-        foreach($request->subjects as $key -> $value){
+        foreach($subjects as $subject){
             $event_subject = new EventSubject();
             $event_subject->event_id = $event_id;
-            $event_subject->subject_id = $value;
+            $event_subject->subject_id = $subject;
             $event_subject->save();
         }
 

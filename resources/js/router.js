@@ -10,7 +10,10 @@ import CreateEvents from "./components/inst/CreateEventsComponent";
 import Drafts from "./components/inst/DraftsComponent";
 import Dashboard from "./components/inst/DashboardComponent";
 import InstProfile from "./components/inst/InstProfileComponent";
-import Test from "./components/TestComponent"
+//テスト
+// import Test from "./components/inst/TestComponent"
+// import TestTwo from "./components/inst/TestTwoComponent"
+import TestThree from "./components/inst/TestThreeComponent"
  
 const routes = [
     {
@@ -43,11 +46,23 @@ const routes = [
         name: "inst-profile",
         component: InstProfile
     },
+    // //テスト
+    // {
+    //     path: "/inst/test",
+    //     name: "test",
+    //     component: Test
+    // },
+    // {
+    //     path: "/inst/testtwo",
+    //     name: "testtwo",
+    //     component: TestTwo
+    // },
     {
-        path: "/inst/test",
-        name: "test",
-        component: Test
+        path: "/inst/testthree",
+        name: "testthree",
+        component: TestThree
     },
+
 ];
  
 export default new VueRouter({

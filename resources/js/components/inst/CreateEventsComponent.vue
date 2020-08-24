@@ -326,6 +326,9 @@ export default {
     },
     allowedSteps: m => m % 10 === 0,
     submit(){
+      let testregions = this.selectedRegions;
+      console.log(testregions);
+      
       if(this.$refs.form.validate()){
           this.loading = true;
 

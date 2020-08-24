@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Region;
 use App\Models\Event;
+//テスト
+use App\Models\EventRegion;
+use Auth;
+//テスト終わる
 use Illuminate\Http\Request;
 
 class RegionsController extends Controller
@@ -39,7 +43,20 @@ class RegionsController extends Controller
 
         return response()->json(['regions'=>$regions],200);
     }
+    
+    //テスト
+    public function test(Request $request)
+    {
+        $regions = $request->regions;
 
+        foreach($regions as $region){
+            $event_region = new EventRegion();
+            $event_region->event_id= 24;
+            $event_region->region_id=$region;
+            $event_region->save();
+        }
+    }
+    //テスト終わり
     /**
      * Show the form for creating a new resource.
      *

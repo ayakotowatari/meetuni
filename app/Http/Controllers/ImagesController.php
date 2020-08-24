@@ -75,4 +75,9 @@ class ImagesController extends Controller
         return response()->json(['image'=>$image],200);
 
     }
+    
+    public function testshow(){
+        
+        return view ('inst.anothertest');
+    }
 }
