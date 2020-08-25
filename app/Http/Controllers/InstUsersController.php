@@ -62,33 +62,33 @@ class InstUsersController extends Controller
         return response()->json(['initials'=>$initials],200);
     }
 
-    public function fetchProjects()
+    public function fetchEvents()
     {
         $user_id = Auth::user()->id;
 
-        $projects = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('regions', 'regions.id', '=', 'event_regions.region_id')
                     ->join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where('events.inst_user_id', $user_id)
                     ->select('events.id', 'events.title', 'events.date', 'statuses.status', 'regions.region')
                     ->get();
 
-        return response()->json(['projects' => $projects],200);
+        return response()->json(['events' => $events],200);
     }
 
-    public function fetchSingleProject(Request $request, $id)
+    public function fetchSingleEvent(Request $request, $id)
     {
         $user_id = Auth::user()->id;
 
-        $project_id = $id;
-        $project = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        $event_id = $id;
+        $event = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('regions', 'regions.id', '=', 'event_regions.region_id')
                     ->join('statuses', 'events.status_id', '=', 'statuses.id')
-                    ->where([['events.id', $project_id], ['events.inst_user_id', $user_id]])
+                    ->where([['events.id', $event_id], ['events.inst_user_id', $user_id]])
                     ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'statuses.status', 'regions.region')
                     ->first();
 
-        return response()->json(['project' => $project],200);
+        return response()->json(['event' => $event],200);
     }
 
 

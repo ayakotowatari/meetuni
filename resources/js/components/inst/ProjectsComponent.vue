@@ -14,7 +14,7 @@
       </v-row>
       <v-data-table
           :headers="headers"
-          :items="projects"
+          :items="events"
           :search="search"
           class="elevation-1 mt-10"
         >
@@ -41,7 +41,7 @@
             v-show="item.status !== 'Complete'"
             small
             class="mr-4"
-            @click="editItem(item)"
+            @click="toEditEvent(item.id)"
           >
             mdi-pencil-outline
           </v-icon>
@@ -77,7 +77,7 @@ import moment from 'moment';
 
   export default {
     props: {
-      projects: Array,
+      events: Array,
     },
     data: () => ({
       dialog: false,
@@ -111,6 +111,10 @@ import moment from 'moment';
       toDashboard(id){
         console.log(id); 
         this.$router.push({name: 'dashboard', params: {id: id}})
+      },
+      toEditEvent(id){
+        console.log(id); 
+        this.$router.push({name: 'edit-event', params: {id: id}})
       },
       // formattedDate(value){
       //   return moment(value).format('ddd, MMM Do YYYY');

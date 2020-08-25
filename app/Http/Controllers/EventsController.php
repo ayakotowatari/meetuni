@@ -169,6 +169,14 @@ class EventsController extends Controller
         //
     }
 
+    public function fetchEditEvent(Request $request, $id)
+    {
+        $event = Event::where('events.id', $id)
+                    ->first();
+
+        return response()->json(['event' => $event],200);
+    }
+
     /**
      * Update the specified resource in storage.
      *

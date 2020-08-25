@@ -45,9 +45,9 @@ Route::get('/inst/fetch-inst','InstUsersController@fetchInst');
 
 Route::get('/inst/fetch-initials','InstUsersController@fetchInitials');
 
-Route::get('/inst/fetch-projects', 'InstUsersController@fetchProjects');
+Route::get('/inst/fetch-events', 'InstUsersController@fetchEvents');
 
-Route::get('/inst/fetch-single-project/{id}', 'InstUsersController@fetchSingleProject');
+Route::get('/inst/fetch-single-event/{id}', 'InstUsersController@fetchSingleEvent');
 
 Route::post('/inst/create-events/store', 'EventsController@store');
 
@@ -57,11 +57,13 @@ Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
 
 Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
 
-Route::get('/inst/fetch-project-regions/{id}', 'RegionsController@fetchProjectRegions');
+Route::get('/inst/fetch-event-regions/{id}', 'RegionsController@fetchEventRegions');
 
-Route::get('/inst/fetch-project-levels/{id}', 'LevelsController@fetchProjectLevels');
+Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels');
 
-Route::get('/inst/fetch-project-subjects/{id}', 'SubjectsController@fetchProjectSubjects');
+Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects');
+
+Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
@@ -69,6 +71,8 @@ Route::get('/inst/fetch-project-subjects/{id}', 'SubjectsController@fetchProject
 // Route::get ('/inst/image/get', 'ImagesController@displayImage')-> name('inst.show');
 // Route::get ('/inst/create-event', 'ImagesController@testshow')-> name('inst.show');
 // Route::post('inst/region', 'RegionsController@test');
+Route::get('/inst/testform', 'ImagesController@testform');
+Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //テスト終わる
 
 // Vue

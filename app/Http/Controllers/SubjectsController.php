@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class SubjectsController extends Controller
@@ -24,10 +25,10 @@ class SubjectsController extends Controller
         return response()->json(['subjects'=>$subjects],200);
     }
 
-    public function fetchProjectSubjects(Request $request, $id)
+    public function fetchEventSubjects(Request $request, $id)
     {
-        $subjects = Event::join('event_subjeccts', 'events.id', '=', 'event_subjects.event_id')
-                    ->join('subjects', 'event_subjects.subjet_id', '=', 'subjects.id')
+        $subjects = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                    ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
                     ->where('events.id', $id)
                     ->select('subjects.subject')
                     ->get();

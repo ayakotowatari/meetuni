@@ -8,11 +8,11 @@
     </v-row>
     <v-row class="mb-10">
         <v-col col="12" sm="12" md="6">
-            <h3 class="grey--text text--darken-4">{{ project.title }}</h3>
-            <span>{{ formattedDate(project.date, user.timezone) }} </span>
+            <h3 class="grey--text text--darken-4">{{ event.title }}</h3>
+            <span>{{ formattedDate(event.date, user.timezone) }} </span>
             <span class="ml-3">
-                {{ formattedStartTime(project.start_utc, user.timezone) }} - 
-                {{ formattedEndTime(project.end_utc, user.timezone) }}
+                {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+                {{ formattedEndTime(event.end_utc, user.timezone) }}
             </span>
             <div>
                 <span>Targets:</span>
@@ -48,7 +48,7 @@ props: {
 data: function(){
     return{
         id: this.$route.params.id,
-        project: {},
+        event: {},
         regions: {},
         levels: {},
         subjects: {}
@@ -56,33 +56,34 @@ data: function(){
     console.log(id);
 },
 created(){
-    this.fetchSingleProject();
-    this.fetchProjectRegions();
-    this.fetchProjectLevels();
-    this.fetchProjectSubjects();
+    this.fetchSingleEvent();
+    this.fetchEventRegions();
+    this.fetchEventLevels();
+    this.fetchEventSubjects();
 },
 methods: {
-    fetchSingleProject: function(id) {
+    fetchSingleEvent: function(id) {
           console.log(id);
-          axios.get("/inst/fetch-single-project/" + this.id).then(res => {
-            this.project = res.data.project;
+          axios.get("/inst/fetch-single-event/" + this.id).then(res => {
+            this.event = res.data.event;
+            console.log(event);
           })
     },
-    fetchProjectRegions: function(id) {
+    fetchEventRegions: function(id) {
           console.log(id);
-          axios.get("/inst/fetch-project-regions/" + this.id).then(res => {
+          axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
             this.regions = res.data.regions;
           })
     },
-    fetchProjectLevels: function(id) {
+    fetchEventLevels: function(id) {
           console.log(id);
-          axios.get("/inst/fetch-project-levels/" + this.id).then(res => {
+          axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
             this.levels = res.data.levels;
           })
     },
-    fetchProjectSubjects: function(id) {
+    fetchEventSubjects: function(id) {
           console.log(id);
-          axios.get("/inst/fetch-project-subjects/" + this.id).then(res => {
+          axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
             this.subjects = res.data.subjects;
           })
     },

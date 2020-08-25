@@ -73,7 +73,7 @@
     data: () => ({
       drawer: true,
       links: [
-        { icon: 'mdi-home-outline', text: 'My Projects', route: '/inst/projects' },
+        { icon: 'mdi-home-outline', text: 'My Projects', route: '/inst/events' },
         { icon: 'mdi-pencil-outline', text: 'Create Events', route: '/inst/create-events' },
         { icon: 'mdi-file-document-outline', text: 'Drafts', route: '/inst/drafts'},
         { icon: 'mdi-account-details-outline', text: 'My Profile', route: '/inst/profile' },

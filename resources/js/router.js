@@ -10,10 +10,13 @@ import CreateEvents from "./components/inst/CreateEventsComponent";
 import Drafts from "./components/inst/DraftsComponent";
 import Dashboard from "./components/inst/DashboardComponent";
 import InstProfile from "./components/inst/InstProfileComponent";
+
 //テスト
 // import Test from "./components/inst/TestComponent"
 // import TestTwo from "./components/inst/TestTwoComponent"
 import TestThree from "./components/inst/TestThreeComponent"
+import TestFour from "./components/inst/TestFourComponent"
+//テスト終わる
  
 const routes = [
     {
@@ -22,12 +25,12 @@ const routes = [
         component: Home
     },
     {
-        path: "/inst/projects",
+        path: "/inst/events",
         name: "projects",
         component: Projects
     },
     {
-        path: "/inst/projects/dashboard/:id",
+        path: "/inst/event/dashboard/:id",
         name: "dashboard",
         component: Dashboard
     },
@@ -61,6 +64,11 @@ const routes = [
         path: "/inst/testthree",
         name: "testthree",
         component: TestThree
+    },
+    {
+        path: "/inst/testfour",
+        name: "testfour",
+        component: TestFour
     },
 
 ];

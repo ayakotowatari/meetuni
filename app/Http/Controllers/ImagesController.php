@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use App\Models\Testform;
 use Storage;
 use Validator;
 
@@ -79,5 +80,33 @@ class ImagesController extends Controller
     public function testshow(){
         
         return view ('inst.anothertest');
+    }
+
+    public function testform(){
+        
+        $testform = Testform::where('testforms.id', '1')->first();
+
+        return response() ->json(['testform' =>$testform], 200);
+    }
+
+    public function testformUpdate(Request $request){
+
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'date' => 'required',
+            'time' => 'required'
+         ]);
+
+        $id = request('id');
+
+        $updatedForm = Testform::find($id);
+        $updatedForm->name = $request->name;
+        $updatedForm->email = $request->email;
+        $updatedForm->date = $request->date;
+        $updatedForm->time = $request->time;
+        $updatedForm->save();
+
     }
 }

@@ -29,7 +29,7 @@ class RegionsController extends Controller
         return response()->json(['regions'=>$regions],200);
     }
 
-    public function fetchProjectRegions(Request $request, $id)
+    public function fetchEventRegions(Request $request, $id)
     {
         $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('regions', 'event_regions.region_id', '=', 'regions.id')
