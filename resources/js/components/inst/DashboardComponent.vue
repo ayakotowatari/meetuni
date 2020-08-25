@@ -6,7 +6,7 @@
             <dashboardmenu-component />
         </v-col>
     </v-row>
-    <v-row class="my-5">
+    <v-row class="mb-10">
         <v-col col="12" sm="12" md="6">
             <h3 class="grey--text text--darken-4">{{ project.title }}</h3>
             <span>{{ formattedDate(project.date, user.timezone) }} </span>
@@ -14,17 +14,23 @@
                 {{ formattedStartTime(project.start_utc, user.timezone) }} - 
                 {{ formattedEndTime(project.end_utc, user.timezone) }}
             </span>
-            <div v-for="region in regions" :key="region.region">
-                <span>Targets: {{ region.region }}</span>
+            <div>
+                <span>Targets:</span>
+                <span v-for="region in regions" :key="region.region" class="ml-3">{{ region.region }}</span>
             </div>
             <div>
-                <span>Levels: {{ project.level }}</span>
+                <span>Levels:</span>
+                <span v-for="level in levels" :key="level.level" class="ml-3">{{ level.level }}</span>
             </div>
              <div>
-                <span>Subjects: {{ project.region }}</span>
+                <span>Subjects:</span>
+                <span v-for="subject in subjects" :key="subject.subject" class="ml-3">{{ subject.subject }}</span>
             </div>
         </v-col>         
     </v-row>
+
+    <dashboardsummary-component />
+    <dashboardchart-component />
       
   </v-container>
 </template>
@@ -43,13 +49,17 @@ data: function(){
     return{
         id: this.$route.params.id,
         project: {},
-        regions: {}
+        regions: {},
+        levels: {},
+        subjects: {}
     }
     console.log(id);
 },
 created(){
     this.fetchSingleProject();
     this.fetchProjectRegions();
+    this.fetchProjectLevels();
+    this.fetchProjectSubjects();
 },
 methods: {
     fetchSingleProject: function(id) {
@@ -62,6 +72,18 @@ methods: {
           console.log(id);
           axios.get("/inst/fetch-project-regions/" + this.id).then(res => {
             this.regions = res.data.regions;
+          })
+    },
+    fetchProjectLevels: function(id) {
+          console.log(id);
+          axios.get("/inst/fetch-project-levels/" + this.id).then(res => {
+            this.levels = res.data.levels;
+          })
+    },
+    fetchProjectSubjects: function(id) {
+          console.log(id);
+          axios.get("/inst/fetch-project-subjects/" + this.id).then(res => {
+            this.subjects = res.data.subjects;
           })
     },
     formattedDate(value, timezone){

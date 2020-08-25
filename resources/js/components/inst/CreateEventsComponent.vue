@@ -22,6 +22,7 @@
               <v-col cols="12" sm="12" md="8">
                 <v-text-field 
                     label="Event Title" 
+                    outlined
                     prepend-icon="mdi-subtitles-outline"
                     v-model="title" 
                     :rules="titleRules" 
@@ -46,6 +47,7 @@
                     <v-text-field
                         v-model="date"
                         label="Date"
+                        outlined
                         prepend-icon="mdi-calendar-month-outline"
                         readonly
                         v-bind="attrs"
@@ -68,6 +70,7 @@
                     v-model="timezone"
                     :items="['0-17', '18-29', '30-54', '54+']"
                     label="Timezone"
+                    outlined
                     :rules="timezoneRules" 
                     prepend-icon="mdi-map-marker-radius-outline"
                     hint="What is your timezone?"
@@ -105,6 +108,7 @@
                     <v-text-field
                         v-model="time"
                         label="Start Time"
+                        outlined
                         prepend-icon="mdi-clock-outline"
                         readonly
                         v-bind="attrs"
@@ -140,6 +144,7 @@
                     <v-text-field
                         v-model="time2"
                         label="End Time"
+                        outlined
                         prepend-icon="mdi-clock-outline"
                         readonly
                         v-bind="attrs"
@@ -168,6 +173,7 @@
                     item-text="region"
                     item-value='id'
                     label="Regions"
+                    outlined
                     :rules="regionRules" 
                     multiple
                     chips
@@ -188,6 +194,7 @@
                     item-text="level"
                     item-value="id"
                     label="Levels"
+                    outlined
                     :rules="levelRules" 
                     multiple
                     chips
@@ -208,6 +215,7 @@
                     item-text="subject"
                     item-value="id"
                     label="Subject Areas"
+                    outlined
                     :rules="subjectRules" 
                     multiple
                     chips
@@ -226,6 +234,8 @@
                     v-model="description"
                     counter
                     label="Event Description"
+                    outlined
+                    rows="10"
                     prepend-icon="mdi-pencil-outline"
                     :rules="textareaRules"
                     :error="allerror.description"
@@ -239,6 +249,7 @@
                     v-model="files"
                     accept="image/*" 
                     label="Event Image"
+                    outlined
                     placeholder="Pick an image"
                     prepend-icon="mdi-camera-outline"
                     :rules="imageRules"

@@ -29,6 +29,8 @@ Vue.use(Vuetify);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-component', require('./components/inst/parts/NavbarComponent.vue').default);
 Vue.component('dashboardmenu-component', require('./components/inst/parts/DashboardMenuComponent.vue').default);
+Vue.component('dashboardsummary-component', require('./components/inst/parts/DashboardSummaryComponent.vue').default);
+Vue.component('dashboardchart-component', require('./components/inst/parts/DashboardChartComponent.vue').default);
 //テスト
 
 

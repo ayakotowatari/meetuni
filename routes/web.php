@@ -59,12 +59,16 @@ Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
 
 Route::get('/inst/fetch-project-regions/{id}', 'RegionsController@fetchProjectRegions');
 
+Route::get('/inst/fetch-project-levels/{id}', 'LevelsController@fetchProjectLevels');
+
+Route::get('/inst/fetch-project-subjects/{id}', 'SubjectsController@fetchProjectSubjects');
+
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');
 // Route::get ('/inst/image/get', 'ImagesController@displayImage')-> name('inst.show');
 // Route::get ('/inst/create-event', 'ImagesController@testshow')-> name('inst.show');
-Route::post('inst/region', 'RegionsController@test');
+// Route::post('inst/region', 'RegionsController@test');
 //テスト終わる
 
 // Vue
