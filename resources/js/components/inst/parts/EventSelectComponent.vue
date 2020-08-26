@@ -76,6 +76,7 @@
                 block 
                 color="primary" 
                 class="mx-0" 
+                :loading="loading"
                 @click="submit"
                 >Save
                 </v-btn>
@@ -114,6 +115,13 @@ export default {
         },
        
         submit(){
+
+            if(this.$refs.form.validate()){
+                this.loading = true;
+
+                axios
+                .post()
+            }
             this.$emit('basicsAdded')
         }
     }

@@ -34,7 +34,7 @@ class LoginController extends Controller
             return '/home';//viewsでreturnはできない。errorとなる。
         }
         if($type === 5){
-            return'/inst/projects';
+            return'/inst/events';
         }
         if($type === 9){
             return '/student';

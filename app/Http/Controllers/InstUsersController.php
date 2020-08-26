@@ -85,7 +85,7 @@ class InstUsersController extends Controller
                     ->join('regions', 'regions.id', '=', 'event_regions.region_id')
                     ->join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where([['events.id', $event_id], ['events.inst_user_id', $user_id]])
-                    ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'statuses.status', 'regions.region')
+                    ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'events.end_utc', 'statuses.status', 'regions.region')
                     ->first();
 
         return response()->json(['event' => $event],200);

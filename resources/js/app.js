@@ -31,6 +31,7 @@ Vue.component('navbar-component', require('./components/inst/parts/NavbarCompone
 Vue.component('dashboardmenu-component', require('./components/inst/parts/DashboardMenuComponent.vue').default);
 Vue.component('dashboardsummary-component', require('./components/inst/parts/DashboardSummaryComponent.vue').default);
 Vue.component('dashboardchart-component', require('./components/inst/parts/DashboardChartComponent.vue').default);
+Vue.component('eventheader-component', require('./components/inst/parts/EventHeaderComponent.vue').default);
 Vue.component('eventbasics-component', require('./components/inst/parts/EventBasicsComponent.vue').default);
 Vue.component('eventselect-component', require('./components/inst/parts/EventSelectComponent.vue').default);
 Vue.component('eventfile-component', require('./components/inst/parts/EventFileComponent.vue').default);

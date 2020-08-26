@@ -66,16 +66,6 @@
                     :error="allerror.timezone"
                     :error-messages="allerror.timezone"
                 ></v-select>
-                    <!-- <v-select
-                        v-model="timezone"
-                        :items="['0-17', '18-29', '30-54', '54+']"
-                        label="Timezone"
-                        :rules="timezoneRules" 
-                        chips
-                        prepend-icon="mdi-map-marker-radius-outline"
-                        hint="What is your timezone?"
-                        persistent-hint
-                    ></v-select> -->
             </v-col>
         </v-row>
         <v-row justify="center">
@@ -161,6 +151,7 @@
                 color="primary" 
                 class="mx-0" 
                 @click="submit"
+                :loading="loading"
                 >Save
                 </v-btn>
             </v-col>
@@ -174,6 +165,7 @@ import moment from 'moment'
 export default {
     data: () => ({
         valid: true,
+        loading: false,
         title: '',
         titleRules: [
         v => !!v || 'Event title is required',
@@ -204,7 +196,32 @@ export default {
         allowedSteps: m => m % 10 === 0,
         
         submit(){
-            this.$emit('basicsAdded')
+            if(this.$refs.form.validate()){
+                this.loading = true;
+
+                axios
+                .post("/inst/create-event/basis/store", {
+                    title: this.title,
+                    date: this.date,
+                    timezone: this.timezone,
+                    start_time: this.time,
+                    end_time: this.time2
+                })
+                .then(response => {
+                    this.loading = false;
+                    this.$emit('basicsAdded')
+                    this.title='';
+                    this.date='';
+                    this.timezone='';
+                    this.time='';
+                    this.time2='';
+                })
+                .catch(error => 
+                    this.allerror = error.response.data.errors
+                )
+
+            }
+            
         }
     }
 }

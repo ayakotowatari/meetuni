@@ -5,10 +5,12 @@ Vue.use(VueRouter);
  
 import Home from "./components/HomeComponent";
 // import ExampleComponent from "./components/ExampleComponent";
-import Projects from "./components/inst/ProjectsComponent";
+import Events from "./components/inst/EventsComponent";
 import CreateEvents from "./components/inst/CreateEventsComponent";
 import Drafts from "./components/inst/DraftsComponent";
 import Dashboard from "./components/inst/DashboardComponent";
+import ManageParticipants from "./components/inst/ManageParticipantsComponent";
+import ParticipantStatistics from "./components/inst/ParticipantStatisticsComponent";
 import InstProfile from "./components/inst/InstProfileComponent";
 
 //テスト
@@ -26,8 +28,13 @@ const routes = [
     },
     {
         path: "/inst/events",
-        name: "projects",
-        component: Projects
+        name: "events",
+        component: Events
+    },
+    {
+        path: "/inst/create-events",
+        name: "create-events",
+        component: CreateEvents
     },
     {
         path: "/inst/event/dashboard/:id",
@@ -35,9 +42,14 @@ const routes = [
         component: Dashboard
     },
     {
-        path: "/inst/create-events",
-        name: "create-events",
-        component: CreateEvents
+        path: "/inst/event/manage-participants/:id",
+        name: "manage-participants",
+        component: ManageParticipants
+    },
+    {
+        path: "/inst/event/participant-statistics/:id",
+        name: "participant-statistics",
+        component: ParticipantStatistics
     },
     {
         path: "/inst/drafts",

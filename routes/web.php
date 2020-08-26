@@ -65,6 +65,8 @@ Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubj
 
 Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 
+// Create event
+
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');

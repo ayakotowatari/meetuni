@@ -128,7 +128,7 @@ trait OtherRegistersUsers
 
         // view'dashboard'で、{{ $user->first_name }}で大学ユーザーの名前を,{{ $inst->inst_name }}で大学名を呼び出し
         // return redirect('inst/projects', ['user'=>$user, 'inst'=>$inst]);
-        return redirect('inst/projects');
+        return redirect('inst/events');
     }
 
     protected function studentRegistered(Request $request, $user)
