@@ -37,9 +37,9 @@
 <script>
 // import EventHeader from './parts/EventHeaderComponent'
 import moment from 'moment-timezone'
-import DashboardMenu from './parts/DashboardMenuComponent'
-import DashboardSummary from './parts/DashboardSummaryComponent'
-import DashboardChart from './parts/DashboardChartComponent'
+import DashboardMenu from './DashboardMenuComponent'
+import DashboardSummary from './DashboardSummaryComponent'
+import DashboardChart from './DashboardChartComponent'
 
 export default {
 components: {

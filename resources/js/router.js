@@ -5,13 +5,13 @@ Vue.use(VueRouter);
  
 import Home from "./components/HomeComponent";
 // import ExampleComponent from "./components/ExampleComponent";
-import Events from "./components/inst/EventsComponent";
-import CreateEvents from "./components/inst/CreateEventsComponent";
-import Drafts from "./components/inst/DraftsComponent";
-import Dashboard from "./components/inst/DashboardComponent";
-import ManageParticipants from "./components/inst/ManageParticipantsComponent";
-import ParticipantStatistics from "./components/inst/ParticipantStatisticsComponent";
-import InstProfile from "./components/inst/InstProfileComponent";
+import Events from "./components/inst/events/EventsComponent";
+import CreateEvents from "./components/inst/events/create/CreateEventsComponent";
+import EditEvents from "./components/inst/events/edit/EditEventsComponent";
+import Dashboard from "./components/inst/dashboard/DashboardComponent";
+import ManageParticipants from "./components/inst/participants/ManageParticipantsComponent";
+import ParticipantStatistics from "./components/inst/participants/ParticipantStatisticsComponent";
+import InstProfile from "./components/inst/profile/InstProfileComponent";
 
 //テスト
 // import Test from "./components/inst/TestComponent"
@@ -52,9 +52,9 @@ const routes = [
         component: ParticipantStatistics
     },
     {
-        path: "/inst/drafts",
-        name: "drafts",
-        component: Drafts
+        path: "/inst/event/edit",
+        name: "edit-events",
+        component: EditEvents
     },
     {
         path: "/inst/profile",

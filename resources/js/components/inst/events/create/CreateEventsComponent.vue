@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import EventBasics from './parts/EventBasicsComponent'
-import EventSelect from './parts/EventSelectComponent'
-import EventFile from './parts/EventFileComponent'
+import EventBasics from './EventBasicsComponent'
+import EventSelect from './EventSelectComponent'
+import EventFile from './EventFileComponent'
 
 export default {
   components: { 

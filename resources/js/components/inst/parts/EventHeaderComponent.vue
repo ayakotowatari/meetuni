@@ -31,7 +31,7 @@
 
 <script>
 import moment from 'moment-timezone'
-import DashboardMenu from './DashboardMenuComponent'
+import DashboardMenu from '../dashboard/DashboardMenuComponent'
 
 export default {
     components: { DashboardMenu },

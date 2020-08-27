@@ -28,14 +28,14 @@
         </v-col>    
     </v-row>
 
-    <h1 class="grey--text mb-6">Participant Statistics</h1>
+    <h1 class="grey--text mb-6">Manage Participants</h1>
   </v-container>
 </template>
 
 <script>
 // import EventHeader from './parts/EventHeaderComponent'
 import moment from 'moment-timezone'
-import DashboardMenu from './parts/DashboardMenuComponent'
+import DashboardMenu from '../dashboard/DashboardMenuComponent'
 
 export default {
 components: {
