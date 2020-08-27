@@ -1,11 +1,6 @@
 <template>
   <v-form class="mb-6" v-model="valid">
        <v-row justify="center">
-           <v-col cols="12" sm="12" md="8">
-               <h2 class="grey--text text--darken-1">Step 1</h2>
-           </v-col>
-       </v-row>
-       <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
                 <v-text-field 
                     label="Event Title" 
@@ -20,7 +15,7 @@
             </v-col>
         </v-row>
         <v-row justify="center">
-            <v-col cols="12" sm="12" md="4">
+            <v-col cols="12" sm="12" md="8">
                 <v-menu
                     ref="menu"
                     v-model="menu"
@@ -52,7 +47,9 @@
                     </v-date-picker>
                 </v-menu>
             </v-col>
-            <v-col cols="12" sm="12" md="4">
+        </v-row>
+        <v-row justify="center" class="mb-7">
+            <v-col cols="12" sm="12" md="8">
                 <v-select
                     v-model="timezone"
                     :items="['0-17', '18-29', '30-54', '54+']"
@@ -66,6 +63,10 @@
                     :error="allerror.timezone"
                     :error-messages="allerror.timezone"
                 ></v-select>
+                <div class="selected">
+                    <span>Currently selected: </span>
+                    <v-chip class="ma-2">{{ timezone }}</v-chip>
+                </div>
             </v-col>
         </v-row>
         <v-row justify="center">
@@ -163,29 +164,35 @@
 import moment from 'moment'
 
 export default {
+    props: {
+        id: Number,
+        title: String,
+        date: String,
+        timezone: String,
+        time: String,
+        time2: String,
+        levels: Array,
+        subjects: Array,
+        regions: Array,
+    },
     data: () => ({
         valid: true,
         loading: false,
-        title: '',
         titleRules: [
         v => !!v || 'Event title is required',
         ],
-        date: null,
         dateRules: [
         v => !!v || 'Date is required',
         ],
-        timezone: '',
         timezoneRules: [
         v => !!v || 'Timezone is required',
         ],
         menu: false,
-        time: null,
         menu2: false,
         timeRules: [
         v => !!v || 'Time is required',
         ],
         menu3: false,
-        time2: null,
         allerror: []
     }),
     methods: {
@@ -212,7 +219,8 @@ export default {
                 this.loading = true;
 
                 axios
-                .post("/inst/create-basics", {
+                .post("/inst/update-basics", {
+                    id: this.id,
                     title: this.title,
                     date: this.date,
                     timezone: this.timezone,
@@ -221,12 +229,7 @@ export default {
                 })
                 .then(response => {
                     this.loading = false;
-                    this.$emit('basicsAdded');
-                    this.title='';
-                    this.date='';
-                    this.timezone='';
-                    this.time='';
-                    this.time2=''
+                    // this.$emit('basicsAdded');
                 })
                 .catch(error => 
                     this.allerror = error.response.data.errors
@@ -238,5 +241,7 @@ export default {
 </script>
 
 <style>
-
+.selected{
+    margin-left: 36px;
+}
 </style>

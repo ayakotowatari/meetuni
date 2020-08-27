@@ -35,7 +35,7 @@ Vue.component('eventheader-component', require('./components/inst/parts/EventHea
 Vue.component('eventbasics-component', require('./components/inst/events/create/EventBasicsComponent.vue').default);
 Vue.component('eventselect-component', require('./components/inst/events/create/EventSelectComponent.vue').default);
 Vue.component('eventfile-component', require('./components/inst/events/create/EventFileComponent.vue').default);
-
+Vue.component('editeventbasics-component', require('./components/inst/events/edit/EditEventBasicsComponent.vue').default);
 //テスト
 
 

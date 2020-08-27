@@ -87,10 +87,10 @@ export default {
             let config = {headers: {'Content-Type': 'multipart/form-data'}};
             
             axios
-                .post("/inst/enter-file", data, config)
+                .post("/inst/create-file", data, config)
                 .then(response => {
                     this.loading = false;
-                    this.snackbar = true;
+                    this.$emit('eventAdded');
                     this.description='';
                     this.files='';
                 })

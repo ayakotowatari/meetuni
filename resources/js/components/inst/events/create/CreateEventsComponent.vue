@@ -1,7 +1,7 @@
 <template>
 <div>
-  <v-snackbar v-model="snackbar" :timeout="4000" bottom color="info">
-          <span>A new project has been added.</span>
+  <v-snackbar v-model="snackbar" :timeout="4000" bottom>
+          <span>A new event has been added.</span>
           <template v-slot:action="{ attrs }">
               <v-btn 
                 depressed 
@@ -26,7 +26,9 @@
         ></eventselect-component>
       </v-form>
       <v-form class="mb-6" :disabled="hide" v-model="valid">
-        <eventfile-component></eventfile-component>
+        <eventfile-component
+          @eventAdded = "snackbar = true"
+        ></eventfile-component>
       </v-form>
   </v-container>
 </div>

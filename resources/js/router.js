@@ -37,6 +37,11 @@ const routes = [
         component: CreateEvents
     },
     {
+        path: "/inst/event/edit/:id",
+        name: "edit-events",
+        component: EditEvents
+    },
+    {
         path: "/inst/event/dashboard/:id",
         name: "dashboard",
         component: Dashboard
@@ -50,11 +55,6 @@ const routes = [
         path: "/inst/event/participant-statistics/:id",
         name: "participant-statistics",
         component: ParticipantStatistics
-    },
-    {
-        path: "/inst/event/edit",
-        name: "edit-events",
-        component: EditEvents
     },
     {
         path: "/inst/profile",

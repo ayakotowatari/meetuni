@@ -128,7 +128,7 @@ export default {
                 this.loading = true;
 
                 axios
-                .post("/inst/enter-selects", {
+                .post("/inst/create-selects", {
 
                     regions: this.selectedRegions,
                     levels: this.selectedLevels,

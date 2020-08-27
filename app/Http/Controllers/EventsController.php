@@ -178,6 +178,40 @@ class EventsController extends Controller
                     'image' => $filename 
                 ]);
     }
+    
+    public function updateBasics(Request $request){
+
+        $request->validate([
+            'id' => 'required',
+            'title' => 'required',
+            'date' => 'required',
+            'timezone' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required'
+        ]);
+
+        $id = request('id');
+        $title = request('title');
+        $date = request('date');
+        $timezone = request('timezone');
+        $start_time = request("start_time");
+        $end_time = request("end_time");
+        // UTCへの変換
+        $date_starttime = $date.' '.$start_time.':00';
+        $date_endtime = $date.' '.$end_time.':00';
+
+        $event = Event::find($id);
+
+        $event->title = $title;
+        $event->date = $date;
+        $event->timezone = $timezone;
+        $event->start_time = $start_time;
+        $event->end_time = $end_time;
+        $event->start_utc = $date_starttime;
+        $event->end_utc = $date_endtime;
+
+        $event -> save();
+    }
 
     /**
      * Display the specified resource.

@@ -1,198 +1,125 @@
 <template>
-<v-container>
-  <h1 class="subheading grey--text">Drafts</h1>
- <v-data-table
-    :headers="headers"
-    :items="events"
-    sort-by="calories"
-    class="elevation-1 mt-10"
-  >
-    <!-- <template v-slot:top> -->
-      <!-- <v-toolbar flat color="white"> -->
-        <!-- <v-toolbar-title>My CRUD</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        ></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-            >New Item</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
+  <v-container>
+    <v-row class="mb-8">
+      <v-col>
+        <div>{{ formattedDate(event.date, user.timezone) }}</div>
+        <div>
+          {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+          {{ formattedEndTime(event.end_utc, user.timezone) }}
+        </div>
+        <h2 class="grey--text text--darken-4">{{ event.title }}</h2> 
+       
+        <div class="text--primary">
+          <span>Targets:</span>
+          <span v-for="region in regions" :key="region.region" class="ml-3">{{ region.region }}</span>
+        </div>
+        <div class="text--primary">
+          <span>Levels:</span>
+          <span v-for="level in levels" :key="level.level" class="ml-3">{{ level.level }}</span>
+        </div>
+        <div class="text--primary">
+          <span>Subjects:</span>
+          <span v-for="subject in subjects" :key="subject.subject" class="ml-3">{{ subject.subject }}</span>
+        </div>
+      </v-col>
+    </v-row>
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar> -->
-    <!-- </template> -->
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <!-- <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
-    </template> -->
-  </v-data-table>
-
-
-</v-container>
+    <h1 class="grey--text mb-6">Edit Events</h1>
+    <v-container>
+      <editeventbasics-component
+        v-bind:id="id"
+        v-bind:event="event"
+        v-bind:title="title"
+        v-bind:date="date"
+        v-bind:timezone="timezone"
+        v-bind:time="time"
+        v-bind:time2="time2"
+        v-bind:regions="regions"
+        v-bind:levels="levels"
+        v-bind:subjects="subjects"
+      ></editeventbasics-component>
+      <v-divider></v-divider>
+    </v-container>    
+  </v-container>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      dialog: false,
-      headers: [
-        {
-          text: 'Event Title',
-          align: 'start',
-          sortable: false,
-          value: 'title',
-        },
-        { text: 'Date', value: 'date' },
-        { text: 'Target Region', value: 'region' },
-        { text: 'Status', value: 'status' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ],
-      events: [],
-      // editedIndex: -1,
-      // editedItem: {
-      //   name: '',
-      //   calories: 0,
-      //   fat: 0,
-      //   carbs: 0,
-      //   protein: 0,
-      // },
-      // defaultItem: {
-      //   name: '',
-      //   calories: 0,
-      //   fat: 0,
-      //   carbs: 0,
-      //   protein: 0,
-      // },
-    }),
+// import EventHeader from './parts/EventHeaderComponent'
+import moment from 'moment-timezone'
+import EditEventBasices from './EditEventBasicsComponent'
 
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
+export default {
+components: {
+    // EventHeader,
+},
+props: {
+    user: Object,
+},
+
+data: function(){
+    return{
+            id: this.$route.params.id,
+            event: {},
+            title: '',
+            date: '',
+            timezone: '',
+            time: '',
+            time2: '',
+            regions: [],
+            levels: [],
+            subjects: [],
+        }
+    console.log(id);
+},
+created(){
+     this.fetchSingleEvent();
+     this.fetchEventRegions();
+     this.fetchEventLevels();
+     this.fetchEventSubjects();
+},
+methods: {
+    fetchSingleEvent: function(id) {
+            console.log(id);
+            axios.get("/inst/fetch-single-event/" + this.id).then(res => {
+                this.event = res.data.event;
+                this.title = res.data.event.title;
+                this.timezone = res.data.event.timezone;
+                this.date = res.data.event.date;
+                this.time = res.data.event.start_time;
+                this.time2 = res.data.event.end_time
+            })
     },
-
-    created () {
-      this.initialize()
+    fetchEventRegions: function(id) {
+        console.log(id);
+        axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
+            this.regions = res.data.regions;
+        })
     },
-
-    methods: {
-      initialize () {
-        this.events= [
-          {
-            title: 'Information Session',
-            date: 'Tue, 29 JUL 2020',
-            region: 'Americas',
-            status: 'ongoing',
-          },
-          {
-            title: 'Information Session',
-            date: 'Tue, 29 JUL 2020',
-            region: 'Americas',
-            status: 'ongoing',
-          },
-          {
-            title: 'Information Session',
-            date: 'Tue, 29 JUL 2020',
-            region: 'Americas',
-            status: 'ongoing',
-          },
-         {
-            title: 'Information Session',
-            date: 'Tue, 29 JUL 2020',
-            region: 'Americas',
-            status: 'ongoing',
-          },
-          {
-            title: 'Information Session',
-            date: 'Tue, 29 JUL 2020',
-            region: 'Americas',
-            status: 'ongoing',
-          },
-        ]
-      },
-
-      // editItem (item) {
-      //   this.editedIndex = this.desserts.indexOf(item)
-      //   this.editedItem = Object.assign({}, item)
-      //   this.dialog = true
-      // },
-
-      // deleteItem (item) {
-      //   const index = this.desserts.indexOf(item)
-      //   confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      // },
-
-      // close () {
-      //   this.dialog = false
-      //   this.$nextTick(() => {
-      //     this.editedItem = Object.assign({}, this.defaultItem)
-      //     this.editedIndex = -1
-      //   })
-      // },
-
-      // save () {
-      //   if (this.editedIndex > -1) {
-      //     Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      //   } else {
-      //     this.desserts.push(this.editedItem)
-      //   }
-      //   this.close()
-      // },
+    fetchEventLevels: function(id) {
+        console.log(id);
+        axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
+            this.levels = res.data.levels;
+        })
     },
-  }
+    fetchEventSubjects: function(id) {
+        console.log(id);
+        axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
+            this.subjects = res.data.subjects;
+        })
+    },
+    formattedDate(value, timezone){
+        return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
+    },
+    formattedStartTime(value, timezone){
+        return moment.utc(value).local().tz(timezone).format("h:mm a")
+    },
+    formattedEndTime(value, timezone){
+        return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
+    }
+}
+}
 </script>
+
+<style>
+
+</style>

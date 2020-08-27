@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="subheading grey--text">My Projects</h1>
+    <h1 class="subheading grey--text">My Events</h1>
       <v-row>
         <v-col cols="12" sm="4" offset-sm="8">
           <v-text-field
@@ -114,7 +114,7 @@ import moment from 'moment';
       },
       toEditEvent(id){
         console.log(id); 
-        this.$router.push({name: 'edit-event', params: {id: id}})
+        this.$router.push({name: 'edit-events', params: {id: id}})
       },
       // formattedDate(value){
       //   return moment(value).format('ddd, MMM Do YYYY');
