@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-snackbar v-model="snackbar" :timeout="4000" color="info">
+  <v-snackbar v-model="snackbar" :timeout="4000" bottom color="info">
           <span>A new project has been added.</span>
           <template v-slot:action="{ attrs }">
               <v-btn 
@@ -17,15 +17,15 @@
   <h1 class="grey--text">Create Events</h1>
   <v-container>
       <eventbasics-component @basicsAdded = "hide = false"></eventbasics-component>
-      <v-form class="mb-6" :disabled="hide">
+      <v-form class="mb-6" :disabled="hide" v-model="valid">
         <eventselect-component 
           v-bind:regions="regions"
           v-bind:levels="levels"
           v-bind:subjects="subjects"
-          @basicsAdded = "hide = false"
+          @selectsAdded = "hide = false"
         ></eventselect-component>
       </v-form>
-      <v-form class="mb-6" :disabled="hide">
+      <v-form class="mb-6" :disabled="hide" v-model="valid">
         <eventfile-component></eventfile-component>
       </v-form>
   </v-container>

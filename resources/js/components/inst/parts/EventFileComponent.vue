@@ -66,12 +66,44 @@ export default {
     }),
     methods: {
         validate(){
-        this.$refs.form.validate()
+            if(
+                this.description != '' && 
+                this.files != '' 
+            )
+            {
+                return true
+            }else{
+                return false
+            }
         },
-    },
-    submit(){
+        submit(){
+            if(this.valid=true){
+            this.loading = true;
 
-    }
+            let data = new FormData();
+            data.append("description", this.description);
+            data.append("image", this.files);
+
+            let config = {headers: {'Content-Type': 'multipart/form-data'}};
+            
+            axios
+                .post("/inst/enter-file", data, config)
+                .then(response => {
+                    this.loading = false;
+                    this.snackbar = true;
+                    this.description='';
+                    this.files='';
+                })
+                // .catch(error => 
+                //     this.allerror = error.response.data.errors
+                // );
+                .catch(error => 
+                        this.allerror = error.response.data.errors
+                    )
+            }
+        }
+    },
+    
 }
 </script>
 

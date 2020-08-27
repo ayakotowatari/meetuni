@@ -41,7 +41,7 @@ class EventsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeBasics(Request $request)
     {
         $user_id = Auth::user()->id;
         $inst = InstUser::join('insts', 'inst_users.inst_id', 'insts.id')
@@ -50,36 +50,13 @@ class EventsController extends Controller
                 ->first();
 
         $request->validate([
-                'title' => 'required | max:191',
-                'date' => 'required',
-                'timezone' => 'required',
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'regions' => 'required',
-                'levels' => 'required',
-                "subjects" => 'required',
-                'description' => 'required | max:300',
-                'image' => 'required | image | max:5000'
+            'title' => 'required | max:191',
+            'date' => 'required',
+            'timezone' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
         ]);
 
-        $image = $request->file('image');
-        $disk = Storage::disk('local');
-        // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
-        // $disk = Storage::disk('s3');
-
-        $path = $disk->put('public', $image);
-        $filename = ltrim($path, 'public/');
-
-        // if($image){
-            
-        //     $file_name = time().'.'.$request->file->getClientOriginalName();
-
-        //     //putAsは自分で名前を決められる
-        //     //（第一引数：保存場所、第二引数：画像ファイル、第三引数：ファイル名）
-        //     $path = $disk->putFileAs('image', $image, $file_name);
-        // }
-
-        //store event
         $event = new Event();
         
         $event->title = request('title');
@@ -92,27 +69,42 @@ class EventsController extends Controller
         $end_time = request("end_time");
         $event->end_time = $end_time;
 
-        // $event->start_utc = '2020-10-20 10:00:00';
-       
+        // UTCへの変換
         $date_starttime = $date.' '.$start_time.':00';
         $event->start_utc = $date_starttime;
        
         $date_endtime = $date.' '.$end_time.':00';
         $event->end_utc = $date_endtime;
         
-        // $event->end_utc = '2020-10-20 11:00:00';
-
-        $event->description = request('description');
-
-        $event->image = $filename; 
+        $event->description = Null;
+        $event->image = Null;
 
         $event->capacity_id = 1;
         $event->status_id = 3;
         $event->inst_user_id = $user_id;
 
         $event->save();
+    }
 
-        //event_idの取得
+    public function storeSelects(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $event = Event::latest('created_at')
+                ->where('events.inst_user_id', $user_id)
+                ->first();
+        
+        $request->validate([
+            'regions' => 'required',
+            'levels' => 'required',
+            'subjects' => 'required',
+        ]);
+
+        // $update = [
+        //     'title' => $request->title,
+        //     'details' => $request->details
+        // ];
+        // Test::where('id', $id)->update($update);
+
         $event_id = $event->id;
 
         $regions = request("regions");
@@ -144,7 +136,47 @@ class EventsController extends Controller
             $event_subject->subject_id = $subject;
             $event_subject->save();
         }
+    }
 
+    public function storeFile(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $event = Event::latest('created_at')
+                ->where('events.inst_user_id', $user_id)
+                ->first();
+        $event_id = $event->id;
+
+        $request->validate([
+                'description' => 'required | max:600',
+                'image' => 'required | image | max:5000'
+        ]);
+
+        $description = request('description');
+
+        $image = $request->file('image');
+        $disk = Storage::disk('local');
+        // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
+        // $disk = Storage::disk('s3');
+
+        $path = $disk->put('public', $image);
+        $filename = ltrim($path, 'public/');
+
+        // if($image){
+            
+        //     $file_name = time().'.'.$request->file->getClientOriginalName();
+
+        //     //putAsは自分で名前を決められる
+        //     //（第一引数：保存場所、第二引数：画像ファイル、第三引数：ファイル名）
+        //     $path = $disk->putFileAs('image', $image, $file_name);
+        // }
+
+        //update event
+
+        Event::where('events.id', $event_id)
+                ->update([ 
+                    'description' => $description, 
+                    'image' => $filename 
+                ]);
     }
 
     /**

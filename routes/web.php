@@ -49,8 +49,6 @@ Route::get('/inst/fetch-events', 'InstUsersController@fetchEvents');
 
 Route::get('/inst/fetch-single-event/{id}', 'InstUsersController@fetchSingleEvent');
 
-Route::post('/inst/create-events/store', 'EventsController@store');
-
 Route::get('/inst/fetch-levels', 'LevelsController@fetchLevels');
 
 Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
@@ -66,6 +64,11 @@ Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubj
 Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 
 // Create event
+Route::post('/inst/enter-basics', 'EventsController@storeBasics');
+
+Route::post('/inst/enter-selects', 'EventsController@storeSelects');
+
+Route::post('/inst/enter-file', 'EventsController@storeFile');
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');

@@ -111,21 +111,42 @@ export default {
     }),
     methods: {
         validate(){
-        this.$refs.form.validate()
+            if(
+                this.regions != '' && 
+                this.levels != '' && 
+                this.subjects != '' 
+            ){
+                return true
+            }else{
+                return false
+            }
         },
        
         submit(){
 
-            if(this.$refs.form.validate()){
+            if(this.valid=true){
                 this.loading = true;
 
                 axios
-                .post()
+                .post("/inst/enter-selects", {
+
+                    regions: this.selectedRegions,
+                    levels: this.selectedLevels,
+                    subjects: this.selectedSubjects
+                })
+                 .then(response => {
+                    this.loading = false;
+                    this.$emit('selectsAdded');
+                    this.regions='';
+                    this.levels='';
+                    this.subjects='';
+                })
+                .catch(error => 
+                    this.allerror = error.response.data.errors
+                )
             }
-            this.$emit('basicsAdded')
         }
     }
-
 }
 </script>
 
