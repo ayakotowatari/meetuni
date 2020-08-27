@@ -1,5 +1,18 @@
 <template>
   <div>
+        <v-row justify="center">
+            <v-dialog v-model="dialog" persistent max-width="420">
+            <v-card>
+                <v-card-title class="headline">You added a new project.</v-card-title>
+                <v-card-text>Now it's time to publish your event informatoin to reach students.</v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="info darken-2" text @click="toDraft(event.id)">Go to Draft</v-btn>
+                <v-btn color="info darken-2" text @click="toMyEvents">Back to My Events</v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-dialog>
+        </v-row>
        <v-row justify="center">
           <v-col cols="12" sm="12" md="8">
                <h2 class="grey--text text--darken-1">Step 3</h2>
@@ -54,6 +67,8 @@
 <script>
 export default {
     data: () => ({
+        id: '',
+        dialog: false,
         valid: true,
         loading: false,
         description: '',
@@ -90,7 +105,9 @@ export default {
                 .post("/inst/create-file", data, config)
                 .then(response => {
                     this.loading = false;
-                    this.$emit('eventAdded');
+                    // this.$emit('redirect');
+                    this.event = response.data.event;
+                    this.dialog = true;
                     this.description='';
                     this.files='';
                 })
@@ -101,6 +118,12 @@ export default {
                         this.allerror = error.response.data.errors
                     )
             }
+        },
+        toDraft(id){
+            this.$router.push({name: 'edit-events', params: {id: id}})
+        },
+        toMyEvents(){
+            this.$router.push({name: 'events'})
         }
     },
     

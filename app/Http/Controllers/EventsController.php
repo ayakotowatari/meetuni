@@ -177,6 +177,12 @@ class EventsController extends Controller
                     'description' => $description, 
                     'image' => $filename 
                 ]);
+
+        $event = Event::where('id', $event_id)
+                    ->select('id')
+                    ->first();
+
+        return response()->json(['event' => $event],200);
     }
     
     public function updateBasics(Request $request){

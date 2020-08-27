@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-snackbar v-model="snackbar" :timeout="4000" bottom>
+  <!-- <v-snackbar v-model="snackbar" :timeout="4000" bottom>
           <span>A new event has been added.</span>
           <template v-slot:action="{ attrs }">
               <v-btn 
@@ -12,7 +12,7 @@
               >Close
               </v-btn>
           </template>
-  </v-snackbar>
+  </v-snackbar> -->
 
   <h1 class="grey--text">Create Events</h1>
   <v-container>
@@ -27,7 +27,7 @@
       </v-form>
       <v-form class="mb-6" :disabled="hide" v-model="valid">
         <eventfile-component
-          @eventAdded = "snackbar = true"
+          @eventAdded = "dialog = true"
         ></eventfile-component>
       </v-form>
   </v-container>
@@ -55,7 +55,8 @@ export default {
     loading: false,
     hide: true,
     allerror: [],
-    snackbar: false
+    dialog: true
+    // snackbar: false
   }),
   methods: {
     validate(){

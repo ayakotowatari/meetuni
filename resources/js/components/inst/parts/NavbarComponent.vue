@@ -22,6 +22,7 @@
      <v-navigation-drawer
       v-model="drawer"
       app
+      hide-overlay
     >
       <v-row>
         <v-col cols="12" align="center" class="mt-5">
