@@ -18,7 +18,7 @@ class LevelsController extends Controller
 
     public function fetchEventLevels(Request $request, $id)
     {
-        $levels = Event::join('event_levels', 'events.id', '=', 'event_levels.event_id')
+        $eventLevels = Event::join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->join('levels', 'event_levels.level_id', '=', 'levels.id')
                     ->where('events.id', $id)
                     ->select('levels.level')
@@ -28,6 +28,6 @@ class LevelsController extends Controller
         //             ->where('events.id', $id)
         //             ->get();
 
-        return response()->json(['levels'=>$levels],200);
+        return response()->json(['eventLevels'=>$eventLevels],200);
     }
 }

@@ -40,38 +40,29 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
-
 Route::get('/inst/fetch-inst','InstUsersController@fetchInst');
-
 Route::get('/inst/fetch-initials','InstUsersController@fetchInitials');
-
 Route::get('/inst/fetch-events', 'InstUsersController@fetchEvents');
-
 Route::get('/inst/fetch-single-event/{id}', 'InstUsersController@fetchSingleEvent');
-
 Route::get('/inst/fetch-levels', 'LevelsController@fetchLevels');
-
 Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
-
 Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
-
 Route::get('/inst/fetch-event-regions/{id}', 'RegionsController@fetchEventRegions');
-
 Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels');
-
 Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects');
 
-Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
+// Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 
 // Create event
 Route::post('/inst/create-basics', 'EventsController@storeBasics');
-
 Route::post('/inst/create-selects', 'EventsController@storeSelects');
-
 Route::post('/inst/create-file', 'EventsController@storeFile');
 
 // Edit event
 Route::post('inst/update-basics', 'EventsController@updateBasics');
+Route::post('inst/update-regions', 'EventsController@updateRegions');
+Route::post('inst/update-levels', 'EventsController@updateLevels');
+Route::post('inst/update-subjects', 'EventsController@updateSubjects');
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');

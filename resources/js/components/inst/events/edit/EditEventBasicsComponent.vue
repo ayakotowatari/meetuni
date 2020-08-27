@@ -171,9 +171,6 @@ export default {
         timezone: String,
         time: String,
         time2: String,
-        levels: Array,
-        subjects: Array,
-        regions: Array,
     },
     data: () => ({
         valid: true,

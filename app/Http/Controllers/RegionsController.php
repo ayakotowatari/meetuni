@@ -31,7 +31,7 @@ class RegionsController extends Controller
 
     public function fetchEventRegions(Request $request, $id)
     {
-        $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        $eventRegions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('regions', 'event_regions.region_id', '=', 'regions.id')
                     ->where('events.id', $id)
                     ->select('regions.region')
@@ -41,7 +41,7 @@ class RegionsController extends Controller
         //             ->where('events.id', $id)
         //             ->get();
 
-        return response()->json(['regions'=>$regions],200);
+        return response()->json(['eventRegions'=>$eventRegions],200);
     }
     
     //テスト

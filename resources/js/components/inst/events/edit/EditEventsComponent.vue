@@ -11,15 +11,15 @@
        
         <div class="text--primary">
           <span>Targets:</span>
-          <span v-for="region in regions" :key="region.region" class="ml-3">{{ region.region }}</span>
+          <span v-for="eventRegion in eventRegions" :key="eventRegion.region" class="ml-3">{{ eventRegion.region }}</span>
         </div>
         <div class="text--primary">
           <span>Levels:</span>
-          <span v-for="level in levels" :key="level.level" class="ml-3">{{ level.level }}</span>
+          <span v-for="eventLevel in eventLevels" :key="eventLevel.level" class="ml-3">{{ eventLevel.level }}</span>
         </div>
         <div class="text--primary">
           <span>Subjects:</span>
-          <span v-for="subject in subjects" :key="subject.subject" class="ml-3">{{ subject.subject }}</span>
+          <span v-for="eventSubject in eventSubjects" :key="eventSubject.subject" class="ml-3">{{ eventSubject.subject }}</span>
         </div>
       </v-col>
     </v-row>
@@ -34,10 +34,22 @@
         v-bind:timezone="timezone"
         v-bind:time="time"
         v-bind:time2="time2"
+        class="mb-10"
+      ></editeventbasics-component>
+
+      <v-divider></v-divider>
+
+      <editeventselect-component
+        v-bind:id="id"
+        v-bind:eventRegions="eventRegions"
+        v-bind:eventLevels="eventLevels"
+        v-bind:eventSubjects="eventSubjects"
         v-bind:regions="regions"
         v-bind:levels="levels"
         v-bind:subjects="subjects"
-      ></editeventbasics-component>
+        class="my-10"
+      ></editeventselect-component>
+
       <v-divider></v-divider>
     </v-container>    
   </v-container>
@@ -46,14 +58,19 @@
 <script>
 // import EventHeader from './parts/EventHeaderComponent'
 import moment from 'moment-timezone'
-import EditEventBasices from './EditEventBasicsComponent'
+import EditEventBasics from './EditEventBasicsComponent'
+import EditEventSelect from './EditEventSelectComponent'
 
 export default {
 components: {
-    // EventHeader,
+    EditEventBasics,
+    EditEventSelect
 },
 props: {
     user: Object,
+    regions: Array,
+    levels: Array,
+    subjects: Array
 },
 
 data: function(){
@@ -65,9 +82,9 @@ data: function(){
             timezone: '',
             time: '',
             time2: '',
-            regions: [],
-            levels: [],
-            subjects: [],
+            eventRegions: [],
+            eventLevels: [],
+            eventSubjects: [],
         }
     console.log(id);
 },
@@ -92,19 +109,19 @@ methods: {
     fetchEventRegions: function(id) {
         console.log(id);
         axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
-            this.regions = res.data.regions;
+            this.eventRegions = res.data.eventRegions;
         })
     },
     fetchEventLevels: function(id) {
         console.log(id);
         axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
-            this.levels = res.data.levels;
+            this.eventLevels = res.data.eventLevels;
         })
     },
     fetchEventSubjects: function(id) {
         console.log(id);
         axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
-            this.subjects = res.data.subjects;
+            this.eventSubjects = res.data.eventSubjects;
         })
     },
     formattedDate(value, timezone){

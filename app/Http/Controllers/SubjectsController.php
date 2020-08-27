@@ -27,7 +27,7 @@ class SubjectsController extends Controller
 
     public function fetchEventSubjects(Request $request, $id)
     {
-        $subjects = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+        $eventSubjects = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
                     ->where('events.id', $id)
                     ->select('subjects.subject')
@@ -37,7 +37,7 @@ class SubjectsController extends Controller
         //             ->where('events.id', $id)
         //             ->get();
 
-        return response()->json(['subjects'=>$subjects],200);
+        return response()->json(['eventSubjects'=>$eventSubjects],200);
     }
     /**
      * Show the form for creating a new resource.

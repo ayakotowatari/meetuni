@@ -212,6 +212,27 @@ class EventsController extends Controller
 
         $event -> save();
     }
+    public function updateRegions(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required',
+            'regions' => 'required'
+        ]);
+
+        $id = request('id');
+        $regions = request('regions');
+
+        EventRegion::where('event_id', $id)
+            ->delete();
+
+        foreach($regions as $region){
+            $eventRegion = new EventRegion();
+            $eventRegion->event_id = $id;
+            $eventRegion->region_id = $region;
+            $eventRegion->save();
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -221,7 +242,8 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
-        //
+
+
     }
 
     /**
