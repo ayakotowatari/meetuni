@@ -234,6 +234,88 @@ class EventsController extends Controller
         }
     }
 
+    public function updateLevels(Request $request){
+
+        $request->validate([
+            'id' => 'required',
+            'levels' => 'required'
+        ]);
+
+        $id = request('id');
+        $levels = request('levels');
+
+        EventLevel::where('event_id', $id)
+            ->delete();
+
+        foreach($levels as $level){
+            $eventLevel = new EventLevel();
+            $eventLevel->event_id = $id;
+            $eventLevel->level_id = $level;
+            $eventLevel->save();
+        }
+    }
+    
+    public function updateSubjects(Request $request){
+
+        $request->validate([
+            'id' => 'required',
+            'subjects' => 'required'
+        ]);
+
+        $id = request('id');
+        $subjects = request('subjects');
+
+        EventSubject::where('event_id', $id)
+            ->delete();
+
+        foreach($subjects as $subject){
+            $eventSubject = new EventSubject();
+            $eventSubject->event_id = $id;
+            $eventSubject->subject_id = $subject;
+            $eventSubject->save();
+
+        }
+    } 
+    
+    public function updateDescription(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'description' => 'required'
+        ]);
+
+        $event_id = request('id');
+        $description = request('description');
+
+        Event::where('events.id', $event_id)
+                ->update([ 
+                    'description' => $description, 
+                ]);
+    }
+
+    public function updateImage(Request $request){
+
+        $request->validate([
+            'id' => 'required',
+            'image' => 'required'
+        ]);
+
+        $image = $request->file('image');
+        $disk = Storage::disk('local');
+        // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
+        // $disk = Storage::disk('s3');
+
+        $path = $disk->put('public', $image);
+        $filename = ltrim($path, 'public/');
+
+        $event_id = request('id');
+
+        Event::where('events.id', $event_id)
+                ->update([ 
+                    'image' => $filename, 
+                ]);
+    }
+
     /**
      * Display the specified resource.
      *

@@ -59,10 +59,12 @@ Route::post('/inst/create-selects', 'EventsController@storeSelects');
 Route::post('/inst/create-file', 'EventsController@storeFile');
 
 // Edit event
-Route::post('inst/update-basics', 'EventsController@updateBasics');
-Route::post('inst/update-regions', 'EventsController@updateRegions');
-Route::post('inst/update-levels', 'EventsController@updateLevels');
-Route::post('inst/update-subjects', 'EventsController@updateSubjects');
+Route::post('/inst/update-basics', 'EventsController@updateBasics');
+Route::post('/inst/update-regions', 'EventsController@updateRegions');
+Route::post('/inst/update-levels', 'EventsController@updateLevels');
+Route::post('/inst/update-subjects', 'EventsController@updateSubjects');
+Route::post('/inst/update-description', 'EventsController@updateDescription');
+Route::post('/inst/update-image', 'EventsController@updateImage');
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');

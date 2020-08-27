@@ -1,10 +1,5 @@
 <template>
-    <div>
-      <v-row justify="center">
-          <v-col cols="12" sm="12" md="8">
-               <h2 class="grey--text text--darken-1">Step 2</h2>
-          </v-col>
-      </v-row>
+    <div class="mb-6">
       <v-row justify="center">
           <v-col col="12" sm="12" md="8">
                <h3 class="py-0">Regions</h3>
@@ -97,7 +92,7 @@
         <v-row justify="center">
           <v-col col="12" sm="12" md="8" class="py-0">
               <v-btn @click="hideSubjects = !hideSubjects" color="primary" outlined>Change</v-btn>
-              <v-btn v-if="!hideSubjects" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
+              <v-btn v-if="!hideSubjects" @click="updateSubjects" class="ml-4" color="primary" outlined>Save</v-btn>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -142,7 +137,7 @@
 <script>
 export default {
     props: {
-        id: Number,
+        id: String,
         eventRegions: Array,
         eventLevels: Array,
         eventSubjects: Array,

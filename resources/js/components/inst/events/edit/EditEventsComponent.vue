@@ -51,6 +51,12 @@
       ></editeventselect-component>
 
       <v-divider></v-divider>
+
+      <editeventfile-component
+        v-bind:id="id"
+        v-bind:description="description"
+        v-bind:files="files"
+      ></editeventfile-component>
     </v-container>    
   </v-container>
 </template>
@@ -60,11 +66,13 @@
 import moment from 'moment-timezone'
 import EditEventBasics from './EditEventBasicsComponent'
 import EditEventSelect from './EditEventSelectComponent'
+import EditEventFile from './EditEventFileComponent'
 
 export default {
 components: {
     EditEventBasics,
-    EditEventSelect
+    EditEventSelect,
+    EditEventFile
 },
 props: {
     user: Object,
@@ -82,6 +90,8 @@ data: function(){
             timezone: '',
             time: '',
             time2: '',
+            description: '',
+            files: '',
             eventRegions: [],
             eventLevels: [],
             eventSubjects: [],
@@ -103,7 +113,9 @@ methods: {
                 this.timezone = res.data.event.timezone;
                 this.date = res.data.event.date;
                 this.time = res.data.event.start_time;
-                this.time2 = res.data.event.end_time
+                this.time2 = res.data.event.end_time;
+                this.description = res.data.event.description;
+                this.files = res.data.event.image;
             })
     },
     fetchEventRegions: function(id) {
