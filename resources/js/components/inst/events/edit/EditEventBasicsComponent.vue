@@ -154,7 +154,7 @@
                     <v-btn 
                     :disabled="!valid"
                     depressed 
-                    block 
+                    outlined
                     color="primary" 
                     class="mx-0" 
                     @click="submit"

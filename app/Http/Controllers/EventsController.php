@@ -322,6 +322,16 @@ class EventsController extends Controller
                 ]);
     }
 
+    public function publishEvent(Request $request, $id)
+    {
+        $status_id = 1;
+
+        Event::where('events.id', $id)
+        ->update([ 
+            'status_id' => $status_id
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -330,7 +340,6 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
-
 
     }
 

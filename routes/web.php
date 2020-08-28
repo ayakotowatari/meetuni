@@ -65,6 +65,7 @@ Route::post('/inst/update-levels', 'EventsController@updateLevels');
 Route::post('/inst/update-subjects', 'EventsController@updateSubjects');
 Route::post('/inst/update-description', 'EventsController@updateDescription');
 Route::post('/inst/update-image', 'EventsController@updateImage');
+Route::post('/inst/publish-event/{id}', 'EventsController@publishEvent');
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
