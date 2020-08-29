@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import router from "./router";
 import AppComponent from "./components/AppComponent";
 import Vuetify from 'vuetify';
+import store from './store/';
 import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 Vue.use(Vuetify);
@@ -50,6 +51,7 @@ Vue.component('editeventfile-component', require('./components/inst/events/edit/
 const app = new Vue({
     el: '#app',
     router,
+    store,
     components: {
         'app-component': AppComponent
     },
