@@ -59,12 +59,6 @@
     <v-container>
       <editeventbasics-component
         v-bind:id="id"
-        v-bind:event="event"
-        v-bind:title="title"
-        v-bind:date="date"
-        v-bind:timezone="timezone"
-        v-bind:time="time"
-        v-bind:time2="time2"
         class="mb-10"
       ></editeventbasics-component>
 
@@ -75,9 +69,6 @@
         v-bind:eventRegions="eventRegions"
         v-bind:eventLevels="eventLevels"
         v-bind:eventSubjects="eventSubjects"
-        v-bind:regions="regions"
-        v-bind:levels="levels"
-        v-bind:subjects="subjects"
         class="my-10"
       ></editeventselect-component>
 
@@ -85,8 +76,6 @@
 
       <editeventfile-component
         v-bind:id="id"
-        v-bind:description="description"
-        v-bind:files="files"
       ></editeventfile-component>
     </v-container>    
   </v-container>
@@ -99,57 +88,58 @@ import EditEventBasics from './EditEventBasicsComponent'
 import EditEventSelect from './EditEventSelectComponent'
 import EditEventFile from './EditEventFileComponent'
 
+import { mapState } from 'vuex'
+
 export default {
 components: {
     EditEventBasics,
     EditEventSelect,
     EditEventFile
 },
-props: {
-    user: Object,
-    regions: Array,
-    levels: Array,
-    subjects: Array
-},
-
 data: function(){
     return{
             id: this.$route.params.id,
             dialog: false,
-            event: {},
-            title: '',
-            date: '',
-            timezone: '',
-            time: '',
-            time2: '',
-            description: '',
-            files: '',
+            // event: {},
+            // title: '',
+            // date: '',
+            // timezone: '',
+            // time: '',
+            // time2: '',
+            // description: '',
+            // files: '',
             eventRegions: [],
             eventLevels: [],
             eventSubjects: [],
         }
     console.log(id);
 },
+mounted(){
+    this.$store.dispatch('fetchUser');
+    this.$store.dispatch('fetchSingleEvent', {
+          id: this.id
+    });
+},
 created(){
-     this.fetchSingleEvent();
+    //  this.fetchSingleEvent();
      this.fetchEventRegions();
      this.fetchEventLevels();
      this.fetchEventSubjects();
 },
 methods: {
-    fetchSingleEvent: function(id) {
-            console.log(id);
-            axios.get("/inst/fetch-single-event/" + this.id).then(res => {
-                this.event = res.data.event;
-                this.title = res.data.event.title;
-                this.timezone = res.data.event.timezone;
-                this.date = res.data.event.date;
-                this.time = res.data.event.start_time;
-                this.time2 = res.data.event.end_time;
-                this.description = res.data.event.description;
-                this.files = res.data.event.image;
-            })
-    },
+    // fetchSingleEvent: function(id) {
+    //         console.log(id);
+    //         axios.get("/inst/fetch-single-event/" + this.id).then(res => {
+    //             this.event = res.data.event;
+    //             this.title = res.data.event.title;
+    //             this.timezone = res.data.event.timezone;
+    //             this.date = res.data.event.date;
+    //             this.time = res.data.event.start_time;
+    //             this.time2 = res.data.event.end_time;
+    //             this.description = res.data.event.description;
+    //             this.files = res.data.event.image;
+    //         })
+    // },
     fetchEventRegions: function(id) {
         console.log(id);
         axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
@@ -195,6 +185,12 @@ methods: {
     toMyEvents(){
             this.$router.push({ name: 'events'})
     }
+},
+computed: {
+    ...mapState ([
+        'user',
+        'event'
+    ])
 }
 }
 </script>

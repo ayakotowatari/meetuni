@@ -14,8 +14,15 @@ export default new Vuex.Store ({
         events: [],
         regions: [],
         levels: [],
-        subjects: []
-        
+        subjects: [],
+        event: [],
+        title: [],
+        date: [],
+        timezone: [],
+        start_time: [],
+        end_time: [],
+        description: [],
+        files: []
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -46,6 +53,18 @@ export default new Vuex.Store ({
         },
         setSubjects(state,payload){
             state.subjects = payload
+        },
+
+        //テスト
+        setSingleEvent(state,payload){
+            state.event = payload
+            state.title = payload.title
+            state.date = payload.date
+            state.timezone = payload.timezone
+            state.start_time = payload.start_time
+            state.end_time = payload.end_time
+            state.description = payload.description
+            state.files = payload.image
         }
     },
     actions: {
@@ -116,6 +135,19 @@ export default new Vuex.Store ({
                 .then(res => {
                   payload = res.data.subjects;
                   commit("setSubjects", payload)
+                })
+        },
+        //テスト
+        async fetchSingleEvent({commit}, payload){
+            console.log(payload.id);
+
+            let event = [];
+
+            await axios
+                .get("/inst/fetch-single-event/" + payload.id)
+                .then(res => {
+                event = res.data.event;
+                commit("setSingleEvent", event)
                 })
         },
     },

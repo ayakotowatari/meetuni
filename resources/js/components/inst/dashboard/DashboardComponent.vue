@@ -41,15 +41,14 @@ import DashboardMenu from './DashboardMenuComponent'
 import DashboardSummary from './DashboardSummaryComponent'
 import DashboardChart from './DashboardChartComponent'
 
+import { mapState } from 'vuex'
+
 export default {
 components: {
     // EventHeader,
     DashboardSummary,
     DashboardChart,
     DashboardMenu
-},
-props: {
-    user: Object,
 },
 
 data: function(){
@@ -61,6 +60,9 @@ data: function(){
             eventSubjects: {},
         }
     console.log(id);
+},
+mounted(){
+    this.$store.dispatch('fetchUser');
 },
 created(){
      this.fetchSingleEvent();
@@ -103,6 +105,11 @@ methods: {
     formattedEndTime(value, timezone){
         return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
     }
+},
+computed: {
+    ...mapState ([
+        'user'
+    ])
 }
 }
 </script>

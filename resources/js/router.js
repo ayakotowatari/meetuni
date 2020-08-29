@@ -18,6 +18,7 @@ import InstProfile from "./components/inst/profile/InstProfileComponent";
 // import TestTwo from "./components/inst/TestTwoComponent"
 import TestThree from "./components/inst/TestThreeComponent"
 import TestFour from "./components/inst/TestFourComponent"
+import TestFive from "./components/inst/TestFiveComponent"
 //テスト終わる
  
 const routes = [
@@ -81,6 +82,10 @@ const routes = [
         path: "/inst/testfour",
         name: "testfour",
         component: TestFour
+    },{
+        path: "/inst/testfive",
+        name: "testfive",
+        component: TestFive
     },
 
 ];

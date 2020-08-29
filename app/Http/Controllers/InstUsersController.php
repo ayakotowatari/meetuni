@@ -82,7 +82,7 @@ class InstUsersController extends Controller
     }
 
     public function fetchSingleEvent(Request $request, $id)
-    {
+    {   
         $user_id = Auth::user()->id;
 
         $event_id = $id;

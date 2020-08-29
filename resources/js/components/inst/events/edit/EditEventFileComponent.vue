@@ -87,12 +87,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: {
 
         id: String,
-        description: String,
-        files: String
+        // description: String,
+        // files: String
 
     },
     data: () => ({
@@ -105,6 +107,11 @@ export default {
         ],
         allerror: [],
     }),
+    mounted(){
+        this.$store.dispatch('fetchSingleEvent', {
+            id: this.id
+        });
+    },
     methods: {
         validate(){
             if(
@@ -169,6 +176,12 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapState ([
+            'description',
+            'files'
+        ])
+    }
     
 }
 </script>

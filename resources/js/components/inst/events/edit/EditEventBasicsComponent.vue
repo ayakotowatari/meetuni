@@ -90,7 +90,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                            v-model="time"
+                            v-model="start_time"
                             label="Start Time"
                             outlined
                             prepend-icon="mdi-clock-outline"
@@ -104,11 +104,11 @@
                     </template>
                     <v-time-picker
                         v-if="menu2"
-                        v-model="time"
+                        v-model="start_time"
                         full-width
                         :allowed-minutes="allowedSteps"
                         :max="time2"
-                        @click:minute="$refs.menu2.save(time)"
+                        @click:minute="$refs.menu2.save(start_time)"
                     ></v-time-picker>
                     </v-menu>
                 </v-col>
@@ -126,7 +126,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                            v-model="time2"
+                            v-model="end_time"
                             label="End Time"
                             outlined
                             prepend-icon="mdi-clock-outline"
@@ -140,11 +140,11 @@
                     </template>
                     <v-time-picker
                         v-if="menu3"
-                        v-model="time2"
+                        v-model="end_time"
                         full-width
                         :allowed-minutes="allowedSteps"
                         :min="time"
-                        @click:minute="$refs.menu3.save(time)"
+                        @click:minute="$refs.menu3.save(end_time)"
                     ></v-time-picker>
                     </v-menu>
                 </v-col>
@@ -170,14 +170,16 @@
 <script>
 import moment from 'moment'
 
+import { mapState } from 'vuex'
+
 export default {
     props: {
         id: String,
-        title: String,
-        date: String,
-        timezone: String,
-        time: String,
-        time2: String,
+        // title: String,
+        // date: String,
+        // timezone: String,
+        // time: String,
+        // time2: String,
     },
     data: () => ({
         valid: true,
@@ -199,14 +201,19 @@ export default {
         menu3: false,
         allerror: []
     }),
+    mounted(){
+        this.$store.dispatch('fetchSingleEvent', {
+            id: this.id
+        });
+    },
     methods: {
         validate(){
             if(
                 this.title != '' && 
                 this.date != '' && 
                 this.timezone != '' &&
-                this.time != '' &&
-                this.time2 != ''
+                this.start_time != '' &&
+                this.end_time != ''
             ){
                 return true
             }else{
@@ -228,8 +235,8 @@ export default {
                     title: this.title,
                     date: this.date,
                     timezone: this.timezone,
-                    start_time: this.time,
-                    end_time: this.time2
+                    start_time: this.start_time,
+                    end_time: this.end_time
                 })
                 .then(response => {
                     this.loading = false;
@@ -240,6 +247,16 @@ export default {
                 )
             }
         }
+    },
+    computed: {
+        ...mapState([
+            'title',
+            'date',
+            'timezone',
+            'start_time',
+            'end_time',
+        ])
+       
     }
 }
 </script>

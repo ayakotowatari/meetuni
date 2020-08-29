@@ -135,15 +135,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: {
         id: String,
         eventRegions: Array,
         eventLevels: Array,
         eventSubjects: Array,
-        levels: Array,
-        subjects: Array,
-        regions: Array,
     },
     data: () => ({
         valid: true,
@@ -165,6 +164,11 @@ export default {
         ],
         allerror: [],
     }),
+    mounted(){
+        this.$store.dispatch('fetchRegions');
+        this.$store.dispatch('fetchLevels');
+        this.$store.dispatch('fetchSubjects');
+    },
     methods: {
         validate(){
             if(
@@ -234,6 +238,13 @@ export default {
                 )
             }
         },
+    },
+    computed: {
+        ...mapState ([
+            'regions',
+            'levels',
+            'subjects'
+        ])
     }
 }
 </script>
