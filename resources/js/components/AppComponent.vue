@@ -7,7 +7,6 @@
         ></navbar-component>
         <v-main class="mx-4 mb-4">
             <router-view 
-                v-bind:events="events"
                 v-bind:user="user" 
                 v-bind:levels="levels"
                 v-bind:subjects="subjects"
@@ -25,7 +24,7 @@ export default {
        user: {},
        inst: {},
        initials: '',
-       events: [],
+      //  events: [],
        levels:[],
        subjects:[],
        regions:[],
@@ -36,7 +35,7 @@ export default {
       this.fetchUser();
       this.fetchInst();
       this.fetchInitials();
-      this.fetchEvents();
+      // this.fetchEvents();
       this.fetchLevels();
       this.fetchSubjects();
       this.fetchRegions();
@@ -61,11 +60,11 @@ export default {
             this.initials = res.data.initials;
           });
       },
-      fetchEvents: function() {
-          axios.get("/inst/fetch-events").then(res => {
-            this.events = res.data.events;
-          })
-      },
+      // fetchEvents: function() {
+      //     axios.get("/inst/fetch-events").then(res => {
+      //       this.events = res.data.events;
+      //     })
+      // },
       fetchLevels: function() {
           axios.get("/inst/fetch-levels").then(res => {
             this.levels = res.data.levels;

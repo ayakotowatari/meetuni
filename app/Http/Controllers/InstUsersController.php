@@ -66,11 +66,16 @@ class InstUsersController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
-                    ->join('regions', 'regions.id', '=', 'event_regions.region_id')
-                    ->join('statuses', 'events.status_id', '=', 'statuses.id')
+        // $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        //             ->join('regions', 'regions.id', '=', 'event_regions.region_id')
+        //             ->join('statuses', 'events.status_id', '=', 'statuses.id')
+        //             ->where('events.inst_user_id', $user_id)
+        //             ->select('events.id', 'events.title', 'events.date', 'statuses.status', 'regions.region')
+        //             ->get();
+
+        $events = Event::join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where('events.inst_user_id', $user_id)
-                    ->select('events.id', 'events.title', 'events.date', 'statuses.status', 'regions.region')
+                    ->select('events.id', 'events.title', 'events.date', 'statuses.status')
                     ->get();
 
         return response()->json(['events' => $events],200);

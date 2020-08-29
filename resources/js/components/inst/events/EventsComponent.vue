@@ -74,11 +74,12 @@
 
 <script>
 import moment from 'moment';
+import { mapState } from 'vuex';
 
   export default {
-    props: {
-      events: Array,
-    },
+    // props: {
+    //   events: Array,
+    // },
     data: () => ({
       dialog: false,
       search:'',
@@ -90,17 +91,18 @@ import moment from 'moment';
           value: 'title',
         },
         { text: 'Date', value: 'date' },
-        { text: 'Target Region', value: 'region' },
         { text: 'Status', value: 'status' },
         { text: 'Dashboard', value: 'dashboard', sortable: false },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
     }),
-
     watch: {
       dialog (val) {
         val || this.close()
       },
+    },
+    mounted(){
+      this.$store.dispatch('fetchEvents')
     },
     methods: {
       getColor(status){
@@ -116,45 +118,11 @@ import moment from 'moment';
         console.log(id); 
         this.$router.push({name: 'edit-events', params: {id: id}})
       },
-      // formattedDate(value){
-      //   return moment(value).format('ddd, MMM Do YYYY');
-      // }
     },
     computed: {
-      // change date format
-      // formattedDate(){
-      //   return this.date ? format(parseISO(this.date), 'EEE, MMM do, yyyy, zzz') : ''
-      // },
-     
+        ...mapState([
+          'events'
+        ])
     }
-
-      // editItem (item) {
-      //   this.editedIndex = this.desserts.indexOf(item)
-      //   this.editedItem = Object.assign({}, item)
-      //   this.dialog = true
-      // },
-
-      // deleteItem (item) {
-      //   const index = this.desserts.indexOf(item)
-      //   confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      // },
-
-      // close () {
-      //   this.dialog = false
-      //   this.$nextTick(() => {
-      //     this.editedItem = Object.assign({}, this.defaultItem)
-      //     this.editedIndex = -1
-      //   })
-      // },
-
-      // save () {
-      //   if (this.editedIndex > -1) {
-      //     Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      //   } else {
-      //     this.desserts.push(this.editedItem)
-      //   }
-      //   this.close()
-      // },
-    
   }
 </script>
