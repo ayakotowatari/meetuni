@@ -66,9 +66,6 @@
 
       <editeventselect-component
         v-bind:id="id"
-        v-bind:eventRegions="eventRegions"
-        v-bind:eventLevels="eventLevels"
-        v-bind:eventSubjects="eventSubjects"
         class="my-10"
       ></editeventselect-component>
 
@@ -100,17 +97,6 @@ data: function(){
     return{
             id: this.$route.params.id,
             dialog: false,
-            // event: {},
-            // title: '',
-            // date: '',
-            // timezone: '',
-            // time: '',
-            // time2: '',
-            // description: '',
-            // files: '',
-            eventRegions: [],
-            eventLevels: [],
-            eventSubjects: [],
         }
     console.log(id);
 },
@@ -119,45 +105,20 @@ mounted(){
     this.$store.dispatch('fetchSingleEvent', {
           id: this.id
     });
+    this.$store.dispatch('fetchEventRegions', {
+          id: this.id
+    });
+    this.$store.dispatch('fetchEventLevels', {
+          id: this.id
+    });
+    this.$store.dispatch('fetchEventSubjects', {
+          id: this.id
+    });
 },
 created(){
-    //  this.fetchSingleEvent();
-     this.fetchEventRegions();
-     this.fetchEventLevels();
-     this.fetchEventSubjects();
+   
 },
 methods: {
-    // fetchSingleEvent: function(id) {
-    //         console.log(id);
-    //         axios.get("/inst/fetch-single-event/" + this.id).then(res => {
-    //             this.event = res.data.event;
-    //             this.title = res.data.event.title;
-    //             this.timezone = res.data.event.timezone;
-    //             this.date = res.data.event.date;
-    //             this.time = res.data.event.start_time;
-    //             this.time2 = res.data.event.end_time;
-    //             this.description = res.data.event.description;
-    //             this.files = res.data.event.image;
-    //         })
-    // },
-    fetchEventRegions: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
-            this.eventRegions = res.data.eventRegions;
-        })
-    },
-    fetchEventLevels: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
-            this.eventLevels = res.data.eventLevels;
-        })
-    },
-    fetchEventSubjects: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
-            this.eventSubjects = res.data.eventSubjects;
-        })
-    },
     formattedDate(value, timezone){
         return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
     },
@@ -189,7 +150,10 @@ methods: {
 computed: {
     ...mapState ([
         'user',
-        'event'
+        'event',
+        'eventRegions',
+        'eventLevels',
+        'eventSubjects'
     ])
 }
 }

@@ -2,11 +2,15 @@
   <div>
       {{ title }}
       {{ date }}
+       <div>
+          {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+          {{ formattedEndTime(event.end_utc, user.timezone) }}
+        </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     data: function(){
@@ -19,10 +23,22 @@ export default {
             id: this.id
         })
     },
+    methods: {
+        ...mapMutations([
+            'formattedStartTime'
+        ]),
+        formattedEndTime(value, timezone){
+        return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
+        }
+    },
     computed: {
         ...mapState([
+            'user',
+            'event',
             'title',
-            'date'
+            'date',
+            'start_utc',
+            'end_utc'
         ])
     }
 

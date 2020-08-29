@@ -82,7 +82,7 @@
                         v-model="menu2"
                         :close-on-content-click="false"
                         :nudge-right="40"
-                        :return-value.sync="time"
+                        :return-value.sync="start_time"
                         transition="scale-transition"
                         offset-y
                         max-width="290px"
@@ -118,7 +118,7 @@
                         v-model="menu3"
                         :close-on-content-click="false"
                         :nudge-right="40"
-                        :return-value.sync="time"
+                        :return-value.sync="end_time"
                         transition="scale-transition"
                         offset-y
                         max-width="290px"

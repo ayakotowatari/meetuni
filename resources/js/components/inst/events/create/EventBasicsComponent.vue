@@ -75,7 +75,7 @@
                     v-model="menu2"
                     :close-on-content-click="false"
                     :nudge-right="40"
-                    :return-value.sync="time"
+                    :return-value.sync="start_time"
                     transition="scale-transition"
                     offset-y
                     max-width="290px"
@@ -83,7 +83,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                        v-model="time"
+                        v-model="start_time"
                         label="Start Time"
                         outlined
                         prepend-icon="mdi-clock-outline"
@@ -97,11 +97,11 @@
                   </template>
                   <v-time-picker
                       v-if="menu2"
-                      v-model="time"
+                      v-model="start_time"
                       full-width
                       :allowed-minutes="allowedSteps"
                       :max="time2"
-                      @click:minute="$refs.menu2.save(time)"
+                      @click:minute="$refs.menu2.save(start_time)"
                   ></v-time-picker>
                 </v-menu>
             </v-col>
@@ -111,7 +111,7 @@
                     v-model="menu3"
                     :close-on-content-click="false"
                     :nudge-right="40"
-                    :return-value.sync="time"
+                    :return-value.sync="end_time"
                     transition="scale-transition"
                     offset-y
                     max-width="290px"
@@ -119,7 +119,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                        v-model="time2"
+                        v-model="end_time"
                         label="End Time"
                         outlined
                         prepend-icon="mdi-clock-outline"
@@ -133,11 +133,11 @@
                   </template>
                   <v-time-picker
                       v-if="menu3"
-                      v-model="time2"
+                      v-model="end_time"
                       full-width
                       :allowed-minutes="allowedSteps"
                       :min="time"
-                      @click:minute="$refs.menu3.save(time)"
+                      @click:minute="$refs.menu3.save(end_time)"
                   ></v-time-picker>
                 </v-menu>
             </v-col>
@@ -179,13 +179,13 @@ export default {
         v => !!v || 'Timezone is required',
         ],
         menu: false,
-        time: null,
+        start_time: null,
         menu2: false,
         timeRules: [
         v => !!v || 'Time is required',
         ],
         menu3: false,
-        time2: null,
+        end_time: null,
         allerror: []
     }),
     methods: {
@@ -194,8 +194,8 @@ export default {
                 this.title != '' && 
                 this.date != '' && 
                 this.timezone != '' &&
-                this.time != '' &&
-                this.time2 != ''
+                this.start_time != '' &&
+                this.end_time != ''
             ){
                 return true
             }else{
@@ -216,8 +216,8 @@ export default {
                     title: this.title,
                     date: this.date,
                     timezone: this.timezone,
-                    start_time: this.time,
-                    end_time: this.time2
+                    start_time: this.start_time,
+                    end_time: this.end_time
                 })
                 .then(response => {
                     this.loading = false;
@@ -225,8 +225,8 @@ export default {
                     this.title='';
                     this.date='';
                     this.timezone='';
-                    this.time='';
-                    this.time2=''
+                    this.start_time='';
+                    this.end_time=''
                 })
                 .catch(error => 
                     this.allerror = error.response.data.errors

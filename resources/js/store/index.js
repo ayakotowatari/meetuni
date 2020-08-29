@@ -21,8 +21,13 @@ export default new Vuex.Store ({
         timezone: [],
         start_time: [],
         end_time: [],
+        start_utc: [],
+        end_utc: [],
         description: [],
-        files: []
+        files: [],
+        eventRegions: [],
+        eventLevels: [],
+        eventSubjects: []
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -54,8 +59,6 @@ export default new Vuex.Store ({
         setSubjects(state,payload){
             state.subjects = payload
         },
-
-        //テスト
         setSingleEvent(state,payload){
             state.event = payload
             state.title = payload.title
@@ -63,9 +66,20 @@ export default new Vuex.Store ({
             state.timezone = payload.timezone
             state.start_time = payload.start_time
             state.end_time = payload.end_time
+            state.start_utc = payload.start_utc
+            state.end_utc = payload.end_utc
             state.description = payload.description
             state.files = payload.image
-        }
+        },
+        setEventRegions(state, payload){
+            state.eventRegions = payload
+        },
+        setEventLevels(state, payload){
+            state.eventLevels = payload
+        },
+        setEventSubjects(state, payload){
+            state.eventSubjects = payload
+        },
     },
     actions: {
         //非同期処理をする
@@ -137,7 +151,6 @@ export default new Vuex.Store ({
                   commit("setSubjects", payload)
                 })
         },
-        //テスト
         async fetchSingleEvent({commit}, payload){
             console.log(payload.id);
 
@@ -148,6 +161,43 @@ export default new Vuex.Store ({
                 .then(res => {
                 event = res.data.event;
                 commit("setSingleEvent", event)
+                })
+        },
+        async fetchEventRegions({commit}, payload){
+            console.log(payload.id);
+
+            let eventRegions = [];
+
+            await axios
+                .get("/inst/fetch-event-regions/" + payload.id)
+                .then(res => {
+                eventRegions = res.data.eventRegions;
+                commit("setEventRegions", eventRegions)
+            })
+        },
+        async fetchEventLevels({commit}, payload){
+            console.log(payload.id);
+
+            let eventLevels = [];
+
+            await 
+                axios
+                .get("/inst/fetch-event-levels/" + payload.id)
+                .then(res => {
+                    eventLevels = res.data.eventLevels;
+                    commit("setEventLevels", eventLevels)
+                })
+        },
+        async fetchEventSubjects({commit}, payload){
+            console.log(payload.id);
+
+            let eventSubjects = [];
+
+            await axios
+                .get("/inst/fetch-event-subjects/" + payload.id)
+                .then(res => {
+                    eventSubjects = res.data.eventSubjects;
+                    commit("setEventSubjects", eventSubjects)
                 })
         },
     },

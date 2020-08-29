@@ -26,7 +26,7 @@
 <script>
 export default {
   props: {
-      id: Number,
+      id: String,
   },
   data: () => ({
       offset: true,
@@ -35,8 +35,7 @@ export default {
                 { icon: 'mdi-account-group-outline', text: 'Manage Participants', route: 'manage-participants' },
                 { icon: 'mdi-chart-line', text: 'Participant Statistics', route: 'participant-statistics' },
              ],
-  })
-        
+  }),
 }
 </script>
 

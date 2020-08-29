@@ -54,48 +54,60 @@ components: {
 data: function(){
     return{
             id: this.$route.params.id,
-            event: {},
-            eventRegions: {},
-            eventLevels: {},
-            eventSubjects: {},
+            // event: {},
+            // eventRegions: {},
+            // eventLevels: {},
+            // eventSubjects: {},
         }
     console.log(id);
 },
 mounted(){
     this.$store.dispatch('fetchUser');
+    this.$store.dispatch('fetchSingleEvent', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventRegions', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventLevels', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventSubjects', {
+        id: this.id
+    });
 },
 created(){
-     this.fetchSingleEvent();
-     this.fetchEventRegions();
-     this.fetchEventLevels();
-     this.fetchEventSubjects();
+    //  this.fetchSingleEvent();
+    //  this.fetchEventRegions();
+    //  this.fetchEventLevels();
+    //  this.fetchEventSubjects();
 },
 methods: {
-    fetchSingleEvent: function(id) {
-            console.log(id);
-            axios.get("/inst/fetch-single-event/" + this.id).then(res => {
-                this.event = res.data.event;
-                console.log(event);
-            })
-    },
-    fetchEventRegions: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
-            this.eventRegions = res.data.eventRegions;
-        })
-    },
-    fetchEventLevels: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
-            this.eventLevels = res.data.eventLevels;
-        })
-    },
-    fetchEventSubjects: function(id) {
-        console.log(id);
-        axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
-            this.eventSubjects = res.data.eventSubjects;
-        })
-    },
+    // fetchSingleEvent: function(id) {
+    //         console.log(id);
+    //         axios.get("/inst/fetch-single-event/" + this.id).then(res => {
+    //             this.event = res.data.event;
+    //             console.log(event);
+    //         })
+    // },
+    // fetchEventRegions: function(id) {
+    //     console.log(id);
+    //     axios.get("/inst/fetch-event-regions/" + this.id).then(res => {
+    //         this.eventRegions = res.data.eventRegions;
+    //     })
+    // },
+    // fetchEventLevels: function(id) {
+    //     console.log(id);
+    //     axios.get("/inst/fetch-event-levels/" + this.id).then(res => {
+    //         this.eventLevels = res.data.eventLevels;
+    //     })
+    // },
+    // fetchEventSubjects: function(id) {
+    //     console.log(id);
+    //     axios.get("/inst/fetch-event-subjects/" + this.id).then(res => {
+    //         this.eventSubjects = res.data.eventSubjects;
+    //     })
+    // },
     formattedDate(value, timezone){
         return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
     },
@@ -108,7 +120,11 @@ methods: {
 },
 computed: {
     ...mapState ([
-        'user'
+        'user',
+        'event',
+        'eventRegions',
+        'eventLevels',
+        'eventSubjects'
     ])
 }
 }
