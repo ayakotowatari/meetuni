@@ -8,6 +8,9 @@ export default new Vuex.Store ({
     state: {
         //状態を管理する
         //component側でstateからデータを取るのはcomputed
+        user: [],
+        inst: [],
+        initials: '',
         events: [],
         regions: [],
         levels: [],
@@ -23,6 +26,15 @@ export default new Vuex.Store ({
         //actionsが終わった後の同期処理をする
         //change and edite data in state
         //componentsではmethodsで展開
+        setUser(state, payload){
+            state.user = payload
+        },
+        setInst(state, payload){
+            state.inst = payload
+        },
+        setInitials(state, payload){
+            state.initials = payload
+        },
         setEvents(state,payload){
             state.events = payload
         },
@@ -35,30 +47,58 @@ export default new Vuex.Store ({
         setSubjects(state,payload){
             state.subjects = payload
         }
-        
-
     },
     actions: {
         //非同期処理をする
         //componentsではmethodsで展開
 
-        async fetchEvents({commit}) {
-        let payload = [];
-        await axios
-            .get("/inst/fetch-events")
-            .then(response => {
-                payload = response.data.events;
-                commit("setEvents", payload)
+        async fetchUser({ commit }){
+            let payload = [];
+
+            await axios
+                .get("/inst/fetch-user")
+                .then(res => {
+                    payload = res.data.user;
+                    commit('setUser', payload)
             });
         },
+        async fetchInst({ commit }) {
+            let payload = [];
+
+            await axios
+                .get("/inst/fetch-inst")
+                .then(res => {
+                    payload = res.data.inst;
+                    commit('setInst', payload)
+            });
+        },
+        async fetchInitials({ commit }) {
+            let payload = '';
+
+            await axios
+                .get("/inst/fetch-initials")
+                .then(res => {
+                    payload = res.data.initials;
+                    commit('setInitials', payload)
+            });
+        },
+        async fetchEvents({commit}) {
+            let payload = [];
+            await axios
+                .get("/inst/fetch-events")
+                .then(response => {
+                    payload = response.data.events;
+                    commit("setEvents", payload)
+                });
+        },
         async fetchRegions({commit}) {
-        let payload = [];
-        await axios
-            .get("/inst/fetch-regions")
-            .then(res => {
-              payload = res.data.regions;
-              commit("setRegions", payload)
-            })
+            let payload = [];
+            await axios
+                .get("/inst/fetch-regions")
+                .then(res => {
+                payload = res.data.regions;
+                commit("setRegions", payload)
+                })
         },
         async fetchLevels({commit}) {
             let payload = [];

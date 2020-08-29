@@ -1,15 +1,8 @@
 <template>
     <v-app>
-        <navbar-component 
-            v-bind:user="user" 
-            v-bind:inst="inst" 
-            v-bind:initials="initials"
-        ></navbar-component>
+        <navbar-component></navbar-component>
         <v-main class="mx-4 mb-4">
-            <router-view 
-                v-bind:user="user" 
-            >
-            </router-view>
+            <router-view></router-view>
         </v-main>
     </v-app>
 </template>
@@ -18,36 +11,36 @@
 export default {
 
    data: () => ({
-       user: {},
-       inst: {},
-       initials: '',
+      //  user: {},
+      //  inst: {},
+      //  initials: '',
    }),
    created(){
 
-      this.fetchUser();
-      this.fetchInst();
-      this.fetchInitials();
+      // this.fetchUser();
+      // this.fetchInst();
+      // this.fetchInitials();
 
    },
    methods: {
        
-      fetchUser: function() {
-          axios.get("/inst/fetch-user").then(res => {
-            this.user = res.data.user;
-          });
-      },
+      // fetchUser: function() {
+      //     axios.get("/inst/fetch-user").then(res => {
+      //       this.user = res.data.user;
+      //     });
+      // },
 
-      fetchInst: function() {
-          axios.get("/inst/fetch-inst").then(res => {
-            this.inst = res.data.inst;
-          });
-      },
+      // fetchInst: function() {
+      //     axios.get("/inst/fetch-inst").then(res => {
+      //       this.inst = res.data.inst;
+      //     });
+      // },
 
-      fetchInitials: function() {
-          axios.get("/inst/fetch-initials").then(res => {
-            this.initials = res.data.initials;
-          });
-      },
+      // fetchInitials: function() {
+      //     axios.get("/inst/fetch-initials").then(res => {
+      //       this.initials = res.data.initials;
+      //     });
+      // },
       // fetchEvents: function() {
       //     axios.get("/inst/fetch-events").then(res => {
       //       this.events = res.data.events;
@@ -69,9 +62,6 @@ export default {
       //     })
       // },
    }
-    
-       
-       
 }
 </script>
 

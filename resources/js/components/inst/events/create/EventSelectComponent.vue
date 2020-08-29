@@ -89,10 +89,6 @@
 import { mapState } from 'vuex'
 
 export default {
-    props: {
-        levels: Array,
-        subjects: Array,
-    },
     data: () => ({
         valid: true,
         loading: false,

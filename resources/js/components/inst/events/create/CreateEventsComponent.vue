@@ -17,7 +17,7 @@
   <h1 class="grey--text">Create Events</h1>
   <v-container>
       <eventbasics-component @basicsAdded = "hide = false"></eventbasics-component>
-      <v-form class="mb-6" :disabled="hide" v-model="valid">
+      <v-form class="mb-6" v-model="valid">
         <eventselect-component 
           @selectsAdded = "hide = false"
         ></eventselect-component>

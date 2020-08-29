@@ -65,12 +65,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
   export default {
-    props: {
-      user: Object,
-      inst: Object,
-      initials: String,
-    },
     data: () => ({
       drawer: true,
       links: [
@@ -80,12 +77,22 @@
         { icon: 'mdi-account-details-outline', text: 'My Profile', route: '/inst/profile' },
        ],
     }),
+    mounted() {
+        this.$store.dispatch('fetchUser');
+        this.$store.dispatch('fetchInst');
+        this.$store.dispatch('fetchInitials');
+    },
     computed: {
         token() {
             let token = document.head.querySelector('meta[name="csrf-token"]');
             return token.content
-        }
         },
+        ...mapState([
+            'user',
+            'inst',
+            'initials'
+        ]),
+    },
     methods: {
         logout() {
             document.getElementById('logout-form').submit()
