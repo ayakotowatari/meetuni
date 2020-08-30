@@ -12,7 +12,7 @@
                     elevation="12"
                     max-width="calc(100% - 32px)"
                 >
-                    <eventbookingchart-component :width="400" :height="300"></eventbookingchart-component>
+                    <eventbookingchart-component></eventbookingchart-component>
                 </v-sheet>
                 <v-card-text class="pt-0">
                     <div class="title font-weight-light mb-2 mt-6">Student Registrations</div>

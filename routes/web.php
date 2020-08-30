@@ -67,6 +67,9 @@ Route::post('/inst/update-description', 'EventsController@updateDescription');
 Route::post('/inst/update-image', 'EventsController@updateImage');
 Route::post('/inst/publish-event/{id}', 'EventsController@publishEvent');
 
+// Generate charts
+Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
+
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');
