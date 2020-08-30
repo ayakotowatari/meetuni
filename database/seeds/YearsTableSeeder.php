@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CountriesTableSeeder extends Seeder
+class YearsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,30 +13,31 @@ class CountriesTableSeeder extends Seeder
     {
         $data = [
             [
-                'country' => 'Taiwan',
-                'region_id' => 2,
+                'year' => 2021,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'country' => 'South Korea',
-                'region_id' => 2,
+                'year' => 2022,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'country' => 'Mexico',
-                'region_id' => 5,
+                'year' => 2023,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'country' => 'Argentina',
-                'region_id' => 5,
+                'year' => 2024,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
+            [
+                'year' => 2025,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ]
         ];
-                DB::table('countries')->insert($data);
+                DB::table('years')->insert($data);
     }
 }
