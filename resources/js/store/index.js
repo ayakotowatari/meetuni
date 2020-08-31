@@ -210,9 +210,9 @@ export default new Vuex.Store ({
 
             await axios 
                 .get("/inst/event-participants" + payload.id)
-                .then(res => {
-                    participants = res.data.participants;
-                    console.log(res.data.participants);
+                .then(response => {
+                    participants = response.data.participants;
+                    console.log(response.data.participants);
                     commit("setParticipants", participants)
                 })
         },
