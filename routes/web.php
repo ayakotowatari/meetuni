@@ -50,6 +50,7 @@ Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
 Route::get('/inst/fetch-event-regions/{id}', 'RegionsController@fetchEventRegions');
 Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels');
 Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects');
+Route::get('/inst/event-participants/{id}', 'BookingsController@fetchEventParticipants');
 
 // Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 
@@ -69,6 +70,8 @@ Route::post('/inst/publish-event/{id}', 'EventsController@publishEvent');
 
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
+
+
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');

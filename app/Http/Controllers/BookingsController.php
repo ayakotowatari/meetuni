@@ -6,7 +6,6 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use DatePeriod;
 
 class BookingsController extends Controller
 {
@@ -88,10 +87,31 @@ class BookingsController extends Controller
         //     return $bookings->has($date) ? $bookings->get($date)->total: 0;
         // }, iterator_to_array($period));
 
-        // return response() -> json(['dataRecord' => $graph]);
+        // return response() -> json(['dataRecord' => $graph]);         
 
+    }
+    public function fetchEventParticipants(Request $request, $id){
+
+        $event_id = $id;
+
+        $participants = Booking::join('students', 'bookings.student_id', '=', 'students.id')
+                                ->join('users', 'students.id', '=', 'users.id')
+                                ->join('countries', 'students.country_id', '=', 'countries.id')
+                                ->where('bookings.event_id', $event_id)
+                                ->where('bookings.cancelled', '0')
+                                ->select('users.first_name', 'users.last_name', 'users.email', 'bookings.created_at','countries.country')
+                                ->get();
+
+        // $ppts = Book::join('students', 'books.students_id', '=', 'students.id')
+        // ->join('users', 'students.id', '=', 'users.id')
+        // ->join('nations', 'students.nations_id', '=', 'nations.id')
+        // ->join('s_l_maps', 's_l_maps.students_id', '=', 'books.students_id')
+        // ->join('levels', 's_l_maps.levels_id', '=', 'levels.id')
+        // ->where('books.events_id', $id)
+        // ->where('books.CXL', '=', 0)
+        // ->get();
         
-                        
+        return response()->json(['participants'=>$participants],200);
 
     }
     public function index()
