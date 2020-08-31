@@ -8,7 +8,7 @@
             >
                 <v-sheet
                     class="v-sheet--offset mx-auto"
-                    color="cyan"
+                    color="white"
                     elevation="12"
                     max-width="calc(100% - 32px)"
                 >
@@ -35,7 +35,7 @@
             >
                 <v-sheet
                     class="v-sheet--offset mx-auto"
-                    color="cyan"
+                    color="white"
                     elevation="12"
                     max-width="calc(100% - 32px)"
                 >

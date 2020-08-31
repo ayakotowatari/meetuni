@@ -1,29 +1,26 @@
 <template>
+<div>
     <linechart-component 
         v-if="loaded"
-        v-bind:data="data" 
-        v-bind:options="options" 
+        :chartdata="chartdata" 
+        :options="options" 
         :width="400" 
         :height="300"
-        ></linechart-component>
+    ></linechart-component>
+</div>
 </template>
 
 <script>
 import LineChart from '../../chart/LineChartComponent'
 
 export default {
+    name: 'EventBookingChartComponent',
     components: {
         LineChart
     },
     data: () => ({
         loaded: false,
-        data: {
-            datasets: [{
-                data: [],   //グラフで使うデータ
-                backgroundColor: '#ffffff'      //背景色
-            }],
-            labels: []    // X軸のラベル名
-        },
+        chartdata: {},
         options: {
             responsive: false,    //グラフサイズの自動調整
             legend: {
@@ -39,12 +36,14 @@ export default {
                     display: true,        //Y軸の表示
                     scaleLabel: {
                         display: true,     //Y軸のラベル表示
-                        labelString: 'Y',  //Y軸のラベル
+                        labelString: '',  //Y軸のラベル
+                        fontFamily: 'Roboto',
                         fontSize: 18       //Y軸のラベルのフォントサイズ
                     },
                     ticks: {
                         min: 0,           //Y軸の最小値
                         max: 5,          //Y軸の最大値
+                        fontFamily: 'Roboto',
                         fontSize: 18,     //Y軸のフォントサイズ
                         stepSize: 1      //Y軸の間隔
                     },
@@ -53,11 +52,12 @@ export default {
                     display: true,        //X軸の表示
                     scaleLabel: {
                         display: true,     //X軸の表示
-                        labelString: 'X',  //X軸のラベル
+                        labelString: '',  //X軸のラベル
                         fontSize: 18       //X軸のラベルのフォントサイズ
                     },
                     ticks: {
-                        fontSize: 18      //X軸のフォントサイズ
+                        fontFamily: "Roboto",
+                        fontSize: 14      //X軸のフォントサイズ
                     },
                 }],
                 },
@@ -75,42 +75,41 @@ export default {
         this.fillChartData();
     },
     methods: {
-        fillChartData(){
-            axios
+        async fillChartData(){
+             await axios
                 .get('/inst/event-bookings/' + this.$route.params.id)
                 .then(response => {
                     console.log(response.data.chartData);
-                    // console.log(response.data.date);
-
-                    // var jsonfile = {
-                    // "jsonarray": [{
-                    //     "name": "Joe",
-                    //     "age": 12
-                    // }, {
-                    //     "name": "Tom",
-                    //     "age": 14
-                    // }]
-                    // };
 
                     let chartData = response.data.chartData;
 
                     console.log(chartData[0].date);
                     console.log(chartData[0].total);
 
-                    let data = new Array(chartData.length);
+                    let bookingdata = new Array(chartData.length);
                     let labels = new Array(chartData.length);
 
                     for(let i = 0; i<chartData.length; i++){
-                        data[i] = chartData[i].total;
+                        bookingdata[i] = chartData[i].total;
                         labels[i] = chartData[i].date;
-                        
                     };
 
-                    console.log(data);
-
-                    this.data.datasets.data = data;
-                    this.data.labels = labels;
-
+                    console.log(bookingdata);
+                    
+                    this.chartdata = {
+                        labels: labels,
+                        datasets: [{
+                            label: '',
+                            data: bookingdata,
+                            backgroundColor: '#323EDD',
+                            borderColor: '#323EDD',
+                            borderWidth: 2,
+                            lineTension: 0,
+                            fill: false,
+                        }]
+                    },
+                    console.log(this.chartdata.datasets.data);
+                    // this.loaded = true
                 })
                 .catch(error => {
                 console.error(error);
