@@ -54,13 +54,8 @@ export default {
              await axios
                 .get('/inst/participant-subjects/' + this.id)
                 .then(response => {
-                    console.log(response.data.subject);
-                    console.log(response.data.total);
-
                     let subject = response.data.subject;
                     let total = response.data.total;
-                    console.log(subject);
-                    console.log(total);
                     
                     this.chartdata = {
                         labels: subject,

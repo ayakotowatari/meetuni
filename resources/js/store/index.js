@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import { participants } from './modules/participants';
+import { participantcharts } from './modules/participantcharts';
 
 export default new Vuex.Store ({
 
@@ -222,6 +223,7 @@ export default new Vuex.Store ({
     },
     modules: {
         participants,
+        participantcharts
     }
 
 })

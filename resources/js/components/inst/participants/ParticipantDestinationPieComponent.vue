@@ -48,13 +48,13 @@ export default {
              await axios
                 .get('/inst/participant-destinations/' + this.id)
                 .then(response => {
-                    console.log(response.data.destination);
-                    console.log(response.data.total);
+                    // console.log(response.data.destination);
+                    // console.log(response.data.total);
 
                     let destination = response.data.destination;
                     let total = response.data.total;
-                    console.log(destination);
-                    console.log(total);
+                    // console.log(destination);
+                    // console.log(total);
                     
                     this.chartdata = {
                         labels: destination,

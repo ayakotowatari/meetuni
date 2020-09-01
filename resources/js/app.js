@@ -46,6 +46,7 @@ Vue.component('linechart-component', require('./components/chart/LineChartCompon
 Vue.component('participantslist-component', require('./components/inst/participants/ParticipantsListComponent.vue').default);
 Vue.component('piechart-component', require('./components/chart/PieChartComponent.vue').default);
 Vue.component('participantcountrypie-component', require('./components/inst/participants/ParticipantCountryPieComponent.vue').default);
+Vue.component('participantcountrylist-component', require('./components/inst/participants/ParticipantCountryListComponent.vue').default);
 Vue.component('participantlevelpie-component', require('./components/inst/participants/ParticipantLevelPieComponent.vue').default);
 Vue.component('participantdestinationpie-component', require('./components/inst/participants/ParticipantDestinationPieComponent.vue').default);
 Vue.component('participantsubjectpie-component', require('./components/inst/participants/ParticipantSubjectPieComponent.vue').default);

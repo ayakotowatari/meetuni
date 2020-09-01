@@ -41,7 +41,7 @@ class CountriesController extends Controller
             // dd($json);
         }
 
-        return response() -> json(['country' => $json, 'total' => $json2]);
+        return response() -> json(['countries'=>$countries, 'country' => $json, 'total' => $json2]);
 
     }
 

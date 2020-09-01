@@ -55,8 +55,8 @@ export default {
 
                     let country = response.data.country;
                     let total = response.data.total;
-                    console.log(country);
-                    console.log(total);
+                    // console.log(country);
+                    // console.log(total);
                     
                     this.chartdata = {
                         labels: country,

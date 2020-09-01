@@ -48,13 +48,13 @@ export default {
              await axios
                 .get('/inst/participant-levels/' + this.id)
                 .then(response => {
-                    console.log(response.data.level);
-                    console.log(response.data.total);
+                    // console.log(response.data.level);
+                    // console.log(response.data.total);
 
                     let level = response.data.level;
                     let total = response.data.total;
-                    console.log(level);
-                    console.log(total);
+                    // console.log(level);
+                    // console.log(total);
                     
                     this.chartdata = {
                         labels: level,
