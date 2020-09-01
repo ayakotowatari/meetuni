@@ -17,60 +17,28 @@ class BookingsController extends Controller
      */
     public function fillChartData (Request $request, $id)
     {
-        // $today = Carbon::today();
-        // $bookings = Booking::where('bookings.event_id', $id)
-        //                 ->where('bookings.created_at', '>', $today->subDays(7))
-        //                 ->where("bookings.cancelled", '0')
-        //                 ->groupBy('bookings.created_at')
-        //                 ->orderBy('bookings.created_at')
-        //                 ->select('bookings.created_at as date', DB::raw('count(bookings.created_at) as total'))
-        //                 ->get();
-        // $json = [];
-        // $json2 = [];
-
-        // foreach($bookings as $booking){
-        //     // jsonに変換
-        //     // extract($cntrys);
-        //     $json[] = $booking->date;
-        //     $json2[] = $booking->total;
-        //     // dd($json);
-        // }
-
-        // return response()->json(['date'=>$json, 'total'=>$json2],200);
-
-        // $today = Carbon::today();
-        // $bookings = Booking::where('bookings.created_at', '>', $today->subDays(7))
-        //                     ->get();
-        // $response = '';
-        // $i = 0;
-        // while ($i < 7) {
-        //     $dayOfWeek = $today->subDays($i);
-        //     $bookingsForThisDay = $bookings->where('created_at', $dayOfWeek);
-        //     $response = $bookingsForThisDay->count();
-        //     $i++;
-        // }
-        // return response() -> json(['dataRecord' => $response]);
-
         $today = Carbon::today();
-        $bookings = Booking::where('bookings.created_at', '>', $today->subDays(7))
+        $bookings = Booking::where('bookings.formatted_created', '>', $today->subDays(7))
             ->where('bookings.event_id', $id)
-            ->groupBy('bookings.created_at')
-            ->orderBy('bookings.created_at')
-            ->select('bookings.created_at as date', DB::raw('count(bookings.created_at) as total'))
+            ->where('bookings.cancelled', '=', 0)
+            ->groupBy('bookings.formatted_created')
+            ->orderBy('bookings.formatted_created')
+            ->select('bookings.formatted_created as date', DB::raw('count(bookings.formatted_created) as total'))
             ->get();
 
         $bookings = collect($bookings)->keyBy('date')
                     ->map(function($item){
-                        $item->date = \Carbon\Carbon::parse($item->date);
+                        $item->date = \Carbon\Carbon::parse($item->date)->format('Y-m-d');
                         return $item;
                     });
         
-        // return response() -> json(['dataRecord' => $bookings]);
+        // return response() -> json(['chartData' => $bookings]);
 
-        $periods = new DatePeriod($bookings->min('date'), \Carbon\CarbonInterval::day(), $bookings->max('date')->addDay());
+        // $periods = new DatePeriod($bookings->min('date'), \Carbon\CarbonInterval::day(), $bookings->max('date')->addDay());   
+        $periods = new DatePeriod(Carbon::today()->subDays(7), \Carbon\CarbonInterval::day(), Carbon::today()->addDay());
 
         $graph = array_map(function ($period) use ($bookings){
-            $date = $period->format('Y-m-d H:i:s');
+            $date = $period->format('Y-m-d');
 
             return (object)[
                 'date' => $period->format('D M j'),
@@ -79,16 +47,6 @@ class BookingsController extends Controller
         }, iterator_to_array($periods));
 
          return response() -> json(['chartData' => $graph]);
-
-
-        // $period = new DatePeriod(Carbon::now()->subDays(7), CarbonInterval::day(), Carbon::now()->addDay());
-
-        // $graph = array_map(function ($datePeriod) use ($bookings){
-        //     $date = $datePeriod->format('Y-m-d');
-        //     return $bookings->has($date) ? $bookings->get($date)->total: 0;
-        // }, iterator_to_array($period));
-
-        // return response() -> json(['dataRecord' => $graph]);         
 
     }
     public function fetchEventParticipants(Request $request, $id){

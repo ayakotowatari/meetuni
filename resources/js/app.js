@@ -42,6 +42,8 @@ Vue.component('editeventfile-component', require('./components/inst/events/edit/
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
 Vue.component('linechart-component', require('./components/chart/LineChartComponent.vue').default);
 Vue.component('participantslist-component', require('./components/inst/participants/ParticipantsListComponent.vue').default);
+Vue.component('piechart-component', require('./components/chart/PieChartComponent.vue').default);
+Vue.component('participantcountrypie-component', require('./components/inst/participants/ParticipantCountryPieComponent.vue').default);
 //テスト
 
 

@@ -12,8 +12,19 @@
             <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
         </v-col>
     </v-row>
-
-   <participantslist-component v-bind:id="id"></participantslist-component>
+    <v-row justify="center" class="mb-6">
+        <v-col cols="12" sm="12" md="12">
+            <h2 class="grey--text text--darken-1">Participants List</h2>
+        </v-col>
+    </v-row>
+    <div class="mb-12">
+        <participantslist-component v-bind:id="id"></participantslist-component>
+    </div>
+    <v-row v-if="isBooked">
+        <v-col col="12" sm="12" md="6" class="mb-12">
+            <participantcountrypie-component v-bind:id="id"></participantcountrypie-component>
+        </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -22,15 +33,18 @@ import moment from 'moment-timezone'
 import EventHeader from '../parts/EventHeaderComponent'
 import DashboardMenu from '../dashboard/DashboardMenuComponent'
 import ParticipantsList from './ParticipantsListComponent'
+import ParticipantCountryPie from './ParticipantCountryPieComponent'
 
 export default {
 components: {
     EventHeader,
     DashboardMenu,
     ParticipantsList,
+    ParticipantCountryPie
 },
 data: function(){
     return{
+            isBooked: false,
             id: this.$route.params.id,
             selected: [],
             headers: [

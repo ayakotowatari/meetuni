@@ -107,8 +107,7 @@ export default {
                             lineTension: 0,
                             fill: false,
                         }]
-                    },
-                    console.log(this.chartdata.datasets.data);
+                    }
                     // this.loaded = true
                 })
                 .catch(error => {
