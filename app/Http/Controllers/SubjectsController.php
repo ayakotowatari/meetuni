@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subject;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SubjectsController extends Controller
 {
@@ -38,6 +39,32 @@ class SubjectsController extends Controller
         //             ->get();
 
         return response()->json(['eventSubjects'=>$eventSubjects],200);
+    }
+
+    public function fetchStudentSubjects(Request $request, $id)
+    {
+        $event_id = $id;
+
+        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                    ->join('students', 'student_subjects.student_id', '=', 'students.id')
+                    ->join('bookings', 'students.id', '=', 'bookings.student_id')
+                    ->where('bookings.event_id', '=', $event_id)
+                    ->where('bookings.cancelled', '=', 0)
+                    ->groupBy('subjects.subject')
+                    ->select('subjects.subject', DB::raw('count(subject) as total'))
+                    ->get();
+    
+            $json7 = [];
+            $json8 = [];
+
+            foreach($subjects as $subject){
+                // jsonに変換
+                // extract($sbjs);
+                $json7[] = $subject->subject;
+                $json8[] = $subject->total;
+            }
+
+            return response() -> json(['subject' => $json7, 'total' => $json8]);
     }
     /**
      * Show the form for creating a new resource.

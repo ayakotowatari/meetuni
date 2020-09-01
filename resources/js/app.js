@@ -39,12 +39,21 @@ Vue.component('eventfile-component', require('./components/inst/events/create/Ev
 Vue.component('editeventbasics-component', require('./components/inst/events/edit/EditEventBasicsComponent.vue').default);
 Vue.component('editeventselect-component', require('./components/inst/events/edit/EditEventSelectComponent.vue').default);
 Vue.component('editeventfile-component', require('./components/inst/events/edit/EditEventFileComponent.vue').default);
+
+//Chart
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
 Vue.component('linechart-component', require('./components/chart/LineChartComponent.vue').default);
 Vue.component('participantslist-component', require('./components/inst/participants/ParticipantsListComponent.vue').default);
 Vue.component('piechart-component', require('./components/chart/PieChartComponent.vue').default);
 Vue.component('participantcountrypie-component', require('./components/inst/participants/ParticipantCountryPieComponent.vue').default);
+Vue.component('participantlevelpie-component', require('./components/inst/participants/ParticipantLevelPieComponent.vue').default);
+Vue.component('participantdestinationpie-component', require('./components/inst/participants/ParticipantDestinationPieComponent.vue').default);
+Vue.component('participantsubjectpie-component', require('./components/inst/participants/ParticipantSubjectPieComponent.vue').default);
+Vue.component('barchart-component', require('./components/chart/BarChartComponent.vue').default);
+
 //テスト
+
+
 
 
 /**

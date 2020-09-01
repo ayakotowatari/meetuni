@@ -44,6 +44,34 @@ class CountriesController extends Controller
         return response() -> json(['country' => $json, 'total' => $json2]);
 
     }
+
+    public function fetchStudentDestinations(Request $request, $id)
+    {
+        $event_id = $id;
+        
+        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                            ->join('students', 'country_students.student_id', '=', 'students.id')
+                            ->join('bookings', 'students.id', '=', 'bookings.student_id')
+                            ->where('bookings.event_id', '=', $event_id)
+                            ->where('bookings.cancelled', '=', 0)
+                            ->groupBy('countries.country')
+                            ->select('countries.country', DB::raw('count(countries.country) as total'))
+                            ->get();
+    
+                    $json3 = [];
+                    $json4 = [];
+                    
+                    foreach($destinations as $destination){
+                        // jsonに変換
+                        // extract($dtns);
+                        $json3[] = $destination->country;
+                        $json4[] = $destination->total;        
+                    }
+
+                    return response() -> json(['destination' => $json3, 'total' => $json4]);
+
+    }
+
     public function index()
     {
         //

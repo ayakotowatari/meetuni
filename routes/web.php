@@ -51,7 +51,12 @@ Route::get('/inst/fetch-event-regions/{id}', 'RegionsController@fetchEventRegion
 Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels');
 Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects');
 Route::get('/inst/event-participants/{id}', 'BookingsController@fetchEventParticipants');
+
+//Charts
 Route::get('/inst/participant-countries/{id}', 'CountriesController@fetchStudentCountries');
+Route::get('/inst/participant-levels/{id}', 'LevelsController@fetchStudentLevels');
+Route::get('/inst/participant-destinations/{id}', 'CountriesController@fetchStudentDestinations');
+Route::get('/inst/participant-subjects/{id}', 'SubjectsController@fetchStudentSubjects');
 
 // Route::get('/inst/event/current-info/{id}', 'EventsController@fetchEditEvent');
 

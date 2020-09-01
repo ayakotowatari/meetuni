@@ -1,10 +1,5 @@
 <template>
     <div>
-        <v-row justify="center" class="mb-6">
-            <v-col cols="12" sm="12" md="12">
-                <h2 class="grey--text text--darken-1">Participant Statistics</h2>
-            </v-col>
-        </v-row>
         <v-card
             class="mx-auto"
             max-width="500"
@@ -79,6 +74,7 @@ export default {
                         }]
                     }
                     this.loaded = true
+                    this.$emit('isBooked');
                 })
                 .catch(error => {
                 console.error(error);
