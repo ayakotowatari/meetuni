@@ -39,7 +39,7 @@ export default {
         allerror: []
       }
     },
-    mounted(){
+    created(){
         // this.$store.dispatch('fetchEventParticipants', {
         //     id: this.id
         // })

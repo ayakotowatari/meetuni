@@ -13,7 +13,15 @@
         </v-col>
     </v-row>
 
-    <participantslist-component v-bind:id="id"></participantslist-component>
+    <v-data-table
+    v-model="selected"
+    :headers="headers"
+    :items="participants"
+    item-key="last_name"
+    show-select
+    class="elevation-1"
+    >
+    </v-data-table>
   </v-container>
 </template>
 
@@ -21,27 +29,65 @@
 import moment from 'moment-timezone'
 import EventHeader from '../parts/EventHeaderComponent'
 import DashboardMenu from '../dashboard/DashboardMenuComponent'
-import ParticipantsList from './ParticipantsListComponent'
+// import ParticipantsList from './ParticipantsListComponent'
+
+import { mapState } from 'vuex'
 
 export default {
 components: {
     EventHeader,
-    DashboardMenu,
-    ParticipantsList
+    DashboardMenu
 },
 data: function(){
     return{
             id: this.$route.params.id,
-            
+            selected: [],
+            headers: [
+            {
+                text: 'Last Name',
+                align: 'start',
+                sortable: false,
+                value: 'last_name',
+            },
+            { text: 'First Name', value: 'first_name' },
+            { text: 'E-mail', value: 'email' },
+            { text: 'Country', value: 'country' },
+            { text: 'Booked At', value: 'created_at' },
+            { text: 'Actions', value: 'actions' }
+            ],
+            allerror: []
         }
-        console.log(id);
+
+},
+mounted(){
+    this.$store.dispatch('fetchEventParticipants', {
+        id: this.id
+    })
+    // this.fetchEventParticipants();
 },
 created(){
 
 },
 methods: {
+    // fetchEventParticipants: function(){
+    //         axios 
+    //             .get("/inst/event-participants" + this.id)
+    //             .then(res => {
+    //                 this.participants = res.data.participants;
+    //                 console.log(res.data.participants)
+    //             })
+    //             .catch(error => 
+    //                 this.allerror = error.response.data.errors
+    //             )
+    //     },
     
+},
+computed: {
+    ...mapState ([
+        'participants'
+    ])
 }
+
 }
 </script>
 

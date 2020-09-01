@@ -28,7 +28,7 @@ export default new Vuex.Store ({
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
-        // participants:[],
+        participants:[],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -81,9 +81,9 @@ export default new Vuex.Store ({
         setEventSubjects(state, payload){
             state.eventSubjects = payload
         },
-        // setParticipants(state, payload){
-        //     state.participants = payload
-        // }
+        setParticipants(state, payload){
+            state.participants = payload
+        }
     },
     actions: {
         //非同期処理をする
@@ -156,7 +156,7 @@ export default new Vuex.Store ({
                 })
         },
         async fetchSingleEvent({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             let event = [];
 
@@ -168,7 +168,7 @@ export default new Vuex.Store ({
                 })
         },
         async fetchEventRegions({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             let eventRegions = [];
 
@@ -180,7 +180,7 @@ export default new Vuex.Store ({
             })
         },
         async fetchEventLevels({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             let eventLevels = [];
 
@@ -193,7 +193,7 @@ export default new Vuex.Store ({
                 })
         },
         async fetchEventSubjects({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             let eventSubjects = [];
 
@@ -204,18 +204,19 @@ export default new Vuex.Store ({
                     commit("setEventSubjects", eventSubjects)
                 })
         },
-        // async fetchEventParticipants({commit}, payload){
+        async fetchEventParticipants({commit}, payload){
+            console.log(payload.id);
 
-        //     let participants = [];
+            let participants = [];
 
-        //     await axios 
-        //         .get("/inst/event-participants" + payload.id)
-        //         .then(response => {
-        //             participants = response.data.participants;
-        //             console.log(response.data.participants);
-        //             commit("setParticipants", participants)
-        //         })
-        // },
+            await axios 
+                .get("/inst/event-participants/" + payload.id)
+                .then(response => {
+                    participants = response.data.participants;
+                    console.log(participants);
+                    commit("setParticipants", participants)
+                })
+        },
     },
     modules: {
         
