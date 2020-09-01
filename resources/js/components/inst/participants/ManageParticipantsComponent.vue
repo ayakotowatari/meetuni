@@ -13,15 +13,7 @@
         </v-col>
     </v-row>
 
-    <v-data-table
-    v-model="selected"
-    :headers="headers"
-    :items="participants"
-    item-key="last_name"
-    show-select
-    class="elevation-1"
-    >
-    </v-data-table>
+   <participantslist-component v-bind:id="id"></participantslist-component>
   </v-container>
 </template>
 
@@ -29,14 +21,13 @@
 import moment from 'moment-timezone'
 import EventHeader from '../parts/EventHeaderComponent'
 import DashboardMenu from '../dashboard/DashboardMenuComponent'
-// import ParticipantsList from './ParticipantsListComponent'
-
-import { mapState } from 'vuex'
+import ParticipantsList from './ParticipantsListComponent'
 
 export default {
 components: {
     EventHeader,
-    DashboardMenu
+    DashboardMenu,
+    ParticipantsList,
 },
 data: function(){
     return{
@@ -60,9 +51,9 @@ data: function(){
 
 },
 mounted(){
-    this.$store.dispatch('fetchEventParticipants', {
-        id: this.id
-    })
+    // this.$store.dispatch('fetchEventParticipants', {
+    //     id: this.id
+    // })
     // this.fetchEventParticipants();
 },
 created(){
@@ -83,9 +74,9 @@ methods: {
     
 },
 computed: {
-    ...mapState ([
-        'participants'
-    ])
+    // ...mapState ([
+    //     'participants'
+    // ])
 }
 
 }

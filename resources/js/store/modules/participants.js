@@ -16,7 +16,7 @@ export const participants = {
             let participants = [];
 
             await axios
-                .get("/inst/event-participants" + payload.id)
+                .get("/inst/event-participants/" + payload.id)
                 .then(response => {
                     participants = response.data.participants;
                     console.log(participants);

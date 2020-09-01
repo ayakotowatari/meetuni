@@ -11,9 +11,9 @@
 </template>
 
 <script>
-// import {createNamespacedHelpers } from 'vuex'
-// const {mapState} = createNamespacedHelpers('participants');
-import { mapState } from 'vuex'
+import {createNamespacedHelpers} from 'vuex'
+const {mapState} = createNamespacedHelpers('participants');
+// import { mapState } from 'vuex'
 
 export default {
      props: {
@@ -22,7 +22,6 @@ export default {
      data: () => {
       return {
         selected: [],
-        participants: [],
         headers: [
           {
             text: 'Last Name',
@@ -39,29 +38,29 @@ export default {
         allerror: []
       }
     },
-    created(){
-        // this.$store.dispatch('fetchEventParticipants', {
-        //     id: this.id
-        // })
-        this.fetchEventParticipants();
+    mounted(){
+        this.$store.dispatch('participants/fetchEventParticipants', {
+            id: this.id
+        })
+        // this.fetchEventParticipants();
     },
     computed: {
-        // ...mapState([
-        //     'participants'
-        // ]),
+        ...mapState([
+            'participants'
+        ]),
     },
     methods: {
-        fetchEventParticipants: function(id){
-            axios 
-                .get("/inst/event-participants" + this.id)
-                .then(res => {
-                    this.participants = res.data.participants;
-                    console.log(res.data.participants)
-                })
-                .catch(error => 
-                    this.allerror = error.response.data.errors
-                )
-        },
+        // fetchEventParticipants: function(){
+        //     axios 
+        //         .get("/inst/event-participants" + this.id)
+        //         .then(res => {
+        //             this.participants = res.data.participants;
+        //             console.log(res.data.participants)
+        //         })
+        //         .catch(error => 
+        //             this.allerror = error.response.data.errors
+        //         )
+        // },
     }
 
 }
