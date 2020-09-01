@@ -20,19 +20,28 @@
                 <participantcountrylist-component v-bind:id="id"></participantcountrylist-component>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col col="12" sm="12" md="6" class="mb-14">
+        <v-row class="mb-14">
+            <v-col col="12" sm="12" md="6" >
                 <participantdestinationpie-component v-bind:id="id"></participantdestinationpie-component>
             </v-col>
-        </v-row>
-        <v-row>
-            <v-col col="12" sm="12" md="6" class="mb-14">
-                <participantlevelpie-component v-bind:id="id"></participantlevelpie-component>
+            <v-col col="12" sm="12" md="6">
+                <participantdestinationlist-component v-bind:id="id"></participantdestinationlist-component>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col col="12" sm="12" md="6" class="mb-14">
+        <v-row class="mb-14">
+            <v-col col="12" sm="12" md="6">
+                <participantlevelpie-component v-bind:id="id"></participantlevelpie-component>
+            </v-col>
+            <v-col col="12" sm="12" md="6">
+                <participantlevellist-component v-bind:id="id"></participantlevellist-component>
+            </v-col>
+        </v-row>
+        <v-row justify="center" class="mb-14">
+            <v-col col="12" sm="12" md="6">
                 <participantsubjectpie-component v-bind:id="id"></participantsubjectpie-component>
+            </v-col>
+            <v-col col="12" sm="12" md="6">
+                <participantsubjectlist-component v-bind:id="id"></participantsubjectlist-component>
             </v-col>
         </v-row>
     </v-container>
@@ -44,9 +53,12 @@ import EventHeader from '../parts/EventHeaderComponent'
 import DashboardMenu from '../dashboard/DashboardMenuComponent'
 import ParticipantCountryPie from './ParticipantCountryPieComponent'
 import ParticipantCountryList from './ParticipantCountryListComponent'
-import ParticipantLevelPie from './ParticipantCountryPieComponent'
 import ParticipantDestinationPie from './ParticipantDestinationPieComponent'
+import ParticipantDestinationList from './ParticipantDestinationListComponent'
+import ParticipantLevelPie from './ParticipantLevelPieComponent'
+import ParticipantLevelList from './ParticipantLevelListComponent'
 import ParticipantSubjectPie from './ParticipantSubjectPieComponent'
+import ParticipantSubjectList from './ParticipantSubjectListComponent'
 
 export default {
     components: {
@@ -54,9 +66,12 @@ export default {
         DashboardMenu,
         ParticipantCountryPie,
         ParticipantCountryList,
-        ParticipantLevelPie,
         ParticipantDestinationPie,
-        ParticipantSubjectPie
+        ParticipantDestinationList,
+        ParticipantLevelPie,
+        ParticipantLevelList,
+        ParticipantSubjectPie,
+        ParticipantSubjectList
     },
     data: function(){
         return{

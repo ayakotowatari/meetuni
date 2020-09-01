@@ -1,7 +1,7 @@
 <template>
     <v-card
         class="mx-auto"
-        max-width="500"
+        max-width="800"
     >
         <barchart-component
         v-if="loaded"

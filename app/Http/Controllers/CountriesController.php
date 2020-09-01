@@ -68,7 +68,7 @@ class CountriesController extends Controller
                         $json4[] = $destination->total;        
                     }
 
-                    return response() -> json(['destination' => $json3, 'total' => $json4]);
+                    return response() -> json(['destinations' => $destinations, 'destination' => $json3, 'total' => $json4]);
 
     }
 

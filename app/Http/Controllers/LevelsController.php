@@ -55,6 +55,6 @@ class LevelsController extends Controller
                     $json6[] = $level->total;
             }
 
-            return response() -> json(['level' => $json5, 'total' => $json6]);
+            return response() -> json(['levels' => $levels, 'level' => $json5, 'total' => $json6]);
     }
 }
