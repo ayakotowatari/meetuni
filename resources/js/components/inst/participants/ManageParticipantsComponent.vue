@@ -13,7 +13,7 @@
         </v-col>
     </v-row>
 
-    <participantslist-component></participantslist-component>
+    <participantslist-component v-bind:id="id"></participantslist-component>
   </v-container>
 </template>
 
@@ -32,8 +32,9 @@ components: {
 data: function(){
     return{
             id: this.$route.params.id,
+            
         }
-    console.log(id);
+        console.log(id);
 },
 created(){
 

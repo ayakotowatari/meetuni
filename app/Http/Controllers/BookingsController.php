@@ -93,6 +93,10 @@ class BookingsController extends Controller
     }
     public function fetchEventParticipants(Request $request, $id){
 
+        $request->validate([
+            'id' => 'required',
+        ]);
+
         $event_id = $id;
 
         $participants = Booking::join('students', 'bookings.student_id', '=', 'students.id')

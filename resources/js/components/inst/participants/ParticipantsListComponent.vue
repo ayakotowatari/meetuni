@@ -16,10 +16,13 @@
 import { mapState } from 'vuex'
 
 export default {
-     data () {
+     props: {
+        id: String,
+     },
+     data: () => {
       return {
-        id: this.$route.params.id,
         selected: [],
+        participants: [],
         headers: [
           {
             text: 'Last Name',
@@ -33,17 +36,32 @@ export default {
           { text: 'Booked At', value: 'created_at' },
           { text: 'Actions', value: 'actions' }
         ],
+        allerror: []
       }
     },
     mounted(){
-        this.$store.dispatch('fetchEventParticipants', {
-            id: this.id
-        })
+        // this.$store.dispatch('fetchEventParticipants', {
+        //     id: this.id
+        // })
+        this.fetchEventParticipants();
     },
     computed: {
-        ...mapState([
-            'participants'
-        ]),
+        // ...mapState([
+        //     'participants'
+        // ]),
+    },
+    methods: {
+        fetchEventParticipants: function(id){
+            axios 
+                .get("/inst/event-participants" + this.id)
+                .then(res => {
+                    this.participants = res.data.participants;
+                    console.log(res.data.participants)
+                })
+                .catch(error => 
+                    this.allerror = error.response.data.errors
+                )
+        },
     }
 
 }
