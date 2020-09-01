@@ -74,7 +74,7 @@ export default {
                         }]
                     }
                     this.loaded = true
-                    this.$emit('isBooked');
+                    // this.$emit('isBooked');
                 })
                 .catch(error => {
                 console.error(error);
