@@ -21,8 +21,6 @@ export const participantcharts = {
             await axios
                .get('/inst/participant-countries/' + payload.id)
                .then(response => {
-                   // console.log(response.data.country);
-                   // console.log(response.data.total);
                    let countries = response.data.countries;
                    let country = response.data.country;
                    let total = response.data.total;
@@ -33,28 +31,9 @@ export const participantcharts = {
 
                    commit('setParticipantCountry', {countries, country, total})
                    
-                //    this.chartdata = {
-                //        labels: country,
-                //        datasets: [{
-                //            data: total,
-                //            backgroundColor: [
-                //                "#6A2B86",
-                //                "#F0E52F",
-                //                "#1ABEBE",
-                //                "#ED871D",
-                //                "#DF3291",
-                //                "#66266C",
-                //            ],
-                //            borderAlign: "inner"
-                //        }]
-                //    }
-                //    this.loaded = true
-                //    this.$emit('isBooked');
+                
                })
-            //    .catch(error => {
-            //    console.error(error);
-            //    })
-               // .finally(() => this.loaded = true)
+            
        },
     }
 
