@@ -17,16 +17,12 @@
   <h1 class="grey--text">Create Events</h1>
   <v-container>
       <eventbasics-component @basicsAdded = "hide = false"></eventbasics-component>
-      <v-form class="mb-6" v-model="valid">
         <eventselect-component 
           @selectsAdded = "hide = false"
         ></eventselect-component>
-      </v-form>
-      <v-form class="mb-6" :disabled="hide" v-model="valid">
         <eventfile-component
           @eventAdded = "dialog = true"
         ></eventfile-component>
-      </v-form>
   </v-container>
 </div>
 </template>
@@ -45,7 +41,6 @@ export default {
   data: () => ({
     valid: true,
     loading: false,
-    hide: true,
     allerror: [],
     dialog: true
     // snackbar: false

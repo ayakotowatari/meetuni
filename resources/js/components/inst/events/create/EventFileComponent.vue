@@ -18,6 +18,7 @@
                <h2 class="grey--text text--darken-1">Step 3</h2>
           </v-col>
       </v-row>
+      <v-form class="mb-6" v-model="valid">
       <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
             <v-textarea
@@ -61,6 +62,7 @@
                 </v-btn>
             </v-col>
         </v-row>
+        </v-form>
   </div>
 </template>
 
@@ -68,6 +70,7 @@
 export default {
     data: () => ({
         id: '',
+        hide: true,
         dialog: false,
         valid: true,
         loading: false,
