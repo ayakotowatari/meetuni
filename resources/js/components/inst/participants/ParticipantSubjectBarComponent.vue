@@ -28,17 +28,20 @@ export default {
         chartdata: {},
         options: {
             title: {
-            display: true,
+            display: false,
             position: "top",
             text: "Subject areas of interest",
+            fontFamily: 'Roboto',
             fontSize: 18,
             fontColor: "#262626"
             },
             scales: {
                 xAxes : [{
                     ticks: {
-                        min: 0
-                    }
+                        min: 0,
+                        fontFamily: 'Roboto',
+                    },
+                    barPercentage: 0.8
                 }]
             },
             legend: {

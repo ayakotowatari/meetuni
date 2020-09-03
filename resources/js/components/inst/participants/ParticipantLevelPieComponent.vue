@@ -28,10 +28,11 @@ export default {
         chartdata: {},
         options: {
             title :{
-                display: true,
+                display: false,
                 position: "top",
                 text: "Levels",
                 fontSize: 18,
+                fontFamily: 'Roboto',
                 fontColor: "#262626"
             },
             legend : {

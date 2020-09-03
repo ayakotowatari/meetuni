@@ -28,15 +28,17 @@ export default {
         chartdata: {},
         options: {
             title :{
-                display: true,
+                display: false,
                 position: "top",
                 text: "Desired Destinations",
                 fontSize: 18,
+                fontFamily: 'Roboto',
                 fontColor: "#262626"
             },
             legend : {
                 display: true,
-                position: "bottom"
+                position: "bottom",
+                fontFamily: 'Roboto'
             }
         }
     }),

@@ -30,7 +30,7 @@ export default {
         chartdata: {},
         options: {
             title :{
-                display: true,
+                display: false,
                 position: "top",
                 text: "Country of origins",
                 fontSize: 18,
@@ -38,7 +38,8 @@ export default {
             },
             legend : {
                 display: true,
-                position: "bottom"
+                position: "bottom",
+                fontFamily: 'Roboto',
             }
         }
     }),
