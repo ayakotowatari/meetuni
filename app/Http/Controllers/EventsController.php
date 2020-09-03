@@ -279,7 +279,6 @@ class EventsController extends Controller
             $eventSubject->event_id = $id;
             $eventSubject->subject_id = $subject;
             $eventSubject->save();
-
         }
     } 
     
@@ -325,6 +324,16 @@ class EventsController extends Controller
     public function publishEvent(Request $request, $id)
     {
         $status_id = 1;
+
+        Event::where('events.id', $id)
+        ->update([ 
+            'status_id' => $status_id
+        ]);
+    }
+
+    public function unpublishEvent(Request $request, $id)
+    {
+        $status_id = 3;
 
         Event::where('events.id', $id)
         ->update([ 
