@@ -94,6 +94,9 @@ export default new Vuex.Store ({
         updateEventDescription(state, payload){
             state.description = payload
         },
+        updateEventFiles(state, payload){
+            state.files = payload
+        },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
@@ -254,6 +257,34 @@ export default new Vuex.Store ({
                         commit('setallErrors', allerror)
                     )
 
+        },
+        async updateEventFiles({state, commit}, payload){
+
+            console.log(payload.id);
+            console.log(payload.image);
+
+            let allerror = [];
+            
+            let data = new FormData();
+            data.append("image", payload.image);
+            data.append("id", payload.id)
+
+            let config = {headers: {'Content-Type': 'multipart/form-data'}};
+            
+            await axios
+                .post("/inst/update-image", data, config)
+                .then(response => {
+                    console.log(response);
+                    // this.loading = false;
+                    // this.$emit('eventAdded');
+                })
+                // .catch(error => 
+                //     this.allerror = error.response.data.errors
+                // );
+                .catch(error => 
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
+                    )
         },
         // async fetchEventParticipants({commit}, payload){
         //     console.log(payload.id);
