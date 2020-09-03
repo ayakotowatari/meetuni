@@ -12,6 +12,11 @@
                 <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
             </v-col>
         </v-row>
+        <v-row justify="center" class="mb-6">
+        <v-col cols="12" sm="12" md="12">
+            <h2 class="grey--text text--darken-1">Country of Origins</h2>
+        </v-col>
+        </v-row>
         <v-row class="mb-14">
             <v-col col="12" sm="12" md="6">
                 <participantcountrypie-component v-bind:id="id"></participantcountrypie-component>
@@ -20,6 +25,9 @@
                 <participantcountrylist-component v-bind:id="id"></participantcountrylist-component>
             </v-col>
         </v-row>
+        <v-col cols="12" sm="12" md="12">
+            <h2 class="grey--text text--darken-1">Desired Destinations</h2>
+        </v-col>
         <v-row class="mb-14">
             <v-col col="12" sm="12" md="6" >
                 <participantdestinationpie-component v-bind:id="id"></participantdestinationpie-component>
@@ -28,6 +36,9 @@
                 <participantdestinationlist-component v-bind:id="id"></participantdestinationlist-component>
             </v-col>
         </v-row>
+        <v-col cols="12" sm="12" md="12">
+            <h2 class="grey--text text--darken-1">Desired Levels of Study</h2>
+        </v-col>
         <v-row class="mb-14">
             <v-col col="12" sm="12" md="6">
                 <participantlevelpie-component v-bind:id="id"></participantlevelpie-component>
@@ -36,9 +47,12 @@
                 <participantlevellist-component v-bind:id="id"></participantlevellist-component>
             </v-col>
         </v-row>
+        <v-col cols="12" sm="12" md="12">
+            <h2 class="grey--text text--darken-1">Subject Areas of Interest</h2>
+        </v-col>
         <v-row justify="center" class="mb-14">
             <v-col col="12" sm="12" md="6">
-                <participantsubjectpie-component v-bind:id="id"></participantsubjectpie-component>
+                <participantsubjectbar-component v-bind:id="id"></participantsubjectbar-component>
             </v-col>
             <v-col col="12" sm="12" md="6">
                 <participantsubjectlist-component v-bind:id="id"></participantsubjectlist-component>
@@ -57,7 +71,7 @@ import ParticipantDestinationPie from './ParticipantDestinationPieComponent'
 import ParticipantDestinationList from './ParticipantDestinationListComponent'
 import ParticipantLevelPie from './ParticipantLevelPieComponent'
 import ParticipantLevelList from './ParticipantLevelListComponent'
-import ParticipantSubjectPie from './ParticipantSubjectPieComponent'
+import ParticipantSubjectBar from './ParticipantSubjectBarComponent'
 import ParticipantSubjectList from './ParticipantSubjectListComponent'
 
 export default {
@@ -70,7 +84,7 @@ export default {
         ParticipantDestinationList,
         ParticipantLevelPie,
         ParticipantLevelList,
-        ParticipantSubjectPie,
+        ParticipantSubjectBar,
         ParticipantSubjectList
     },
     data: function(){
