@@ -97,6 +97,21 @@ export default new Vuex.Store ({
         updateEventFiles(state, payload){
             state.files = payload
         },
+        updateEventTitle(state,payload){
+            state.title = payload
+        },
+        updateEventDate(state,payload){
+            state.date = payload
+        },
+        updateEventTimezone(state,payload){
+            state.timezone = payload
+        },
+        updateEventStartTime(state,payload){
+            state.start_time = payload
+        },
+        updateEventEndTime(state,payload){
+            state.end_time= payload
+        },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
@@ -237,6 +252,29 @@ export default new Vuex.Store ({
                     eventSubjects = res.data.eventSubjects;
                     commit("setEventSubjects", eventSubjects)
                 })
+        },
+        async updateEventBasics({state, commit}, payload){
+
+            let loading = payload.loading
+            let aooerror = [];
+
+            axios
+                .post("/inst/update-basics", {
+                    id: payload.id,
+                    title: payload.title,
+                    date: payload.date,
+                    timezone: payload.timezone,
+                    start_time: payload.start_time,
+                    end_time: payload.end_time
+                })
+                .then(response => {
+                    loading = false;
+                    // this.$emit('basicsAdded');
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit("setallErrors", allerror)
+                )
         },
         async updateEventDescription({state, commit}, payload){
 
