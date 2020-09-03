@@ -73,6 +73,7 @@ Route::post('/inst/update-subjects', 'EventsController@updateSubjects');
 Route::post('/inst/update-description', 'EventsController@updateDescription');
 Route::post('/inst/update-image', 'EventsController@updateImage');
 Route::post('/inst/publish-event/{id}', 'EventsController@publishEvent');
+Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');

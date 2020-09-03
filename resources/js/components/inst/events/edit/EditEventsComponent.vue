@@ -2,13 +2,21 @@
   <v-container>
     <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="420">
-        <v-card>
+        <v-card v-if="isPublished == true">
             <v-card-title class="headline">Your project has been published.</v-card-title>
             <v-card-text>Your dashboard is ready to help you manage the event.</v-card-text>
             <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="info darken-2" text @click="toDashboard(id)">Go to Dashboard</v-btn>
-            <v-btn color="info darken-2" text @click="toMyEvents">Back to My Events</v-btn>
+            <v-btn color="info darken-2" text @click="toMyEvents">Go to My Events</v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card v-if="isUnpublished == true">
+            <v-card-title class="headline">Your project has been unpublished.</v-card-title>
+            <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="info darken-2" text @click="close">Close</v-btn>
+            <v-btn color="info darken-2" text @click="toMyEvents">Leave to My Events</v-btn>
             </v-card-actions>
         </v-card>
         </v-dialog>
@@ -32,6 +40,7 @@
           v-if="event.status === 'Ongoing'"
           color="primary"
           outlined
+          @click="unpublish(id)"
         >Unpublish</v-btn>
       </v-col>
     </v-row>
@@ -79,6 +88,8 @@ data: function(){
     return{
             id: this.$route.params.id,
             dialog: false,
+            isPublished: false,
+            isUnpublished: false,
         }
     console.log(id);
 },
@@ -98,16 +109,28 @@ methods: {
     },
     publish(id){
       axios
-        .post('/inst/publish-event' + this.id)
+        .post('/inst/publish-event/' + this.id)
         .then(res => {
-          this.dialog = true
+          this.dialog = true;
+          this.isPublished = true;
+        })
+    },
+    unpublish(id){
+      axios
+        .post('/inst/unpublish-event/' + this.id)
+        .then(res => {
+          this.dialog = true;
+          this.isUnpublished = true;
         })
     },
     toDashboard(id){
       this.$router.push({name: 'dashboard', params: {id: id}})
     },
     toMyEvents(){
-            this.$router.push({ name: 'events'})
+      this.$router.push({ name: 'events'})
+    },
+    close(){
+      this.dialog = false;
     }
 },
 computed: {
