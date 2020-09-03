@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-form v-model="valid">
+    <v-form ref="form">
         <v-row justify="center" class="mt-12">
             <v-col col="12" sm="12" md="8">
                 <h3 class="py-0">Description</h3>
@@ -8,6 +8,7 @@
         </v-row>
         <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
+            {{ description }}
             <v-textarea
                 v-model="description"
                 counter
@@ -24,7 +25,6 @@
         <v-row justify="center">
             <v-col col="12" sm="12" md="1" offset-md="7">
                 <v-btn 
-                :disabled="!valid"
                 depressed 
                 outlined
                 color="primary" 
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -97,7 +97,6 @@ export default {
 
     },
     data: () => ({
-        valid: true,
         loading: false,
         hideFiles: true,
         textareaRules: [v => v.length <= 600 || 'Max 600 characters'],
@@ -111,45 +110,50 @@ export default {
             id: this.id
         });
     },
+    computed: {
+        ...mapState ([
+            'description',
+            'files'
+        ]),
+        description: {
+            get(){
+                return this.$store.state.description
+            },
+            set (value) {
+                this.$store.commit('updateEventDescription', value)
+            }
+        },
+    },
     methods: {
-        validate(){
-            if(
-                this.description != ''
-            )
-            {
-                return true
-            }else if(
-            
-                this.files != ''
-            
-            )
-            {
-                return true
-            }
-            else{
-                
-                return false
-            }
-        },
+        ...mapActions([
+            'updateEventDescription'
+        ]),
         updateDescription(){
-
-            if(this.valid=true){
-                this.loading = true;
-
-                axios
-                    .post('/inst/update-description', {
-                        id: this.id,
-                        description: this.description
-                    })
-                    .then(response => {
-                    this.loading = false;
-                    // this.$emit('basicsAdded');
-                    })
-                    .catch(error => 
-                        this.allerror = error.response.data.errors
-                    )
+            if(this.$refs.form.validate()){
+                this.updateEventDescription({
+                id: this.id,
+                description: this.description
+                })
             }
         },
+        // updateDescription(){
+
+        //     if(this.$refs.form.validate()){
+        //         // this.loading = true;
+        //         axios
+        //             .post('/inst/update-description', {
+        //                 id: this.id,
+        //                 description: this.description
+        //             })
+        //             .then(response => {
+        //             this.loading = false;
+        //             // this.$emit('basicsAdded');
+        //             })
+        //             .catch(error => 
+        //                 this.allerror = error.response.data.errors
+        //             )
+        //     }
+        // },
         updateFiles(){
             if(this.valid=true){
             this.loading = true;
@@ -175,12 +179,7 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapState ([
-            'description',
-            'files'
-        ])
-    }
+   
     
 }
 </script>

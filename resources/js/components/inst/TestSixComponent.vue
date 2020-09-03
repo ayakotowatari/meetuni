@@ -1,6 +1,6 @@
 <template>
   <v-container>
-  <v-form>
+  <v-form ref="form">
       <v-row>
         <v-col
           cols="12"
@@ -93,10 +93,12 @@ import { mapState } from 'vuex'
             // });
         },
         update(){
-            this.$store.dispatch('updateDetails', {
-                name: this.name,
-                email: this.email
-            })
+            if(this.$refs.form.validate()){
+              this.$store.dispatch('updateDetails', {
+                  name: this.name,
+                  email: this.email
+              })
+            }
         }
         // submit(){
         //   this.loading = true;

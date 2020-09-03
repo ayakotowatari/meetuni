@@ -91,6 +91,9 @@ export default new Vuex.Store ({
         setEventSubjects(state, payload){
             state.eventSubjects = payload
         },
+        updateEventDescription(state, payload){
+            state.description = payload
+        },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
@@ -231,6 +234,26 @@ export default new Vuex.Store ({
                     eventSubjects = res.data.eventSubjects;
                     commit("setEventSubjects", eventSubjects)
                 })
+        },
+        async updateEventDescription({state, commit}, payload){
+
+            console.log(payload.id);
+            console.log(payload.description);
+
+            await axios
+                    .post('/inst/update-description', {
+                        id: payload.id,
+                        description: payload.description
+                    })
+                    .then(response => {
+                        console.log(response);
+                    // this.$emit('basicsAdded');
+                    })
+                    .catch(error => 
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
+                    )
+
         },
         // async fetchEventParticipants({commit}, payload){
         //     console.log(payload.id);
