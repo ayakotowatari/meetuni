@@ -105,6 +105,12 @@ export default new Vuex.Store ({
         },
         setallErrors(state, payload){
             state.allerror = payload
+        },
+        updateName(state, payload){
+            state.details.name = payload
+        },
+        updateEmail(state, payload){
+            state.details.email = payload
         }
     },
     actions: {
@@ -267,6 +273,31 @@ export default new Vuex.Store ({
 
             await axios
                 .post('/inst/testform', {
+                    name: details.name,
+                    email: details.email
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    console.log(allerror),
+                    commit('setallErrors', allerror)
+                )
+        },
+        async updateDetails({state, commit}, payload){
+            console.log(payload.name);
+            console.log(payload.email);
+
+            let allerror = [];
+
+            const details = {
+                name: payload.name,
+                email: payload.email
+            }
+
+            await axios
+                .post('/inst/testform/update', {
                     name: details.name,
                     email: details.email
                 })
