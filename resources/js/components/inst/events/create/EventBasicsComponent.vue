@@ -5,7 +5,7 @@
                <h2 class="grey--text text--darken-1">Step 1</h2>
            </v-col>
        </v-row>
-       <v-form class="mb-6" v-model="valid">
+       <v-form class="mb-6" ref="form"> 
         <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
                     <v-text-field 
@@ -91,6 +91,7 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
+                            :rules="timeRules" 
                             required
                             :error="allerror.start_time"
                             :error-messages="allerror.start_time"
@@ -127,6 +128,7 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
+                            :rules="timeRules" 
                             required
                             :error="allerror.end_time"
                             :error-messages="allerror.end_time"
@@ -146,7 +148,7 @@
             <v-row justify="center">
                 <v-col col="12" sm="12" md="1" offset-md="7">
                     <v-btn 
-                    :disabled="!valid"
+                    :disabled = "isSubmitted"
                     depressed 
                     block 
                     color="primary" 
@@ -166,8 +168,8 @@ import moment from 'moment'
 
 export default {
     data: () => ({
-        valid: true,
         loading: false,
+        isSubmitted: false,
         title: '',
         titleRules: [
         v => !!v || 'Event title is required',
@@ -191,27 +193,28 @@ export default {
         allerror: []
     }),
     methods: {
-        validate(){
-            if(
-                this.title != '' && 
-                this.date != '' && 
-                this.timezone != '' &&
-                this.start_time != '' &&
-                this.end_time != ''
-            ){
-                return true
-            }else{
-                return false
-            }
-        },
+        // validate(){
+        //     if(
+        //         this.title != '' && 
+        //         this.date != '' && 
+        //         this.timezone != '' &&
+        //         this.start_time != '' &&
+        //         this.end_time != ''
+        //     ){
+        //         return true
+        //     }else{
+        //         return false
+        //     }
+        // },
         // validate(){
         //     this.$refs.form.validate()
         // },
         allowedSteps: m => m % 10 === 0,
         
         submit(){
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
                 this.loading = true;
+                this.isSubmitted = true;
 
                 axios
                 .post("/inst/create-basics", {
@@ -224,11 +227,11 @@ export default {
                 .then(response => {
                     this.loading = false;
                     this.$emit('basicsAdded');
-                    this.title='';
-                    this.date='';
-                    this.timezone='';
-                    this.start_time='';
-                    this.end_time=''
+                    // this.title = '';
+                    // this.date = '';
+                    // this.timezone = '';
+                    // this.start_time = '';
+                    // this.end_time = '';
                 })
                 .catch(error => 
                     this.allerror = error.response.data.errors

@@ -18,7 +18,7 @@
                <h2 class="grey--text text--darken-1">Step 3</h2>
           </v-col>
       </v-row>
-      <v-form class="mb-6" v-model="valid">
+      <v-form :disabled="hideFile" class="mb-6" ref="form">
       <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
             <v-textarea
@@ -52,7 +52,7 @@
         <v-row justify="center">
             <v-col col="12" sm="12" md="1" offset-md="7">
                 <v-btn 
-                :disabled="!valid"
+                :disabled="isSubmitted"
                 depressed 
                 block 
                 color="primary" 
@@ -68,35 +68,40 @@
 
 <script>
 export default {
+    props: {
+        hideFile: Boolean
+    },
     data: () => ({
         id: '',
-        hide: true,
+        isSubmitted: false,
         dialog: false,
-        valid: true,
         loading: false,
         description: '',
-        textareaRules: [v => v.length <= 300 || 'Max 300 characters'],
+        textareaRules: [
+            v => !!v || v.length <= 300 || 'Max 300 characters'
+        ],
         files: [],
         imageRules: [
-            value => !value || value.size < 3000000 || 'Image size should be less than 3 MB.',
+            value => !!value || value.size < 3000000 || 'Image size should be less than 3 MB.',
         ],
         allerror: [],
     }),
     methods: {
-        validate(){
-            if(
-                this.description != '' && 
-                this.files != '' 
-            )
-            {
-                return true
-            }else{
-                return false
-            }
-        },
+        // validate(){
+        //     if(
+        //         this.description != '' && 
+        //         this.files != '' 
+        //     )
+        //     {
+        //         return true
+        //     }else{
+        //         return false
+        //     }
+        // },
         submit(){
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
             this.loading = true;
+            this.isSubmitted = true;
 
             let data = new FormData();
             data.append("description", this.description);
@@ -111,8 +116,8 @@ export default {
                     // this.$emit('redirect');
                     this.event = response.data.event;
                     this.dialog = true;
-                    this.description='';
-                    this.files='';
+                    // this.description='';
+                    // this.files='';
                 })
                 // .catch(error => 
                 //     this.allerror = error.response.data.errors
