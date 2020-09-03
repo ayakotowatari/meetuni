@@ -5,7 +5,7 @@
                 <h3 class="py-0">Basic Information</h3>
             </v-col>  
         </v-row>
-        <v-form class="mb-6" ref="form">
+        <v-form class="mb-6" v-model="valid">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
                     <v-text-field 
@@ -152,6 +152,7 @@
             <v-row justify="center">
                 <v-col col="12" sm="12" md="1" offset-md="7">
                     <v-btn 
+                    :disabled="!valid"
                     depressed 
                     outlined
                     color="primary" 
@@ -181,6 +182,7 @@ export default {
         // time2: String,
     },
     data: () => ({
+        valid: true,
         loading: false,
         titleRules: [
         v => !!v || 'Event title is required',
@@ -205,13 +207,26 @@ export default {
         });
     },
     methods: {
+        validate(){
+            if(
+                this.title != '' && 
+                this.date != '' && 
+                this.timezone != '' &&
+                this.start_time != '' &&
+                this.end_time != ''
+            ){
+                return true
+            }else{
+                return false
+            }
+        },
         // validate(){
         //     this.$refs.form.validate()
         // },
         allowedSteps: m => m % 10 === 0,
         
         submit(){
-            if(this.$refs.form.validate()){
+            if(this.valid=true){
                 this.loading = true;
 
                 axios
