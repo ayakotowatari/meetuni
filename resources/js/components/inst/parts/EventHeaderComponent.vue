@@ -2,8 +2,8 @@
     <v-container>
         <v-row>
             <v-col>
-                <h2 class="grey--text text--darken-4">{{ event.title }}</h2> 
-                <div>{{ formattedDate(event.date, user.timezone) }}</div>
+                <h2 class="grey--text text--darken-4">{{ title }}</h2> 
+                <div>{{ formattedDate(date, user.timezone) }}</div>
                 <div>
                 {{ formattedStartTime(event.start_utc, user.timezone) }} - 
                 {{ formattedEndTime(event.end_utc, user.timezone) }}
@@ -67,6 +67,10 @@ export default {
     ...mapState ([
         'user',
         'event',
+        'title',
+        'date',
+        'start_time',
+        'end_time',
         'eventRegions',
         'eventLevels',
         'eventSubjects'

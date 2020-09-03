@@ -142,7 +142,6 @@ export default {
         id: String
     },
     data: () => ({
-        valid: true,
         loading: false,
         hideRegions: true,
         hideLevels: true,

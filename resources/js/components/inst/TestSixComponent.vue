@@ -1,11 +1,12 @@
 <template>
   <v-container>
-  <v-form>
+  <v-form ref="form">
       <v-row>
         <v-col
           cols="12"
           md="4"
         >
+        <p>{{details.name}}</p>
           <v-text-field
             v-model="name"
             :rules="nameRules"
@@ -20,6 +21,7 @@
           cols="12"
           md="4"
         >
+        <p>{{details.email}}</p>
           <v-text-field
             v-model="email"
             :rules="emailRules"
@@ -30,7 +32,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-        <v-btn @click="submit"></v-btn>
+        <v-btn @click="update"></v-btn>
   </v-form>
     </v-container>
 </template>
@@ -42,8 +44,6 @@ import { mapState } from 'vuex'
   export default {
     data: () => ({
       loading: false,
-      name: '',
-      email: '',
       nameRules: [
         v => !!v || 'Name is required',
         v => v.length <= 20 || 'Name must be less than 20 characters',
@@ -53,13 +53,30 @@ import { mapState } from 'vuex'
         v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
     }),
-    created(){
-
+    mounted(){
+        this.$store.dispatch('readDetails');
     },
     computed: {
         ...mapState([
-            'allerror'
-        ])
+            'allerror',
+            'details'
+        ]),
+        name: {
+            get(){
+                return this.$store.state.details.name
+            },
+            set (value) {
+                this.$store.commit('updateName', value)
+            }
+        },
+        email: {
+            get(){
+                return this.$store.state.details.email
+            },
+            set(value){
+                this.$store.commit('updateEmail', value)
+            }
+        }
     },
     methods: {
         // ...mapActions([
@@ -75,6 +92,14 @@ import { mapState } from 'vuex'
             //     email: this.email
             // });
         },
+        update(){
+            if(this.$refs.form.validate()){
+              this.$store.dispatch('updateDetails', {
+                  name: this.name,
+                  email: this.email
+              })
+            }
+        }
         // submit(){
         //   this.loading = true;
         //   console.log(id);

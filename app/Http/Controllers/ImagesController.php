@@ -109,27 +109,33 @@ class ImagesController extends Controller
     public function testformUpdate(Request $request){
 
         $request->validate([
-            'id' => 'required',
+            // 'id' => 'required',
             'name' => 'required',
             'email' => 'required',
             // 'date' => 'required',
             // 'time' => 'required'
          ]);
 
-        $id = request('id');
+        // $id = request('id');
 
-        $updatedForm = Testform::find($id);
-        $updatedForm->name = $request->name;
-        $updatedForm->email = $request->email;
-        // $updatedForm->date = $request->date;
-        // $updatedForm->time = $request->time;
-        $updatedForm->save();
+        // $updatedForm = Testform::where('id', '1');
+        // $updatedForm->name = $request->name;
+        // $updatedForm->email = $request->email;
+        // // $updatedForm->date = $request->date;
+        // // $updatedForm->time = $request->time;
+        // $updatedForm->update();
 
-        $updatedDetails = Testform::where('id', $id)
-                        ->select('name', 'email')
-                        ->get();
+        Testform::where('id', '1')
+        ->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
 
-        return response() ->json(['updatedDetails'=>$updatedDetails], 200);
+        // $updatedDetails = Testform::where('id', $id)
+        //                 ->select('name', 'email')
+        //                 ->get();
+
+        // return response() ->json(['updatedDetails'=>$updatedDetails], 200);
 
     }
 }

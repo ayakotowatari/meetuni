@@ -5,9 +5,10 @@
                 <h3 class="py-0">Basic Information</h3>
             </v-col>  
         </v-row>
-        <v-form class="mb-6" v-model="valid">
+        <v-form class="mb-6" ref="form">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
+                    <p>{{ title }}</p> 
                     <v-text-field 
                         label="Event Title" 
                         outlined
@@ -22,6 +23,7 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
+                    <p>{{ date }}</p>
                     <v-menu
                         ref="menu"
                         v-model="menu"
@@ -77,6 +79,7 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="4">
+                    <p>{{ start_time }}</p>
                     <v-menu
                         ref="menu2"
                         v-model="menu2"
@@ -113,6 +116,7 @@
                     </v-menu>
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
+                    <p>{{ end_time }}</p>
                     <v-menu
                         ref="menu3"
                         v-model="menu3"
@@ -152,7 +156,6 @@
             <v-row justify="center">
                 <v-col col="12" sm="12" md="1" offset-md="7">
                     <v-btn 
-                    :disabled="!valid"
                     depressed 
                     outlined
                     color="primary" 
@@ -170,7 +173,7 @@
 <script>
 import moment from 'moment'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -182,7 +185,6 @@ export default {
         // time2: String,
     },
     data: () => ({
-        valid: true,
         loading: false,
         titleRules: [
         v => !!v || 'Event title is required',
@@ -206,48 +208,6 @@ export default {
             id: this.id
         });
     },
-    methods: {
-        validate(){
-            if(
-                this.title != '' && 
-                this.date != '' && 
-                this.timezone != '' &&
-                this.start_time != '' &&
-                this.end_time != ''
-            ){
-                return true
-            }else{
-                return false
-            }
-        },
-        // validate(){
-        //     this.$refs.form.validate()
-        // },
-        allowedSteps: m => m % 10 === 0,
-        
-        submit(){
-            if(this.valid=true){
-                this.loading = true;
-
-                axios
-                .post("/inst/update-basics", {
-                    id: this.id,
-                    title: this.title,
-                    date: this.date,
-                    timezone: this.timezone,
-                    start_time: this.start_time,
-                    end_time: this.end_time
-                })
-                .then(response => {
-                    this.loading = false;
-                    // this.$emit('basicsAdded');
-                })
-                .catch(error => 
-                    this.allerror = error.response.data.errors
-                )
-            }
-        }
-    },
     computed: {
         ...mapState([
             'title',
@@ -255,9 +215,71 @@ export default {
             'timezone',
             'start_time',
             'end_time',
-        ])
-       
-    }
+        ]),
+        title: {
+            get(){
+                return this.$store.state.title
+            },
+            set (value) {
+                this.$store.commit('updateEventTitle', value)
+            }
+        },
+        date: {
+            get(){
+                return this.$store.state.date
+            },
+            set (value) {
+                this.$store.commit('updateEventDate', value)
+            }
+        },
+        timezone: {
+            get(){
+                return this.$store.state.timezone
+            },
+            set (value) {
+                this.$store.commit('updateEventTimezone', value)
+            }
+        },
+        start_time: {
+            get(){
+                return this.$store.state.start_time
+            },
+            set (value) {
+                this.$store.commit('updateEventStartTime', value)
+            }
+        },
+        end_time: {
+            get(){
+                return this.$store.state.end_time
+            },
+            set (value) {
+                this.$store.commit('updateEventEndTime', value)
+            }
+        },
+    },
+    methods: {
+        // validate(){
+        //     this.$refs.form.validate()
+        // },
+        allowedSteps: m => m % 10 === 0,
+        ...mapActions([
+            'updateEventBasics'
+        ]),
+        submit(){
+            if(this.$refs.form.validate()){
+                // this.loading = true;
+                this.updateEventBasics({
+                    loading: true,
+                    id: this.id,
+                    title: this.title,
+                    date: this.date,
+                    timezone: this.timezone,
+                    start_time: this.start_time,
+                    end_time: this.end_time
+                });
+            }
+        }
+    },
 }
 </script>
 

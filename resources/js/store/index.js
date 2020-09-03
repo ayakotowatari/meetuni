@@ -91,6 +91,27 @@ export default new Vuex.Store ({
         setEventSubjects(state, payload){
             state.eventSubjects = payload
         },
+        updateEventDescription(state, payload){
+            state.description = payload
+        },
+        updateEventFiles(state, payload){
+            state.files = payload
+        },
+        updateEventTitle(state,payload){
+            state.title = payload
+        },
+        updateEventDate(state,payload){
+            state.date = payload
+        },
+        updateEventTimezone(state,payload){
+            state.timezone = payload
+        },
+        updateEventStartTime(state,payload){
+            state.start_time = payload
+        },
+        updateEventEndTime(state,payload){
+            state.end_time= payload
+        },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
@@ -105,6 +126,12 @@ export default new Vuex.Store ({
         },
         setallErrors(state, payload){
             state.allerror = payload
+        },
+        updateName(state, payload){
+            state.details.name = payload
+        },
+        updateEmail(state, payload){
+            state.details.email = payload
         }
     },
     actions: {
@@ -226,6 +253,77 @@ export default new Vuex.Store ({
                     commit("setEventSubjects", eventSubjects)
                 })
         },
+        async updateEventBasics({state, commit}, payload){
+
+            let loading = payload.loading
+            let aooerror = [];
+
+            axios
+                .post("/inst/update-basics", {
+                    id: payload.id,
+                    title: payload.title,
+                    date: payload.date,
+                    timezone: payload.timezone,
+                    start_time: payload.start_time,
+                    end_time: payload.end_time
+                })
+                .then(response => {
+                    loading = false;
+                    // this.$emit('basicsAdded');
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit("setallErrors", allerror)
+                )
+        },
+        async updateEventDescription({state, commit}, payload){
+
+            console.log(payload.id);
+            console.log(payload.description);
+
+            await axios
+                    .post('/inst/update-description', {
+                        id: payload.id,
+                        description: payload.description
+                    })
+                    .then(response => {
+                        console.log(response);
+                    // this.$emit('basicsAdded');
+                    })
+                    .catch(error => 
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
+                    )
+
+        },
+        async updateEventFiles({state, commit}, payload){
+
+            console.log(payload.id);
+            console.log(payload.image);
+
+            let allerror = [];
+            
+            let data = new FormData();
+            data.append("image", payload.image);
+            data.append("id", payload.id)
+
+            let config = {headers: {'Content-Type': 'multipart/form-data'}};
+            
+            await axios
+                .post("/inst/update-image", data, config)
+                .then(response => {
+                    console.log(response);
+                    // this.loading = false;
+                    // this.$emit('eventAdded');
+                })
+                // .catch(error => 
+                //     this.allerror = error.response.data.errors
+                // );
+                .catch(error => 
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
+                    )
+        },
         // async fetchEventParticipants({commit}, payload){
         //     console.log(payload.id);
 
@@ -267,6 +365,31 @@ export default new Vuex.Store ({
 
             await axios
                 .post('/inst/testform', {
+                    name: details.name,
+                    email: details.email
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    console.log(allerror),
+                    commit('setallErrors', allerror)
+                )
+        },
+        async updateDetails({state, commit}, payload){
+            console.log(payload.name);
+            console.log(payload.email);
+
+            let allerror = [];
+
+            const details = {
+                name: payload.name,
+                email: payload.email
+            }
+
+            await axios
+                .post('/inst/testform/update', {
                     name: details.name,
                     email: details.email
                 })
