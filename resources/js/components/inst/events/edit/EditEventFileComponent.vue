@@ -1,75 +1,74 @@
 <template>
   <div>
-    <v-form v-model="valid">
         <v-row justify="center" class="mt-12">
             <v-col col="12" sm="12" md="8">
                 <h3 class="py-0">Description</h3>
             </v-col>  
         </v-row>
-        <v-row justify="center">
-            <v-col cols="12" sm="12" md="8">
-            <v-textarea
-                v-model="description"
-                counter
-                label="Event Description"
-                outlined
-                rows="10"
-                prepend-icon="mdi-pencil-outline"
-                :rules="textareaRules"
-                :error="allerror.description"
-                :error-messages="allerror.description"
-            ></v-textarea>
-            </v-col>
-        </v-row>
-        <v-row justify="center">
-            <v-col col="12" sm="12" md="1" offset-md="7">
-                <v-btn 
-                :disabled="!valid"
-                depressed 
-                outlined
-                color="primary" 
-                class="mx-0" 
-                @click="updateDescription"
-                :loading="loading"
-                >Save
-                </v-btn>
-            </v-col>
-        </v-row>
-    </v-form>
-    <v-form v-model="valid">
-    <v-row justify="center">
-        <v-col col="12" sm="12" md="8">
-            <h3 class="py-0">Event Image</h3>
-        </v-col>  
-    </v-row>
-    <v-row justify="center">
-        <v-col col="12" sm="12" md="8">
-            <v-img :src="`/storage/${ files }`" aspect-ratio="1.7"></v-img>
-        </v-col>
-    </v-row>
-    <v-row justify="center">
-        <v-col col="12" sm="12" md="8" class="py-0">
-            <v-btn @click="hideFiles = !hideFiles" color="primary" outlined class="py-0">Change</v-btn>
-            <v-btn v-if="!hideFiles" @click="updateFiles" class="ml-4" color="primary" outlined>Save</v-btn>
-        </v-col>
-    </v-row>
-    <v-row justify="center">
-        <v-col col="12" sm="12" md="8">
-        <v-file-input 
-            v-if="!hideFiles"
-            v-model="files"
-            accept="image/*" 
-            label="Event Image"
-            outlined
-            placeholder="Pick an image"
-            prepend-icon="mdi-camera-outline"
-            :rules="imageRules"
-            :error="allerror.image"
-            :error-messages="allerror.image">
-        </v-file-input>
-        </v-col>
-    </v-row>
-    </v-form>
+        <v-form ref="form">
+            <v-row justify="center">
+                <v-col cols="12" sm="12" md="8">
+                <v-textarea
+                    v-model="description"
+                    counter
+                    label="Event Description"
+                    outlined
+                    rows="10"
+                    prepend-icon="mdi-pencil-outline"
+                    :rules="textareaRules"
+                    :error="allerror.description"
+                    :error-messages="allerror.description"
+                ></v-textarea>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="1" offset-md="7">
+                    <v-btn 
+                    depressed 
+                    outlined
+                    color="primary" 
+                    class="mx-0" 
+                    @click="updateDescription"
+                    :loading="loading"
+                    >Save
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-form>
+        <v-form ref="form">
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <h3 class="py-0">Event Image</h3>
+                </v-col>  
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-img :src="`/storage/${ files }`" aspect-ratio="1.7"></v-img>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8" class="py-0">
+                    <v-btn @click="hideFiles = !hideFiles" color="primary" outlined class="py-0">Change</v-btn>
+                    <v-btn v-if="!hideFiles" @click="updateFiles" class="ml-4" color="primary" outlined>Save</v-btn>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                <v-file-input 
+                    v-if="!hideFiles"
+                    v-model="files"
+                    accept="image/*" 
+                    label="Event Image"
+                    outlined
+                    placeholder="Pick an image"
+                    prepend-icon="mdi-camera-outline"
+                    :rules="imageRules"
+                    :error="allerror.image"
+                    :error-messages="allerror.image">
+                </v-file-input>
+                </v-col>
+            </v-row>
+        </v-form>
     <!-- <v-row justify="center">
         <v-col col="12" sm="12" md="1" offset-md="7">
             <v-btn 
@@ -98,7 +97,6 @@ export default {
 
     },
     data: () => ({
-        valid: true,
         loading: false,
         hideFiles: true,
         textareaRules: [v => v.length <= 600 || 'Max 600 characters'],
@@ -113,28 +111,9 @@ export default {
         });
     },
     methods: {
-        validate(){
-            if(
-                this.description != ''
-            )
-            {
-                return true
-            }else if(
-            
-                this.files != ''
-            
-            )
-            {
-                return true
-            }
-            else{
-                
-                return false
-            }
-        },
         updateDescription(){
 
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
                 this.loading = true;
 
                 axios
@@ -152,7 +131,7 @@ export default {
             }
         },
         updateFiles(){
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
             this.loading = true;
 
             let data = new FormData();

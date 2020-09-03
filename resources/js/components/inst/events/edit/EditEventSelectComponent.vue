@@ -11,34 +11,36 @@
                <v-chip v-for="eventRegion in eventRegions" :key="eventRegion.region" class="ma-2">{{ eventRegion.region }}</v-chip>
           </v-col>
       </v-row>
-      <v-row justify="center">
-          <v-col col="12" sm="12" md="8" class="py-0">
-              <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Change</v-btn>
-              <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary" outlined>Save</v-btn>
-          </v-col>
-      </v-row>
-      <v-row justify="center">
-            <v-col col="12" sm="12" md="8">
-                <v-select
-                    v-if="!hideRegions"
-                    v-model="editedRegions"
-                    :items="regions"
-                    item-text="region"
-                    item-value='id'
-                    label="Regions"
-                    outlined
-                    :rules="regionRules" 
-                    multiple
-                    chips
-                    prepend-icon="mdi-globe-model"
-                    hint="What are target regions?"
-                    persistent-hint
-                    required
-                    :error="allerror.regions"
-                    :error-messages="allerror.regions"
-                ></v-select>
-             </v-col>
+      <v-form ref="form">
+        <v-row justify="center">
+            <v-col col="12" sm="12" md="8" class="py-0">
+                <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Change</v-btn>
+                <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary" outlined>Save</v-btn>
+            </v-col>
         </v-row>
+        <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-select
+                        v-if="!hideRegions"
+                        v-model="editedRegions"
+                        :items="regions"
+                        item-text="region"
+                        item-value='id'
+                        label="Regions"
+                        outlined
+                        :rules="regionRules" 
+                        multiple
+                        chips
+                        prepend-icon="mdi-globe-model"
+                        hint="What are target regions?"
+                        persistent-hint
+                        required
+                        :error="allerror.regions"
+                        :error-messages="allerror.regions"
+                    ></v-select>
+                </v-col>
+            </v-row>
+        </v-form>
          <v-row justify="center">
           <v-col col="12" sm="12" md="8">
                <h3 class="py-0">Levels</h3>
@@ -50,34 +52,36 @@
                     <v-chip v-for="eventLevel in eventLevels" :key="eventLevel.level" class="ma-2">{{ eventLevel.level }}</v-chip>
             </v-col>
         </v-row>
-        <v-row justify="center">
-          <v-col col="12" sm="12" md="8" class="py-0">
-              <v-btn @click="hideLevels = !hideLevels" color="primary" outlined>Change</v-btn>
-              <v-btn :disabled="!valid" v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-            <v-col col="12" sm="12" md="8">
-                <v-select
-                    v-if="!hideLevels"
-                    v-model="editedLevels"
-                    :items="levels"
-                    item-text="level"
-                    item-value="id"
-                    label="Levels"
-                    outlined
-                    :rules="levelRules" 
-                    multiple
-                    chips
-                    prepend-icon="mdi-layers-triple-outline"
-                    hint="What are target levels?"
-                    persistent-hint
-                    required
-                    :error="allerror.levels"
-                    :error-messages="allerror.levels"
-                ></v-select>
+        <v-form ref="refs">
+            <v-row justify="center">
+            <v-col col="12" sm="12" md="8" class="py-0">
+                <v-btn @click="hideLevels = !hideLevels" color="primary" outlined>Change</v-btn>
+                <v-btn :disabled="!valid" v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
             </v-col>
-        </v-row>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-select
+                        v-if="!hideLevels"
+                        v-model="editedLevels"
+                        :items="levels"
+                        item-text="level"
+                        item-value="id"
+                        label="Levels"
+                        outlined
+                        :rules="levelRules" 
+                        multiple
+                        chips
+                        prepend-icon="mdi-layers-triple-outline"
+                        hint="What are target levels?"
+                        persistent-hint
+                        required
+                        :error="allerror.levels"
+                        :error-messages="allerror.levels"
+                    ></v-select>
+                </v-col>
+            </v-row>
+        </v-form>
         <v-row justify="center">
           <v-col col="12" sm="12" md="8">
                <h3 class="py-0">Subjects</h3>
@@ -89,34 +93,36 @@
                 <v-chip v-for="eventSubject in eventSubjects" :key="eventSubject.subject" class="ma-2">{{ eventSubject.subject }}</v-chip>
             </v-col>
         </v-row>
-        <v-row justify="center">
-          <v-col col="12" sm="12" md="8" class="py-0">
-              <v-btn @click="hideSubjects = !hideSubjects" color="primary" outlined>Change</v-btn>
-              <v-btn v-if="!hideSubjects" @click="updateSubjects" class="ml-4" color="primary" outlined>Save</v-btn>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-            <v-col col="12" sm="12" md="8">
-                <v-select
-                    v-if="!hideSubjects"
-                    v-model="editedSubjects"
-                    :items="subjects"
-                    item-text="subject"
-                    item-value="id"
-                    label="Subject Areas"
-                    outlined
-                    :rules="subjectRules" 
-                    multiple
-                    chips
-                    prepend-icon="mdi-school-outline"
-                    hint="What are target subject areas?"
-                    persistent-hint
-                    required
-                    :error="allerror.subjects"
-                    :error-messages="allerror.subjects"
-                ></v-select>
+        <v-form ref="form">
+            <v-row justify="center">
+            <v-col col="12" sm="12" md="8" class="py-0">
+                <v-btn @click="hideSubjects = !hideSubjects" color="primary" outlined>Change</v-btn>
+                <v-btn v-if="!hideSubjects" @click="updateSubjects" class="ml-4" color="primary" outlined>Save</v-btn>
             </v-col>
-        </v-row>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-select
+                        v-if="!hideSubjects"
+                        v-model="editedSubjects"
+                        :items="subjects"
+                        item-text="subject"
+                        item-value="id"
+                        label="Subject Areas"
+                        outlined
+                        :rules="subjectRules" 
+                        multiple
+                        chips
+                        prepend-icon="mdi-school-outline"
+                        hint="What are target subject areas?"
+                        persistent-hint
+                        required
+                        :error="allerror.subjects"
+                        :error-messages="allerror.subjects"
+                    ></v-select>
+                </v-col>
+            </v-row>
+        </v-form>
         <!-- <v-row justify="center">
             <v-col col="12" sm="12" md="1" offset-md="7">
                 <v-btn 
@@ -142,7 +148,6 @@ export default {
         id: String,
     },
     data: () => ({
-        valid: true,
         loading: false,
         hideRegions: true,
         hideLevels: true,
@@ -167,20 +172,9 @@ export default {
         this.$store.dispatch('fetchSubjects');
     },
     methods: {
-        validate(){
-            if(
-                this.regions != '' && 
-                this.levels != '' && 
-                this.subjects != '' 
-            ){
-                return true
-            }else{
-                return false
-            }
-        },
         updateRegions(){
 
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
                 this.loading = true;
 
                 axios
@@ -199,7 +193,7 @@ export default {
         },
         updateLevels(){
 
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
                 this.loading = true;
 
                 axios
@@ -218,7 +212,7 @@ export default {
         },
         updateSubjects(){
 
-            if(this.valid=true){
+            if(this.$refs.form.validate()){
                 this.loading = true;
 
                 axios
