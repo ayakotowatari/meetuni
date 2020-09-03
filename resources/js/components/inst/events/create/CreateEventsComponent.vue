@@ -16,13 +16,9 @@
 
   <h1 class="grey--text">Create Events</h1>
   <v-container>
-      <eventbasics-component @basicsAdded = "hide = false"></eventbasics-component>
-        <eventselect-component 
-          @selectsAdded = "hide = false"
-        ></eventselect-component>
-        <eventfile-component
-          @eventAdded = "dialog = true"
-        ></eventfile-component>
+      <eventbasics-component @basicsAdded = "hideSelect = false"></eventbasics-component>
+      <eventselect-component :hideSelect="hideSelect" @selectsAdded = "hideFile = false"></eventselect-component>
+      <eventfile-component :hideFile="hideFile" @eventAdded = "dialog = true"></eventfile-component>
   </v-container>
 </div>
 </template>
@@ -40,6 +36,8 @@ export default {
   },
   data: () => ({
     valid: true,
+    hideSelect: true,
+    hideFile: true,
     loading: false,
     allerror: [],
     dialog: true
