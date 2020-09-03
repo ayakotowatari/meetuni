@@ -32,6 +32,13 @@ export default new Vuex.Store ({
         eventLevels: [],
         eventSubjects: [],
         // participants:[],
+        //テスト
+        details: {
+            id: [],
+            name: [],
+            email: []
+        },
+        allerror: [],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -87,6 +94,18 @@ export default new Vuex.Store ({
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
+        //テスト
+        readDetails(state, payload){
+            state.details.id = payload.id
+            state.details.name = payload.name
+            state.details.email = payload.email
+        },
+        setDetails(state, payload){  
+            state.details = Object.assign({}, state.details, payload)
+        },
+        setallErrors(state, payload){
+            state.allerror = payload
+        }
     },
     actions: {
         //非同期処理をする
@@ -220,6 +239,46 @@ export default new Vuex.Store ({
         //             commit("setParticipants", participants)
         //         })
         // },
+
+        //テスト
+        async readDetails({commit}){
+
+            await axios
+                .get('/inst/testform')
+                .then(res => {
+                //   let id = res.data.testform.id;
+                //   let name = res.data.testform.name;
+                //   let email = res.data.testform.email;
+                let details = res.data.testform
+                  commit("readDetails", details)
+                })
+            
+        },
+        async postDetails({state, commit}, payload){
+            console.log(payload.name);
+            console.log(payload.email);
+
+            let allerror = [];
+
+            const details = {
+                name: payload.name,
+                email: payload.email
+            }
+
+            await axios
+                .post('/inst/testform', {
+                    name: details.name,
+                    email: details.email
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    console.log(allerror),
+                    commit('setallErrors', allerror)
+                )
+        }
     },
     modules: {
         participants,

@@ -19,6 +19,7 @@ import InstProfile from "./components/inst/profile/InstProfileComponent";
 import TestThree from "./components/inst/TestThreeComponent"
 import TestFour from "./components/inst/TestFourComponent"
 import TestFive from "./components/inst/TestFiveComponent"
+import TestSix from "./components/inst/TestSixComponent"
 //テスト終わる
  
 const routes = [
@@ -82,10 +83,16 @@ const routes = [
         path: "/inst/testfour",
         name: "testfour",
         component: TestFour
-    },{
+    },
+    {
         path: "/inst/testfive",
         name: "testfive",
         component: TestFive
+    },
+    {
+        path: "/inst/testsix",
+        name: "testsix",
+        component: TestSix
     },
 
 ];

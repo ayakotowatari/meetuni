@@ -84,9 +84,26 @@ class ImagesController extends Controller
 
     public function testform(){
         
-        $testform = Testform::where('testforms.id', '1')->first();
+        $testform = Testform::where('testforms.id', '1')
+                ->select('id', 'name', 'email')
+                ->first();
 
         return response() ->json(['testform' =>$testform], 200);
+    }
+
+    public function addTestform(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required'
+         ]);
+
+         $testform = new Testform();
+         $testform->name = request('name');
+         $testform->email = request('email');
+         $testform->date = '2020-08-31';
+         $testform->time = '14:00';
+         $testform->save();
+
     }
 
     public function testformUpdate(Request $request){
@@ -95,8 +112,8 @@ class ImagesController extends Controller
             'id' => 'required',
             'name' => 'required',
             'email' => 'required',
-            'date' => 'required',
-            'time' => 'required'
+            // 'date' => 'required',
+            // 'time' => 'required'
          ]);
 
         $id = request('id');
@@ -104,9 +121,15 @@ class ImagesController extends Controller
         $updatedForm = Testform::find($id);
         $updatedForm->name = $request->name;
         $updatedForm->email = $request->email;
-        $updatedForm->date = $request->date;
-        $updatedForm->time = $request->time;
+        // $updatedForm->date = $request->date;
+        // $updatedForm->time = $request->time;
         $updatedForm->save();
+
+        $updatedDetails = Testform::where('id', $id)
+                        ->select('name', 'email')
+                        ->get();
+
+        return response() ->json(['updatedDetails'=>$updatedDetails], 200);
 
     }
 }
