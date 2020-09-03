@@ -91,8 +91,7 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-
-        id: String,
+        id: String
         // description: String,
         // files: String
 

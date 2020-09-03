@@ -87,6 +87,7 @@ Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 // Route::get ('/inst/create-event', 'ImagesController@testshow')-> name('inst.show');
 // Route::post('inst/region', 'RegionsController@test');
 Route::get('/inst/testform', 'ImagesController@testform');
+Route::post('/inst/testform', 'ImagesController@addTestform');
 Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //テスト終わる
 
