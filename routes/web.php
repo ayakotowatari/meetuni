@@ -28,9 +28,9 @@ Route::post('inst/register', 'Auth\RegisterController@instUserRegister')->name('
 
 Route::post('inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
 
-Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm');
+Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm')->name('studentUser.regiform');
 
-Route::post('student/register', 'Auth\RegisterController@studentRegister')->name('student.regiter');
+Route::post('student/register', 'Auth\RegisterController@studentUserRegister')->name('student.register');
 
 Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('student.logout');
 
@@ -98,4 +98,8 @@ Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){
         return view('inst.main');
     })->where('any','.*');
 });
+
+Route::get('/student/{any}', function () {
+    return view('student.main');
+})->where('any','.*');
 

@@ -143,13 +143,13 @@ class RegisterController extends Controller
         ]);
     }
 
-    protected function studentTableValidator(array $data)
-    {
-        return Validator::make($data, [
-            'country_id' => ['required', 'integer'],
-            'year_id' => ['required', 'string'],
-        ]);
-    }
+    // protected function studentTableValidator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'country_id' => ['required', 'integer'],
+    //         'year_id' => ['required', 'string'],
+    //     ]);
+    // }
 
     protected function instUserTableCreate(Int $id, array $data, InstUser $inst_user)
     {
@@ -159,12 +159,12 @@ class RegisterController extends Controller
         return;
     }
 
-    protected function studentTableCreate(Int $id, array $data, Student $student)
-    {
-        $student = new Student();
-        $student->fill(['id'=>$id,'country_id'=>$data['country_id'],'year_id'=>$data['year_id']]);
-        $student->save();
-        return;
-    }
+    // protected function studentTableCreate(Int $id, array $data, Student $student)
+    // {
+    //     $student = new Student();
+    //     $student->fill(['id'=>$id,'country_id'=>$data['country_id'],'year_id'=>$data['year_id']]);
+    //     $student->save();
+    //     return;
+    // }
 
 }
