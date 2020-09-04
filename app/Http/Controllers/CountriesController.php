@@ -14,6 +14,13 @@ class CountriesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function fetchCountries(){
+
+        $countries = Country::all();
+
+        return response() -> json(['countries'=>$countries]);
+    }
+
     public function fetchStudentCountries(Request $request, $id)
     {
         // 学生の出身国

@@ -15,12 +15,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-// 大学名チェック
-Route::get('inst/search', 'InstsController@index');
-
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
-
-
 //Authentification
 Route::get('inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
 
@@ -37,6 +31,15 @@ Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('stude
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//             //
+//     大学     //
+//             //
+
+// 大学名チェック
+Route::get('inst/search', 'InstsController@index');
+
+Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 // 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
@@ -78,8 +81,6 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 
-
-
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');
@@ -90,6 +91,12 @@ Route::get('/inst/testform', 'ImagesController@testform');
 Route::post('/inst/testform', 'ImagesController@addTestform');
 Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //テスト終わる
+
+//             //
+//     学生     //
+//             //
+// 各種情報の取得
+Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 
 // Vue
 //Only inst user can access.

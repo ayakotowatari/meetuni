@@ -16,6 +16,7 @@ export default new Vuex.Store ({
         initials: '',
         events: [],
         regions: [],
+        countries: [],
         levels: [],
         subjects: [],
         event: [],
@@ -33,16 +34,19 @@ export default new Vuex.Store ({
         eventSubjects: [],
         // participants:[],
         //テスト
-        details: {
-            id: [],
-            name: [],
-            email: []
-        },
+        // details: {
+        //     id: [],
+        //     name: [],
+        //     email: []
+        // },
         allerror: [],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
         //componentsではcomputedで展開
+        filterCountries: (state) => (id) => {
+            return state.countries.filter(countries => countries.region_id == id)
+        }
 
     },
     mutations: {
@@ -69,6 +73,9 @@ export default new Vuex.Store ({
         },
         setSubjects(state,payload){
             state.subjects = payload
+        },
+        setCountries(state,payload){
+            state.countries = payload
         },
         setSingleEvent(state,payload){
             state.event = payload
@@ -116,23 +123,23 @@ export default new Vuex.Store ({
         //     state.participants = payload
         // }
         //テスト
-        readDetails(state, payload){
-            state.details.id = payload.id
-            state.details.name = payload.name
-            state.details.email = payload.email
-        },
-        setDetails(state, payload){  
-            state.details = Object.assign({}, state.details, payload)
-        },
-        setallErrors(state, payload){
-            state.allerror = payload
-        },
-        updateName(state, payload){
-            state.details.name = payload
-        },
-        updateEmail(state, payload){
-            state.details.email = payload
-        }
+        // readDetails(state, payload){
+        //     state.details.id = payload.id
+        //     state.details.name = payload.name
+        //     state.details.email = payload.email
+        // },
+        // setDetails(state, payload){  
+        //     state.details = Object.assign({}, state.details, payload)
+        // },
+        // setallErrors(state, payload){
+        //     state.allerror = payload
+        // },
+        // updateName(state, payload){
+        //     state.details.name = payload
+        // },
+        // updateEmail(state, payload){
+        //     state.details.email = payload
+        // }
     },
     actions: {
         //非同期処理をする
@@ -176,6 +183,16 @@ export default new Vuex.Store ({
                     payload = response.data.events;
                     commit("setEvents", payload)
                 });
+        },
+        async fetchCountries({commit}) {
+            let payload = [];
+
+            await axios
+                .get("/student/fetch-countries")
+                .then(res => {
+                    payload = res.data.countries;
+                    commit("setCountries", payload)
+                })
         },
         async fetchRegions({commit}) {
             let payload = [];

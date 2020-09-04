@@ -2263,6 +2263,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2310,12 +2317,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      selectedRegion: [],
       e6: 1
     };
-  }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch('fetchRegions');
+    this.$store.dispatch('fetchCountries');
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['regions', 'countries'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['filterCountries'])), {}, {
+    filteredCountries: function filteredCountries() {
+      return this.filterCountries(this.selectedRegion);
+    } // filteredCountries(){
+    //     let options = this.countries
+    //     return options.filter(option => option.region_id == this.selectedRegion)
+    // }
+
+  })
 });
 
 /***/ }),
@@ -39583,7 +39620,7 @@ var render = function() {
         [
           _c("v-row", { staticClass: "mb-8" }, [
             _c("h1", { staticClass: "grey--text mb-6" }, [
-              _vm._v("Tell us what you are looking for")
+              _vm._v("Help us find best opportunities for you")
             ])
           ]),
           _vm._v(" "),
@@ -39613,10 +39650,52 @@ var render = function() {
                 "v-stepper-content",
                 { attrs: { step: "1" } },
                 [
-                  _c("v-card", {
-                    staticClass: "mb-12",
-                    attrs: { color: "grey lighten-1", height: "200px" }
+                  _c("v-select", {
+                    staticClass: "mb-4",
+                    attrs: {
+                      items: _vm.regions,
+                      "item-text": "region",
+                      "item-value": "id",
+                      label: "Select Your Regions",
+                      chips: "",
+                      hint: "which region are you in?",
+                      "persistent-hint": ""
+                    },
+                    model: {
+                      value: _vm.selectedRegion,
+                      callback: function($$v) {
+                        _vm.selectedRegion = $$v
+                      },
+                      expression: "selectedRegion"
+                    }
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "v-card",
+                    { attrs: { height: "100px" } },
+                    [
+                      _c(
+                        "v-chip-group",
+                        {
+                          attrs: { column: "", multiple: "" },
+                          model: {
+                            value: _vm.countries,
+                            callback: function($$v) {
+                              _vm.countries = $$v
+                            },
+                            expression: "countries"
+                          }
+                        },
+                        _vm._l(_vm.filteredCountries, function(country) {
+                          return _c("v-chip", { key: country.country }, [
+                            _vm._v(_vm._s(country.country))
+                          ])
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",
@@ -100560,6 +100639,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     initials: '',
     events: [],
     regions: [],
+    countries: [],
     levels: [],
     subjects: [],
     event: [],
@@ -100577,15 +100657,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     eventSubjects: [],
     // participants:[],
     //テスト
-    details: {
-      id: [],
-      name: [],
-      email: []
-    },
+    // details: {
+    //     id: [],
+    //     name: [],
+    //     email: []
+    // },
     allerror: []
   },
-  getters: {//stateの値を加工して、componentで使いたい時。
+  getters: {
+    //stateの値を加工して、componentで使いたい時。
     //componentsではcomputedで展開
+    filterCountries: function filterCountries(state) {
+      return function (id) {
+        return state.countries.filter(function (countries) {
+          return countries.region_id == id;
+        });
+      };
+    }
   },
   mutations: {
     //actionsが終わった後の同期処理をする
@@ -100611,6 +100699,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     setSubjects: function setSubjects(state, payload) {
       state.subjects = payload;
+    },
+    setCountries: function setCountries(state, payload) {
+      state.countries = payload;
     },
     setSingleEvent: function setSingleEvent(state, payload) {
       state.event = payload;
@@ -100653,28 +100744,28 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     updateEventEndTime: function updateEventEndTime(state, payload) {
       state.end_time = payload;
-    },
-    // setParticipants(state, payload){
+    } // setParticipants(state, payload){
     //     state.participants = payload
     // }
     //テスト
-    readDetails: function readDetails(state, payload) {
-      state.details.id = payload.id;
-      state.details.name = payload.name;
-      state.details.email = payload.email;
-    },
-    setDetails: function setDetails(state, payload) {
-      state.details = Object.assign({}, state.details, payload);
-    },
-    setallErrors: function setallErrors(state, payload) {
-      state.allerror = payload;
-    },
-    updateName: function updateName(state, payload) {
-      state.details.name = payload;
-    },
-    updateEmail: function updateEmail(state, payload) {
-      state.details.email = payload;
-    }
+    // readDetails(state, payload){
+    //     state.details.id = payload.id
+    //     state.details.name = payload.name
+    //     state.details.email = payload.email
+    // },
+    // setDetails(state, payload){  
+    //     state.details = Object.assign({}, state.details, payload)
+    // },
+    // setallErrors(state, payload){
+    //     state.allerror = payload
+    // },
+    // updateName(state, payload){
+    //     state.details.name = payload
+    // },
+    // updateEmail(state, payload){
+    //     state.details.email = payload
+    // }
+
   },
   actions: {
     //非同期処理をする
@@ -100771,7 +100862,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee4);
       }))();
     },
-    fetchRegions: function fetchRegions(_ref5) {
+    fetchCountries: function fetchCountries(_ref5) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -100781,9 +100872,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref5.commit;
                 payload = [];
                 _context5.next = 4;
-                return axios.get("/inst/fetch-regions").then(function (res) {
-                  payload = res.data.regions;
-                  commit("setRegions", payload);
+                return axios.get("/student/fetch-countries").then(function (res) {
+                  payload = res.data.countries;
+                  commit("setCountries", payload);
                 });
 
               case 4:
@@ -100794,7 +100885,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee5);
       }))();
     },
-    fetchLevels: function fetchLevels(_ref6) {
+    fetchRegions: function fetchRegions(_ref6) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -100804,9 +100895,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref6.commit;
                 payload = [];
                 _context6.next = 4;
-                return axios.get("/inst/fetch-levels").then(function (res) {
-                  payload = res.data.levels;
-                  commit("setLevels", payload);
+                return axios.get("/inst/fetch-regions").then(function (res) {
+                  payload = res.data.regions;
+                  commit("setRegions", payload);
                 });
 
               case 4:
@@ -100817,7 +100908,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee6);
       }))();
     },
-    fetchSubjects: function fetchSubjects(_ref7) {
+    fetchLevels: function fetchLevels(_ref7) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
@@ -100827,9 +100918,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref7.commit;
                 payload = [];
                 _context7.next = 4;
-                return axios.get("/inst/fetch-subjects").then(function (res) {
-                  payload = res.data.subjects;
-                  commit("setSubjects", payload);
+                return axios.get("/inst/fetch-levels").then(function (res) {
+                  payload = res.data.levels;
+                  commit("setLevels", payload);
                 });
 
               case 4:
@@ -100840,20 +100931,19 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee7);
       }))();
     },
-    fetchSingleEvent: function fetchSingleEvent(_ref8, payload) {
+    fetchSubjects: function fetchSubjects(_ref8) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var commit, event;
+        var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
                 commit = _ref8.commit;
-                // console.log(payload.id);
-                event = [];
+                payload = [];
                 _context8.next = 4;
-                return axios.get("/inst/fetch-single-event/" + payload.id).then(function (res) {
-                  event = res.data.event;
-                  commit("setSingleEvent", event);
+                return axios.get("/inst/fetch-subjects").then(function (res) {
+                  payload = res.data.subjects;
+                  commit("setSubjects", payload);
                 });
 
               case 4:
@@ -100864,20 +100954,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee8);
       }))();
     },
-    fetchEventRegions: function fetchEventRegions(_ref9, payload) {
+    fetchSingleEvent: function fetchSingleEvent(_ref9, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var commit, eventRegions;
+        var commit, event;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
                 commit = _ref9.commit;
                 // console.log(payload.id);
-                eventRegions = [];
+                event = [];
                 _context9.next = 4;
-                return axios.get("/inst/fetch-event-regions/" + payload.id).then(function (res) {
-                  eventRegions = res.data.eventRegions;
-                  commit("setEventRegions", eventRegions);
+                return axios.get("/inst/fetch-single-event/" + payload.id).then(function (res) {
+                  event = res.data.event;
+                  commit("setSingleEvent", event);
                 });
 
               case 4:
@@ -100888,20 +100978,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee9);
       }))();
     },
-    fetchEventLevels: function fetchEventLevels(_ref10, payload) {
+    fetchEventRegions: function fetchEventRegions(_ref10, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var commit, eventLevels;
+        var commit, eventRegions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
                 commit = _ref10.commit;
                 // console.log(payload.id);
-                eventLevels = [];
+                eventRegions = [];
                 _context10.next = 4;
-                return axios.get("/inst/fetch-event-levels/" + payload.id).then(function (res) {
-                  eventLevels = res.data.eventLevels;
-                  commit("setEventLevels", eventLevels);
+                return axios.get("/inst/fetch-event-regions/" + payload.id).then(function (res) {
+                  eventRegions = res.data.eventRegions;
+                  commit("setEventRegions", eventRegions);
                 });
 
               case 4:
@@ -100912,20 +101002,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee10);
       }))();
     },
-    fetchEventSubjects: function fetchEventSubjects(_ref11, payload) {
+    fetchEventLevels: function fetchEventLevels(_ref11, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var commit, eventSubjects;
+        var commit, eventLevels;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
                 commit = _ref11.commit;
                 // console.log(payload.id);
-                eventSubjects = [];
+                eventLevels = [];
                 _context11.next = 4;
-                return axios.get("/inst/fetch-event-subjects/" + payload.id).then(function (res) {
-                  eventSubjects = res.data.eventSubjects;
-                  commit("setEventSubjects", eventSubjects);
+                return axios.get("/inst/fetch-event-levels/" + payload.id).then(function (res) {
+                  eventLevels = res.data.eventLevels;
+                  commit("setEventLevels", eventLevels);
                 });
 
               case 4:
@@ -100936,14 +101026,38 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee11);
       }))();
     },
-    updateEventBasics: function updateEventBasics(_ref12, payload) {
+    fetchEventSubjects: function fetchEventSubjects(_ref12, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var state, commit, loading, aooerror;
+        var commit, eventSubjects;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                state = _ref12.state, commit = _ref12.commit;
+                commit = _ref12.commit;
+                // console.log(payload.id);
+                eventSubjects = [];
+                _context12.next = 4;
+                return axios.get("/inst/fetch-event-subjects/" + payload.id).then(function (res) {
+                  eventSubjects = res.data.eventSubjects;
+                  commit("setEventSubjects", eventSubjects);
+                });
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }))();
+    },
+    updateEventBasics: function updateEventBasics(_ref13, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var state, commit, loading, aooerror;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                state = _ref13.state, commit = _ref13.commit;
                 loading = payload.loading;
                 aooerror = [];
                 axios.post("/inst/update-basics", {
@@ -100961,23 +101075,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 4:
               case "end":
-                return _context12.stop();
+                return _context13.stop();
             }
           }
-        }, _callee12);
+        }, _callee13);
       }))();
     },
-    updateEventDescription: function updateEventDescription(_ref13, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+    updateEventDescription: function updateEventDescription(_ref14, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var state, commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
-                state = _ref13.state, commit = _ref13.commit;
+                state = _ref14.state, commit = _ref14.commit;
                 console.log(payload.id);
                 console.log(payload.description);
-                _context13.next = 5;
+                _context14.next = 5;
                 return axios.post('/inst/update-description', {
                   id: payload.id,
                   description: payload.description
@@ -100989,20 +101103,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 5:
               case "end":
-                return _context13.stop();
+                return _context14.stop();
             }
           }
-        }, _callee13);
+        }, _callee14);
       }))();
     },
-    updateEventFiles: function updateEventFiles(_ref14, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+    updateEventFiles: function updateEventFiles(_ref15, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
         var state, commit, allerror, data, config;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
-                state = _ref14.state, commit = _ref14.commit;
+                state = _ref15.state, commit = _ref15.commit;
                 console.log(payload.id);
                 console.log(payload.image);
                 allerror = [];
@@ -101014,7 +101128,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                     'Content-Type': 'multipart/form-data'
                   }
                 };
-                _context14.next = 10;
+                _context15.next = 10;
                 return axios.post("/inst/update-image", data, config).then(function (response) {
                   console.log(response); // this.loading = false;
                   // this.$emit('eventAdded');
@@ -101027,10 +101141,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 10:
               case "end":
-                return _context14.stop();
+                return _context15.stop();
             }
           }
-        }, _callee14);
+        }, _callee15);
       }))();
     },
     // async fetchEventParticipants({commit}, payload){
@@ -101045,15 +101159,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     //         })
     // },
     //テスト
-    readDetails: function readDetails(_ref15) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+    readDetails: function readDetails(_ref16) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
         var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
-                commit = _ref15.commit;
-                _context15.next = 3;
+                commit = _ref16.commit;
+                _context16.next = 3;
                 return axios.get('/inst/testform').then(function (res) {
                   //   let id = res.data.testform.id;
                   //   let name = res.data.testform.name;
@@ -101064,46 +101178,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 3:
               case "end":
-                return _context15.stop();
-            }
-          }
-        }, _callee15);
-      }))();
-    },
-    postDetails: function postDetails(_ref16, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
-        var state, commit, allerror, details;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
-          while (1) {
-            switch (_context16.prev = _context16.next) {
-              case 0:
-                state = _ref16.state, commit = _ref16.commit;
-                console.log(payload.name);
-                console.log(payload.email);
-                allerror = [];
-                details = {
-                  name: payload.name,
-                  email: payload.email
-                };
-                _context16.next = 7;
-                return axios.post('/inst/testform', {
-                  name: details.name,
-                  email: details.email
-                }).then(function (res) {
-                  console.log(res);
-                })["catch"](function (error) {
-                  return allerror = error.response.data.errors;
-                }, console.log(allerror), commit('setallErrors', allerror));
-
-              case 7:
-              case "end":
                 return _context16.stop();
             }
           }
         }, _callee16);
       }))();
     },
-    updateDetails: function updateDetails(_ref17, payload) {
+    postDetails: function postDetails(_ref17, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
         var state, commit, allerror, details;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
@@ -101119,7 +101200,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   email: payload.email
                 };
                 _context17.next = 7;
-                return axios.post('/inst/testform/update', {
+                return axios.post('/inst/testform', {
                   name: details.name,
                   email: details.email
                 }).then(function (res) {
@@ -101134,6 +101215,39 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
             }
           }
         }, _callee17);
+      }))();
+    },
+    updateDetails: function updateDetails(_ref18, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+        var state, commit, allerror, details;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                state = _ref18.state, commit = _ref18.commit;
+                console.log(payload.name);
+                console.log(payload.email);
+                allerror = [];
+                details = {
+                  name: payload.name,
+                  email: payload.email
+                };
+                _context18.next = 7;
+                return axios.post('/inst/testform/update', {
+                  name: details.name,
+                  email: details.email
+                }).then(function (res) {
+                  console.log(res);
+                })["catch"](function (error) {
+                  return allerror = error.response.data.errors;
+                }, console.log(allerror), commit('setallErrors', allerror));
+
+              case 7:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
       }))();
     }
   },
