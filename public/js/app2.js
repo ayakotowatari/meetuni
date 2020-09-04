@@ -2332,19 +2332,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      country: [],
+      year: [],
       selectedRegion: [],
+      destination: [],
+      level: [],
+      subject: [],
       e6: 1
     };
   },
   mounted: function mounted() {
     this.$store.dispatch('fetchRegions');
     this.$store.dispatch('fetchCountries');
+    this.$store.dispatch('fetchYears');
+    this.$store.dispatch('fetchDestinations');
+    this.$store.dispatch('fetchLevels');
+    this.$store.dispatch('fetchSubjects');
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['regions', 'countries'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['filterCountries'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['regions', 'countries', 'years', 'destinations', 'levels', 'subjects'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['filterCountries'])), {}, {
     filteredCountries: function filteredCountries() {
       return this.filterCountries(this.selectedRegion);
     } // filteredCountries(){
@@ -39639,16 +39702,17 @@ var render = function() {
             [
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.e6 > 1, step: "1" } },
+                { attrs: { editable: "", complete: _vm.e6 > 1, step: "1" } },
                 [
-                  _vm._v("\n        Where are you from?\n        "),
-                  _c("small", [_vm._v("Summarize if needed")])
+                  _vm._v(
+                    "\n            Which country are you from?\n            "
+                  )
                 ]
               ),
               _vm._v(" "),
               _c(
                 "v-stepper-content",
-                { attrs: { step: "1" } },
+                { staticClass: "mb-6", attrs: { step: "1" } },
                 [
                   _c("v-select", {
                     staticClass: "mb-4",
@@ -39672,18 +39736,22 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card",
-                    { attrs: { height: "100px" } },
+                    { staticClass: "mb-4", attrs: { height: "100px" } },
                     [
                       _c(
                         "v-chip-group",
                         {
-                          attrs: { column: "", multiple: "" },
+                          attrs: {
+                            column: "",
+                            "active-class": "primary--text text--accent-4",
+                            mandatory: ""
+                          },
                           model: {
-                            value: _vm.countries,
+                            value: _vm.country,
                             callback: function($$v) {
-                              _vm.countries = $$v
+                              _vm.country = $$v
                             },
-                            expression: "countries"
+                            expression: "country"
                           }
                         },
                         _vm._l(_vm.filteredCountries, function(country) {
@@ -39708,27 +39776,56 @@ var render = function() {
                       }
                     },
                     [_vm._v("Continue")]
-                  ),
-                  _vm._v(" "),
-                  _c("v-btn", { attrs: { text: "" } }, [_vm._v("Cancel")])
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.e6 > 2, step: "2" } },
-                [_vm._v("Configure analytics for this app")]
+                { attrs: { editable: "", complete: _vm.e6 > 2, step: "2" } },
+                [
+                  _vm._v(
+                    "\n            Which year are you interested in starting your study overseas?\n            "
+                  )
+                ]
               ),
               _vm._v(" "),
               _c(
                 "v-stepper-content",
-                { attrs: { step: "2" } },
+                { staticClass: "mb-6", attrs: { step: "2" } },
                 [
-                  _c("v-card", {
-                    staticClass: "mb-12",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
+                  _c(
+                    "v-card",
+                    { staticClass: "mb-4", attrs: { height: "100px" } },
+                    [
+                      _c(
+                        "v-chip-group",
+                        {
+                          attrs: {
+                            column: "",
+                            "active-class": "primary--text text--accent-4",
+                            multiple: "",
+                            mandatory: ""
+                          },
+                          model: {
+                            value: _vm.year,
+                            callback: function($$v) {
+                              _vm.year = $$v
+                            },
+                            expression: "year"
+                          }
+                        },
+                        _vm._l(_vm.years, function(year) {
+                          return _c("v-chip", { key: year.year }, [
+                            _vm._v(_vm._s(year.year))
+                          ])
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",
@@ -39741,27 +39838,56 @@ var render = function() {
                       }
                     },
                     [_vm._v("Continue")]
-                  ),
-                  _vm._v(" "),
-                  _c("v-btn", { attrs: { text: "" } }, [_vm._v("Cancel")])
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-stepper-step",
-                { attrs: { complete: _vm.e6 > 3, step: "3" } },
-                [_vm._v("Select an ad format and name ad unit")]
+                { attrs: { editable: "", complete: _vm.e6 > 3, step: "3" } },
+                [
+                  _vm._v(
+                    "\n            Which destinations of study are you interested in?\n            "
+                  )
+                ]
               ),
               _vm._v(" "),
               _c(
                 "v-stepper-content",
-                { attrs: { step: "3" } },
+                { staticClass: "mb-6", attrs: { step: "3" } },
                 [
-                  _c("v-card", {
-                    staticClass: "mb-12",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
+                  _c(
+                    "v-card",
+                    { staticClass: "mb-4", attrs: { height: "100px" } },
+                    [
+                      _c(
+                        "v-chip-group",
+                        {
+                          attrs: {
+                            column: "",
+                            "active-class": "primary--text text--accent-4",
+                            multiple: "",
+                            mandatory: ""
+                          },
+                          model: {
+                            value: _vm.destination,
+                            callback: function($$v) {
+                              _vm.destination = $$v
+                            },
+                            expression: "destination"
+                          }
+                        },
+                        _vm._l(_vm.destinations, function(destination) {
+                          return _c("v-chip", { key: destination.country }, [
+                            _vm._v(_vm._s(destination.country))
+                          ])
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",
@@ -39769,30 +39895,119 @@ var render = function() {
                       attrs: { color: "primary" },
                       on: {
                         click: function($event) {
-                          _vm.e6 = 4
+                          _vm.e6 = 5
                         }
                       }
                     },
                     [_vm._v("Continue")]
-                  ),
-                  _vm._v(" "),
-                  _c("v-btn", { attrs: { text: "" } }, [_vm._v("Cancel")])
+                  )
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("v-stepper-step", { attrs: { step: "4" } }, [
-                _vm._v("View setup instructions")
+              _c(
+                "v-stepper-step",
+                { attrs: { editable: "", complete: _vm.e6 > 5, step: "5" } },
+                [
+                  _vm._v(
+                    "\n            Which levels of study are you interested in?\n            "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-stepper-content",
+                { staticClass: "mb-6", attrs: { step: "5" } },
+                [
+                  _c(
+                    "v-card",
+                    { staticClass: "mb-4", attrs: { height: "100px" } },
+                    [
+                      _c(
+                        "v-chip-group",
+                        {
+                          attrs: {
+                            column: "",
+                            "active-class": "primary--text text--accent-4",
+                            multiple: "",
+                            mandatory: ""
+                          },
+                          model: {
+                            value: _vm.level,
+                            callback: function($$v) {
+                              _vm.level = $$v
+                            },
+                            expression: "level"
+                          }
+                        },
+                        _vm._l(_vm.levels, function(level) {
+                          return _c("v-chip", { key: level.level }, [
+                            _vm._v(_vm._s(level.level))
+                          ])
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.e6 = 5
+                        }
+                      }
+                    },
+                    [_vm._v("Continue")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-stepper-step", { attrs: { editable: "", step: "5" } }, [
+                _vm._v(
+                  "\n            Which subject areas are you insterested in?\n            "
+                )
               ]),
               _vm._v(" "),
               _c(
                 "v-stepper-content",
-                { attrs: { step: "4" } },
+                { attrs: { step: "5" } },
                 [
-                  _c("v-card", {
-                    staticClass: "mb-12",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
+                  _c(
+                    "v-card",
+                    { staticClass: "mb-4", attrs: { height: "200px" } },
+                    [
+                      _c(
+                        "v-chip-group",
+                        {
+                          attrs: {
+                            column: "",
+                            "active-class": "primary--text text--accent-4",
+                            multiple: "",
+                            mandatory: ""
+                          },
+                          model: {
+                            value: _vm.subject,
+                            callback: function($$v) {
+                              _vm.subject = $$v
+                            },
+                            expression: "subject"
+                          }
+                        },
+                        _vm._l(_vm.subjects, function(subject) {
+                          return _c("v-chip", { key: subject.subject }, [
+                            _vm._v(_vm._s(subject.subject))
+                          ])
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-btn",
@@ -39805,9 +40020,7 @@ var render = function() {
                       }
                     },
                     [_vm._v("Continue")]
-                  ),
-                  _vm._v(" "),
-                  _c("v-btn", { attrs: { text: "" } }, [_vm._v("Cancel")])
+                  )
                 ],
                 1
               )
@@ -100640,6 +100853,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     events: [],
     regions: [],
     countries: [],
+    destinations: [],
+    years: [],
     levels: [],
     subjects: [],
     event: [],
@@ -100694,14 +100909,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     setRegions: function setRegions(state, payload) {
       state.regions = payload;
     },
+    setCountries: function setCountries(state, payload) {
+      state.countries = payload;
+    },
+    setDestinations: function setDestinations(state, payload) {
+      state.destinations = payload;
+    },
+    setYears: function setYears(state, payload) {
+      state.years = payload;
+    },
     setLevels: function setLevels(state, payload) {
       state.levels = payload;
     },
     setSubjects: function setSubjects(state, payload) {
       state.subjects = payload;
-    },
-    setCountries: function setCountries(state, payload) {
-      state.countries = payload;
     },
     setSingleEvent: function setSingleEvent(state, payload) {
       state.event = payload;
@@ -100885,7 +101106,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee5);
       }))();
     },
-    fetchRegions: function fetchRegions(_ref6) {
+    fetchDestinations: function fetchDestinations(_ref6) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -100895,9 +101116,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref6.commit;
                 payload = [];
                 _context6.next = 4;
-                return axios.get("/inst/fetch-regions").then(function (res) {
-                  payload = res.data.regions;
-                  commit("setRegions", payload);
+                return axios.get("/student/fetch-destinations").then(function (res) {
+                  payload = res.data.destinations;
+                  commit("setDestinations", payload);
                 });
 
               case 4:
@@ -100908,7 +101129,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee6);
       }))();
     },
-    fetchLevels: function fetchLevels(_ref7) {
+    fetchYears: function fetchYears(_ref7) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
@@ -100918,9 +101139,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref7.commit;
                 payload = [];
                 _context7.next = 4;
-                return axios.get("/inst/fetch-levels").then(function (res) {
-                  payload = res.data.levels;
-                  commit("setLevels", payload);
+                return axios.get("/student/fetch-years").then(function (res) {
+                  payload = res.data.years;
+                  commit("setYears", payload);
                 });
 
               case 4:
@@ -100931,7 +101152,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee7);
       }))();
     },
-    fetchSubjects: function fetchSubjects(_ref8) {
+    fetchRegions: function fetchRegions(_ref8) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
@@ -100941,9 +101162,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 commit = _ref8.commit;
                 payload = [];
                 _context8.next = 4;
-                return axios.get("/inst/fetch-subjects").then(function (res) {
-                  payload = res.data.subjects;
-                  commit("setSubjects", payload);
+                return axios.get("/inst/fetch-regions").then(function (res) {
+                  payload = res.data.regions;
+                  commit("setRegions", payload);
                 });
 
               case 4:
@@ -100954,20 +101175,19 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee8);
       }))();
     },
-    fetchSingleEvent: function fetchSingleEvent(_ref9, payload) {
+    fetchLevels: function fetchLevels(_ref9) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var commit, event;
+        var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
                 commit = _ref9.commit;
-                // console.log(payload.id);
-                event = [];
+                payload = [];
                 _context9.next = 4;
-                return axios.get("/inst/fetch-single-event/" + payload.id).then(function (res) {
-                  event = res.data.event;
-                  commit("setSingleEvent", event);
+                return axios.get("/inst/fetch-levels").then(function (res) {
+                  payload = res.data.levels;
+                  commit("setLevels", payload);
                 });
 
               case 4:
@@ -100978,20 +101198,19 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee9);
       }))();
     },
-    fetchEventRegions: function fetchEventRegions(_ref10, payload) {
+    fetchSubjects: function fetchSubjects(_ref10) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var commit, eventRegions;
+        var commit, payload;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
                 commit = _ref10.commit;
-                // console.log(payload.id);
-                eventRegions = [];
+                payload = [];
                 _context10.next = 4;
-                return axios.get("/inst/fetch-event-regions/" + payload.id).then(function (res) {
-                  eventRegions = res.data.eventRegions;
-                  commit("setEventRegions", eventRegions);
+                return axios.get("/inst/fetch-subjects").then(function (res) {
+                  payload = res.data.subjects;
+                  commit("setSubjects", payload);
                 });
 
               case 4:
@@ -101002,20 +101221,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee10);
       }))();
     },
-    fetchEventLevels: function fetchEventLevels(_ref11, payload) {
+    fetchSingleEvent: function fetchSingleEvent(_ref11, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var commit, eventLevels;
+        var commit, event;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
                 commit = _ref11.commit;
                 // console.log(payload.id);
-                eventLevels = [];
+                event = [];
                 _context11.next = 4;
-                return axios.get("/inst/fetch-event-levels/" + payload.id).then(function (res) {
-                  eventLevels = res.data.eventLevels;
-                  commit("setEventLevels", eventLevels);
+                return axios.get("/inst/fetch-single-event/" + payload.id).then(function (res) {
+                  event = res.data.event;
+                  commit("setSingleEvent", event);
                 });
 
               case 4:
@@ -101026,20 +101245,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee11);
       }))();
     },
-    fetchEventSubjects: function fetchEventSubjects(_ref12, payload) {
+    fetchEventRegions: function fetchEventRegions(_ref12, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var commit, eventSubjects;
+        var commit, eventRegions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
                 commit = _ref12.commit;
                 // console.log(payload.id);
-                eventSubjects = [];
+                eventRegions = [];
                 _context12.next = 4;
-                return axios.get("/inst/fetch-event-subjects/" + payload.id).then(function (res) {
-                  eventSubjects = res.data.eventSubjects;
-                  commit("setEventSubjects", eventSubjects);
+                return axios.get("/inst/fetch-event-regions/" + payload.id).then(function (res) {
+                  eventRegions = res.data.eventRegions;
+                  commit("setEventRegions", eventRegions);
                 });
 
               case 4:
@@ -101050,14 +101269,62 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee12);
       }))();
     },
-    updateEventBasics: function updateEventBasics(_ref13, payload) {
+    fetchEventLevels: function fetchEventLevels(_ref13, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var state, commit, loading, aooerror;
+        var commit, eventLevels;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
-                state = _ref13.state, commit = _ref13.commit;
+                commit = _ref13.commit;
+                // console.log(payload.id);
+                eventLevels = [];
+                _context13.next = 4;
+                return axios.get("/inst/fetch-event-levels/" + payload.id).then(function (res) {
+                  eventLevels = res.data.eventLevels;
+                  commit("setEventLevels", eventLevels);
+                });
+
+              case 4:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      }))();
+    },
+    fetchEventSubjects: function fetchEventSubjects(_ref14, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+        var commit, eventSubjects;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                commit = _ref14.commit;
+                // console.log(payload.id);
+                eventSubjects = [];
+                _context14.next = 4;
+                return axios.get("/inst/fetch-event-subjects/" + payload.id).then(function (res) {
+                  eventSubjects = res.data.eventSubjects;
+                  commit("setEventSubjects", eventSubjects);
+                });
+
+              case 4:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }))();
+    },
+    updateEventBasics: function updateEventBasics(_ref15, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+        var state, commit, loading, aooerror;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                state = _ref15.state, commit = _ref15.commit;
                 loading = payload.loading;
                 aooerror = [];
                 axios.post("/inst/update-basics", {
@@ -101075,23 +101342,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 4:
               case "end":
-                return _context13.stop();
+                return _context15.stop();
             }
           }
-        }, _callee13);
+        }, _callee15);
       }))();
     },
-    updateEventDescription: function updateEventDescription(_ref14, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+    updateEventDescription: function updateEventDescription(_ref16, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
         var state, commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
-                state = _ref14.state, commit = _ref14.commit;
+                state = _ref16.state, commit = _ref16.commit;
                 console.log(payload.id);
                 console.log(payload.description);
-                _context14.next = 5;
+                _context16.next = 5;
                 return axios.post('/inst/update-description', {
                   id: payload.id,
                   description: payload.description
@@ -101103,20 +101370,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 5:
               case "end":
-                return _context14.stop();
+                return _context16.stop();
             }
           }
-        }, _callee14);
+        }, _callee16);
       }))();
     },
-    updateEventFiles: function updateEventFiles(_ref15, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+    updateEventFiles: function updateEventFiles(_ref17, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
         var state, commit, allerror, data, config;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
-                state = _ref15.state, commit = _ref15.commit;
+                state = _ref17.state, commit = _ref17.commit;
                 console.log(payload.id);
                 console.log(payload.image);
                 allerror = [];
@@ -101128,7 +101395,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                     'Content-Type': 'multipart/form-data'
                   }
                 };
-                _context15.next = 10;
+                _context17.next = 10;
                 return axios.post("/inst/update-image", data, config).then(function (response) {
                   console.log(response); // this.loading = false;
                   // this.$emit('eventAdded');
@@ -101141,10 +101408,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 10:
               case "end":
-                return _context15.stop();
+                return _context17.stop();
             }
           }
-        }, _callee15);
+        }, _callee17);
       }))();
     },
     // async fetchEventParticipants({commit}, payload){
@@ -101159,15 +101426,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     //         })
     // },
     //テスト
-    readDetails: function readDetails(_ref16) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+    readDetails: function readDetails(_ref18) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
         var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context16.prev = _context16.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
-                commit = _ref16.commit;
-                _context16.next = 3;
+                commit = _ref18.commit;
+                _context18.next = 3;
                 return axios.get('/inst/testform').then(function (res) {
                   //   let id = res.data.testform.id;
                   //   let name = res.data.testform.name;
@@ -101178,20 +101445,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 3:
               case "end":
-                return _context16.stop();
+                return _context18.stop();
             }
           }
-        }, _callee16);
+        }, _callee18);
       }))();
     },
-    postDetails: function postDetails(_ref17, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+    postDetails: function postDetails(_ref19, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
         var state, commit, allerror, details;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context19.prev = _context19.next) {
               case 0:
-                state = _ref17.state, commit = _ref17.commit;
+                state = _ref19.state, commit = _ref19.commit;
                 console.log(payload.name);
                 console.log(payload.email);
                 allerror = [];
@@ -101199,7 +101466,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   name: payload.name,
                   email: payload.email
                 };
-                _context17.next = 7;
+                _context19.next = 7;
                 return axios.post('/inst/testform', {
                   name: details.name,
                   email: details.email
@@ -101211,20 +101478,20 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 7:
               case "end":
-                return _context17.stop();
+                return _context19.stop();
             }
           }
-        }, _callee17);
+        }, _callee19);
       }))();
     },
-    updateDetails: function updateDetails(_ref18, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+    updateDetails: function updateDetails(_ref20, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20() {
         var state, commit, allerror, details;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
-                state = _ref18.state, commit = _ref18.commit;
+                state = _ref20.state, commit = _ref20.commit;
                 console.log(payload.name);
                 console.log(payload.email);
                 allerror = [];
@@ -101232,7 +101499,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   name: payload.name,
                   email: payload.email
                 };
-                _context18.next = 7;
+                _context20.next = 7;
                 return axios.post('/inst/testform/update', {
                   name: details.name,
                   email: details.email
@@ -101244,10 +101511,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 7:
               case "end":
-                return _context18.stop();
+                return _context20.stop();
             }
           }
-        }, _callee18);
+        }, _callee20);
       }))();
     }
   },

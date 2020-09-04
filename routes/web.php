@@ -97,6 +97,8 @@ Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //             //
 // 各種情報の取得
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
+Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
+Route::get('/student/fetch-years','YearsController@fetchYears');
 
 // Vue
 //Only inst user can access.

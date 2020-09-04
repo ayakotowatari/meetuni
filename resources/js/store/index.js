@@ -17,6 +17,8 @@ export default new Vuex.Store ({
         events: [],
         regions: [],
         countries: [],
+        destinations: [],
+        years: [],
         levels: [],
         subjects: [],
         event: [],
@@ -68,14 +70,20 @@ export default new Vuex.Store ({
         setRegions(state,payload){
             state.regions = payload
         },
+        setCountries(state,payload){
+            state.countries = payload
+        },
+        setDestinations(state,payload){
+            state.destinations = payload
+        },
+        setYears(state,payload){
+            state.years = payload
+        },
         setLevels(state,payload){
             state.levels = payload
         },
         setSubjects(state,payload){
             state.subjects = payload
-        },
-        setCountries(state,payload){
-            state.countries = payload
         },
         setSingleEvent(state,payload){
             state.event = payload
@@ -192,6 +200,26 @@ export default new Vuex.Store ({
                 .then(res => {
                     payload = res.data.countries;
                     commit("setCountries", payload)
+                })
+        },
+        async fetchDestinations({commit}) {
+            let payload = [];
+
+            await axios 
+                .get("/student/fetch-destinations")
+                .then(res => {
+                    payload = res.data.destinations;
+                    commit("setDestinations", payload)
+                })
+        },
+        async fetchYears({commit}){
+            let payload = [];
+
+            await axios
+                .get("/student/fetch-years")
+                .then(res => {
+                    payload = res.data.years;
+                    commit("setYears", payload)
                 })
         },
         async fetchRegions({commit}) {
