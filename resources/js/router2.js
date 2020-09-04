@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
  
 import Home from "./components/HomeComponent";
+import UserDetails from "./components/student/userdetails/UserDetailsComponent";
 
 //テスト
 
@@ -11,9 +12,9 @@ import Home from "./components/HomeComponent";
  
 const routes = [
     {
-        path: "/student/main",
-        name: "home",
-        component: Home
+        path: "/student/details",
+        name: "details",
+        component: UserDetails
     },
 ];
  

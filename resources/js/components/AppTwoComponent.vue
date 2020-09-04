@@ -1,6 +1,6 @@
 <template>
     <v-app>
-         <example-component></example-component>
+         <navbar-component></navbar-component>
          <v-main class="mx-4 mb-4">
             <router-view></router-view>
          </v-main>

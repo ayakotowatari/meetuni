@@ -154,6 +154,6 @@ trait OtherRegistersUsers
         //                 'nations'    =>$nations,
         //                 'levels'    =>$levels
         //                 ]);
-        return redirect('student/main');
+        return redirect('student/details');
     }
 }

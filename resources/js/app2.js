@@ -28,6 +28,7 @@ Vue.use(Vuetify);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('navbar-component', require('./components/student/parts/NavbarComponent.vue').default);
 
 //Chart
 
