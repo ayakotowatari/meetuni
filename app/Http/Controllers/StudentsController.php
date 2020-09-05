@@ -2,7 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+
+use App\User;
 use App\Models\Student;
+use App\Models\Country;
+use App\Models\Level;
+use App\Models\Year;
+use App\Models\CountryStudent;
+use App\Models\LevelStudent;
+use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -12,6 +21,67 @@ class StudentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function fetchStudentUser()
+    {
+        $user = Auth::user();
+        return response()->json(['user'=>$user],200);
+    }
+
+    public function addStudentDetails(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'country' => 'required',
+            'year' => 'required',
+            "destinations" => 'required',
+            "levels" => 'required',
+            'subjects' => 'required',
+        ]);
+
+        $user_id = request('id');
+        $country = request('country');
+        $year = request('year');
+
+        $student = new Student();
+        $student->id = $user_id;
+        $student->country_id = $country;
+        $student->year_id = $year;
+        $student->save();
+
+        $destinations = request("destinations");
+
+        //country_studentsテーブルへの挿入
+        foreach($destinations as $destination){
+
+            $country_student = new CountryStudent();
+            $country_student->student_id = $user_id;
+            $country_student->country_id = $destination;
+            $country_student->save();
+        }
+
+        $levels = request('levels');
+
+        //level_studentsテーブルへの挿入
+        foreach($levels as $level){
+          
+            $level_students = new LevelStudent();
+            $level_students->student_id = $user_id;
+            $level_students->level_id = $level;
+            $level_students->save();
+        }
+
+        $subjects = request('subjects');
+
+        //stuent_subjectsテーブルへの挿入
+        foreach($subjects as $subject){
+           
+            $student_subjects = new StudentSubject();
+            $student_subjects->student_id = $user_id;
+            $student_subjects->subject_id = $subject;
+            $student_subjects->save();
+        }
+    }
 
     public function index()
     {

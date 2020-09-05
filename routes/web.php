@@ -15,12 +15,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-// 大学名チェック
-Route::get('inst/search', 'InstsController@index');
-
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
-
-
 //Authentification
 Route::get('inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
 
@@ -28,15 +22,24 @@ Route::post('inst/register', 'Auth\RegisterController@instUserRegister')->name('
 
 Route::post('inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
 
-Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm');
+Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm')->name('studentUser.regiform');
 
-Route::post('student/register', 'Auth\RegisterController@studentRegister')->name('student.regiter');
+Route::post('student/register', 'Auth\RegisterController@studentUserRegister')->name('student.register');
 
 Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('student.logout');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//             //
+//     大学     //
+//             //
+
+// 大学名チェック
+Route::get('inst/search', 'InstsController@index');
+
+Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 // 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
@@ -78,8 +81,6 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 
-
-
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');
@@ -91,6 +92,18 @@ Route::post('/inst/testform', 'ImagesController@addTestform');
 Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //テスト終わる
 
+//             //
+//     学生     //
+//             //
+// 各種情報の取得
+Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
+Route::get('/student/fetch-countries','CountriesController@fetchCountries');
+Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
+Route::get('/student/fetch-years','YearsController@fetchYears');
+
+//学生追加情報の登録
+Route::post('/student/add-details', 'StudentsController@addStudentDetails');
+
 // Vue
 //Only inst user can access.
 Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){
@@ -98,4 +111,8 @@ Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){
         return view('inst.main');
     })->where('any','.*');
 });
+
+Route::get('/student/{any}', function () {
+    return view('student.main');
+})->where('any','.*');
 

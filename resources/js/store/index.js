@@ -31,18 +31,27 @@ export default new Vuex.Store ({
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
+
+        //学生用に追加
+        studentUser: [],
+        countries: [],
+        destinations: [],
+        years: [],
         // participants:[],
         //テスト
-        details: {
-            id: [],
-            name: [],
-            email: []
-        },
+        // details: {
+        //     id: [],
+        //     name: [],
+        //     email: []
+        // },
         allerror: [],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
         //componentsではcomputedで展開
+        filterCountries: (state) => (id) => {
+            return state.countries.filter(countries => countries.region_id == id)
+        }
 
     },
     mutations: {
@@ -112,27 +121,41 @@ export default new Vuex.Store ({
         updateEventEndTime(state,payload){
             state.end_time= payload
         },
+        setallErrors(state, payload){
+            state.allerror = payload
+        },
+
+        //学生用に追加
+        setStudentUser(state, payload){
+            state.studentUser = payload
+        },
+        setCountries(state,payload){
+            state.countries = payload
+        },
+        setDestinations(state,payload){
+            state.destinations = payload
+        },
+        setYears(state,payload){
+            state.years = payload
+        },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
         //テスト
-        readDetails(state, payload){
-            state.details.id = payload.id
-            state.details.name = payload.name
-            state.details.email = payload.email
-        },
-        setDetails(state, payload){  
-            state.details = Object.assign({}, state.details, payload)
-        },
-        setallErrors(state, payload){
-            state.allerror = payload
-        },
-        updateName(state, payload){
-            state.details.name = payload
-        },
-        updateEmail(state, payload){
-            state.details.email = payload
-        }
+        // readDetails(state, payload){
+        //     state.details.id = payload.id
+        //     state.details.name = payload.name
+        //     state.details.email = payload.email
+        // },
+        // setDetails(state, payload){  
+        //     state.details = Object.assign({}, state.details, payload)
+        // },
+        // updateName(state, payload){
+        //     state.details.name = payload
+        // },
+        // updateEmail(state, payload){
+        //     state.details.email = payload
+        // }
     },
     actions: {
         //非同期処理をする
@@ -256,7 +279,7 @@ export default new Vuex.Store ({
         async updateEventBasics({state, commit}, payload){
 
             let loading = payload.loading
-            let aooerror = [];
+            let allerror = [];
 
             axios
                 .post("/inst/update-basics", {
@@ -324,19 +347,75 @@ export default new Vuex.Store ({
                         commit('setallErrors', allerror)
                     )
         },
-        // async fetchEventParticipants({commit}, payload){
-        //     console.log(payload.id);
 
-        //     let participants = [];
+        //学生用に追加
+        async fetchStudentUser({ commit }){
+            let payload = [];
 
-        //     await axios 
-        //         .get("/inst/event-participants/" + payload.id)
-        //         .then(response => {
-        //             participants = response.data.participants;
-        //             console.log(participants);
-        //             commit("setParticipants", participants)
-        //         })
-        // },
+            await axios
+                .get("/student/fetch-user")
+                .then(res => {
+                    payload = res.data.user;
+                    commit('setStudentUser', payload)
+            });
+        },
+        async fetchCountries({commit}) {
+            let payload = [];
+
+            await axios
+                .get("/student/fetch-countries")
+                .then(res => {
+                    payload = res.data.countries;
+                    commit("setCountries", payload)
+                })
+        },
+        async fetchDestinations({commit}) {
+            let payload = [];
+
+            await axios 
+                .get("/student/fetch-destinations")
+                .then(res => {
+                    payload = res.data.destinations;
+                    commit("setDestinations", payload)
+                })
+        },
+        async fetchYears({commit}){
+            let payload = [];
+
+            await axios
+                .get("/student/fetch-years")
+                .then(res => {
+                    payload = res.data.years;
+                    commit("setYears", payload)
+                })
+        },
+        async addStudentDetails({state, commit}, payload){
+            let allerror = [];
+
+            console.log(payload.id);
+            console.log(payload.country);
+            console.log(payload.year);
+            console.log(payload.destinations);
+            console.log(payload.levels);
+            console.log(payload.subjects);
+
+            await axios 
+                .post("/student/add-details", {
+                    id: payload.id,
+                    country: payload.country,
+                    year: payload.year,
+                    destinations: payload.destinations,
+                    levels: payload.levels,
+                    subjects: payload.subjects
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
 
         //テスト
         async readDetails({commit}){

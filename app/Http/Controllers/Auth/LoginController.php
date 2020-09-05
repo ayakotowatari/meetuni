@@ -37,7 +37,7 @@ class LoginController extends Controller
             return'/inst/events';
         }
         if($type === 9){
-            return '/student';
+            return '/student/details';
         }
     }
     
