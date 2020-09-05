@@ -96,9 +96,13 @@ Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //     学生     //
 //             //
 // 各種情報の取得
+Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');
+
+//学生追加情報の登録
+Route::post('/student/add-details', 'StudentsController@addStudentDetails');
 
 // Vue
 //Only inst user can access.

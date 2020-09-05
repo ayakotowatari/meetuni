@@ -24,12 +24,12 @@
                     ></v-select>
                     <v-card height="100px" class="mb-4">
                         <v-chip-group 
-                            v-model="country" 
+                            v-model="selectedCountry" 
                             column 
                             active-class="primary--text text--accent-4"
                             mandatory
                         >
-                            <v-chip v-for="country in filteredCountries" :key="country.country">{{ country.country}}</v-chip>
+                            <v-chip v-for="country in filteredCountries" :key="country.id" :value="`${country.id}`">{{ country.country }}</v-chip>
                         </v-chip-group>
                     </v-card>
                     <v-btn color="primary" @click="e6 = 2">Continue</v-btn>
@@ -42,13 +42,12 @@
                 <v-stepper-content step="2" class="mb-6">
                     <v-card height="100px" class="mb-4">
                         <v-chip-group 
-                            v-model="year" 
+                            v-model="selectedYear" 
                             column 
                             active-class="primary--text text--accent-4"
-                            multiple
                             mandatory
                         >
-                            <v-chip v-for="year in years" :key="year.year">{{ year.year}}</v-chip>
+                            <v-chip v-for="year in years" :key="year.year" :value="`${year.id}`">{{ year.year}}</v-chip>
                         </v-chip-group>
                     </v-card>
                 <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
@@ -61,32 +60,32 @@
                 <v-stepper-content step="3" class="mb-6">
                     <v-card height="100px" class="mb-4">
                         <v-chip-group 
-                            v-model="destination" 
+                            v-model="selectedDestinations" 
                             column 
                             active-class="primary--text text--accent-4"
                             multiple
                             mandatory
                         >
-                            <v-chip v-for="destination in destinations" :key="destination.country">{{ destination.country}}</v-chip>
+                            <v-chip v-for="destination in destinations" :key="destination.country" :value="`${destination.id}`">{{ destination.country}}</v-chip>
                         </v-chip-group>
                     </v-card>
-                <v-btn color="primary" @click="e6 = 5">Continue</v-btn>
+                <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
                 </v-stepper-content>
 
-                <v-stepper-step editable :complete="e6 > 5" step="5">
+                <v-stepper-step editable :complete="e6 > 4" step="4">
                 Which levels of study are you interested in?
                 </v-stepper-step>
 
-                <v-stepper-content step="5" class="mb-6">
+                <v-stepper-content step="4" class="mb-6">
                     <v-card height="100px" class="mb-4">
                         <v-chip-group 
-                            v-model="level" 
+                            v-model="selectedLevels" 
                             column 
                             active-class="primary--text text--accent-4"
                             multiple
                             mandatory
                         >
-                            <v-chip v-for="level in levels" :key="level.level">{{ level.level}}</v-chip>
+                            <v-chip v-for="level in levels" :key="level.level" :value="`${level.id}`">{{ level.level}}</v-chip>
                         </v-chip-group>
                     </v-card>
                 <v-btn color="primary" @click="e6 = 5">Continue</v-btn>
@@ -98,16 +97,16 @@
                 <v-stepper-content step="5">
                     <v-card height="200px" class="mb-4">
                         <v-chip-group 
-                            v-model="subject" 
+                            v-model="selectedSubjects" 
                             column 
                             active-class="primary--text text--accent-4"
                             multiple
                             mandatory
                         >
-                            <v-chip v-for="subject in subjects" :key="subject.subject">{{ subject.subject }}</v-chip>
+                            <v-chip v-for="subject in subjects" :key="subject.subject" :value="`${subject.id}`">{{ subject.subject }}</v-chip>
                         </v-chip-group>
                     </v-card>
-                <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
+                <v-btn color="primary" @click.stop="submit">Save</v-btn>
                 </v-stepper-content>
             </v-stepper>
         </v-container>
@@ -115,16 +114,19 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
+    props: {
+        user: Object,
+    },
     data: () => ({
-        country: [],
-        year: [],
         selectedRegion: [],
-        destination: [],
-        level: [],
-        subject: [],
+        selectedCountry: [],
+        selectedYear: [],
+        selectedDestinations: [],
+        selectedLevels: [],
+        selectedSubjects: [],
         e6: 1,
     }),
     mounted(){
@@ -142,19 +144,43 @@ export default {
             'years',
             'destinations',
             'levels',
-            'subjects'
+            'subjects', 
+            'allerror'
         ]),
         ...mapGetters([
             'filterCountries'
         ]),
         filteredCountries(){
             return this.filterCountries(this.selectedRegion);
-        }
+        },
         // filteredCountries(){
         //     let options = this.countries
         //     return options.filter(option => option.region_id == this.selectedRegion)
         // }
     },
+    methods: {
+        ...mapActions([
+            'addStudentDetails'
+        ]),
+        submit(){
+
+            // console.log(this.selectedCountry);
+            // console.log(this.selectedYear);
+            // console.log(this.selectedDestinations);
+            // console.log(this.selectedLevels);
+            // console.log(this.selectedSubjects);
+        
+            this.addStudentDetails({
+                id: this.user.id,
+                country: this.selectedCountry,
+                year: this.selectedYear,
+                destinations: this.selectedDestinations,
+                levels: this.selectedLevels,
+                subjects: this.selectedSubjects,
+            });
+            
+        },
+    }
 
 
 
