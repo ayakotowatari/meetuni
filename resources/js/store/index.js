@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 import { participants } from './modules/participants';
 import { participantcharts } from './modules/participantcharts';
+import { student } from './modules/student';
 
 export default new Vuex.Store ({
 
@@ -52,7 +53,6 @@ export default new Vuex.Store ({
         filterCountries: (state) => (id) => {
             return state.countries.filter(countries => countries.region_id == id)
         }
-
     },
     mutations: {
         //actionsが終わった後の同期処理をする
@@ -484,7 +484,8 @@ export default new Vuex.Store ({
     },
     modules: {
         participants,
-        participantcharts
+        participantcharts,
+        student
     }
 
 })

@@ -1,37 +1,25 @@
 <template>
 <v-container>
     <v-row>
-        <v-col col="12" sm="12" md="3">
+        <v-col col="12" sm="12" md="3" class="mb-6" v-for="allEvent in allEvents" :key="allEvent.id">
             <v-card
                 class="mx-auto"
                 max-width="400"
             >
                 <v-img
                 class="white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                height="180px"
+                :src="`/storage/${ allEvent.image }`"
+                aspect-ratio="1.7"  
                 >
-                <!-- <v-row
-                    align="end"
-                    class="fill-height"
-                >
-                <v-col
-                    align-self="start"
-                >
-                    <v-avatar
-                        tile
-                        size="60"
-                        color="grey"
-                    ></v-avatar>
-                </v-col>
-                </v-row> -->
-                <v-card-title>King's College London</v-card-title>
                 </v-img>
+
+                <v-card-title>{{ allEvent.name }}</v-card-title>
 
                 <v-card-subtitle class="pb-0">Fri, Aug 29 2020 <br> 13:00 - 14:00 (GMT + 09:00)</v-card-subtitle>
 
                 <v-card-text class="text--primary">
-                <div>Information Session for Postgraduate Students</div>
+                <div>{{ allEvent.title }}</div>
                 </v-card-text>
 
                 <v-card-actions>
@@ -43,135 +31,14 @@
                         ></v-img>
                         </v-list-item-avatar>
 
-                        <v-list-item-content>
-                        <v-list-item-title>Evan You</v-list-item-title>
-                        </v-list-item-content>
-
                         <v-row
                         align="center"
                         justify="end"
                         >
-                        <v-icon class="mr-1">mdi-heart</v-icon>
-                        <span class="subheading mr-2">256</span>
-                        <span class="mr-1">·</span>
+                        <v-icon class="mr-3">mdi-heart</v-icon>
                         <v-icon class="mr-1">mdi-share-variant</v-icon>
-                        <span class="subheading">45</span>
                         </v-row>
                     </v-list-item>
-                </v-card-actions>
-            </v-card>
-        </v-col>
-        <v-col col="12" sm="12" md="3">
-            <v-card
-                class="mx-auto"
-                max-width="400"
-            >
-                <v-img
-                class="white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                >
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-                </v-img>
-
-                <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
-                </v-card-text>
-
-                <v-card-actions>
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Share
-                </v-btn>
-
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Explore
-                </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-col>
-        <v-col col="12" sm="12" md="3">
-            <v-card
-                class="mx-auto"
-                max-width="400"
-            >
-                <v-img
-                class="white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                >
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-                </v-img>
-
-                <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
-                </v-card-text>
-
-                <v-card-actions>
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Share
-                </v-btn>
-
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Explore
-                </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-col>
-        <v-col col="12" sm="12" md="3">
-            <v-card
-                class="mx-auto"
-                max-width="400"
-            >
-                <v-img
-                class="white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                >
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-                </v-img>
-
-                <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
-                </v-card-text>
-
-                <v-card-actions>
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Share
-                </v-btn>
-
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Explore
-                </v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -180,7 +47,23 @@
 </template>
 
 <script>
+// import { mapState } from 'vuex'
+import {createNamespacedHelpers} from 'vuex'
+const { mapState } = createNamespacedHelpers('student');
+
 export default {
+    data: () => ({
+
+    }),
+    mounted(){
+        this.$store.dispatch('student/fetchAllEvents');
+    },
+    computed: {
+        ...mapState([
+            'allEvents',
+        ])
+    },
+
 
 }
 </script>
