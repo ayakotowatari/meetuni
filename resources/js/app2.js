@@ -29,6 +29,8 @@ Vue.use(Vuetify);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-component', require('./components/student/parts/NavbarComponent.vue').default);
+Vue.component('search-component', require('./components/student/parts/SearchComponent.vue').default);
+Vue.component('header-component', require('./components/student/main/HeaderComponent.vue').default);
 
 //Chart
 
