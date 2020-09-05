@@ -14,18 +14,6 @@
                 >
                 </v-img>
 
-                <v-card-title>{{ allEvent.name }}</v-card-title>
-
-                <v-card-subtitle class="pb-0">
-                    {{ formattedDate(allEvent.date, user.timezone) }} <br> 
-                    {{ formattedStartTime(allEvent.start_utc, user.timezone) }}  -  
-                    {{ formattedEndTime(allEvent.end_utc, user.timezone) }}
-                </v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>{{ allEvent.title }}</div>
-                </v-card-text>
-
                 <v-card-actions>
                     <v-list-item class="grow">
                         <v-list-item-avatar color="grey darken-3">
@@ -44,6 +32,18 @@
                         </v-row>
                     </v-list-item>
                 </v-card-actions>
+
+                <v-card-title>{{ allEvent.name }}</v-card-title>
+
+                <v-card-subtitle class="pb-0">
+                    {{ formattedDate(allEvent.date, user.timezone) }} <br> 
+                    {{ formattedStartTime(allEvent.start_utc, user.timezone) }}  -  
+                    {{ formattedEndTime(allEvent.end_utc, user.timezone) }}
+                </v-card-subtitle>
+
+                <v-card-text class="text--primary">
+                <div>{{ allEvent.title }}</div>
+                </v-card-text>
             </v-card>
         </v-col>
     </v-row>
