@@ -4,7 +4,15 @@ export const student = {
     state: {
         allEvents: [],
     },
-     
+
+    getters: {
+        //stateの値を加工して、componentで使いたい時。
+        //componentsではcomputedで展開
+        // formattedStartTime: (state) => (value, timezone) => {
+        //     return state.allEvents.start_utc.moment.utc(value).local().tz(timezone).format("h:mm a")
+        // }
+    },
+    
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload

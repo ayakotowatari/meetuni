@@ -16,7 +16,11 @@
 
                 <v-card-title>{{ allEvent.name }}</v-card-title>
 
-                <v-card-subtitle class="pb-0">Fri, Aug 29 2020 <br> 13:00 - 14:00 (GMT + 09:00)</v-card-subtitle>
+                <v-card-subtitle class="pb-0">
+                    {{ formattedDate(allEvent.date, user.timezone) }} <br> 
+                    {{ formattedStartTime(allEvent.start_utc, user.timezone) }}  -  
+                    {{ formattedEndTime(allEvent.end_utc, user.timezone) }}
+                </v-card-subtitle>
 
                 <v-card-text class="text--primary">
                 <div>{{ allEvent.title }}</div>
@@ -47,11 +51,16 @@
 </template>
 
 <script>
+import moment from 'moment-timezone'
+
 // import { mapState } from 'vuex'
 import {createNamespacedHelpers} from 'vuex'
 const { mapState } = createNamespacedHelpers('student');
 
 export default {
+    props: {
+        user: Array,
+    },
     data: () => ({
 
     }),
@@ -63,8 +72,17 @@ export default {
             'allEvents',
         ])
     },
-
-
+    methods: {
+        formattedDate(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
+        },
+        formattedStartTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a")
+        },
+        formattedEndTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
+        }
+    }
 }
 </script>
 

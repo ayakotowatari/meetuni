@@ -16,7 +16,7 @@
             <v-tab :to="{name: 'foryou-events'}">For You</v-tab>
             <v-tab>Item Three</v-tab>
         </v-tabs>
-        <router-view></router-view>
+        <router-view v-bind:user="user"></router-view>
     </v-container>
   
 </template>
@@ -27,6 +27,9 @@ import SearchComponent from '../parts/SearchComponent'
 export default {
     components: {
         SearchComponent
+    },
+    props: {
+        user: Array,
     }
 
 }
