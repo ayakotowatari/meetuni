@@ -177,12 +177,9 @@ export default {
                 destinations: this.selectedDestinations,
                 levels: this.selectedLevels,
                 subjects: this.selectedSubjects,
-<<<<<<< HEAD
-=======
             })
             .then(() => {
                 this.$router.push({name: 'student-main'});
->>>>>>> master
             });
             
         },
