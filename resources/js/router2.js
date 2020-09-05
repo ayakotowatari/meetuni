@@ -5,7 +5,9 @@ Vue.use(VueRouter);
  
 // import Home from "./components/HomeComponent";
 import UserDetails from "./components/student/userdetails/UserDetailsComponent";
-import StudentMain from "./components/student/StudentMainComponent";
+import Main from "./components/student/main/MainComponent";
+import AllEvents from "./components/student/main/AllEventsComponent";
+import ForYouEvents from "./components/student/main/ForYouEventsComponent";
 
 //テスト
 
@@ -19,8 +21,29 @@ const routes = [
     },
     {
         path: "/student/main",
-        name: "student-main",
-        component: StudentMain
+        name: "main",
+        component: Main, 
+            children: [
+                {
+                    path: '',
+                    component: AllEvents
+
+                },
+                {
+                    //AllEvents will be rendered inside Main's <router-view>
+                    //when /main/all-events is matched.
+                    path: "all-events",
+                    name: "all-events",
+                    component: AllEvents
+                },
+                {
+                    //ForYouEvents will be rendered inside Main's <router-view>
+                    //when /main/foryou-events is matched.
+                    path: "foryou-events",
+                    name: "foryou-events",
+                    component: ForYouEvents
+                },
+            ]
     },
 ];
  
