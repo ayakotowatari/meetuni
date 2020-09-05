@@ -25,6 +25,18 @@ class EventsController extends Controller
         //
     }
 
+    public function fetchAllEvents(){
+
+        $events = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->where('events.id', '>', '82')
+                    ->where('events.id', '<', '90')
+                    ->orderBy('events.created_at')
+                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->get();
+
+        return response()->json(['events'=>$events],200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
