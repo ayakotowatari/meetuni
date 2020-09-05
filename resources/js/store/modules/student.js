@@ -22,6 +22,7 @@ export const student = {
     actions: {
         async fetchAllEvents({commit}){
             let payload = [];
+            let loading = true;
 
             await axios
                 .get("/student/all-events")
