@@ -35,12 +35,12 @@ export const student = {
                     console.log(payload)
                 });
         },
-        async recommendEvents({commit}, payload){
+        async recommendEventsWithSubjects({commit}, payload){
             let events = [];
             console.log(payload.id);
 
             await axios
-                .get("/student/recommended-events/" + payload.id)
+                .get("/student/event-subjects/" + payload.id)
                 .then(res => {
                     events = res.data.events;
                     console.log(events);
