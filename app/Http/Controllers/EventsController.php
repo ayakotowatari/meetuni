@@ -39,7 +39,7 @@ class EventsController extends Controller
         return response()->json(['events'=>$events],200);
     }
 
-    public function recommendEventsWithSubjects(Request $request, $id){
+    public function recommendSubjectEvents(Request $request, $id){
 
         // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
         //                     ->join('levels', 'levels.id', '=', 'level_students.level_id')
@@ -62,12 +62,13 @@ class EventsController extends Controller
             $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                    ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
                     ->where('event_subjects.subject_id', $subject->id)
                     ->where(function($query){
                         $query->where('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 1);
                     })
-                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
         };
         // DD($events);
@@ -81,7 +82,7 @@ class EventsController extends Controller
         return response()->json(['events'=>$unique],200);
     }
 
-    public function recommendEventsWithDestinations (Request $request, $id)
+    public function recommendDestinationEvents(Request $request, $id)
     {
         $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
                             ->join('countries', 'countries.id', '=', 'country_students.country_id')
@@ -116,11 +117,15 @@ class EventsController extends Controller
 
         // DD($unique);
 
+        // DD($unique);
+
         return response()->json(['events'=>$unique],200);
+
+        // return view('student.test',['events'=>$unique]);
 
     }
 
-    public function recommendEventsWithRegions(Request $request, $id)
+    public function recommendRegionEvents(Request $request, $id)
     {
         $region = Student::join('countries', 'students.country_id', '=', 'countries.id')
                         ->join('regions', 'countries.region_id', '=', 'regions.id')
@@ -146,9 +151,13 @@ class EventsController extends Controller
 
         // $array = $events;
         // $flattened_events = Arr::flatten($array);
-        $unique = array_unique($events);
 
-        return response()->json(['events'=>$unique],200);
+        if($events->isEmpty()){
+            return 'There was no record';
+        }else{
+            $unique = array_unique($events);
+            return response()->json(['events'=>$unique],200);
+        }
     }
 
     /**

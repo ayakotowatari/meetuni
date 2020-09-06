@@ -1,62 +1,38 @@
 <template>
 <v-container>
-    <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="recommendedEvent in recommendedEvents" :key="recommendedEvent.id">
-            <v-card
-                class="mx-auto"
-                max-width="400"
-            >
-                <v-img
-                class="white--text align-end"
-                height="180px"
-                :src="`/storage/${ recommendedEvent.image }`"
-                aspect-ratio="1.7"  
-                >
-                </v-img>
-                 <v-card-actions>
-                    <v-list-item class="grow">
-                        <v-list-item-avatar color="grey darken-3">
-                        <v-img
-                            class="elevation-6"
-                            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                        ></v-img>
-                        </v-list-item-avatar>
-
-                        <v-row
-                        align="center"
-                        justify="end"
-                        >
-                        <v-icon class="mr-3">mdi-heart</v-icon>
-                        <v-icon class="mr-1">mdi-share-variant</v-icon>
-                        </v-row>
-                    </v-list-item>
-                </v-card-actions>
-
-                <v-card-title>{{ recommendedEvent.name }}</v-card-title>
-
-                <v-card-subtitle class="pb-0">
-                    {{ formattedDate(recommendedEvent.date, user.timezone) }} <br> 
-                    {{ formattedStartTime(recommendedEvent.start_utc, user.timezone) }}  -  
-                    {{ formattedEndTime(recommendedEvent.end_utc, user.timezone) }}
-                </v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>{{ recommendedEvent.title }}</div>
-                </v-card-text>
-            </v-card>
-        </v-col>
-    </v-row>
+    <h2 class="grey--text text--darken-2">Your subject insterests</h2>
+    <subjectrecommend-component
+        v-bind:events="recommendedSubjectEvents"
+        v-bind:user="user"
+    ></subjectrecommend-component>
+    <h2 class="grey--text text--darken-2">From countries of your interest</h2>
+    <destinationrecommend-component
+        v-bind:events="recommendedDestinationEvents"
+        v-bind:user="user"
+    ></destinationrecommend-component>
+    <h2 class="grey--text text--darken-2">Focus on your region</h2>
+    <regionrecommend-component
+        v-bind:events="recommendedRegionEvents"
+        v-bind:user="user"
+    ></regionrecommend-component>
 </v-container>
 </template>
 
 <script>
-import moment from 'moment-timezone'
+import SubjectRecommend from './SubjectRecommendComponent'
+import DestinationRecommend from './DestinationRecommendComponent'
+import RegionRecommend from './RegionRecommendComponent'
 
 // import { mapState } from 'vuex'
 import {createNamespacedHelpers} from 'vuex'
 const { mapState } = createNamespacedHelpers('student');
 
 export default {
+    components: {
+        SubjectRecommend,
+        DestinationRecommend,
+        RegionRecommend,
+    },
     props: {
         user: Object,
     },
@@ -64,7 +40,13 @@ export default {
 
     }),
     mounted(){
-        this.$store.dispatch('student/recommendEvents', {
+        this.$store.dispatch('student/recommendSubjectEvents', {
+            id: this.user.id
+        });
+        this.$store.dispatch('student/recommendDestinationEvents', {
+            id: this.user.id
+        });
+         this.$store.dispatch('student/recommendRegionEvents', {
             id: this.user.id
         });
     },
@@ -73,19 +55,13 @@ export default {
     },
     computed: {
         ...mapState([
-            'recommendedEvents',
+            'recommendedSubjectEvents',
+            'recommendedDestinationEvents',
+            'recommendedRegionEvents'
         ])
     },
     methods: {
-        formattedDate(value, timezone){
-            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
-        },
-        formattedStartTime(value, timezone){
-            return moment.utc(value).local().tz(timezone).format("h:mm a")
-        },
-        formattedEndTime(value, timezone){
-            return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
-        }
+       
     }
 }
 </script>

@@ -11,7 +11,7 @@
                 <search-component></search-component>
             </v-col>
         </v-row>
-        <v-tabs>
+        <v-tabs class="mb-6">
             <v-tab :to="{name: 'all-events'}">All</v-tab>
             <v-tab :to="{name: 'recommended-events', params: {id: this.user.id}}">For You</v-tab>
             <v-tab>Item Three</v-tab>
