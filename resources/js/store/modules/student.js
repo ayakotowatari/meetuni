@@ -3,6 +3,7 @@ export const student = {
 
     state: {
         allEvents: [],
+        recommendedEvents: []
     },
 
     getters: {
@@ -16,13 +17,15 @@ export const student = {
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setRecommendedEvents(state, payload){
+            state.recommendedEvents = payload
         }
     },
 
     actions: {
         async fetchAllEvents({commit}){
             let payload = [];
-            let loading = true;
 
             await axios
                 .get("/student/all-events")
@@ -32,5 +35,17 @@ export const student = {
                     console.log(payload)
                 });
         },
+        async recommendEvents({commit}, payload){
+            let events = [];
+            console.log(payload.id);
+
+            await axios
+                .get("/student/recommended-events/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    console.log(events);
+                    commit("setRecommendedEvents", events)
+                });
+        }
     }
 }

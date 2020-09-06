@@ -101,6 +101,7 @@ Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');
 Route::get('/student/all-events', 'EventsController@fetchAllEvents');
+Route::get('/student/recommended-events/{id}', 'EventsController@recommendEvents');
 
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');

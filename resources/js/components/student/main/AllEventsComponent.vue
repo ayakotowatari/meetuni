@@ -59,7 +59,7 @@ const { mapState } = createNamespacedHelpers('student');
 
 export default {
     props: {
-        user: Array,
+        user: Object,
     },
     data: () => ({
 
