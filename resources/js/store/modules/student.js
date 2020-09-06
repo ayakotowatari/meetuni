@@ -3,6 +3,9 @@ export const student = {
 
     state: {
         allEvents: [],
+        recommendedSubjectEvents: [],
+        recommendedDestinationEvents: [],
+        recommendedRegionEvents: [],
     },
 
     getters: {
@@ -16,13 +19,21 @@ export const student = {
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setRecommendedSubjectEvents(state, payload){
+            state.recommendedSubjectEvents = payload
+        },
+        setRecommendedDestinationEvents(state, payload){
+            state.recommendedDestinationEvents = payload
+        },
+        setRecommendedRegionEvents(state, payload){
+            state.recommendedRegionEvents = payload
         }
     },
 
     actions: {
         async fetchAllEvents({commit}){
             let payload = [];
-            let loading = true;
 
             await axios
                 .get("/student/all-events")
@@ -32,5 +43,41 @@ export const student = {
                     console.log(payload)
                 });
         },
+        async recommendSubjectEvents({commit}, payload){
+            let events = [];
+            console.log(payload.id);
+
+            await axios
+                .get("/student/event-subjects/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    console.log(events);
+                    commit("setRecommendedSubjectEvents", events)
+                });
+        },
+        async recommendDestinationEvents({commit}, payload){
+            let events = [];
+            console.log(payload.id);
+
+            await axios
+                .get("/student/event-destinations/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    console.log(events);
+                    commit("setRecommendedDestinationEvents", events)
+                });
+        },
+        async recommendRegionEvents({commit}, payload){
+            let events = [];
+            console.log(payload.id);
+
+            await axios
+                .get("/student/event-regions/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    console.log(events);
+                    commit("setRecommendedRegionEvents", events)
+                });
+        }
     }
 }

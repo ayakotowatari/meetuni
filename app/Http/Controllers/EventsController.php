@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\InstUser;
 use App\Models\Inst;
+use App\Models\Student;
 use App\Models\Event;
 use App\Models\EventRegion;
 use App\Models\EventLevel;
 use App\Models\EventSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Storage;
 use Validator;
 
@@ -35,6 +37,127 @@ class EventsController extends Controller
                     ->get();
 
         return response()->json(['events'=>$events],200);
+    }
+
+    public function recommendSubjectEvents(Request $request, $id){
+
+        // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
+        //                     ->join('levels', 'levels.id', '=', 'level_students.level_id')
+        //                     ->where('students.id', $id)
+        //                     ->select('levels.id')
+        //                     ->get();
+
+        // DD($levels);
+
+        $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
+                                ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                                ->where('students.id', $id)
+                                ->select('subjects.id')
+                                ->get();
+        // DD($subjects);
+
+        // $events=[];
+
+        foreach($subjects as $subject){
+            $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                    ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
+                    ->where('event_subjects.subject_id', $subject->id)
+                    ->where(function($query){
+                        $query->where('event_levels.level_id', 6)
+                              ->orWhere('event_levels.level_id', 1);
+                    })
+                    ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->get();
+        };
+        // DD($events);
+        $array = $events;
+        $flattened_events = Arr::flatten($array);
+        $unique = array_unique($flattened_events);
+
+        // DD($unique);
+
+        // return view('student.test', ['events'=>$unique]);
+        return response()->json(['events'=>$unique],200);
+    }
+
+    public function recommendDestinationEvents(Request $request, $id)
+    {
+        $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
+                            ->join('countries', 'countries.id', '=', 'country_students.country_id')
+                            ->where('students.id', $id)
+                            ->select('countries.id')
+                            ->get();
+
+        // DD($destinations);
+
+        foreach($destinations as $destination){
+
+            $events[] = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+                            ->join('countries', 'insts.country_id', '=', 'countries.id')
+                            ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                            ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                            ->where('countries.id', $destination->id)
+                            ->where('event_subjects.subject_id', 1)
+                            ->where(function($query){
+                                $query->where('event_levels.level_id', 1)
+                                      ->orWhere('event_levels.level_id', 6)
+                                      ->orWhere('event_levels.level_id', 10);
+                            })
+                            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                            ->get();
+        }
+
+        // DD($events);
+
+        $array = $events;
+        $flattened_events = Arr::flatten($array);
+        $unique = array_unique($flattened_events);
+
+        // DD($unique);
+
+        // DD($unique);
+
+        return response()->json(['events'=>$unique],200);
+
+        // return view('student.test',['events'=>$unique]);
+
+    }
+
+    public function recommendRegionEvents(Request $request, $id)
+    {
+        $region = Student::join('countries', 'students.country_id', '=', 'countries.id')
+                        ->join('regions', 'countries.region_id', '=', 'regions.id')
+                        ->where('students.id', $id)
+                        ->select('regions.id')
+                        ->get();
+
+        // DD($region);
+
+        $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                    ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                    ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                    ->where('event_regions.region_id', $region)
+                    ->where('event_subjects.subject_id', 1)
+                    ->where(function($query){
+                        $query->where('event_levels.level_id', 1)
+                              ->orWhere('event_levels.level_id', 6)
+                              ->orWhere('event_levels.level_id', 10);
+                    })
+                    ->get();
+
+        // DD($events);
+
+        // $array = $events;
+        // $flattened_events = Arr::flatten($array);
+
+        if($events->isEmpty()){
+            return 'There was no record';
+        }else{
+            $unique = array_unique($events);
+            return response()->json(['events'=>$unique],200);
+        }
     }
 
     /**

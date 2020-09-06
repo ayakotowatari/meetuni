@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 import UserDetails from "./components/student/userdetails/UserDetailsComponent";
 import Main from "./components/student/main/MainComponent";
 import AllEvents from "./components/student/main/AllEventsComponent";
-import ForYouEvents from "./components/student/main/ForYouEventsComponent";
+import RecommendedEvents from "./components/student/main/RecommendedEventsComponent";
 
 //テスト
 
@@ -21,7 +21,6 @@ const routes = [
     },
     {
         path: "/student/main",
-        name: "main",
         component: Main, 
             children: [
                 {
@@ -39,9 +38,9 @@ const routes = [
                 {
                     //ForYouEvents will be rendered inside Main's <router-view>
                     //when /main/foryou-events is matched.
-                    path: "foryou-events",
-                    name: "foryou-events",
-                    component: ForYouEvents
+                    path: "recommended-events",
+                    name: "recommended-events",
+                    component: RecommendedEvents
                 },
             ]
     },

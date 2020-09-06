@@ -31,7 +31,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('navbar-component', require('./components/student/parts/NavbarComponent.vue').default);
 Vue.component('search-component', require('./components/student/parts/SearchComponent.vue').default);
 Vue.component('header-component', require('./components/student/main/HeaderComponent.vue').default);
-
+Vue.component('subjectrecommend-component', require('./components/student/main/SubjectRecommendComponent.vue').default);
+Vue.component('destinationrecommend-component', require('./components/student/main/DestinationRecommendComponent.vue').default);
+Vue.component('regionrecommend-component', require('./components/student/main/RegionRecommendComponent.vue').default);
 //Chart
 
 
