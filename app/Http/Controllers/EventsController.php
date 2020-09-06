@@ -41,80 +41,42 @@ class EventsController extends Controller
 
     public function recommendEvents(Request $request, $id){
 
-        // $student_regions = Student::join('countries', 'students.country_id', '=', 'countries.id')
-        //                         ->join('regions', 'countries.region_id', '=', 'regions.id')
-        //                         ->where('students.id', $id)
-        //                         ->select('regions.id')
-        //                         ->get();
+        $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
+                            ->join('levels', 'levels.id', '=', 'level_students.level_id')
+                            ->where('students.id', $id)
+                            ->select('levels.id')
+                            ->get();
 
-        // $json=[];
-
-        // foreach($student_regions as $student_region){
-        //     $event = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
-        //         ->join('regions', 'event_regions.region_id', '=', 'regions.id')
-        //         ->join('insts', 'events.inst_id', '=', 'insts.id')
-        //         ->where('regions.id', $student_region)
-        //         ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-        //         ->get();
-
-        //     $json[] = $event;
-            
-        // }
-
-        // $student_destinations = Student::join('country_students', 'students.id', '=', 'country_students.student_id')
-        //                             ->join('countries', 'countries.id', '=', 'country_students.country_id')
-        //                             ->where('students.id', $id)
-        //                             ->select('countries.id')
-        //                             ->get();
-
-        // $json = [];
-
-        // foreach($student_destinations as $student_destination){
-        //     $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
-        //                 ->join('countries', 'insts.country_id', '=', 'countries.id')
-        //                 ->where('countries.id', $student_destination)
-        //                 ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-        //                 ->get();
-
-        //     $json[] = $event->title;
-        // }
-
-
-
-        // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
-        //                     ->join('levels', 'levels.id', '=', 'level_students.level_id')
-        //                     ->where('students.id', $id)
-        //                     ->select('levels.id')
-        //                     ->get();
-
-        // // DD($levels);
+        // DD($levels);
 
         $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
                                 ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
                                 ->where('students.id', $id)
                                 ->select('subjects.id')
                                 ->get();
-
         // DD($subjects);
 
         // $events=[];
 
         foreach($subjects as $subject){
             $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
-            ->where('event_subjects.subject_id', $subject->id)
-            ->select('events.id', 'events.title')
-            ->get();
+                    ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                    ->where('event_subjects.subject_id', $subject->id)
+                    ->where('event_levels.level_id', 10)
+                    ->select('events.id', 'events.title')
+                    ->distinct()
+                    ->get();
         };
 
         // DD($events);
-
         $array = $events;
         $flattened_events = Arr::flatten($array);
+        $unique = array_unique($flattened_events);
 
         // DD($flattened_events);
-
-        // DD($flattened_events);
-
+       
+        DD($unique);
+       
         // DD($events);
         // foreach($levels as $level){
         // };
@@ -160,7 +122,7 @@ class EventsController extends Controller
 
         // return response()->json(['events'=>$json],200);
 
-        return view('student.test', ['events'=>$flattened_events]);
+        return view('student.test', ['events'=>$unique]);
     }
 
     /**
