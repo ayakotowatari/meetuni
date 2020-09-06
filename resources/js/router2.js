@@ -21,7 +21,6 @@ const routes = [
     },
     {
         path: "/student/main",
-        name: "main",
         component: Main, 
             children: [
                 {

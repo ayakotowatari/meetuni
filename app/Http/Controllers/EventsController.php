@@ -60,13 +60,14 @@ class EventsController extends Controller
 
         foreach($subjects as $subject){
             $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->where('event_subjects.subject_id', $subject->id)
                     ->where(function($query){
                         $query->where('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 1);
                     })
-                    ->select('events.id', 'events.title')
+                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
         };
         // DD($events);

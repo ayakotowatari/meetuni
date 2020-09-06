@@ -13,7 +13,7 @@
         </v-row>
         <v-tabs>
             <v-tab :to="{name: 'all-events'}">All</v-tab>
-            <v-tab :to="{name: 'recommended-events'}">For You</v-tab>
+            <v-tab :to="{name: 'recommended-events', params: {id: this.user.id}}">For You</v-tab>
             <v-tab>Item Three</v-tab>
         </v-tabs>
         <router-view v-bind:user="user"></router-view>

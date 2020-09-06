@@ -68,6 +68,9 @@ export default {
             id: this.user.id
         });
     },
+    created(){
+        
+    },
     computed: {
         ...mapState([
             'recommendedEvents',

@@ -35,7 +35,7 @@ export const student = {
                     console.log(payload)
                 });
         },
-        async recommendEventsWithSubjects({commit}, payload){
+        async recommendEvents({commit}, payload){
             let events = [];
             console.log(payload.id);
 
