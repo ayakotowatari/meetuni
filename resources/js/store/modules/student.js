@@ -1,8 +1,14 @@
+// import moment from 'moment-timezone'
+
 export const student = {
     namespaced: true,
 
     state: {
         allEvents: [],
+        event: [],
+        regions: [],
+        levels: [],
+        subjects: [],
         recommendedSubjectEvents: [],
         recommendedDestinationEvents: [],
         recommendedRegionEvents: [],
@@ -11,14 +17,20 @@ export const student = {
     getters: {
         //stateの値を加工して、componentで使いたい時。
         //componentsではcomputedで展開
-        // formattedStartTime: (state) => (value, timezone) => {
-        //     return state.allEvents.start_utc.moment.utc(value).local().tz(timezone).format("h:mm a")
+        // formattedStartTime: (state) => (timezone) =>{
+        //     return moment.utc(state.event.start_utc).local().tz(timezone).format("h:mm a")
         // }
     },
     
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setEvent(state, payload){
+            state.event = payload.event
+            state.regions = payload.regions
+            state.levels = payload.levels
+            state.subjects = payload.subjects
         },
         setRecommendedSubjectEvents(state, payload){
             state.recommendedSubjectEvents = payload
@@ -36,11 +48,31 @@ export const student = {
             let payload = [];
 
             await axios
-                .get("/student/all-events")
+                .get("/student/fetch-events")
                 .then(res => {
                     payload = res.data.events;
                     commit("setAllEvents", payload);
                     console.log(payload)
+                });
+        },
+        async fetchSingleEvent({commit}, payload){
+            let event = [];
+            let regions = [];
+            let levels = [];
+            let subjects = [];
+
+            await axios
+                .get("/student/fetch-details/" + payload.id)
+                .then(res => {
+                    event = res.data.event;
+                    regions = res.data.regions;
+                    levels = res.data.levels;
+                    subjects = res.data.subjects
+                    console.log(event)
+                    console.log(regions)
+                    console.log(levels)
+                    console.log(subjects)
+                    commit("setEvent", {event, regions, levels, subjects});
                 });
         },
         async recommendSubjectEvents({commit}, payload){

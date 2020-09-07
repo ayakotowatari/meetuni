@@ -52,7 +52,7 @@ import moment from 'moment-timezone'
 
 export default {
     props: {
-        user: Object,
+        user: Array,
         events: Object
     },
     methods: {
