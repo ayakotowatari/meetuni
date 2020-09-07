@@ -1,3 +1,5 @@
+// import moment from 'moment-timezone'
+
 export const student = {
     namespaced: true,
 
@@ -15,8 +17,8 @@ export const student = {
     getters: {
         //stateの値を加工して、componentで使いたい時。
         //componentsではcomputedで展開
-        // formattedStartTime: (state) => (value, timezone) => {
-        //     return state.allEvents.start_utc.moment.utc(value).local().tz(timezone).format("h:mm a")
+        // formattedStartTime: (state) => (timezone) =>{
+        //     return moment.utc(state.event.start_utc).local().tz(timezone).format("h:mm a")
         // }
     },
     
@@ -46,7 +48,7 @@ export const student = {
             let payload = [];
 
             await axios
-                .get("/student/all-events")
+                .get("/student/fetch-events")
                 .then(res => {
                     payload = res.data.events;
                     commit("setAllEvents", payload);
@@ -60,7 +62,7 @@ export const student = {
             let subjects = [];
 
             await axios
-                .get("/student/event-details/" + payload.id)
+                .get("/student/fetch-details/" + payload.id)
                 .then(res => {
                     event = res.data.event;
                     regions = res.data.regions;
