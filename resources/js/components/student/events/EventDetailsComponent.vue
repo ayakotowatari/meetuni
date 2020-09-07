@@ -14,13 +14,16 @@ export default {
         console.log(id);
     },
     mounted(){
-        this.$store.dispatch('fetchSingleEvent', {
+        this.$store.dispatch('student/fetchSingleEvent', {
             id: this.id
         })
     },
     computed: {
         ...mapState([
-            'event'
+            'event',
+            'regions',
+            'levels',
+            'subjects'
         ])
     }
 

@@ -34,7 +34,7 @@ const routes = [
                     //when /main/all-events is matched.
                     path: "all-events",
                     name: "all-events",
-                    component: AllEvents
+                    component: AllEvents, 
                 },
                 {
                     //RecommendedEvents will be rendered inside Main's <router-view>

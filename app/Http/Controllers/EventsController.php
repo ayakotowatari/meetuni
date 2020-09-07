@@ -46,6 +46,25 @@ class EventsController extends Controller
                     ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->first();
 
+        $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                            ->join('regions', 'event_regions.region_id', '=', 'regions.id')
+                            ->where('events.id', $id)
+                            ->select('regions.region')
+                            ->get();
+
+        $levels = Event::join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                            ->join('levels', 'event_levels.level_id', '=', 'levels.id')
+                            ->where('events.id', $id)
+                            ->select('levels.level')
+                            ->get();
+
+        $subjects = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                            ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
+                            ->where('events.id', $id)
+                            ->select('subjects.subject')
+                            ->get();
+
+        return response()->json(['event'=>$event, 'regions'=>$regions, 'levels'=>$levels, 'subjects'=>$subjects],200);
         
     }       
 
