@@ -3,6 +3,7 @@ export const student = {
 
     state: {
         allEvents: [],
+        event: [],
         recommendedSubjectEvents: [],
         recommendedDestinationEvents: [],
         recommendedRegionEvents: [],
@@ -19,6 +20,9 @@ export const student = {
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setEvent(state, payload){
+            state.event = payload
         },
         setRecommendedSubjectEvents(state, payload){
             state.recommendedSubjectEvents = payload
@@ -41,6 +45,17 @@ export const student = {
                     payload = res.data.events;
                     commit("setAllEvents", payload);
                     console.log(payload)
+                });
+        },
+        async fetchSingleEvent({commit}, payload){
+            let event = [];
+
+            await axios
+                .get("/student/event-details/" + payload.id)
+                .then(res => {
+                    event = res.data.event;
+                    commit("setEvent", event);
+                    console.log(event)
                 });
         },
         async recommendSubjectEvents({commit}, payload){

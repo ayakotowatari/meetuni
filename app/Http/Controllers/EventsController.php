@@ -39,6 +39,16 @@ class EventsController extends Controller
         return response()->json(['events'=>$events],200);
     }
 
+    public function fetchSingleEvent(Request $request, $id){
+
+        $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->where('events.id', $id)
+                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->first();
+
+        
+    }       
+
     public function recommendSubjectEvents(Request $request, $id){
 
         // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')

@@ -1,15 +1,16 @@
 <template>
 <v-container>
     <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="allEvent in allEvents" :key="allEvent.id">
+        <v-col col="12" sm="12" md="3" class="mb-6" v-for="event in allEvents" :key="event.id">
             <v-card
-                class="mx-auto"
+                class="mx-auto card-link"
                 max-width="400"
+                @click.stop="expand(event.id)"
             >
                 <v-img
                 class="white--text align-end"
                 height="180px"
-                :src="`/storage/${ allEvent.image }`"
+                :src="`/storage/${ event.image }`"
                 aspect-ratio="1.7"  
                 >
                 </v-img>
@@ -33,16 +34,16 @@
                     </v-list-item>
                 </v-card-actions>
 
-                <v-card-title>{{ allEvent.name }}</v-card-title>
+                <v-card-title>{{ event.name }}</v-card-title>
 
                 <v-card-subtitle class="pb-0">
-                    {{ formattedDate(allEvent.date, user.timezone) }} <br> 
-                    {{ formattedStartTime(allEvent.start_utc, user.timezone) }}  -  
-                    {{ formattedEndTime(allEvent.end_utc, user.timezone) }}
+                    {{ formattedDate(event.date, user.timezone) }} <br> 
+                    {{ formattedStartTime(event.start_utc, user.timezone) }}  -  
+                    {{ formattedEndTime(event.end_utc, user.timezone) }}
                 </v-card-subtitle>
 
                 <v-card-text class="text--primary">
-                <div>{{ allEvent.title }}</div>
+                <div>{{ event.title }}</div>
                 </v-card-text>
             </v-card>
         </v-col>
@@ -73,6 +74,9 @@ export default {
         ])
     },
     methods: {
+        expand(id){
+            this.$router.push({name: 'event-details', params: {id: id}})
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },
@@ -87,5 +91,8 @@ export default {
 </script>
 
 <style>
+.card-link{
+    cursor: pointer;
+}
 
 </style>

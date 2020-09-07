@@ -34,7 +34,7 @@ export default {
         RegionRecommend,
     },
     props: {
-        user: Object,
+        user: Array,
     },
     data: () => ({
 
