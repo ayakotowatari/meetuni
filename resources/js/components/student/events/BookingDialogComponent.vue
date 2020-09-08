@@ -42,7 +42,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="registerEvent">Register</v-btn>
+                <v-btn color="blue darken-1" text @click="bookEvent">Register</v-btn>
                 <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
             </v-card-actions>
             </v-card>
@@ -65,7 +65,7 @@ export default {
         ...mapActions('student', [
             'registerEvent'
         ]),
-        registerEvent(){
+        bookEvent(){
             this.registerEvent({
                 event_id: this.event.id,
                 first_name: this.first_name,

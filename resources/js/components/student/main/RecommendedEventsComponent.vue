@@ -23,9 +23,9 @@ import SubjectRecommend from './SubjectRecommendComponent'
 import DestinationRecommend from './DestinationRecommendComponent'
 import RegionRecommend from './RegionRecommendComponent'
 
-// import { mapState } from 'vuex'
-import {createNamespacedHelpers} from 'vuex'
-const { mapState } = createNamespacedHelpers('student');
+import { mapState } from 'vuex'
+// import {createNamespacedHelpers} from 'vuex'
+// const { mapState } = createNamespacedHelpers('student');
 
 export default {
     components: {
@@ -54,7 +54,7 @@ export default {
         
     },
     computed: {
-        ...mapState([
+        ...mapState('student', [
             'recommendedSubjectEvents',
             'recommendedDestinationEvents',
             'recommendedRegionEvents'

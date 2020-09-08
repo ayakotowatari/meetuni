@@ -19,7 +19,7 @@
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="book"
+                        @click="showDialog"
                     >Follow</v-btn>
                 </v-col>
             </v-row>

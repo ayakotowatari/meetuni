@@ -56,7 +56,7 @@ export default {
         events: Object
     },
     methods: {
-         formattedDate(value, timezone){
+        formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },
         formattedStartTime(value, timezone){
