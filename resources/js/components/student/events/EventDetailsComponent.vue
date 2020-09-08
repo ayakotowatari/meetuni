@@ -75,12 +75,20 @@
                 </v-col>
             </v-row>
             <v-btn 
+                v-if="isBooked==false"
                 class="ma-2 hidden-sm-and-down" 
                 dark     
                 block
                 color="primary"
                 @click="showDialog"
             >Book</v-btn>
+             <v-btn 
+                v-if="isBooked"
+                class="ma-2 hidden-sm-and-down" 
+                outlined    
+                block
+                color="primary"
+            >Booked</v-btn>
         </v-container>
         <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
             <v-btn>
@@ -125,7 +133,8 @@ export default {
             'regions',
             'levels',
             'subjects',
-            'dialog'
+            'dialog',
+            'isBooked'
         ]),
     },
     methods: {
