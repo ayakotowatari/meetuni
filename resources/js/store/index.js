@@ -408,8 +408,8 @@ export default new Vuex.Store ({
                     levels: payload.levels,
                     subjects: payload.subjects
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -447,8 +447,8 @@ export default new Vuex.Store ({
                     name: details.name,
                     email: details.email
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -472,8 +472,8 @@ export default new Vuex.Store ({
                     name: details.name,
                     email: details.email
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

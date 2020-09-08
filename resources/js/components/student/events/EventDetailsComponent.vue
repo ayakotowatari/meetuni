@@ -1,6 +1,10 @@
 <template>
     <div>
-        <bookingdialog-component v-bind:dialog="dialog"></bookingdialog-component>
+        <bookingdialog-component 
+            v-bind:dialog="dialog"
+            v-bind:event="event"
+            v-bind:user="user"
+        ></bookingdialog-component>
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 

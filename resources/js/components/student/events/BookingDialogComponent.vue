@@ -9,16 +9,31 @@
                 <v-container>
                     <v-row>
                         <v-col cols="12" sm="12" md="6">
-                            <v-text-field label="First name*" required></v-text-field>
+                            <v-text-field 
+                                v-model= "first_name" 
+                                label="First name*" 
+                                required
+                            ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="12" md="6">
-                            <v-text-field label="Last name*" required></v-text-field>
+                            <v-text-field 
+                                v-model= "last_name" 
+                                label="Last name*" 
+                                required
+                            ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="12" md="6">
-                            <v-text-field label="Email*" required></v-text-field>
+                            <v-text-field 
+                                label="Email*" 
+                                required
+                            ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="12" md="6">
-                            <v-text-field label="Confirm Email*" required></v-text-field>
+                            <v-text-field  
+                                v-model= "email" 
+                                label="Confirm Email*" 
+                                required
+                            ></v-text-field>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -36,16 +51,34 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
-        dialog: Boolean
+        dialog: Boolean,
+        event: Array,
     },
     methods: {
         ...mapMutations('student', {
             closeDialog: 'closeDialog'
-        })
+        }),
+        ...mapActions('student', [
+            'registerEvent'
+        ]),
+        registerEvent(){
+            this.registerEvent({
+                event_id: this.event.id,
+                first_name: this.first_name,
+                last_name: this.last_name,
+                email: this.email
+            })
+        }
+    },
+    computed: {
+        ...mapState('student', [
+            'allerror'
+        ])
+       
     }
 
 }
