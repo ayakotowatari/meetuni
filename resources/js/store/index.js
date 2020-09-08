@@ -32,6 +32,8 @@ export default new Vuex.Store ({
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
+        dialog: false,
+        isPublished: false,
 
         //学生用に追加
         studentUser: [],
@@ -124,7 +126,18 @@ export default new Vuex.Store ({
         setallErrors(state, payload){
             state.allerror = payload
         },
-
+        showDialog(state){
+            state.dialog = true;
+        },
+        closeDialog(state){
+            state.dialog = false;
+        },
+        isPublished(state){
+            state.isPublished = true;
+        },
+        isUnpublished(state){
+            state.isPublished = false;
+        },
         //学生用に追加
         setStudentUser(state, payload){
             state.studentUser = payload
@@ -347,6 +360,26 @@ export default new Vuex.Store ({
                         commit('setallErrors', allerror)
                     )
         },
+        async publishEvent({state, commit}, payload){
+            console.log(payload.id);
+            await axios
+              .post('/inst/publish-event/' + payload.id)
+              .then(res => {
+                console.log(res);
+                commit('showDialog');
+                commit('isPublished');
+              })
+        },
+        async unpublishEvent({state, commit}, payload){
+
+            await axios
+              .post('/inst/unpublish-event/' + payload.id)
+              .then(res => {
+                console.log(res);
+                commit('closeDialog');
+                commit('isUnpublished');
+              })
+          },
 
         //学生用に追加
         async fetchStudentUser({ commit }){

@@ -34,13 +34,13 @@
           v-if="event.status === 'Draft'"
           color="error"
           outlined
-          @click="publish(id)"
+          @click="publish()"
         >Publish</v-btn>
          <v-btn
           v-if="event.status === 'Ongoing'"
           color="primary"
           outlined
-          @click="unpublish(id)"
+          @click="unpublish"
         >Unpublish</v-btn>
       </v-col>
     </v-row>
@@ -75,7 +75,7 @@ import EditEventSelect from './EditEventSelectComponent'
 import EditEventFile from './EditEventFileComponent'
 import EventHeader from '../../parts/EventHeaderComponent'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
 components: {
@@ -87,9 +87,9 @@ components: {
 data: function(){
     return{
             id: this.$route.params.id,
-            dialog: false,
-            isPublished: false,
-            isUnpublished: false,
+            // dialog: false,
+            // isPublished: false,
+            // isUnpublished: false,
         }
     console.log(id);
 },
@@ -98,8 +98,13 @@ mounted(){
           id: this.id
     });
 },
-created(){
-   
+computed: {
+    ...mapState ([
+        'event',
+        'dialog',
+        'isPublished',
+        'isUnpublished',
+    ])
 },
 methods: {
     getColor(status){
@@ -107,37 +112,32 @@ methods: {
       else if (status == 'Draft') return 'error'
       else return 'info'
     },
-    publish(id){
-      axios
-        .post('/inst/publish-event/' + this.id)
-        .then(res => {
-          this.dialog = true;
-          this.isPublished = true;
-        })
+    ...mapActions([
+      'publishEvent',
+      'unpublishEvent',
+    ]),
+    publish(){
+      this.publishEvent({
+        id: this.id
+      })
     },
-    unpublish(id){
-      axios
-        .post('/inst/unpublish-event/' + this.id)
-        .then(res => {
-          this.dialog = true;
-          this.isUnpublished = true;
-        })
+    unpublish(){
+      this.unpublishEvent({
+        id: this.id
+      });
     },
     toDashboard(id){
-      this.$router.push({name: 'dashboard', params: {id: id}})
+      this.$router.push({name: 'dashboard', params: {id: id}});
+      this.dialog = false;
     },
     toMyEvents(){
       this.$router.push({ name: 'events'})
+      this.dialog = false;
     },
     close(){
       this.dialog = false;
     }
 },
-computed: {
-    ...mapState ([
-        'event',
-    ])
-}
 }
 </script>
 
