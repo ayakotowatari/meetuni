@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import router from '../router'
+
 import { participants } from './modules/participants';
 import { participantcharts } from './modules/participantcharts';
 import { student } from './modules/student';
@@ -32,6 +34,10 @@ export default new Vuex.Store ({
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
+        dialog: false,
+        isPublished: false,
+        isOngoing: false,
+        isDraft: false,
 
         //学生用に追加
         studentUser: [],
@@ -123,6 +129,24 @@ export default new Vuex.Store ({
         },
         setallErrors(state, payload){
             state.allerror = payload
+        },
+        showDialog(state){
+            state.dialog = true;
+        },
+        closeDialog(state){
+            state.dialog = false;
+        },
+        isPublished(state){
+            state.isPublished = true;
+        },
+        isUnpublished(state){
+            state.isPublished = false;
+        },
+        isOngoing(state){
+            state.event.status = 'Ongoing';
+        },
+        isDraft(state){
+            state.event.status = 'Draft';
         },
 
         //学生用に追加
@@ -347,6 +371,36 @@ export default new Vuex.Store ({
                         commit('setallErrors', allerror)
                     )
         },
+        async publishEvent({state, commit}, payload){
+            console.log(payload.id);
+            await axios
+              .post('/inst/publish-event/' + payload.id)
+              .then(res => {
+                console.log(res);
+                commit('showDialog');
+                commit('isPublished');
+                commit('isOngoing');
+              })
+        },
+        async unpublishEvent({state, commit}, payload){
+
+            await axios
+              .post('/inst/unpublish-event/' + payload.id)
+              .then(res => {
+                console.log(res);
+                commit('isUnpublished');
+                commit('showDialog');
+                commit('isDraft');
+              })
+        },
+        toDashboardPage({state, commit}, payload){
+            router.push({name: 'dashboard', params: {id: payload.id}});
+            commit('closeDialog');
+        },
+        toMyEventsPage({state,commit}){
+            router.push({ name: 'events'});
+            commit('closeDialog');
+        },
 
         //学生用に追加
         async fetchStudentUser({ commit }){
@@ -408,8 +462,8 @@ export default new Vuex.Store ({
                     levels: payload.levels,
                     subjects: payload.subjects
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -447,8 +501,8 @@ export default new Vuex.Store ({
                     name: details.name,
                     email: details.email
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -472,8 +526,8 @@ export default new Vuex.Store ({
                     name: details.name,
                     email: details.email
                 })
-                .then(res => {
-                    console.log(res)
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

@@ -1,5 +1,10 @@
 <template>
     <div>
+        <bookingdialog-component 
+            v-bind:dialog="dialog"
+            v-bind:event="event"
+            v-bind:user="user"
+        ></bookingdialog-component>
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 
@@ -74,7 +79,7 @@
                 dark     
                 block
                 color="primary"
-                @click="book"
+                @click="showDialog"
             >Book</v-btn>
         </v-container>
         <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
@@ -89,12 +94,19 @@
 <script>
 import moment from 'moment-timezone'
 
-import {createNamespacedHelpers} from 'vuex'
-const { mapState, mapGetters } = createNamespacedHelpers('student');
+import BookingDialog from './BookingDialogComponent'
+
+import { mapState, mapMutations } from 'vuex'
+
+// import {createNamespacedHelpers} from 'vuex'
+// const { mapState, mapGetters } = createNamespacedHelpers('student');
 
 export default {
     props: {
         user: Array,
+    },
+    components: {
+        BookingDialog
     },
     data: function(){
         return{
@@ -108,14 +120,18 @@ export default {
         })
     },
     computed: {
-        ...mapState([
+        ...mapState('student', [
             'event',
             'regions',
             'levels',
-            'subjects'
+            'subjects',
+            'dialog'
         ]),
     },
     methods: {
+        ...mapMutations('student', {
+            showDialog: 'showDialog'
+        }),
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },
@@ -124,7 +140,7 @@ export default {
         },
         formattedEndTime(value, timezone){
             return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
-        }
+        },
     }
 }
 </script>

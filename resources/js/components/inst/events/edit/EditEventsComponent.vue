@@ -7,11 +7,11 @@
             <v-card-text>Your dashboard is ready to help you manage the event.</v-card-text>
             <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="info darken-2" text @click="toDashboard(id)">Go to Dashboard</v-btn>
+            <v-btn color="info darken-2" text @click="toDashboard">Go to Dashboard</v-btn>
             <v-btn color="info darken-2" text @click="toMyEvents">Go to My Events</v-btn>
             </v-card-actions>
         </v-card>
-        <v-card v-if="isUnpublished == true">
+        <v-card v-if="isPublished == false">
             <v-card-title class="headline">Your project has been unpublished.</v-card-title>
             <v-card-actions>
             <v-spacer></v-spacer>
@@ -34,13 +34,13 @@
           v-if="event.status === 'Draft'"
           color="error"
           outlined
-          @click="publish(id)"
+          @click="publish"
         >Publish</v-btn>
          <v-btn
           v-if="event.status === 'Ongoing'"
           color="primary"
           outlined
-          @click="unpublish(id)"
+          @click="unpublish"
         >Unpublish</v-btn>
       </v-col>
     </v-row>
@@ -75,7 +75,7 @@ import EditEventSelect from './EditEventSelectComponent'
 import EditEventFile from './EditEventFileComponent'
 import EventHeader from '../../parts/EventHeaderComponent'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
 components: {
@@ -87,9 +87,9 @@ components: {
 data: function(){
     return{
             id: this.$route.params.id,
-            dialog: false,
-            isPublished: false,
-            isUnpublished: false,
+            // dialog: false,
+            // isPublished: false,
+            // isUnpublished: false,
         }
     console.log(id);
 },
@@ -98,8 +98,13 @@ mounted(){
           id: this.id
     });
 },
-created(){
-   
+computed: {
+    ...mapState ([
+        'event',
+        'dialog',
+        'isPublished',
+        'isUnpublished',
+    ])
 },
 methods: {
     getColor(status){
@@ -107,37 +112,42 @@ methods: {
       else if (status == 'Draft') return 'error'
       else return 'info'
     },
-    publish(id){
-      axios
-        .post('/inst/publish-event/' + this.id)
-        .then(res => {
-          this.dialog = true;
-          this.isPublished = true;
-        })
+    ...mapMutations({
+      close: 'closeDialog'
+    }),
+    ...mapActions([
+      'publishEvent',
+      'unpublishEvent',
+      'toDashboardPage',
+      'toMyEventsPage'
+    ]),
+    publish(){
+      this.publishEvent({
+        id: this.id
+      })
     },
-    unpublish(id){
-      axios
-        .post('/inst/unpublish-event/' + this.id)
-        .then(res => {
-          this.dialog = true;
-          this.isUnpublished = true;
-        })
+    unpublish(){
+      this.unpublishEvent({
+        id: this.id
+      });
     },
-    toDashboard(id){
-      this.$router.push({name: 'dashboard', params: {id: id}})
+    // toDashboard(id){
+    //   this.$router.push({name: 'dashboard', params: {id: id}});
+    //   this.dialog = false;
+    // },
+    toDashboard(){
+      this.toDashboardPage({
+        id: this.id
+      })
     },
+    // toMyEvents(){
+    //   this.$router.push({ name: 'events'})
+    //   this.dialog = false;
+    // },
     toMyEvents(){
-      this.$router.push({ name: 'events'})
+      this.toMyEventsPage();
     },
-    close(){
-      this.dialog = false;
-    }
 },
-computed: {
-    ...mapState ([
-        'event',
-    ])
-}
 }
 </script>
 

@@ -12,6 +12,9 @@ export const student = {
         recommendedSubjectEvents: [],
         recommendedDestinationEvents: [],
         recommendedRegionEvents: [],
+        dialog: false,
+        isBooked: false,
+        allerror: [],
     },
 
     getters: {
@@ -40,6 +43,21 @@ export const student = {
         },
         setRecommendedRegionEvents(state, payload){
             state.recommendedRegionEvents = payload
+        },
+        showDialog(state){
+            state.dialog = true
+        },
+        closeDialog(state){
+            state.dialog = false
+        },
+        isBooked(state){
+            state.isBooked = true
+        },
+        isCancelled(state){
+            state.isBooked = false
+        },
+        setallErrors(state, payload){
+            state.allerror = payload
         }
     },
 
@@ -110,6 +128,27 @@ export const student = {
                     console.log(events);
                     commit("setRecommendedRegionEvents", events)
                 });
+        },
+        async registerEvent({state, commit}, payload){
+            console.log(payload)
+
+            await axios
+                .post("/student/register-event/", {
+                    id: payload.event_id,
+                    first_name: payload.first_name,
+                    last_name: payload.last_name,
+                    email: payload.email
+                })
+                .then(response => {
+                    commit('closeDialog');
+                    commit('isBooked');
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
         }
+        //テスト
+
     }
 }

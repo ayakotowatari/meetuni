@@ -33,11 +33,13 @@ Vue.component('search-component', require('./components/student/parts/SearchComp
 Vue.component('subjectrecommend-component', require('./components/student/main/SubjectRecommendComponent.vue').default);
 Vue.component('destinationrecommend-component', require('./components/student/main/DestinationRecommendComponent.vue').default);
 Vue.component('regionrecommend-component', require('./components/student/main/RegionRecommendComponent.vue').default);
+Vue.component('bookingdialog-component', require('./components/student/events/BookingDialogComponent.vue').default);
 //Chart
 
 
 //テスト
-
+Vue.component('testone-component', require('./components/student/TestOneComponent.vue').default);
+Vue.component('testtwo-component', require('./components/student/TestTwoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

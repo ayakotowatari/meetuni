@@ -109,6 +109,9 @@ Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');
 
+//学生イベント予約
+Route::post('/student/register-event', 'BookingsController@store');
+
 // Vue
 //Only inst user can access.
 Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){

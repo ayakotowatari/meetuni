@@ -9,6 +9,7 @@ import Main from "./components/student/main/MainComponent";
 import AllEvents from "./components/student/main/AllEventsComponent";
 import RecommendedEvents from "./components/student/main/RecommendedEventsComponent";
 import EventDetails from "./components/student/events/EventDetailsComponent";
+import TestOne from "./components/student/TestOneComponent";
 
 //テスト
 
@@ -49,7 +50,14 @@ const routes = [
         path: "/student/event-details/:id",
         name: "event-details",
         component: EventDetails
-    }
+    },
+    //テスト
+    {
+        path: "/student/test",
+        name: "testone-component",
+        component: TestOne
+    },
+
 ];
  
 export default new VueRouter({
