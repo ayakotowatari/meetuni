@@ -14,8 +14,8 @@ class AddColumnsToBookingsTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->string('formatted_created', 191)->after('created_at');
-            $table->string('formatted_updated', 191)->after('updated_at');
+            $table->string('formatted_created', 191)->nullable()->after('created_at');
+            $table->string('formatted_updated', 191)->nullable()->after('updated_at');
         });
     }
 

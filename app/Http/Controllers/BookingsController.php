@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -108,8 +109,24 @@ class BookingsController extends Controller
         $booking = new Booking();
         $booking->event_id = request('id');
         $booking->student_id = $user_id;
-        
+        $booking->first_name = request('first_name');
+        $booking->last_name = request('last_name');
+        $booking->email = request('email');
+        $booking->cancelled = 0;
+        $booking->save();
 
+        $currentBooking = Booking::latest('created_at')
+                                ->where('bookings.student_id', $user_id)
+                                ->first();
+        $booking_id = $currentBooking->id;
+        $created_at = $currentBooking->created_at;
+        $updated_at = $currentBooking->updated_at;
+        
+        Booking::where('bookings.id', $booking_id)
+        ->update([ 
+            'formatted_created' => $created_at, 
+            'formatted_updated' => $updated_at 
+        ]);
     }
 
     /**

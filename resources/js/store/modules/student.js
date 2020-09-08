@@ -133,7 +133,7 @@ export const student = {
             console.log(payload)
 
             await axios
-                .post("/student/register-event/", {
+                .post("/student/register-event", {
                     id: payload.event_id,
                     first_name: payload.first_name,
                     last_name: payload.last_name,
