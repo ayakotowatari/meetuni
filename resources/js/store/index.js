@@ -36,6 +36,8 @@ export default new Vuex.Store ({
         eventSubjects: [],
         dialog: false,
         isPublished: false,
+        isOngoing: false,
+        isDraft: false,
 
         //学生用に追加
         studentUser: [],
@@ -139,6 +141,12 @@ export default new Vuex.Store ({
         },
         isUnpublished(state){
             state.isPublished = false;
+        },
+        isOngoing(state){
+            state.event.status = 'Ongoing';
+        },
+        isDraft(state){
+            state.event.status = 'Draft';
         },
 
         //学生用に追加
@@ -371,6 +379,7 @@ export default new Vuex.Store ({
                 console.log(res);
                 commit('showDialog');
                 commit('isPublished');
+                commit('isOngoing');
               })
         },
         async unpublishEvent({state, commit}, payload){
@@ -381,6 +390,7 @@ export default new Vuex.Store ({
                 console.log(res);
                 commit('isUnpublished');
                 commit('showDialog');
+                commit('isDraft');
               })
         },
         toDashboardPage({state, commit}, payload){
