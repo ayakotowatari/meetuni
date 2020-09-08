@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import router from '../router'
+
 import { participants } from './modules/participants';
 import { participantcharts } from './modules/participantcharts';
 import { student } from './modules/student';
@@ -138,6 +140,7 @@ export default new Vuex.Store ({
         isUnpublished(state){
             state.isPublished = false;
         },
+
         //学生用に追加
         setStudentUser(state, payload){
             state.studentUser = payload
@@ -376,10 +379,18 @@ export default new Vuex.Store ({
               .post('/inst/unpublish-event/' + payload.id)
               .then(res => {
                 console.log(res);
-                commit('closeDialog');
                 commit('isUnpublished');
+                commit('showDialog');
               })
-          },
+        },
+        toDashboardPage({state, commit}, payload){
+            router.push({name: 'dashboard', params: {id: payload.id}});
+            commit('closeDialog');
+        },
+        toMyEventsPage({state,commit}){
+            router.push({ name: 'events'});
+            commit('closeDialog');
+        },
 
         //学生用に追加
         async fetchStudentUser({ commit }){

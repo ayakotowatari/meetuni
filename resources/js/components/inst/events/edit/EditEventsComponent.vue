@@ -7,11 +7,11 @@
             <v-card-text>Your dashboard is ready to help you manage the event.</v-card-text>
             <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="info darken-2" text @click="toDashboard(id)">Go to Dashboard</v-btn>
+            <v-btn color="info darken-2" text @click="toDashboard">Go to Dashboard</v-btn>
             <v-btn color="info darken-2" text @click="toMyEvents">Go to My Events</v-btn>
             </v-card-actions>
         </v-card>
-        <v-card v-if="isUnpublished == true">
+        <v-card v-if="isPublished == false">
             <v-card-title class="headline">Your project has been unpublished.</v-card-title>
             <v-card-actions>
             <v-spacer></v-spacer>
@@ -34,7 +34,7 @@
           v-if="event.status === 'Draft'"
           color="error"
           outlined
-          @click="publish()"
+          @click="publish"
         >Publish</v-btn>
          <v-btn
           v-if="event.status === 'Ongoing'"
@@ -75,7 +75,7 @@ import EditEventSelect from './EditEventSelectComponent'
 import EditEventFile from './EditEventFileComponent'
 import EventHeader from '../../parts/EventHeaderComponent'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
 components: {
@@ -112,9 +112,14 @@ methods: {
       else if (status == 'Draft') return 'error'
       else return 'info'
     },
+    ...mapMutations({
+      close: 'closeDialog'
+    }),
     ...mapActions([
       'publishEvent',
       'unpublishEvent',
+      'toDashboardPage',
+      'toMyEventsPage'
     ]),
     publish(){
       this.publishEvent({
@@ -126,17 +131,22 @@ methods: {
         id: this.id
       });
     },
-    toDashboard(id){
-      this.$router.push({name: 'dashboard', params: {id: id}});
-      this.dialog = false;
+    // toDashboard(id){
+    //   this.$router.push({name: 'dashboard', params: {id: id}});
+    //   this.dialog = false;
+    // },
+    toDashboard(){
+      this.toDashboardPage({
+        id: this.id
+      })
     },
+    // toMyEvents(){
+    //   this.$router.push({ name: 'events'})
+    //   this.dialog = false;
+    // },
     toMyEvents(){
-      this.$router.push({ name: 'events'})
-      this.dialog = false;
+      this.toMyEventsPage();
     },
-    close(){
-      this.dialog = false;
-    }
 },
 }
 </script>
