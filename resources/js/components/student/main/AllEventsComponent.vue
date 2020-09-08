@@ -54,9 +54,9 @@
 <script>
 import moment from 'moment-timezone'
 
-// import { mapState } from 'vuex'
-import {createNamespacedHelpers} from 'vuex'
-const { mapState } = createNamespacedHelpers('student');
+import { mapState } from 'vuex'
+// import {createNamespacedHelpers} from 'vuex'
+// const { mapState } = createNamespacedHelpers('student');
 
 export default {
     props: {
@@ -69,7 +69,7 @@ export default {
         this.$store.dispatch('student/fetchAllEvents');
     },
     computed: {
-        ...mapState([
+        ...mapState('student', [
             'allEvents',
         ])
     },
