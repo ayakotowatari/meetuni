@@ -12,6 +12,7 @@ export const student = {
         recommendedSubjectEvents: [],
         recommendedDestinationEvents: [],
         recommendedRegionEvents: [],
+        dialog: false,
     },
 
     getters: {
@@ -40,6 +41,12 @@ export const student = {
         },
         setRecommendedRegionEvents(state, payload){
             state.recommendedRegionEvents = payload
+        },
+        showDialog(state){
+            state.dialog = true
+        },
+        closeDialog(state){
+            state.dialog = false
         }
     },
 
@@ -110,6 +117,9 @@ export const student = {
                     console.log(events);
                     commit("setRecommendedRegionEvents", events)
                 });
-        }
+        },
+
+        //テスト
+
     }
 }
