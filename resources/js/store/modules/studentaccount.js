@@ -4,7 +4,8 @@ export const studentaccount = {
     state: {
         dialog: false,
         isBooked: false,
-        events: [],
+        bookings: [],
+        bookingId: '',
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -25,8 +26,11 @@ export const studentaccount = {
             state.isBooked = false
         },
         setBookedEvents(state, payload){
-            state.events = payload
+            state.bookings = payload
         },
+        setBookingId(state, payload){
+            state.bookingId = payload
+        }
     },
     actions: {
         async registerEvent({state, commit}, payload){
@@ -52,15 +56,32 @@ export const studentaccount = {
 
             console.log(payload.id);
 
-            let events = [];
-            let start_time = [];
+            let bookings = [];
 
             await axios
                 .get('/student/fetch-bookedevents/' + payload.id)
                 .then(response => {
-                    events = response.data.events;
-                    start_time = response.data.events.start_time
-                    commit('setBookedEvents', events);
+                    bookings = response.data.bookings;
+                    commit('setBookedEvents', bookings);
+                    commit('isBooked');
+                })
+        },
+        showDialogWithEvent({state, commit}, payload){
+            console.log(payload.id);
+
+            commit('showDialog');
+            commit('setBookingId', payload.id);
+        },
+        async cancelEvent({commit}, payload){
+            console.log(payload.id);
+
+            await axios
+                .post('/student/cancel-event',{
+                    id: payload.id
+                })
+                .then(response => {
+                    console.log(response);
+                    commit('closeDialog');
                 })
         }
 

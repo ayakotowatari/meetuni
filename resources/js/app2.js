@@ -34,6 +34,7 @@ Vue.component('subjectrecommend-component', require('./components/student/main/S
 Vue.component('destinationrecommend-component', require('./components/student/main/DestinationRecommendComponent.vue').default);
 Vue.component('regionrecommend-component', require('./components/student/main/RegionRecommendComponent.vue').default);
 Vue.component('bookingdialog-component', require('./components/student/events/BookingDialogComponent.vue').default);
+Vue.component('cancellationdialog-component', require('./components/student/account/CancellationDialogComponent.vue').default);
 //Chart
 
 

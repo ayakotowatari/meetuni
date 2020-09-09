@@ -129,6 +129,42 @@ class BookingsController extends Controller
             'formatted_updated' => $updated_at 
         ]);
     }
+
+    public function fetchBookedEvents (Request $request, $id)
+    {
+        $bookings = Booking::join('events', 'bookings.event_id', '=', 'events.id')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->where('bookings.student_id', $id)
+                    ->where('bookings.cancelled', 0)
+                    ->select('bookings.id', 'bookings.cancelled', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.image')
+                    ->get();
+
+        return response()->json(['bookings'=>$bookings], 200);
+    }
+
+    public function cancel(Request $request)
+    {
+        $request->validate([
+            'id'=> 'required'
+        ]);
+
+        $id = request('id');
+        
+        Booking::where('bookings.id', $id)
+        ->update([ 
+            'cancelled' => 1
+        ]);
+
+        $currentBooking = Booking::where('bookings.id', $id)->first();
+
+        $updated_at = $currentBooking->updated_at;
+
+        Booking::where('bookings.id', $id)
+        ->update([ 
+            'formatted_updated' => $updated_at 
+        ]);         
+    }
+    
     /**
      * Display the specified resource.
      *
@@ -171,6 +207,6 @@ class BookingsController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        
     }
 }
