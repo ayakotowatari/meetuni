@@ -16,16 +16,25 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                <span class="mr-2">menu</span>  
+                <span class="mr-1">menu</span>  
                 <v-icon>mdi-account-outline</v-icon>
               </v-btn>
           </template>
-
           <v-list>
+              <v-list-item>
+                  <v-col cols="12" align="center">
+                      <v-avatar color="info">
+                          <span class="white--text headline">{{ initials }}</span>
+                      </v-avatar>
+                      <p class="subheading mt-3">
+                          {{ user.first_name }} {{ user.last_name }} 
+                      </p>
+                  </v-col>
+              </v-list-item>
               <v-list-item
                 v-for="link in links"
                 :key="link.text"
-                :to="{ name:link.route, params:{id: id}}"
+                :to="{ name:link.route, params:{id: user.id}}"
               >
                   <v-list-item-action>
                       <v-icon left class="grey--text text--darken-3">{{ link.icon }}</v-icon>
