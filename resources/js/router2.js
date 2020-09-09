@@ -9,9 +9,14 @@ import Main from "./components/student/main/MainComponent";
 import AllEvents from "./components/student/main/AllEventsComponent";
 import RecommendedEvents from "./components/student/main/RecommendedEventsComponent";
 import EventDetails from "./components/student/events/EventDetailsComponent";
-import TestOne from "./components/student/TestOneComponent";
+import BookedEvents from "./components/student/account/BookedEventsComponent";
+import Following from "./components/student/account/FollowingComponent";
+import Liked from "./components/student/account/LikedComponent";
+import Profile from "./components/student/account/ProfileComponent";
 
 //テスト
+import TestOne from "./components/student/TestOneComponent";
+import TestThree from "./components/student/TestThreeComponent";
 
 //テスト終わる
  
@@ -51,12 +56,39 @@ const routes = [
         name: "event-details",
         component: EventDetails
     },
+    {
+        path: "/student/booked-events",
+        name: "booked-events",
+        component: BookedEvents
+    },
+    {
+        path: "/student/following",
+        name: "following",
+        component: Following
+    },
+    {
+        path: "/student/liked",
+        name: "liked",
+        component: Liked
+    },
+    {
+        path: "/student/profile",
+        name: "profile",
+        component: Profile
+    },
+    
     //テスト
     {
         path: "/student/test",
         name: "testone-component",
         component: TestOne
     },
+    {
+        path: "/student/testthree",
+        name: "testthree-component",
+        component: TestThree
+    },
+    //テスト終わり
 
 ];
  
