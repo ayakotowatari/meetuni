@@ -36,18 +36,20 @@ export default {
     props: {
         user: Array,
     },
-    data: () => ({
-
-    }),
+    data: function(){
+        return {
+            id: this.$route.params.id
+        }
+    },
     mounted(){
         this.$store.dispatch('student/recommendSubjectEvents', {
-            id: this.user.id
+            id: this.id
         });
         this.$store.dispatch('student/recommendDestinationEvents', {
-            id: this.user.id
+            id: this.id
         });
          this.$store.dispatch('student/recommendRegionEvents', {
-            id: this.user.id
+            id: this.id
         });
     },
     created(){

@@ -8,6 +8,7 @@ import router from '../router'
 import { participants } from './modules/participants';
 import { participantcharts } from './modules/participantcharts';
 import { student } from './modules/student';
+import { studentaccount } from './modules/studentaccount';
 
 export default new Vuex.Store ({
 
@@ -539,7 +540,8 @@ export default new Vuex.Store ({
     modules: {
         participants,
         participantcharts,
-        student
+        student,
+        studentaccount,
     }
 
 })

@@ -188,6 +188,17 @@ class EventsController extends Controller
             return response()->json(['events'=>$unique],200);
         }
     }
+    public function fetchBookedEvents (Request $request, $id)
+    {
+        $events = Event::join('bookings', 'events.id', '=', 'bookings.event_id')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->where('bookings.student_id', $id)
+                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.image')
+                    ->get();
+
+        return response()->json(['events'=>$events], 200);
+    }
+
 
     /**
      * Show the form for creating a new resource.

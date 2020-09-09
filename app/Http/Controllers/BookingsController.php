@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\Booking;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -128,7 +129,6 @@ class BookingsController extends Controller
             'formatted_updated' => $updated_at 
         ]);
     }
-
     /**
      * Display the specified resource.
      *
