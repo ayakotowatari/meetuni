@@ -10,6 +10,7 @@ import AllEvents from "./components/student/main/AllEventsComponent";
 import RecommendedEvents from "./components/student/main/RecommendedEventsComponent";
 import EventDetails from "./components/student/events/EventDetailsComponent";
 import BookedEvents from "./components/student/account/BookedEventsComponent";
+import EventPage from "./components/student/events/EventPageComponent";
 import Following from "./components/student/account/FollowingComponent";
 import Liked from "./components/student/account/LikedComponent";
 import Profile from "./components/student/account/ProfileComponent";
@@ -60,6 +61,11 @@ const routes = [
         path: "/student/booked-events/:id",
         name: "booked-events",
         component: BookedEvents
+    },
+    {
+        path: "/student/event-page/:id",
+        name: "event-page",
+        component: EventPage
     },
     {
         path: "/student/following",
