@@ -8,6 +8,8 @@ export const studentaccount = {
         isBooked: false,
         bookings: [],
         bookingId: '',
+        categories: [],
+        allerror: [],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -32,6 +34,12 @@ export const studentaccount = {
         },
         setBookingId(state, payload){
             state.bookingId = payload
+        },
+        setallErrors(state,payload){
+            state.allerror = payload
+        },
+        setCategories(state, payload){
+            state.categories = payload
         }
     },
     actions: {
@@ -87,8 +95,37 @@ export const studentaccount = {
                     commit('closeDialog');
                     router.go();
                 })
+        },
+        async saveQuestions({commit}, payload){
+            console.log(payload);
+
+            await axios
+                .post('/student/event-queries', {
+                    id: payload.id,
+                    event_id: payload.event_id,
+                    category_id: payload.category_id,
+                    contents: payload.contents
+                })
+                .then(response => {
+                    console.log(response)
+                    commit('closeDialog')
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async fetchCategories({state, commit}){
+
+            let categories = [];
+
+            await axios
+                .get('/student/fetch-categories')
+                .then(response => {
+                    categories = response.data.categories;
+                    console.log(categories);
+                    commit('setCategories', categories);
+                })
         }
-
     }
-
 }

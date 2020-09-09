@@ -136,7 +136,7 @@ class BookingsController extends Controller
                     ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('bookings.student_id', $id)
                     ->where('bookings.cancelled', 0)
-                    ->select('bookings.id', 'bookings.cancelled', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.image')
+                    ->select('bookings.id', 'bookings.event_id', 'bookings.cancelled', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.image')
                     ->get();
 
         return response()->json(['bookings'=>$bookings], 200);

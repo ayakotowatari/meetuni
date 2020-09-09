@@ -30,14 +30,13 @@
                     <v-col cols="12" xs="2" sm="2" md="1">
                         <div class="caption grey--text">Event Page</div>
                         <div>
-                        <v-icon color="info darken-2">mdi-open-in-new</v-icon>
+                        <v-icon color="info darken-2" @click="toEventPage(`${booking.event_id}`)">mdi-open-in-new</v-icon>
                         </div>
                     </v-col>
                     <v-col cols="12" xs="2" sm="2" md="1">
                         <div class="caption grey--text">Cancel</div>
                         <div>
-                        <v-icon v-if="booking.cancelled === 0" color="grey" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
-                        <v-icon v-if="booking.cancelled === 1" color="error">mdi-cancel</v-icon>
+                        <v-icon color="grey" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
                         </div>
                     </v-col>
                 </v-row>
@@ -84,6 +83,9 @@ export default {
             this.showDialogWithEvent({
                 id: id
             })
+        },
+        toEventPage(id){
+            this.$router.push({name: 'event-page', params: {id: id}})
         },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
