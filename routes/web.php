@@ -105,12 +105,14 @@ Route::get('/student/event-subjects/{id}', 'EventsController@recommendSubjectEve
 Route::get('/student/event-destinations/{id}', 'EventsController@recommendDestinationEvents');
 Route::get('/student/event-regions/{id}', 'EventsController@recommendRegionEvents');
 Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
+Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents');
 
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');
 
 //学生イベント予約
 Route::post('/student/register-event', 'BookingsController@store');
+Route::post('/student/cancel-event', 'BookingsController@cancel');
 
 // Vue
 //Only inst user can access.

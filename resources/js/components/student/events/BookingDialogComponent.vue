@@ -31,6 +31,7 @@
                             </v-col>
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field 
+                                    v-model= "email" 
                                     label="Email*" 
                                     :rules="emailRules"
                                     required
@@ -40,7 +41,6 @@
                             </v-col>
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field  
-                                    v-model= "email" 
                                     label="Confirm Email*" 
                                     :rules="confirmemailRules"
                                     required
@@ -91,10 +91,10 @@ export default {
         }
     },
     methods: {
-        ...mapMutations('student', {
+        ...mapMutations('studentaccount', {
             closeDialog: 'closeDialog'
         }),
-        ...mapActions('student', [
+        ...mapActions('studentaccount', [
             'registerEvent'
         ]),
         bookEvent(){

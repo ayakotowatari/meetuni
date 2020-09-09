@@ -3,7 +3,6 @@
     <v-app-bar
       flat app color="white"
     >
-
       <v-toolbar-title>
         <span class="font-weight-bold primary--text">meet<span class="font-weight-light">Uni</span></span> 
       </v-toolbar-title>

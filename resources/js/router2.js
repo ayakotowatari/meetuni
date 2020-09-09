@@ -45,7 +45,7 @@ const routes = [
                 {
                     //RecommendedEvents will be rendered inside Main's <router-view>
                     //when /main/recommended-events is matched.
-                    path: "recommended-events",
+                    path: "recommended-events/:id",
                     name: "recommended-events",
                     component: RecommendedEvents
                 },
@@ -57,7 +57,7 @@ const routes = [
         component: EventDetails
     },
     {
-        path: "/student/booked-events",
+        path: "/student/booked-events/:id",
         name: "booked-events",
         component: BookedEvents
     },

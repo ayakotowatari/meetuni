@@ -133,12 +133,14 @@ export default {
             'regions',
             'levels',
             'subjects',
+        ]),
+        ...mapState('studentaccount', [
             'dialog',
             'isBooked'
-        ]),
+        ])
     },
     methods: {
-        ...mapMutations('student', {
+        ...mapMutations('studentaccount', {
             showDialog: 'showDialog'
         }),
         formattedDate(value, timezone){

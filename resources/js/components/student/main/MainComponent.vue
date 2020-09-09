@@ -12,8 +12,8 @@
             </v-col>
         </v-row>
         <v-tabs class="mb-12">
-            <v-tab :to="{name: 'all-events'}">All</v-tab>
-            <v-tab :to="{name: 'recommended-events', params: {id: this.user.id}}">For You</v-tab>
+            <v-tab router :to="{name: 'all-events'}">All</v-tab>
+            <v-tab router :to="{name: 'recommended-events', params: {id: this.user.id}}">For You</v-tab>
             <v-tab>Item Three</v-tab>
         </v-tabs>
         <router-view v-bind:user="user"></router-view>
@@ -30,8 +30,7 @@ export default {
     },
     props: {
         user: Array,
-    }
-
+    },
 }
 </script>
 
