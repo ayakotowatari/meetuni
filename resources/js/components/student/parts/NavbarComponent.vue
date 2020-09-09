@@ -7,6 +7,9 @@
         <span class="font-weight-bold primary--text">meet<span class="font-weight-light">Uni</span></span> 
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn text color="grey darken-1" @click.stop="toTopPage">
+            <span>top page</span>
+      </v-btn>
       <v-menu open-on-hover top offset-y>
           <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -92,6 +95,9 @@ import { mapState } from 'vuex'
     methods: {
         logout() {
             document.getElementById('logout-form').submit()
+        },
+        toTopPage(){
+          this.$router.push({path: '/student/main'})
         }
     }
   }

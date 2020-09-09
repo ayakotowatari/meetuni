@@ -88,7 +88,5 @@ export const studentaccount = {
                     router.go();
                 })
         }
-
     }
-
 }
