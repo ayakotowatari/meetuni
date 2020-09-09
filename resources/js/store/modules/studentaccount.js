@@ -8,7 +8,8 @@ export const studentaccount = {
         isBooked: false,
         bookings: [],
         bookingId: '',
-        allerror: []
+        categories: [],
+        allerror: [],
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -36,6 +37,9 @@ export const studentaccount = {
         },
         setallErrors(state,payload){
             state.allerror = payload
+        },
+        setCategories(state, payload){
+            state.categories = payload
         }
     },
     actions: {
@@ -110,6 +114,18 @@ export const studentaccount = {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 )
+        },
+        async fetchCategories({state, commit}){
+
+            let categories = [];
+
+            await axios
+                .get('/student/fetch-categories')
+                .then(response => {
+                    categories = response.data.categories;
+                    console.log(categories);
+                    commit('setCategories', categories);
+                })
         }
     }
 }

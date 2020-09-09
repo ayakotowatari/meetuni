@@ -12,20 +12,20 @@
                     <v-container>
                         <v-form ref="form">
                             <v-row>
-                                <v-col cols="12" sm="6">
+                                <v-col cols="12" sm="12" md="12">
                                     <v-select
                                         v-model="selectedCategory"
                                         :items="categories"
                                         item-text="category"
                                         item-value='id'
-                                        label="Categories"
+                                        label="Select Categories"
                                         :rules="categoriesRules" 
                                         chips
                                         hint="What are your questions about?"
                                         persistent-hint
                                         required
-                                        :error="allerror.categories"
-                                        :error-messages="allerror.categories"
+                                        :error="allerror.category"
+                                        :error-messages="allerror.category"
                                     ></v-select>
                                 </v-col>
                                 <v-col cols="12" sm="12" md="12">
@@ -56,13 +56,34 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
-        user: Array,
-        event: Array,
+        user: Object,
+        event: Object,
         dialog: Boolean
+    },
+    data: function(){
+        return{
+            selectedCategory: '',
+            categoriesRules: [
+                v => !!v || 'Category is required',
+            ],
+            queryContents: '',
+            textareaRules: [
+                v => !!v || v.length <= 200 || 'Max 200 characters'
+            ],
+        }
+    },
+    mounted(){
+        this.$store.dispatch('studentaccount/fetchCategories');
+    },
+    computed: {
+        ...mapState('studentaccount', [
+            'categories',
+            'allerror'
+        ])
     },
     methods: {
         ...mapMutations('studentaccount', {

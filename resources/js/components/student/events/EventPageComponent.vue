@@ -36,13 +36,13 @@
                     <v-card dark color="info darken-3" flat class="mx-auto pb-4 px-4">
                         <v-card-title>Have any questions?</v-card-title>
                         <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
-                        <v-card-action>
+                        <v-card-actions>
                             <v-btn
                                 text
                                 @click="showDialog"
                             >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
                             </v-btn>
-                        </v-card-action>
+                        </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -51,12 +51,12 @@
                     <v-card dark color="info darken-3" flat class="mb-10 pb-4 px-4">
                         <v-card-title>Have any questions?</v-card-title>
                         <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
-                        <v-card-action>
+                        <v-card-actions>
                             <v-btn
                                 text
                             >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
                             </v-btn>
-                        </v-card-action>
+                        </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -85,7 +85,7 @@ export default {
         user: Array,
     },
     components: {
-        QuestionsDialog
+        QuestionsDialog,
     },
     data: function(){
         return{

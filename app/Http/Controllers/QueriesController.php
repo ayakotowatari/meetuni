@@ -35,7 +35,20 @@ class QueriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required',
+            'event_id' => 'required',
+            'category_id' => 'required',
+            'contents' => 'required | max:200',
+        ]);
+
+        $query = new Query();
+        $query->event_id = request('event_id');
+        $query->category_id = request('category_id');
+        $query->student_id = request('id');
+        $query->contents = request('contents');
+
+        $query->save();
     }
 
     /**

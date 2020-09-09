@@ -113,6 +113,8 @@ Route::post('/student/add-details', 'StudentsController@addStudentDetails');
 //学生イベント予約
 Route::post('/student/register-event', 'BookingsController@store');
 Route::post('/student/cancel-event', 'BookingsController@cancel');
+Route::get('/student/fetch-categories', 'CategoriesController@index');
+Route::post('/student/event-queries', 'QueriesController@store');
 
 // Vue
 //Only inst user can access.
