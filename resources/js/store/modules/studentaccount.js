@@ -1,3 +1,5 @@
+import router from "../../router"
+
 export const studentaccount = {
     namespaced: true,
 
@@ -71,6 +73,7 @@ export const studentaccount = {
 
             commit('showDialog');
             commit('setBookingId', payload.id);
+            
         },
         async cancelEvent({commit}, payload){
             console.log(payload.id);
@@ -82,6 +85,7 @@ export const studentaccount = {
                 .then(response => {
                     console.log(response);
                     commit('closeDialog');
+                    router.go();
                 })
         }
 
