@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="event in events" :key="event.id">
+        <v-col col="12" sm="12" md="3" class="mb-6" v-for="(event, index) in events" :key="index">
             <v-card
                 class="mx-auto"
                 max-width="400"
@@ -27,15 +27,9 @@
                         justify="end"
                         >
                         <v-icon 
-                            v-if = "isLiked == false"
                             @click.stop="like(`${event.id}`)"
+                            :color="`${event.id}`===selectedId ? 'error' : null"
                             class="like mr-3"
-                        >mdi-heart</v-icon>
-                        <v-icon 
-                            v-if = "isLiked == true"
-                            @click="unlike(`${event.id}`)"
-                            color="error"
-                            class="mr-3"
                         >mdi-heart</v-icon>
                         <v-icon class="mr-1">mdi-share-variant</v-icon>
                         </v-row>
@@ -68,6 +62,11 @@ export default {
         user: Array,
         events: Array
     },
+    data: function(){
+        return {
+            selectedId: '',
+        }
+    },
     computed: {
         ...mapState('studentaccount', [
             'isLiked',
@@ -79,6 +78,9 @@ export default {
             'likeEvent'
         ]),
         like(id){
+
+            this.selectedId = id;
+
             this.likeEvent({
                 user_id: this.user.id,
                 event_id: id
