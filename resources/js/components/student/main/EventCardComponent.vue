@@ -4,7 +4,7 @@
             <v-card
                 class="mx-auto"
                 max-width="400"
-                @click.stop="expand(event.id)"
+                @click.prevent="expand(event.id)"
             >
                 <v-img
                 class="white--text align-end"
@@ -26,7 +26,17 @@
                         align="center"
                         justify="end"
                         >
-                        <v-icon class="mr-3">mdi-heart</v-icon>
+                        <v-icon 
+                            v-if = "isLiked == false"
+                            @click.stop="like(`${event.id}`)"
+                            class="like mr-3"
+                        >mdi-heart</v-icon>
+                        <v-icon 
+                            v-if = "isLiked == true"
+                            @click="unlike(`${event.id}`)"
+                            color="error"
+                            class="mr-3"
+                        >mdi-heart</v-icon>
                         <v-icon class="mr-1">mdi-share-variant</v-icon>
                         </v-row>
                     </v-list-item>
@@ -51,12 +61,29 @@
 <script>
 import moment from 'moment-timezone'
 
+import { mapState, mapActions } from 'vuex'
+
 export default {
     props: {
         user: Array,
-        events: Object
+        events: Array
+    },
+    computed: {
+        ...mapState('studentaccount', [
+            'isLiked',
+            'allerror',
+        ])
     },
     methods: {
+        ...mapActions('studentaccount',[
+            'likeEvent'
+        ]),
+        like(id){
+            this.likeEvent({
+                user_id: this.user.id,
+                event_id: id
+            })
+        },
         expand(id){
             this.$router.push({name: 'event-details', params: {id: id}})
         },
@@ -75,5 +102,8 @@ export default {
 </script>
 
 <style>
+.likd{
+    cursor: pointer;
+}
 
 </style>

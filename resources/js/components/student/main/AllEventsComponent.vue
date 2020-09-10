@@ -21,7 +21,7 @@ export default {
         EventCard
     },
     props: {
-        user: Object,
+        user: Array,
     },
     data: () => ({
 

@@ -115,6 +115,9 @@ Route::post('/student/register-event', 'BookingsController@store');
 Route::post('/student/cancel-event', 'BookingsController@cancel');
 Route::get('/student/fetch-categories', 'CategoriesController@index');
 Route::post('/student/event-queries', 'QueriesController@store');
+Route::post('/student/like-event', 'LikesController@store');
+Route::post('/student/unlike-event', 'LikesController@unlike');
+Route::post('/student/follow-event', 'FollowsController@store');
 
 // Vue
 //Only inst user can access.
