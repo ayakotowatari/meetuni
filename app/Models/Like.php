@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+//ココ↓
 // use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 class Like extends Model
 {
+    //ココ↓
     // use SoftDeletes;
     
     public function setFormattedCreatedAttribute($date) {
