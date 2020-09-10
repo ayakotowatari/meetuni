@@ -4,6 +4,7 @@
             <v-card
                 class="mx-auto"
                 max-width="400"
+                @click.stop="expand(event.id)"
             >
                 <v-img
                 class="white--text align-end"
@@ -56,6 +57,9 @@ export default {
         events: Object
     },
     methods: {
+        expand(id){
+            this.$router.push({name: 'event-details', params: {id: id}})
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },
