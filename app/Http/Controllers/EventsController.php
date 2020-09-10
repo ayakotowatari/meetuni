@@ -36,6 +36,14 @@ class EventsController extends Controller
                     ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
 
+        // foreach($events as $event){
+        //     return $event->liked_by_user;
+        // }
+
+        // DD($event->liked_by_user);
+
+        // return view ('student/test', ['events'=>$events]);
+
         return response()->json(['events'=>$events],200);
     }
 

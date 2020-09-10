@@ -24,6 +24,10 @@ class Event extends Model
         'inst_user_id'
     ];
 
+    protected $appends = [
+        'liked_by_user'
+    ];
+
     // //開始時間のミューテータ
     public function setStartUtcAttribute($value) {
 
@@ -44,6 +48,19 @@ class Event extends Model
 
     public function status(){
         return $this->belongsTo('App\Models\Status');
+    }
+
+    public function likes(){
+        return $this->belongsToMany('App\Models\Student', 'likes');
+    }
+
+    public function getLikedByUserAttribute()
+    {
+        if (Auth::guest()){
+            return false;
+        }
+
+        return $this->likes->contains(Auth::user()->id);
     }
 
     // public function levels(){
