@@ -24,6 +24,24 @@ class Event extends Model
         'inst_user_id'
     ];
 
+    protected $appends = [
+        'liked_by_user'
+    ];
+
+    public function likes(){
+        return $this->belongsToMany('App\Models\Student', 'likes');
+    }
+
+    public function getLikedByUserAttribute()
+    {
+        if (Auth::guest()){
+            return false;
+        }
+
+        return $this->likes->contains(Auth::user()->id);
+    }
+
+
     // //開始時間のミューテータ
     public function setStartUtcAttribute($value) {
 
