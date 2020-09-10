@@ -27,7 +27,7 @@
                         justify="end"
                         >
                         <v-icon 
-                            @click.stop="like(`${event.id}`,`${event.liked_by_user}`)"
+                            @click.stop="like(`${event.id}`, event.liked_by_user)"
                             :color="event.liked_by_user == true ? 'error' : null"
                             class="like mr-3"
                         >mdi-heart</v-icon>
@@ -78,22 +78,22 @@ export default {
             'likeEvent',
             'unlikeEvent',
         ]),
-        like(id, liked_by_user){
+        like(id, liked){
 
-            console.log(liked_by_user);
+            console.log(liked);
+            let liked_status = liked;
 
-            if(liked_by_user == false){
-                this.likeEvent({
+            if(liked_status){
+                 this.unlikeEvent({
                     user_id: this.user.id,
                     event_id: id,
                 })
             }else{
-                this.unlikeEvent({
+                this.likeEvent({
                     user_id: this.user.id,
                     event_id: id,
                 })
             }
-
         },
         expand(id){
             this.$router.push({name: 'event-details', params: {id: id}})

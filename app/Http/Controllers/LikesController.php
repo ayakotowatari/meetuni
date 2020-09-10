@@ -78,18 +78,18 @@ class LikesController extends Controller
              ->where('likes.event_id', $event_id)
              ->delete();
 
-        $currentLike = Like::latest('updated_at')
-                        ->where('likes.student_id', $user_id)
-                        ->where('likes.event_id', $event_id)
-                        ->first();
-        $updated_at = $currentLike->updated_at;
+        // $currentLike = Like::latest('updated_at')
+        //                 ->where('likes.student_id', $user_id)
+        //                 ->where('likes.event_id', $event_id)
+        //                 ->first();
+        // $updated_at = $currentLike->updated_at;
 
-        Like::latest('updated_at')
-            ->where('likes.student_id', $user_id)
-            ->where('likes.event_id', $event_id)
-            ->update([ 
-                'formatted_updated' => $updated_at 
-            ]);
+        // Like::latest('updated_at')
+        //     ->where('likes.student_id', $user_id)
+        //     ->where('likes.event_id', $event_id)
+        //     ->update([ 
+        //         'formatted_updated' => $updated_at 
+        //     ]);
     }
 
 
