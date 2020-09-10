@@ -148,7 +148,6 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('isLiked');
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -157,8 +156,8 @@ export const studentaccount = {
         },
         async unlikeEvent({commit}, payload){
 
-            console.log(payload.user_id);
-            console.log(payload.event_id);
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
 
             await axios
                 .post('/student/unlike-event', {
@@ -167,7 +166,6 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('isUnliked');
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

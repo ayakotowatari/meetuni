@@ -27,8 +27,8 @@
                         justify="end"
                         >
                         <v-icon 
-                            @click.stop="like(`${event.id}`)"
-                            :color="`${event.id}`===selectedId ? 'error' : null"
+                            @click.stop="like(`${event.id}`,`${event.liked_by_user}`)"
+                            :color="event.liked_by_user == true ? 'error' : null"
                             class="like mr-3"
                         >mdi-heart</v-icon>
                         <v-icon class="mr-1">mdi-share-variant</v-icon>
@@ -75,16 +75,25 @@ export default {
     },
     methods: {
         ...mapActions('studentaccount',[
-            'likeEvent'
+            'likeEvent',
+            'unlikeEvent',
         ]),
-        like(id){
+        like(id, liked_by_user){
 
-            this.selectedId = id;
+            console.log(liked_by_user);
 
-            this.likeEvent({
-                user_id: this.user.id,
-                event_id: id
-            })
+            if(liked_by_user == false){
+                this.likeEvent({
+                    user_id: this.user.id,
+                    event_id: id,
+                })
+            }else{
+                this.unlikeEvent({
+                    user_id: this.user.id,
+                    event_id: id,
+                })
+            }
+
         },
         expand(id){
             this.$router.push({name: 'event-details', params: {id: id}})
