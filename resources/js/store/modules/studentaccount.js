@@ -169,7 +169,7 @@ export const studentaccount = {
             console.log(payload.event_id);
 
             let allerror = [];
-            // let eventId = '';
+            let eventId = '';
             let liked = false;
 
             await axios
@@ -179,11 +179,11 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    // eventId = response.data.event_id
+                    eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     liked = true;
-                    commit('isLiked', liked);
-                    // commit('setLikedByUser', eventId)                 
+                    // commit('isLiked', liked);
+                    commit('setLikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
