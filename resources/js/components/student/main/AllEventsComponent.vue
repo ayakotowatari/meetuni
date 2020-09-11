@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <eventcard-component
-        v-bind:events="allEvents"
+        v-bind:allEvents="allEvents"
         v-bind:user="user"
     ></eventcard-component>
 </v-container>
@@ -27,10 +27,10 @@ export default {
 
     }),
     mounted(){
-        this.$store.dispatch('student/fetchAllEvents');
+        this.$store.dispatch('studentaccount/fetchAllEvents');
     },
     computed: {
-        ...mapState('student', [
+        ...mapState('studentaccount', [
             'allEvents',
         ])
     },
