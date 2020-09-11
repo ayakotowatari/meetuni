@@ -5,6 +5,7 @@ export const studentaccount = {
 
     state: {
         allEvents: [],
+        likedEvents: [],
         dialog: false,
         isBooked: false,
         bookings: [],
@@ -22,6 +23,9 @@ export const studentaccount = {
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setLikedEvents(state,payload){
+            state.likedEvents = payload
         },
         showDialog(state){
             state.dialog = true
@@ -78,6 +82,17 @@ export const studentaccount = {
                     commit("setAllEvents", payload);
                     console.log(payload)
                 });
+        },
+        async fetchLikedEvents({commit}, payload){
+            console.log(payload.id);
+            let events = [];
+
+            await axios
+                .get("/student/fetch-likedevents/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    commit("setLikedEvents", events);
+                })
         },
         async registerEvent({state, commit}, payload){
             // console.log(payload)

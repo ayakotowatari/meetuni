@@ -73,7 +73,7 @@ const routes = [
         component: Following
     },
     {
-        path: "/student/liked",
+        path: "/student/liked/:id",
         name: "liked",
         component: Liked
     },
