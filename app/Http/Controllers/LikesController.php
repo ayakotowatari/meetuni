@@ -62,6 +62,8 @@ class LikesController extends Controller
                 'formatted_created' => $created_at, 
                 'formatted_updated' => $updated_at 
             ]);
+
+        return response()->json(['event_id' => $event_id],200);
     }
 
     public function unlike(Request $request)
@@ -77,6 +79,8 @@ class LikesController extends Controller
         Like::where('likes.student_id', $user_id)
              ->where('likes.event_id', $event_id)
              ->delete();
+
+        return response()->json(['event_id' => $event_id],200);
 
         // $currentLike = Like::latest('updated_at')
         //                 ->where('likes.student_id', $user_id)
