@@ -68,13 +68,13 @@ export default {
         }
     },
     computed: {
-        ...mapState('studentaccount', [
+        ...mapState('student', [
             'eventId',
             'allerror',
         ])
     },
     methods: {
-        ...mapActions('studentaccount',[
+        ...mapActions('student',[
             'likeEvent',
             'unlikeEvent',
         ]),

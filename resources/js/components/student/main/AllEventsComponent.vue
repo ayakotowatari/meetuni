@@ -27,10 +27,10 @@ export default {
 
     }),
     mounted(){
-        this.$store.dispatch('studentaccount/fetchAllEvents');
+        this.$store.dispatch('student/fetchAllEvents');
     },
     computed: {
-        ...mapState('studentaccount', [
+        ...mapState('student', [
             'allEvents',
         ])
     },

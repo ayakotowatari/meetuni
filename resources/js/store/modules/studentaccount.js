@@ -14,9 +14,6 @@ export const studentaccount = {
         bookingId: '',
         categories: [],
         allerror: [],
-        isLiked: true,
-        eventId: '',
-        isFollowed: false,
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -68,12 +65,6 @@ export const studentaccount = {
         setCategories(state, payload){
             state.categories = payload
         },
-        isLiked(state, payload){
-            state.isLiked = payload
-        },
-        isUnliked(state){
-            state.isLiked = false
-        },
         setEventId(state, payload){
             state.eventId = payload
         },
@@ -83,20 +74,6 @@ export const studentaccount = {
         isUnfollowed(state){
             state.inst.followed_by_user = false
         },
-        LikedByUser(state,payload){  
-            console.log('setLikedByUser');
-            console.log(payload);
-            const event = state.allEvents.find(event=>event.id == payload);
-            console.log(event);
-            event.liked_by_user = true;
-            console.log(state);
-        },
-        UnlikedByUser(state,payload){  
-            console.log('unlikedByuser');
-            console.log(payload);
-            const event = state.allEvents.find(event=>event.id == payload);
-            event.liked_by_user = false;
-        }
     },
     actions: {
         async fetchAllEvents({commit}){
@@ -204,54 +181,6 @@ export const studentaccount = {
                     console.log(categories);
                     commit('setCategories', categories);
                 })
-        },
-        async likeEvent({commit}, payload){
-
-            // console.log(payload.user_id);
-            // console.log(payload.event_id);
-
-            let allerror = [];
-            let eventId = '';
-
-            await axios
-                .post('/student/like-event', {
-                    user_id: payload.user_id,
-                    event_id: payload.event_id
-                })
-                .then(response => {
-                    // console.log(response);
-                    eventId = response.data.event_id
-                    // commit('setEventId', eventId);
-                    // commit('isLiked', liked);
-                    commit('LikedByUser', eventId)                 
-                })
-                .catch(error => 
-                    allerror = error.response.data.errors,
-                    commit('setallErrors', allerror)
-                )
-        },
-        async unlikeEvent({commit}, payload){
-
-            // console.log(payload.user_id);
-            // console.log(payload.event_id);
-
-            let eventId = '';
-
-            await axios
-                .post('/student/unlike-event', {
-                    user_id: payload.user_id,
-                    event_id: payload.event_id
-                })
-                .then(response => {
-                    console.log(response);
-                    eventId = response.data.event_id;
-                    console.log(eventId);
-                    commit('UnlikedByUser', eventId);
-                })
-                .catch(error => 
-                    allerror = error.response.data.errors,
-                    commit('setallErrors', allerror)
-                )
         },
         async fetchInst({commit}, payload){
 
