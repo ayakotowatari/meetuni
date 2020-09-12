@@ -108,11 +108,12 @@ class EventsController extends Controller
         $array = $events;
         $flattened_events = Arr::flatten($array);
         $unique = array_unique($flattened_events);
+        $renumbered = array_values($unique);
 
         // DD($unique);
 
         // return view('student.test', ['events'=>$unique]);
-        return response()->json(['events'=>$unique],200);
+        return response()->json(['events'=>$renumbered],200);
     }
 
     public function recommendDestinationEvents(Request $request, $id)
@@ -147,12 +148,13 @@ class EventsController extends Controller
         $array = $events;
         $flattened_events = Arr::flatten($array);
         $unique = array_unique($flattened_events);
+        $renumbered = array_vaues($unique);
 
         // DD($unique);
 
         // DD($unique);
 
-        return response()->json(['events'=>$unique],200);
+        return response()->json(['events'=>$renumbered],200);
 
         // return view('student.test',['events'=>$unique]);
 
@@ -189,7 +191,8 @@ class EventsController extends Controller
             return 'There was no record';
         }else{
             $unique = array_unique($events);
-            return response()->json(['events'=>$unique],200);
+            $renumbered = array_vaues($unique);
+            return response()->json(['events'=>$renumbered],200);
         }
     }
 
