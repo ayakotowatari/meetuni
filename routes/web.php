@@ -105,7 +105,9 @@ Route::get('/student/event-subjects/{id}', 'EventsController@recommendSubjectEve
 Route::get('/student/event-destinations/{id}', 'EventsController@recommendDestinationEvents');
 Route::get('/student/event-regions/{id}', 'EventsController@recommendRegionEvents');
 Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
+Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst');
 Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents');
+Route::get('/student/fetch-likedevents/{id}', 'LikesController@fetchLikedEvents');
 
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');
@@ -117,7 +119,11 @@ Route::get('/student/fetch-categories', 'CategoriesController@index');
 Route::post('/student/event-queries', 'QueriesController@store');
 Route::post('/student/like-event', 'LikesController@store');
 Route::post('/student/unlike-event', 'LikesController@unlike');
-Route::post('/student/follow-event', 'FollowsController@store');
+
+//学生フォロー
+Route::post('/student/follow-inst', 'FollowsController@store');
+Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
+
 
 // Vue
 //Only inst user can access.

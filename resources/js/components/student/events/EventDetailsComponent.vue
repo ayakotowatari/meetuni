@@ -5,6 +5,11 @@
             v-bind:event="event"
             v-bind:user="user"
         ></bookingdialog-component>
+        <followdialog-component
+            v-bind:dialog="followDialog"
+            v-bind:event="event"
+            v-bind:user="user"
+        ></followdialog-component> 
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 
@@ -14,13 +19,21 @@
         <v-container>
             <v-row>
                 <v-col col="12" sm="12" md="12">
-                    <div class="grey--text text--darken-1 institution-title">{{ event.name }}</div>
+                    <div class="grey--text text--darken-1 institution-title">{{ inst.name }}</div>
                      <v-btn 
+                        v-if="inst.followed_by_user == false"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="showDialog"
+                        @click="follow(`${inst.id}`, `${user.id}`)"
                     >Follow</v-btn>
+                    <v-btn 
+                        v-if="inst.followed_by_user == true"
+                        class="ma-2 hidden-sm-and-down" 
+                        outlined      
+                        color="primary"
+                        @click="unfollow(`${inst.id}`, `${user.id}`)"
+                    >Followed</v-btn>
                 </v-col>
             </v-row>
             <v-row>
@@ -103,8 +116,9 @@
 import moment from 'moment-timezone'
 
 import BookingDialog from './BookingDialogComponent'
+import FollowDialog from '../account/FollowDialogComponent'
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 // import {createNamespacedHelpers} from 'vuex'
 // const { mapState, mapGetters } = createNamespacedHelpers('student');
@@ -114,7 +128,8 @@ export default {
         user: Array,
     },
     components: {
-        BookingDialog
+        BookingDialog,
+        FollowDialog
     },
     data: function(){
         return{
@@ -124,6 +139,9 @@ export default {
     },
     mounted(){
         this.$store.dispatch('student/fetchSingleEvent', {
+            id: this.id
+        }),
+        this.$store.dispatch('studentaccount/fetchInst', {
             id: this.id
         })
     },
@@ -135,14 +153,40 @@ export default {
             'subjects',
         ]),
         ...mapState('studentaccount', [
+            'inst',
             'dialog',
+            'followDialog',
+            'isFollowed',
             'isBooked'
         ])
     },
     methods: {
         ...mapMutations('studentaccount', {
-            showDialog: 'showDialog'
+            showDialog: 'showDialog',
+            showFollowDialog: 'showFollowDialog'
         }),
+        ...mapActions('studentaccount', [
+            'followInst',
+            'unfollowInst'
+        ]),
+        follow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.followInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
+        unfollow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.unfollowInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },

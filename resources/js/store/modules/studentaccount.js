@@ -5,7 +5,10 @@ export const studentaccount = {
 
     state: {
         allEvents: [],
+        inst: [],
+        likedEvents: [],
         dialog: false,
+        followDialog: false,
         isBooked: false,
         bookings: [],
         bookingId: '',
@@ -13,6 +16,7 @@ export const studentaccount = {
         allerror: [],
         isLiked: true,
         eventId: '',
+        isFollowed: false,
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -23,11 +27,23 @@ export const studentaccount = {
         setAllEvents(state, payload){
             state.allEvents = payload
         },
+        setInst(state, payload){
+            state.inst = payload;
+        },
+        setLikedEvents(state,payload){
+            state.likedEvents = payload
+        },
         showDialog(state){
             state.dialog = true
         },
         closeDialog(state){
             state.dialog = false
+        },
+        closeFollowDialog(state){
+            state.followDialog = false
+        },
+        showFollowDialog(state){
+            state.followDialog = true
         },
         isBooked(state){
             state.isBooked = true
@@ -56,6 +72,12 @@ export const studentaccount = {
         setEventId(state, payload){
             state.eventId = payload
         },
+        isFollowed(state){
+            state.inst.followed_by_user = true
+        },
+        isUnfollowed(state){
+            state.inst.followed_by_user = false
+        }
         // setLikedByUser(state,payload){  
         //     const event = state.allEvents.find(event=>event.id === payload);
         //     event.liked_by_user = true;
@@ -78,6 +100,17 @@ export const studentaccount = {
                     commit("setAllEvents", payload);
                     console.log(payload)
                 });
+        },
+        async fetchLikedEvents({commit}, payload){
+            console.log(payload.id);
+            let events = [];
+
+            await axios
+                .get("/student/fetch-likedevents/" + payload.id)
+                .then(res => {
+                    events = res.data.events;
+                    commit("setLikedEvents", events);
+                })
         },
         async registerEvent({state, commit}, payload){
             // console.log(payload)
@@ -208,6 +241,48 @@ export const studentaccount = {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 )
+        },
+        async fetchInst({commit}, payload){
+
+            console.log(payload.id);
+
+            let inst = [];
+
+            await axios
+                .get('/student/fetch-inst/' + payload.id)
+                .then(response => {
+                    inst = response.data.inst;
+                    commit("setInst", inst)
+                })
+        },
+        async followInst({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            await axios
+                .post('/student/follow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                .then(response => {
+                    console.log(response);
+                    commit('isFollowed');
+                    commit('showFollowDialog');
+                })
+        },
+        async unfollowInst({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            await axios
+                .post('/student/unfollow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                .then(response => {
+                    console.log(response);
+                    commit('isUnfollowed');
+                })
         }
     }
 }

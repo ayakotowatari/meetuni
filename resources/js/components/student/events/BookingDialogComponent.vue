@@ -54,6 +54,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
+                <v-btn color="grey" text @click="closeDialog">Not Now</v-btn>
                 <v-btn color="blue darken-1" text @click="bookEvent">Register</v-btn>
             </v-card-actions>
             </v-card>

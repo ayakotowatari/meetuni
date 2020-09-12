@@ -6,6 +6,7 @@ export const student = {
     state: {
         allEvents: [],
         event: [],
+        inst: [],
         regions: [],
         levels: [],
         subjects: [],
@@ -32,6 +33,9 @@ export const student = {
             state.regions = payload.regions
             state.levels = payload.levels
             state.subjects = payload.subjects
+        },
+        setInst(state, payload){
+            state.inst = payload;
         },
         setRecommendedSubjectEvents(state, payload){
             state.recommendedSubjectEvents = payload
@@ -78,6 +82,19 @@ export const student = {
                     console.log(subjects)
                     commit("setEvent", {event, regions, levels, subjects});
                 });
+        },
+        async fetchInst({commit}, payload){
+
+            console.log(payload.id);
+
+            let inst = [];
+
+            await axios
+                .get('/student/fetch-inst/' + payload.id)
+                .then(response => {
+                    inst = response.data.inst;
+                    commit("setInst", inst)
+                })
         },
         async recommendSubjectEvents({commit}, payload){
             let events = [];
