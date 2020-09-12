@@ -95,6 +95,40 @@ export const student = {
             // event.liked_by_user = true;
             // console.log(state);
         },
+        DestinationLikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            // console.log(state);
+        },
+        DestinationUnlikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = false;
+            // event.liked_by_user = true;
+            // console.log(state);
+        },
+        RegionLikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedRegionEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            // console.log(state);
+        },
+        RegionUnlikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedRegionEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = false;
+            // event.liked_by_user = true;
+            // console.log(state);
+        },
         setallErrors(state, payload){
             state.allerror = payload
         }
@@ -229,7 +263,7 @@ export const student = {
                     commit('setallErrors', allerror)
                 )
         },
-        async likeSubjectEvent({commit}, payload){
+        async SubjectLikeEvent({commit}, payload){
 
             // console.log(payload.user_id);
             // console.log(payload.event_id);
@@ -254,7 +288,7 @@ export const student = {
                     commit('setallErrors', allerror)
                 )
         },
-        async unlikeSubjectEvent({commit}, payload){
+        async SubjectUnlikeEvent({commit}, payload){
 
             console.log(payload.user_id);
             console.log(payload.event_id);
@@ -274,6 +308,108 @@ export const student = {
                     // commit('isLiked', liked);
                     console.log(eventId);
                     commit('SubjectUnlikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async DestinationLikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('DestinationLikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async DestinationUnlikeEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    console.log(eventId);
+                    commit('DestinationUnlikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async RegionLikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('RegionLikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async RegionUnlikeEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    console.log(eventId);
+                    commit('RegionUnlikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

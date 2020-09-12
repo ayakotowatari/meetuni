@@ -60,7 +60,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
     props: {
         user: Object,
-        events: Object
+        events: Array
     },
     data: function(){
         return {
@@ -75,8 +75,8 @@ export default {
     },
     methods: {
         ...mapActions('student',[
-            'likeSubjectEvent',
-            'unlikeSubjectEvent',
+            'SubjectLikeEvent',
+            'SubjectUnlikeEvent',
         ]),
         like(id, liked){
 
@@ -85,12 +85,12 @@ export default {
              console.log(liked);
 
             if(liked_status){
-                this.unlikeSubjectEvent({
+                this.SubjectUnlikeEvent({
                     user_id: this.user.id,
                     event_id: id,
                 });
             }else{
-                this.likeSubjectEvent({
+                this.SubjectLikeEvent({
                     user_id: this.user.id,
                     event_id: id,
                 })

@@ -148,7 +148,7 @@ class EventsController extends Controller
         $array = $events;
         $flattened_events = Arr::flatten($array);
         $unique = array_unique($flattened_events);
-        $renumbered = array_vaues($unique);
+        $renumbered = array_values($unique);
 
         // DD($unique);
 

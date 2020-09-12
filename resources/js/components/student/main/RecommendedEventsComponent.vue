@@ -7,11 +7,11 @@
         class="mb-10"
     ></subjecteventcard-component>
     <h2 class="grey--text text--darken-2">From countries of your interest</h2>
-    <eventcard-component
+    <destinationeventcard-component
         v-bind:events="recommendedDestinationEvents"
         v-bind:user="user"
         class="mb-10"
-    ></eventcard-component>
+    ></destinationeventcard-component>
     <h2 class="grey--text text--darken-2">Focus on your region</h2>
     <eventcard-component
         v-bind:events="recommendedRegionEvents"
@@ -24,6 +24,7 @@
 <script>
 import EventCard from './EventCardComponent'
 import SubjectEventCard from './SubjectEventCardComponent'
+import DestinationEventCard from './DestinationEventCardComponent'
 
 import { mapState } from 'vuex'
 // import {createNamespacedHelpers} from 'vuex'
@@ -32,7 +33,8 @@ import { mapState } from 'vuex'
 export default {
     components: {
         EventCard,
-        SubjectEventCard
+        SubjectEventCard,
+        DestinationEventCard
     },
     props: {
         user: Object,
