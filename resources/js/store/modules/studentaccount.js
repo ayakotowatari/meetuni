@@ -8,6 +8,7 @@ export const studentaccount = {
         inst: [],
         likedEvents: [],
         dialog: false,
+        followDialog: false,
         isBooked: false,
         bookings: [],
         bookingId: '',
@@ -37,6 +38,12 @@ export const studentaccount = {
         },
         closeDialog(state){
             state.dialog = false
+        },
+        closeFollowDialog(state){
+            state.followDialog = false
+        },
+        showFollowDialog(state){
+            state.followDialog = true
         },
         isBooked(state){
             state.isBooked = true
@@ -259,8 +266,8 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('showDialog');
-                    commit('isFollwed');
+                    commit('isFollowed');
+                    commit('showFollowDialog');
                 })
         },
         async unfollowInst({commit}, payload){

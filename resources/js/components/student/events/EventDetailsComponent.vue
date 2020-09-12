@@ -6,7 +6,7 @@
             v-bind:user="user"
         ></bookingdialog-component>
         <followdialog-component
-            v-bind:dialog="dialog"
+            v-bind:dialog="followDialog"
             v-bind:event="event"
             v-bind:user="user"
         ></followdialog-component> 
@@ -155,13 +155,15 @@ export default {
         ...mapState('studentaccount', [
             'inst',
             'dialog',
+            'followDialog',
             'isFollowed',
             'isBooked'
         ])
     },
     methods: {
         ...mapMutations('studentaccount', {
-            showDialog: 'showDialog'
+            showDialog: 'showDialog',
+            showFollowDialog: 'showFollowDialog'
         }),
         ...mapActions('studentaccount', [
             'followInst',

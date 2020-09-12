@@ -43,7 +43,7 @@ export default {
             });
         },
         ...mapMutations('studentaccount', {
-            close: 'closeDialog'
+            close: 'closeFollowDialog'
         })
     }
 }
