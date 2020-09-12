@@ -118,7 +118,10 @@ Route::get('/student/fetch-categories', 'CategoriesController@index');
 Route::post('/student/event-queries', 'QueriesController@store');
 Route::post('/student/like-event', 'LikesController@store');
 Route::post('/student/unlike-event', 'LikesController@unlike');
-Route::post('/student/follow-event', 'FollowsController@store');
+
+//学生フォロー
+Route::post('/student/follow-inst', 'FollowsController@store');
+
 
 // Vue
 //Only inst user can access.

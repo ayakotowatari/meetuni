@@ -25,7 +25,7 @@
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="showDialog(`${event.inst_id}`)"
+                        @click="follow(`${event.inst_id}`, `${user.id}`)"
                     >Follow</v-btn>
                     <v-btn 
                         v-if="isFollowed"
@@ -118,7 +118,7 @@ import moment from 'moment-timezone'
 import BookingDialog from './BookingDialogComponent'
 import FollowDialog from '../account/FollowDialogComponent'
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 // import {createNamespacedHelpers} from 'vuex'
 // const { mapState, mapGetters } = createNamespacedHelpers('student');
@@ -151,6 +151,7 @@ export default {
         ]),
         ...mapState('studentaccount', [
             'dialog',
+            'isFollowed',
             'isBooked'
         ])
     },
@@ -158,6 +159,18 @@ export default {
         ...mapMutations('studentaccount', {
             showDialog: 'showDialog'
         }),
+        ...mapActions('studentaccount', [
+            'followInst'
+        ]),
+        follow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+            
+            this.followInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },

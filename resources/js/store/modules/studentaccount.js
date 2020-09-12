@@ -61,6 +61,12 @@ export const studentaccount = {
         setEventId(state, payload){
             state.eventId = payload
         },
+        isFollowed(state){
+            state.isFollowed = true
+        },
+        isUnfollowed(state){
+            state.isFollowed = false
+        }
         // setLikedByUser(state,payload){  
         //     const event = state.allEvents.find(event=>event.id === payload);
         //     event.liked_by_user = true;
@@ -224,6 +230,21 @@ export const studentaccount = {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 )
+        },
+        async followInst({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            await axios
+                .post('/student/follow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                then(response => {
+                    console.log(response);
+                    commit('showDialog');
+                    commit('isFollowed');
+                })
         }
     }
 }

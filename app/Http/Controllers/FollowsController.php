@@ -35,7 +35,36 @@ class FollowsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'inst_id' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $inst_id = request('inst_id');
+        $user_id = request('user_id');
+
+        $follow = new Follow();
+        $follow->student_id = $user_id;
+        $follow->inst_id = $inst_id;
+        $follow->save();     
+
+        $currentFollow = Follow::latest('created_at')
+                        ->where('student_id', $user_id)
+                        ->where('inst_id', $inst_id)
+                        ->first();
+        $created_at = $currentFollow->created_at;
+        $updated_at = $currentFollow->updated_at;
+
+        Follow::latest('created_at')
+            ->where('student_id', $user_id)
+            ->where('inst_id', $inst_id)
+            ->update([ 
+                'formatted_created' => $created_at, 
+                'formatted_updated' => $updated_at 
+            ]);
+
+        // return response()->json(['event_id' => $event_id],200);
+        
     }
 
     /**
