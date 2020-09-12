@@ -105,6 +105,7 @@ Route::get('/student/event-subjects/{id}', 'EventsController@recommendSubjectEve
 Route::get('/student/event-destinations/{id}', 'EventsController@recommendDestinationEvents');
 Route::get('/student/event-regions/{id}', 'EventsController@recommendRegionEvents');
 Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
+Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst');
 Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents');
 Route::get('/student/fetch-likedevents/{id}', 'LikesController@fetchLikedEvents');
 

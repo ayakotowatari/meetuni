@@ -38,6 +38,20 @@ class InstsController extends Controller
         }
     }
 
+    public function fetchInst($id)
+    {
+       
+        $event_id = $id;
+
+        $inst = Inst::join('events', 'events.inst_id', '=', 'insts.id')
+                    ->where('events.id', $id)
+                    ->select('insts.id', 'insts.name')
+                    ->first();
+
+        return response()->json(['inst' => $inst],200);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

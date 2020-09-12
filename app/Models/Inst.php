@@ -2,10 +2,29 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Inst extends Model
 {
+
+    protected $appends = [
+        'followed_by_user'
+    ];
+
+    public function follows(){
+        return $this->belongsToMany('App\Models\Student', 'follows');
+    }
+
+    public function getFollowedByUserAttribute()
+    {
+        if (Auth::guest()){
+            return false;
+        }
+
+        return $this->follows->contains(Auth::user()->id);
+    }
+
     //InstUserモデルのデータを引っ張ってくる。
     public function instUsers(){
         return $this->hasMany('App\Models\InstUser');

@@ -19,20 +19,20 @@
         <v-container>
             <v-row>
                 <v-col col="12" sm="12" md="12">
-                    <div class="grey--text text--darken-1 institution-title">{{ event.name }}</div>
+                    <div class="grey--text text--darken-1 institution-title">{{ inst.name }}</div>
                      <v-btn 
-                        v-if="isFollowed == false"
+                        v-if="inst.follwed_by_user == false"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="follow(`${event.inst_id}`, `${user.id}`)"
+                        @click="follow(`${inst.id}`, `${user.id}`)"
                     >Follow</v-btn>
                     <v-btn 
-                        v-if="isFollowed"
+                        v-if="inst.followed_by_user == true"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="unfollow(`${event.inst_id}`)"
+                        @click="unfollow(`${inst.id}`, `${user.id}`)"
                     >Followed</v-btn>
                 </v-col>
             </v-row>
@@ -140,11 +140,15 @@ export default {
     mounted(){
         this.$store.dispatch('student/fetchSingleEvent', {
             id: this.id
+        }),
+        this.$store.dispatch('student/fetchInst', {
+            id: this.id
         })
     },
     computed: {
         ...mapState('student', [
             'event',
+            'inst',
             'regions',
             'levels',
             'subjects',
@@ -165,7 +169,7 @@ export default {
         follow(id, user_id){
             console.log(id);
             console.log(user_id);
-            
+
             this.followInst({
                 inst_id: id,
                 user_id: user_id
