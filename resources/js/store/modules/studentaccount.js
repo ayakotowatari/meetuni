@@ -84,8 +84,17 @@ export const studentaccount = {
         unlikedByUser(state, payload){
             let event = state.likedEvents.find(event=>event.id == payload);
             // console.log(event);
+            event.liked_by_user = false;
+        },
+        likedByUser(state,payload){  
+            console.log('LikedByUser');
+            console.log(payload);
+            let event = state.likedEvents.find(event=>event.id == payload);
+            console.log(event);
             event.liked_by_user = true;
-        }
+            console.log(state);
+        },
+        
     },
     actions: {
         async fetchAllEvents({commit}){
@@ -116,6 +125,8 @@ export const studentaccount = {
         },
         async registerEvent({state, commit}, payload){
             // console.log(payload)
+
+            let allerror = [];
 
             await axios
                 .post("/student/register-event", {
@@ -169,6 +180,8 @@ export const studentaccount = {
         },
         async saveQuestions({commit}, payload){
             // console.log(payload);
+
+            let allerror= [];
 
             await axios
                 .post('/student/event-queries', {
@@ -240,12 +253,13 @@ export const studentaccount = {
                     commit('isUnfollowed');
                 })
         },
-        async unlikeLikedEvent({commit}, payload){
+        async unlikeEvent({commit}, payload){
 
-            console.log(payload.user_id);
-            console.log(payload.event_id);
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
 
             let eventId = '';
+            let allerror =[];
 
             await axios
                 .post('/student/unlike-event', {
@@ -257,6 +271,31 @@ export const studentaccount = {
                     eventId = response.data.event_id;
                     console.log(eventId);
                     commit('unlikedByUser', eventId);
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async likeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('likedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

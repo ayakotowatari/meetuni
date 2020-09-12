@@ -246,6 +246,7 @@ export const student = {
             // console.log(payload.event_id);
 
             let eventId = '';
+            let allerror = [];
 
             await axios
                 .post('/student/unlike-event', {

@@ -33,7 +33,7 @@
                         <v-icon 
                             class="icon" 
                             :color="event.liked_by_user == true ? 'error' : null"
-                            @click="like(`${event.id}`, `${user.id}`)"
+                            @click="like(`${event.id}`, event.liked_by_user)"
                         >mdi-heart</v-icon>
                         </div>
                     </v-col>
@@ -86,21 +86,33 @@ export default {
         // }),
         ...mapActions('studentaccount',[
             'showDialogWithEvent',
-            'unlikeLikedEvent'
+            'unlikeEvent',
+            'likeEvent'
         ]),
         showDialog(id){
             this.showDialogWithEvent({
                 id: id
             })
         },
-        like(id, user_id){
-            console.log(id);
-            console.log(user_id);
+        like(id, liked){
+            console.log('pushed');
+            console.log(liked);
 
-            this.unlikeLikedEvent({
-                event_id: id,
-                user_id: user_id
-            })
+            let liked_status = liked;
+
+            if(liked_status){
+                this.unlikeEvent({
+                    event_id: id,
+                    user_id: this.user.id
+                })
+            }else{
+                this.likeEvent({
+                    event_id: id,
+                    user_id: this.user.id
+                })
+            }
+
+            
         },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
