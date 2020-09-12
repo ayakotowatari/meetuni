@@ -5,6 +5,11 @@
             v-bind:event="event"
             v-bind:user="user"
         ></bookingdialog-component>
+        <followdialog-component
+            v-bind:dialog="dialog"
+            v-bind:event="event"
+            v-bind:user="user"
+        ></followdialog-component> 
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 
@@ -16,11 +21,19 @@
                 <v-col col="12" sm="12" md="12">
                     <div class="grey--text text--darken-1 institution-title">{{ event.name }}</div>
                      <v-btn 
+                        v-if="isFollowed == false"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="showDialog"
+                        @click="showDialog(`${event.inst_id}`)"
                     >Follow</v-btn>
+                    <v-btn 
+                        v-if="isFollowed"
+                        class="ma-2 hidden-sm-and-down" 
+                        outlined      
+                        color="primary"
+                        @click="unfollow(`${event.inst_id}`)"
+                    >Followed</v-btn>
                 </v-col>
             </v-row>
             <v-row>
@@ -103,6 +116,7 @@
 import moment from 'moment-timezone'
 
 import BookingDialog from './BookingDialogComponent'
+import FollowDialog from '../account/FollowDialogComponent'
 
 import { mapState, mapMutations } from 'vuex'
 
@@ -114,7 +128,8 @@ export default {
         user: Array,
     },
     components: {
-        BookingDialog
+        BookingDialog,
+        FollowDialog
     },
     data: function(){
         return{

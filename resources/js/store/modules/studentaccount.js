@@ -14,6 +14,7 @@ export const studentaccount = {
         allerror: [],
         isLiked: true,
         eventId: '',
+        isFollowed: false,
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。

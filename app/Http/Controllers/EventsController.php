@@ -47,7 +47,7 @@ class EventsController extends Controller
 
         $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('events.id', $id)
-                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->first();
 
         $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')

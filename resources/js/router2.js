@@ -68,7 +68,7 @@ const routes = [
         component: EventPage
     },
     {
-        path: "/student/following",
+        path: "/student/following/:id",
         name: "following",
         component: Following
     },
