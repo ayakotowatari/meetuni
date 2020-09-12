@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <eventcard-component
-        v-bind:allEvents="allEvents"
+        v-bind:events="allEvents"
         v-bind:user="user"
     ></eventcard-component>
 </v-container>
@@ -21,7 +21,7 @@ export default {
         EventCard
     },
     props: {
-        user: Array,
+        user: Object,
     },
     data: () => ({
 

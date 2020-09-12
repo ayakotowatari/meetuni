@@ -29,7 +29,7 @@ export default {
         SearchComponent
     },
     props: {
-        user: Array,
+        user: Object,
     },
 }
 </script>

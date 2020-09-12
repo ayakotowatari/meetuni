@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="(event, index) in allEvents" :key="index">
+        <v-col col="12" sm="12" md="3" class="mb-6" v-for="(event, index) in events" :key="index">
             <v-card
                 class="mx-auto"
                 max-width="400"
@@ -59,8 +59,8 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        user: Array,
-        allEvents: Array
+        user: Object,
+        events: Array
     },
     data: function(){
         return {

@@ -5,8 +5,8 @@ export const student = {
 
     state: {
         allEvents: [],
-        event: [],
-        inst: [],
+        event: {},
+        inst: {},
         regions: [],
         levels: [],
         subjects: [],

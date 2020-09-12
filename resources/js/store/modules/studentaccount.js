@@ -83,20 +83,19 @@ export const studentaccount = {
         isUnfollowed(state){
             state.inst.followed_by_user = false
         },
-        setLikedByUser(state,payload){  
-            // console.log(payload);
+        LikedByUser(state,payload){  
             console.log('setLikedByUser');
             console.log(payload);
             const event = state.allEvents.find(event=>event.id == payload);
             console.log(event);
             event.liked_by_user = true;
             console.log(state);
-            // state.allEvents = state.allEvents.map (event => {
-            //     if(event.id === payload){
-            //         event.liked_by_user = true
-            //     }
-            //     return event
-            // })
+        },
+        UnlikedByUser(state,payload){  
+            console.log('unlikedByuser');
+            console.log(payload);
+            const event = state.allEvents.find(event=>event.id == payload);
+            event.liked_by_user = false;
         }
     },
     actions: {
@@ -224,7 +223,7 @@ export const studentaccount = {
                     eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
-                    commit('setLikedByUser', eventId)                 
+                    commit('LikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -236,6 +235,8 @@ export const studentaccount = {
             // console.log(payload.user_id);
             // console.log(payload.event_id);
 
+            let eventId = '';
+
             await axios
                 .post('/student/unlike-event', {
                     user_id: payload.user_id,
@@ -243,7 +244,9 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('isUnliked');
+                    eventId = response.data.event_id;
+                    console.log(eventId);
+                    commit('UnlikedByUser', eventId);
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
