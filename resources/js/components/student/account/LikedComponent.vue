@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <v-card flat v-for="event in likedEvents" :key="event.id">
+            <v-card flat v-for="(event, index) in likedEvents" :key="index">
                 <v-row class="pa-3"> 
                     <v-col cols="12" xs="12" md="2">
                         <v-img :src="`/storage/${ event.image }`"></v-img>
@@ -30,7 +30,11 @@
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
-                        <v-icon class="icon" color="error" @click="unlike(`${event.id}`, `${user.id}`)">mdi-heart</v-icon>
+                        <v-icon 
+                            class="icon" 
+                            :color="event.liked_by_user == true ? 'error' : null"
+                            @click="like(`${event.id}`, `${user.id}`)"
+                        >mdi-heart</v-icon>
                         </div>
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
@@ -81,11 +85,21 @@ export default {
         //     showDialog: 'showDialog'
         // }),
         ...mapActions('studentaccount',[
-            'showDialogWithEvent'
+            'showDialogWithEvent',
+            'unlikeLikedEvent'
         ]),
         showDialog(id){
             this.showDialogWithEvent({
                 id: id
+            })
+        },
+        like(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.unlikeLikedEvent({
+                event_id: id,
+                user_id: user_id
             })
         },
         formattedDate(value, timezone){

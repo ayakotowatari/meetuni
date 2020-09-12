@@ -29,7 +29,7 @@ class Event extends Model
     ];
 
     public function likes(){
-        return $this->belongsToMany('App\Models\Student', 'likes');
+        return $this->belongsToMany('App\Models\Student', 'likes', 'event_id', 'student_id');
     }
 
     public function getLikedByUserAttribute()

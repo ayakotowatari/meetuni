@@ -7,6 +7,7 @@ export const studentaccount = {
         allEvents: [],
         inst: {},
         likedEvents: [],
+        isLiked: true,
         dialog: false,
         followDialog: false,
         isBooked: false,
@@ -26,15 +27,21 @@ export const studentaccount = {
         // },
         setAllEvents(state, payload){
             payload.forEach(event => state.allEvents.push(event))
-            console.log('setAllEvents');
-            console.log(state);
+            // console.log('setAllEvents');
+            // console.log(state);
+        },
+        setLikedEvents(state, payload){
+            // console.log(payload);
+            payload.forEach(event => state.likedEvents.push(event))
+            // console.log('setLikedEvents');
+            // console.log(state);
         },
         setInst(state, payload){
             state.inst = payload;
         },
-        setLikedEvents(state,payload){
-            state.likedEvents = payload
-        },
+        // setLikedEvents(state,payload){
+        //     state.likedEvents = payload
+        // },
         showDialog(state){
             state.dialog = true
         },
@@ -74,6 +81,11 @@ export const studentaccount = {
         isUnfollowed(state){
             state.inst.followed_by_user = false
         },
+        unlikedByUser(state, payload){
+            let event = state.likedEvents.find(event=>event.id == payload);
+            // console.log(event);
+            event.liked_by_user = true;
+        }
     },
     actions: {
         async fetchAllEvents({commit}){
@@ -88,13 +100,17 @@ export const studentaccount = {
                 });
         },
         async fetchLikedEvents({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
+            // console.log(payload.id);
+            // console.log(payload);
+
             let events = [];
 
             await axios
                 .get("/student/fetch-likedevents/" + payload.id)
                 .then(res => {
                     events = res.data.events;
+                    // console.log(events);
                     commit("setLikedEvents", events);
                 })
         },
@@ -223,6 +239,30 @@ export const studentaccount = {
                     console.log(response);
                     commit('isUnfollowed');
                 })
-        }
+        },
+        async unlikeLikedEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    console.log(response);
+                    eventId = response.data.event_id;
+                    console.log(eventId);
+                    commit('unlikedByUser', eventId);
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\InstUser;
 use App\Models\Inst;
+use App\Models\Like;
 use App\Models\Student;
 use App\Models\Event;
 use App\Models\EventRegion;
@@ -71,6 +72,30 @@ class EventsController extends Controller
         return response()->json(['event'=>$event, 'regions'=>$regions, 'levels'=>$levels, 'subjects'=>$subjects],200);
         
     }       
+
+    public function fetchLikedEvents(Request $request, $id)
+    {
+        $user_id = $id;
+
+        $events = Event::join('likes', 'events.id', '=', 'likes.event_id')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('likes.student_id', $user_id)
+                        ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
+                        ->get();
+
+        // foreach($events as $event){
+        //     $event->liked_by_user = true;
+        // }
+
+        // $events = Event::join('bookings', 'events.id', '=', 'bookings.event_id')
+        //                 ->where('bookings.student_id', $id)
+        //                 ->get();
+
+        // DD($events);
+        return response()->json(['events' => $events],200);
+
+        // return view ('student.test', ['events'=>$events]);
+    }
 
     public function recommendSubjectEvents(Request $request, $id){
 

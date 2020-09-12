@@ -64,7 +64,7 @@ export const student = {
         // setRecommendedRegionEvents(state, payload){
         //     state.recommendedRegionEvents = payload
         // },
-        LikedByUser(state,payload){  
+        likedByUser(state,payload){  
             console.log('setLikedByUser');
             console.log(payload);
             let event = state.allEvents.find(event=>event.id == payload);
@@ -72,13 +72,13 @@ export const student = {
             event.liked_by_user = true;
             console.log(state);
         },
-        UnlikedByUser(state,payload){  
+        unlikedByUser(state,payload){  
             console.log('unlikedByuser');
             console.log(payload);
             let event = state.allEvents.find(event=>event.id == payload);
             event.liked_by_user = false;
         },
-        SubjectLikedByUser(state,payload){  
+        subjectLikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedSubjectEvents.find(event=>event.id == payload);
@@ -86,7 +86,7 @@ export const student = {
             event.liked_by_user = true;
             // console.log(state);
         },
-        SubjectUnlikedByUser(state,payload){  
+        subjectUnlikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedSubjectEvents.find(event=>event.id == payload);
@@ -95,7 +95,7 @@ export const student = {
             // event.liked_by_user = true;
             // console.log(state);
         },
-        DestinationLikedByUser(state,payload){  
+        destinationLikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
@@ -103,7 +103,7 @@ export const student = {
             event.liked_by_user = true;
             // console.log(state);
         },
-        DestinationUnlikedByUser(state,payload){  
+        destinationUnlikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
@@ -112,7 +112,7 @@ export const student = {
             // event.liked_by_user = true;
             // console.log(state);
         },
-        RegionLikedByUser(state,payload){  
+        regionLikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedRegionEvents.find(event=>event.id == payload);
@@ -120,7 +120,7 @@ export const student = {
             event.liked_by_user = true;
             // console.log(state);
         },
-        RegionUnlikedByUser(state,payload){  
+        regionUnlikedByUser(state,payload){  
             console.log('LikedByUserSubject');
             // console.log(payload);
             let event = state.recommendedRegionEvents.find(event=>event.id == payload);
@@ -233,7 +233,7 @@ export const student = {
                     eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
-                    commit('LikedByUser', eventId)                 
+                    commit('likedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -256,7 +256,7 @@ export const student = {
                     console.log(response);
                     eventId = response.data.event_id;
                     console.log(eventId);
-                    commit('UnlikedByUser', eventId);
+                    commit('unlikedByUser', eventId);
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -281,7 +281,7 @@ export const student = {
                     eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
-                    commit('SubjectLikedByUser', eventId)                 
+                    commit('subjectLikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -307,7 +307,7 @@ export const student = {
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
                     console.log(eventId);
-                    commit('SubjectUnlikedByUser', eventId)                 
+                    commit('subjectUnlikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -332,7 +332,7 @@ export const student = {
                     eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
-                    commit('DestinationLikedByUser', eventId)                 
+                    commit('destinationLikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -358,7 +358,7 @@ export const student = {
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
                     console.log(eventId);
-                    commit('DestinationUnlikedByUser', eventId)                 
+                    commit('destinationUnlikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -383,7 +383,7 @@ export const student = {
                     eventId = response.data.event_id
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
-                    commit('RegionLikedByUser', eventId)                 
+                    commit('regionLikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,
@@ -409,7 +409,7 @@ export const student = {
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
                     console.log(eventId);
-                    commit('RegionUnlikedByUser', eventId)                 
+                    commit('regionUnlikedByUser', eventId)                 
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

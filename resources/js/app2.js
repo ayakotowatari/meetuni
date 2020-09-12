@@ -37,6 +37,7 @@ Vue.component('followdialog-component', require('./components/student/account/Fo
 Vue.component('eventcard-component', require('./components/student/main/EventCardComponent.vue').default);
 Vue.component('subjecteventcard-component', require('./components/student/main/SubjectEventCardComponent.vue').default);
 Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);
+Vue.component('regioneventcard-component', require('./components/student/main/RegionEventCardComponent.vue').default);
 //Chart
 
 
