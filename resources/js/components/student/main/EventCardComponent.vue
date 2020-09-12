@@ -80,7 +80,7 @@ export default {
         ]),
         like(id, liked){
 
-            console.log(liked);
+            console.log(id);
             let liked_status = liked;
 
             if(liked_status){
@@ -88,7 +88,6 @@ export default {
                     user_id: this.user.id,
                     event_id: id,
                 });
-
             }else{
                 this.likeEvent({
                     user_id: this.user.id,
