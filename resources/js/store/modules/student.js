@@ -33,6 +33,15 @@ export const student = {
             console.log('setAllEvents');
             console.log(state);
         },
+        setRecommendedSubjectEvents(state, payload){
+            payload.forEach(event => state.recommendedSubjectEvents.push(event))
+        },
+        setRecommendedDestinationEvents(state, payload){
+            payload.forEach(event => state.recommendedDestinationEvents.push(event))
+        },
+        setRecommendedRegionEvents(state, payload){
+            payload.forEach(event => state.recommendedRegionEvents.push(event))
+        },
         setEvent(state, payload){
             state.event = payload.event
             state.regions = payload.regions
