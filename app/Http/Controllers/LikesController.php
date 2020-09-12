@@ -17,19 +17,6 @@ class LikesController extends Controller
         //
     }
 
-    public function fetchLikedEvents($id)
-    {
-        $user_id = $id;
-
-        $events = Like::join('events', 'likes.event_id', '=', 'events.id')
-                        ->join('insts', 'events.inst_id', '=', 'insts.id')
-                        ->where('likes.student_id', $user_id)
-                        ->select('events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
-                        ->get();
-
-        return response()->json(['events' => $events],200);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

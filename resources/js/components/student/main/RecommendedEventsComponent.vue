@@ -1,28 +1,30 @@
 <template>
 <v-container>
     <h2 class="grey--text text--darken-2">Your subject insterests</h2>
-    <eventcard-component
+    <subjecteventcard-component
         v-bind:events="recommendedSubjectEvents"
         v-bind:user="user"
         class="mb-10"
-    ></eventcard-component>
+    ></subjecteventcard-component>
     <h2 class="grey--text text--darken-2">From countries of your interest</h2>
-    <eventcard-component
+    <destinationeventcard-component
         v-bind:events="recommendedDestinationEvents"
         v-bind:user="user"
         class="mb-10"
-    ></eventcard-component>
+    ></destinationeventcard-component>
     <h2 class="grey--text text--darken-2">Focus on your region</h2>
-    <eventcard-component
+    <regioneventcard-component
         v-bind:events="recommendedRegionEvents"
         v-bind:user="user"
         class="mb-10"
-    ></eventcard-component>
+    ></regioneventcard-component>
 </v-container>
 </template>
 
 <script>
-import EventCard from './EventCardComponent'
+import SubjectEventCard from './SubjectEventCardComponent'
+import DestinationEventCard from './DestinationEventCardComponent'
+import RegionEventCard from './RegionEventCardComponent'
 
 import { mapState } from 'vuex'
 // import {createNamespacedHelpers} from 'vuex'
@@ -30,10 +32,12 @@ import { mapState } from 'vuex'
 
 export default {
     components: {
-        EventCard
+        SubjectEventCard,
+        DestinationEventCard,
+        RegionEventCard
     },
     props: {
-        user: Array,
+        user: Object,
     },
     data: function(){
         return {

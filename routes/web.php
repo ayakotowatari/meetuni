@@ -107,7 +107,7 @@ Route::get('/student/event-regions/{id}', 'EventsController@recommendRegionEvent
 Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
 Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst');
 Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents');
-Route::get('/student/fetch-likedevents/{id}', 'LikesController@fetchLikedEvents');
+Route::get('/student/fetch-likedevents/{id}', 'EventsController@fetchLikedEvents');
 
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');

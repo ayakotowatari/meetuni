@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <v-card flat v-for="event in likedEvents" :key="event.title">
+            <v-card flat v-for="(event, index) in likedEvents" :key="index">
                 <v-row class="pa-3"> 
                     <v-col cols="12" xs="12" md="2">
                         <v-img :src="`/storage/${ event.image }`"></v-img>
@@ -30,7 +30,11 @@
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
-                        <v-icon class="icon" color="error" @click="unlike(`${event.id}`)">mdi-heart</v-icon>
+                        <v-icon 
+                            class="icon" 
+                            :color="event.liked_by_user == true ? 'error' : null"
+                            @click="like(`${event.id}`, event.liked_by_user)"
+                        >mdi-heart</v-icon>
                         </div>
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
@@ -57,7 +61,7 @@ export default {
         BookingDialog
     },
     props: {
-        user: Array,
+        user: Object,
     },
     data: function(){
         return{
@@ -81,15 +85,34 @@ export default {
         //     showDialog: 'showDialog'
         // }),
         ...mapActions('studentaccount',[
-            'showDialogWithEvent'
+            'showDialogWithEvent',
+            'unlikeEvent',
+            'likeEvent'
         ]),
         showDialog(id){
             this.showDialogWithEvent({
                 id: id
             })
         },
-        toEventPage(id){
-            this.$router.push({name: 'event-page', params: {id: id}})
+        like(id, liked){
+            console.log('pushed');
+            console.log(liked);
+
+            let liked_status = liked;
+
+            if(liked_status){
+                this.unlikeEvent({
+                    event_id: id,
+                    user_id: this.user.id
+                })
+            }else{
+                this.likeEvent({
+                    event_id: id,
+                    user_id: this.user.id
+                })
+            }
+
+            
         },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")

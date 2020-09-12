@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="(event, index) in allEvents" :key="index">
+        <v-col col="12" sm="12" md="3" class="mb-6" v-for="(event, index) in events" :key="index">
             <v-card
                 class="mx-auto"
                 max-width="400"
@@ -59,8 +59,8 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        user: Array,
-        allEvents: Array
+        user: Object,
+        events: Array
     },
     data: function(){
         return {
@@ -68,19 +68,19 @@ export default {
         }
     },
     computed: {
-        ...mapState('studentaccount', [
+        ...mapState('student', [
             'eventId',
             'allerror',
         ])
     },
     methods: {
-        ...mapActions('studentaccount',[
+        ...mapActions('student',[
             'likeEvent',
             'unlikeEvent',
         ]),
         like(id, liked){
 
-            console.log(liked);
+            console.log(id);
             let liked_status = liked;
 
             if(liked_status){
@@ -88,7 +88,6 @@ export default {
                     user_id: this.user.id,
                     event_id: id,
                 });
-
             }else{
                 this.likeEvent({
                     user_id: this.user.id,

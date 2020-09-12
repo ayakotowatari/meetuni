@@ -35,6 +35,9 @@ Vue.component('cancellationdialog-component', require('./components/student/acco
 Vue.component('questionsdialog-component', require('./components/student/events/QuestionsDialogComponent.vue').default);
 Vue.component('followdialog-component', require('./components/student/account/FollowDialogComponent.vue').default);
 Vue.component('eventcard-component', require('./components/student/main/EventCardComponent.vue').default);
+Vue.component('subjecteventcard-component', require('./components/student/main/SubjectEventCardComponent.vue').default);
+Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);
+Vue.component('regioneventcard-component', require('./components/student/main/RegionEventCardComponent.vue').default);
 //Chart
 
 

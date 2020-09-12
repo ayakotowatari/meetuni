@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\InstUser;
 use App\Models\Inst;
+use App\Models\Like;
 use App\Models\Student;
 use App\Models\Event;
 use App\Models\EventRegion;
@@ -72,6 +73,30 @@ class EventsController extends Controller
         
     }       
 
+    public function fetchLikedEvents(Request $request, $id)
+    {
+        $user_id = $id;
+
+        $events = Event::join('likes', 'events.id', '=', 'likes.event_id')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('likes.student_id', $user_id)
+                        ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
+                        ->get();
+
+        // foreach($events as $event){
+        //     $event->liked_by_user = true;
+        // }
+
+        // $events = Event::join('bookings', 'events.id', '=', 'bookings.event_id')
+        //                 ->where('bookings.student_id', $id)
+        //                 ->get();
+
+        // DD($events);
+        return response()->json(['events' => $events],200);
+
+        // return view ('student.test', ['events'=>$events]);
+    }
+
     public function recommendSubjectEvents(Request $request, $id){
 
         // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
@@ -108,11 +133,12 @@ class EventsController extends Controller
         $array = $events;
         $flattened_events = Arr::flatten($array);
         $unique = array_unique($flattened_events);
+        $renumbered = array_values($unique);
 
         // DD($unique);
 
         // return view('student.test', ['events'=>$unique]);
-        return response()->json(['events'=>$unique],200);
+        return response()->json(['events'=>$renumbered],200);
     }
 
     public function recommendDestinationEvents(Request $request, $id)
@@ -147,12 +173,13 @@ class EventsController extends Controller
         $array = $events;
         $flattened_events = Arr::flatten($array);
         $unique = array_unique($flattened_events);
+        $renumbered = array_values($unique);
 
         // DD($unique);
 
         // DD($unique);
 
-        return response()->json(['events'=>$unique],200);
+        return response()->json(['events'=>$renumbered],200);
 
         // return view('student.test',['events'=>$unique]);
 
@@ -189,7 +216,8 @@ class EventsController extends Controller
             return 'There was no record';
         }else{
             $unique = array_unique($events);
-            return response()->json(['events'=>$unique],200);
+            $renumbered = array_vaues($unique);
+            return response()->json(['events'=>$renumbered],200);
         }
     }
 

@@ -44,7 +44,7 @@ export default {
         BookingDialog
     },
     props: {
-        user: Array,
+        user: Object,
     },
     data: function(){
         return{

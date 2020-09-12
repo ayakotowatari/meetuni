@@ -6,13 +6,16 @@ export const student = {
     state: {
         allEvents: [],
         event: [],
-        inst: [],
+        inst: {},
         regions: [],
         levels: [],
         subjects: [],
         recommendedSubjectEvents: [],
         recommendedDestinationEvents: [],
         recommendedRegionEvents: [],
+        isLiked: true,
+        eventId: '',
+        isFollowed: false,
         allerror: [],
     },
 
@@ -26,7 +29,22 @@ export const student = {
     
     mutations: {
         setAllEvents(state, payload){
-            state.allEvents = payload
+            payload.forEach(event => state.allEvents.push(event))
+            // console.log('setAllEvents');
+            // console.log(state);
+        },
+        setRecommendedSubjectEvents(state, payload){
+            // console.log(payload);
+            payload.forEach(event => state.recommendedSubjectEvents.push(event))
+            // console.log('setRecommnedeSubjectEvents');
+            // console.log(state);
+            // state.recommendedSubjectEvents = payload
+        },
+        setRecommendedDestinationEvents(state, payload){
+            payload.forEach(event => state.recommendedDestinationEvents.push(event))
+        },
+        setRecommendedRegionEvents(state, payload){
+            payload.forEach(event => state.recommendedRegionEvents.push(event))
         },
         setEvent(state, payload){
             state.event = payload.event
@@ -37,14 +55,79 @@ export const student = {
         setInst(state, payload){
             state.inst = payload;
         },
-        setRecommendedSubjectEvents(state, payload){
-            state.recommendedSubjectEvents = payload
+        // setRecommendedSubjectEvents(state, payload){
+        //     state.recommendedSubjectEvents = payload
+        // },
+        // setRecommendedDestinationEvents(state, payload){
+        //     state.recommendedDestinationEvents = payload
+        // },
+        // setRecommendedRegionEvents(state, payload){
+        //     state.recommendedRegionEvents = payload
+        // },
+        likedByUser(state,payload){  
+            console.log('setLikedByUser');
+            console.log(payload);
+            let event = state.allEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            console.log(state);
         },
-        setRecommendedDestinationEvents(state, payload){
-            state.recommendedDestinationEvents = payload
+        unlikedByUser(state,payload){  
+            console.log('unlikedByuser');
+            console.log(payload);
+            let event = state.allEvents.find(event=>event.id == payload);
+            event.liked_by_user = false;
         },
-        setRecommendedRegionEvents(state, payload){
-            state.recommendedRegionEvents = payload
+        subjectLikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedSubjectEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            // console.log(state);
+        },
+        subjectUnlikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedSubjectEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = false;
+            // event.liked_by_user = true;
+            // console.log(state);
+        },
+        destinationLikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            // console.log(state);
+        },
+        destinationUnlikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedDestinationEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = false;
+            // event.liked_by_user = true;
+            // console.log(state);
+        },
+        regionLikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedRegionEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = true;
+            // console.log(state);
+        },
+        regionUnlikedByUser(state,payload){  
+            console.log('LikedByUserSubject');
+            // console.log(payload);
+            let event = state.recommendedRegionEvents.find(event=>event.id == payload);
+            console.log(event);
+            event.liked_by_user = false;
+            // event.liked_by_user = true;
+            // console.log(state);
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -97,8 +180,8 @@ export const student = {
                 })
         },
         async recommendSubjectEvents({commit}, payload){
-            let events = [];
-            console.log(payload.id);
+            let events = {};
+            // console.log(payload.id);
 
             await axios
                 .get("/student/event-subjects/" + payload.id)
@@ -110,28 +193,230 @@ export const student = {
         },
         async recommendDestinationEvents({commit}, payload){
             let events = [];
-            console.log(payload.id);
+            // console.log(payload.id);
 
             await axios
                 .get("/student/event-destinations/" + payload.id)
                 .then(res => {
                     events = res.data.events;
-                    console.log(events);
+                    // console.log(events);
                     commit("setRecommendedDestinationEvents", events)
                 });
         },
         async recommendRegionEvents({commit}, payload){
             let events = [];
-            console.log(payload.id);
+            // console.log(payload.id);
 
             await axios
                 .get("/student/event-regions/" + payload.id)
                 .then(res => {
                     events = res.data.events;
-                    console.log(events);
+                    // console.log(events);
                     commit("setRecommendedRegionEvents", events)
                 });
-        }
+        },
+        async likeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('likedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async unlikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let eventId = '';
+            let allerror = [];
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    console.log(response);
+                    eventId = response.data.event_id;
+                    console.log(eventId);
+                    commit('unlikedByUser', eventId);
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async SubjectLikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('subjectLikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async SubjectUnlikeEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    console.log(eventId);
+                    commit('subjectUnlikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async DestinationLikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('destinationLikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async DestinationUnlikeEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    console.log(eventId);
+                    commit('destinationUnlikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async RegionLikeEvent({commit}, payload){
+
+            // console.log(payload.user_id);
+            // console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/like-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    commit('regionLikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async RegionUnlikeEvent({commit}, payload){
+
+            console.log(payload.user_id);
+            console.log(payload.event_id);
+
+            let allerror = [];
+            let eventId = '';
+
+            await axios
+                .post('/student/unlike-event', {
+                    user_id: payload.user_id,
+                    event_id: payload.event_id
+                })
+                .then(response => {
+                    // console.log(response);
+                    eventId = response.data.event_id
+                    // commit('setEventId', eventId);
+                    // commit('isLiked', liked);
+                    console.log(eventId);
+                    commit('regionUnlikedByUser', eventId)                 
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
         //テスト
 
     }

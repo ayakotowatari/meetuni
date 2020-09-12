@@ -82,7 +82,7 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
     props: {
-        user: Array,
+        user: Object,
     },
     components: {
         QuestionsDialog,

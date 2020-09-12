@@ -125,7 +125,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
-        user: Array,
+        user: Object,
     },
     components: {
         BookingDialog,
