@@ -67,6 +67,37 @@ class FollowsController extends Controller
         
     }
 
+    public function unfollow(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'inst_id' => 'required'
+        ]);
+
+        $user_id = request('user_id');
+        $inst_id = request('inst_id');
+
+        Follow::where('student_id', $user_id)
+             ->where('inst_id', $inst_id)
+             ->delete();
+
+        return response()->json(['inst_id' => $inst_id],200);
+
+        // $currentLike = Like::latest('updated_at')
+        //                 ->where('likes.student_id', $user_id)
+        //                 ->where('likes.event_id', $event_id)
+        //                 ->first();
+        // $updated_at = $currentLike->updated_at;
+
+        // Like::latest('updated_at')
+        //     ->where('likes.student_id', $user_id)
+        //     ->where('likes.event_id', $event_id)
+        //     ->update([ 
+        //         'formatted_updated' => $updated_at 
+        //     ]);
+    }
+
+
     /**
      * Display the specified resource.
      *

@@ -21,7 +21,7 @@
                 <v-col col="12" sm="12" md="12">
                     <div class="grey--text text--darken-1 institution-title">{{ inst.name }}</div>
                      <v-btn 
-                        v-if="inst.follwed_by_user == false"
+                        v-if="inst.followed_by_user == false"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
@@ -141,19 +141,19 @@ export default {
         this.$store.dispatch('student/fetchSingleEvent', {
             id: this.id
         }),
-        this.$store.dispatch('student/fetchInst', {
+        this.$store.dispatch('studentaccount/fetchInst', {
             id: this.id
         })
     },
     computed: {
         ...mapState('student', [
             'event',
-            'inst',
             'regions',
             'levels',
             'subjects',
         ]),
         ...mapState('studentaccount', [
+            'inst',
             'dialog',
             'isFollowed',
             'isBooked'
@@ -164,13 +164,23 @@ export default {
             showDialog: 'showDialog'
         }),
         ...mapActions('studentaccount', [
-            'followInst'
+            'followInst',
+            'unfollowInst'
         ]),
         follow(id, user_id){
             console.log(id);
             console.log(user_id);
 
             this.followInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
+        unfollow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.unfollowInst({
                 inst_id: id,
                 user_id: user_id
             })

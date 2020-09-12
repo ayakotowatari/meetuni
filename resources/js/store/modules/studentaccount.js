@@ -5,6 +5,7 @@ export const studentaccount = {
 
     state: {
         allEvents: [],
+        inst: [],
         likedEvents: [],
         dialog: false,
         isBooked: false,
@@ -24,6 +25,9 @@ export const studentaccount = {
     mutations: {
         setAllEvents(state, payload){
             state.allEvents = payload
+        },
+        setInst(state, payload){
+            state.inst = payload;
         },
         setLikedEvents(state,payload){
             state.likedEvents = payload
@@ -62,10 +66,10 @@ export const studentaccount = {
             state.eventId = payload
         },
         isFollowed(state){
-            state.isFollowed = true
+            state.inst.followed_by_user = true
         },
         isUnfollowed(state){
-            state.isFollowed = false
+            state.inst.followed_by_user = false
         }
         // setLikedByUser(state,payload){  
         //     const event = state.allEvents.find(event=>event.id === payload);
@@ -231,6 +235,19 @@ export const studentaccount = {
                     commit('setallErrors', allerror)
                 )
         },
+        async fetchInst({commit}, payload){
+
+            console.log(payload.id);
+
+            let inst = [];
+
+            await axios
+                .get('/student/fetch-inst/' + payload.id)
+                .then(response => {
+                    inst = response.data.inst;
+                    commit("setInst", inst)
+                })
+        },
         async followInst({commit}, payload){
             console.log(payload.inst_id);
             console.log(payload.user_id);
@@ -240,10 +257,24 @@ export const studentaccount = {
                     inst_id: payload.inst_id,
                     user_id: payload.user_id
                 })
-                then(response => {
+                .then(response => {
                     console.log(response);
                     commit('showDialog');
-                    commit('isFollowed');
+                    commit('isFollwed');
+                })
+        },
+        async unfollowInst({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            await axios
+                .post('/student/unfollow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                .then(response => {
+                    console.log(response);
+                    commit('isUnfollowed');
                 })
         }
     }

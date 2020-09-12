@@ -122,6 +122,7 @@ Route::post('/student/unlike-event', 'LikesController@unlike');
 
 //学生フォロー
 Route::post('/student/follow-inst', 'FollowsController@store');
+Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 
 
 // Vue
