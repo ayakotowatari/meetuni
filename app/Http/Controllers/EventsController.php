@@ -7,6 +7,8 @@ use App\Models\InstUser;
 use App\Models\Inst;
 use App\Models\Like;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventRegion;
 use App\Models\EventLevel;
@@ -109,11 +111,17 @@ class EventsController extends Controller
 
         // DD($levels);
 
-        $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
-                                ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
-                                ->where('students.id', $id)
-                                ->select('subjects.id')
-                                ->get();
+        // $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
+        //                         ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+        //                         ->where('students.id', $id)
+        //                         ->select('subjects.id')
+        //                         ->get();
+
+        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                        ->where('student_subjects.student_id', $id)
+                        ->select('subjects.id')
+                        ->get();
+        
         // DD($subjects);
 
         // $events=[];
@@ -137,19 +145,28 @@ class EventsController extends Controller
         $unique = array_unique($flattened_events);
         $renumbered = array_values($unique);
 
+        // DD($flattened_events);
+
+        // DD($events);
+        // DD($renumbered);
         // DD($unique);
 
-        // return view('student.test', ['events'=>$unique]);
+        // return view('student.test', ['events'=>$renumbered]);
         return response()->json(['events'=>$renumbered],200);
     }
 
     public function recommendDestinationEvents(Request $request, $id)
     {
-        $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
-                            ->join('countries', 'countries.id', '=', 'country_students.country_id')
-                            ->where('students.id', $id)
-                            ->select('countries.id')
-                            ->get();
+        // $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
+        //                     ->join('countries', 'countries.id', '=', 'country_students.country_id')
+        //                     ->where('students.id', $id)
+        //                     ->select('countries.id')
+        //                     ->get();
+
+        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                                ->where('country_students.student_id', $id)
+                                ->select('countries.id')
+                                ->get();
 
         // DD($destinations);
 
