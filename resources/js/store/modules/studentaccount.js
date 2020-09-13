@@ -11,9 +11,11 @@ export const studentaccount = {
         isLiked: true,
         dialog: false,
         followDialog: false,
+        refollowDialog: false,
         isBooked: false,
         bookings: [],
         bookingId: '',
+        instId: '',
         eventId: '',
         categories: [],
         allerror: [],
@@ -55,8 +57,16 @@ export const studentaccount = {
         closeFollowDialog(state){
             state.followDialog = false
         },
+        closeRefollowDialog(state){
+            state.refollowDialog = false
+        },
         showFollowDialog(state){
             state.followDialog = true
+            console.log('showFollowDialog');
+        },
+        showRefollowDialog(state){
+            state.refollowDialog = true
+            console.log('showRefollowDialog');
         },
         isBooked(state){
             state.isBooked = true
@@ -81,6 +91,9 @@ export const studentaccount = {
         },
         setEventId(state, payload){
             state.eventId = payload
+        },
+        setInstId(state, payload){
+            state.instId = payload
         },
         isFollowed(state){
             state.inst.followed_by_user = true
@@ -192,7 +205,8 @@ export const studentaccount = {
                     instId = response.data.instId;
                     console.log(response);
                     commit('followInsts', instId);
-                    commit('showFollowDialog');
+                    commit('setInstId', instId);
+                    commit('showRefollowDialog');
                 })
         },
         async registerEvent({state, commit}, payload){
@@ -316,7 +330,6 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('isFollowed');
                     commit('showFollowDialog');
                 })
         },

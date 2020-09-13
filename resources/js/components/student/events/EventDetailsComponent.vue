@@ -116,7 +116,7 @@
 import moment from 'moment-timezone'
 
 import BookingDialog from './BookingDialogComponent'
-import FollowDialog from '../account/FollowDialogComponent'
+import FollowDialog from './FollowDialogComponent'
 
 import { mapState, mapMutations, mapActions } from 'vuex'
 
@@ -163,7 +163,6 @@ export default {
     methods: {
         ...mapMutations('studentaccount', {
             showDialog: 'showDialog',
-            showFollowDialog: 'showFollowDialog'
         }),
         ...mapActions('studentaccount', [
             'followInst',

@@ -34,7 +34,8 @@ Vue.component('bookingdialog-component', require('./components/student/events/Bo
 Vue.component('bookingdialog-component', require('./components/student/account/BookingDialogComponent.vue').default);
 Vue.component('cancellationdialog-component', require('./components/student/account/CancellationDialogComponent.vue').default);
 Vue.component('questionsdialog-component', require('./components/student/events/QuestionsDialogComponent.vue').default);
-Vue.component('followdialog-component', require('./components/student/account/FollowDialogComponent.vue').default);
+Vue.component('followdialog-component', require('./components/student/events/FollowDialogComponent.vue').default);
+Vue.component('refollowdialog-component', require('./components/student/account/RefollowDialogComponent.vue').default);
 Vue.component('eventcard-component', require('./components/student/main/EventCardComponent.vue').default);
 Vue.component('subjecteventcard-component', require('./components/student/main/SubjectEventCardComponent.vue').default);
 Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);

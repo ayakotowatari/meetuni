@@ -1,5 +1,10 @@
 <template>
     <div>
+         <refollowdialog-component
+            v-bind:dialog="refollowDialog"
+            v-bind:user="user"
+            v-bind:inst="followedInst"
+         ></refollowdialog-component>
         <v-container>
             <h1 class="mb-8 info--text">Following</h1>
             <v-card flat v-for="inst in followedInsts" :key="inst.id">
@@ -53,11 +58,12 @@
 </template>
 
 <script>
+import RefollowDialog from './RefollowDialogComponent'
 import { mapState, mapActions } from "vuex"
 
 export default {
     components: {
-        
+        RefollowDialog
     },
     props: {
         user: Object,
@@ -75,7 +81,8 @@ export default {
     computed: {
         ...mapState('studentaccount', [
             'followedInsts',
-            'dialog',
+            'refollowDialog',
+            'followedInst'
         ]),
     },
     methods: {
@@ -85,7 +92,6 @@ export default {
         ...mapActions('studentaccount',[
             'unfollowInsts',
             'followInsts',
-            'showDialogWithEvent'
         ]),
         unfollow(id){
             this.unfollowInsts({
