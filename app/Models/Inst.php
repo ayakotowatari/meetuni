@@ -13,7 +13,7 @@ class Inst extends Model
     ];
 
     public function follows(){
-        return $this->belongsToMany('App\Models\Student', 'follows');
+        return $this->belongsToMany('App\Models\Student', 'follows', 'inst_id', 'student_id');
     }
 
     public function getFollowedByUserAttribute()

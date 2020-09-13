@@ -7,12 +7,15 @@ export const studentaccount = {
         allEvents: [],
         inst: {},
         likedEvents: [],
+        followedInsts: [],
         isLiked: true,
         dialog: false,
         followDialog: false,
+        refollowDialog: false,
         isBooked: false,
         bookings: [],
         bookingId: '',
+        instId: '',
         eventId: '',
         categories: [],
         allerror: [],
@@ -41,9 +44,10 @@ export const studentaccount = {
         setInst(state, payload){
             state.inst = payload;
         },
-        // setLikedEvents(state,payload){
-        //     state.likedEvents = payload
-        // },
+        setFollowedInsts(state, payload){
+            state.followedInsts = payload;
+            // payload.forEach(inst => state.followedInsts.push(inst))
+        },
         showDialog(state){
             state.dialog = true
         },
@@ -53,8 +57,16 @@ export const studentaccount = {
         closeFollowDialog(state){
             state.followDialog = false
         },
+        closeRefollowDialog(state){
+            state.refollowDialog = false
+        },
         showFollowDialog(state){
             state.followDialog = true
+            console.log('showFollowDialog');
+        },
+        showRefollowDialog(state){
+            state.refollowDialog = true
+            console.log('showRefollowDialog');
         },
         isBooked(state){
             state.isBooked = true
@@ -80,11 +92,26 @@ export const studentaccount = {
         setEventId(state, payload){
             state.eventId = payload
         },
+        setInstId(state, payload){
+            state.instId = payload
+        },
         isFollowed(state){
             state.inst.followed_by_user = true
         },
         isUnfollowed(state){
             state.inst.followed_by_user = false
+        },
+        followInsts(state, payload){
+            console.log('unfollowInsts');
+            let inst = state.followedInsts.find(inst=>inst.id == payload);
+            inst.followed_by_user = true;
+        },
+        unfollowInsts(state, payload){
+            console.log('unfollowInsts');
+            console.log(payload);
+            let inst = state.followedInsts.find(inst=>inst.id == payload);
+            inst.followed_by_user = false;
+            console.log(state);
         },
         unlikedByUser(state, payload){
             let event = state.likedEvents.find(event=>event.id == payload);
@@ -129,6 +156,57 @@ export const studentaccount = {
                     events = res.data.events;
                     // console.log(events);
                     commit("setLikedEvents", events);
+                })
+        },
+        async fetchFollowingInsts({commit}, payload){
+            console.log(payload.id);
+            // console.log(payload.id);
+            // console.log(payload);
+
+            let insts = [];
+
+            await axios
+                .get("/student/fetch-followinginsts/" + payload.id)
+                .then(res => {
+                    insts = res.data.insts;
+                    // console.log(events);
+                    commit("setFollowedInsts", insts);
+                })
+        },
+        async unfollowInsts({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            let instId = '';
+
+            await axios
+                .post('/student/unfollow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                .then(response => {
+                    instId = response.data.instId
+                    console.log(response);
+                    commit('unfollowInsts', instId);
+                })
+        },
+        async followInsts({commit}, payload){
+            console.log(payload.inst_id);
+            console.log(payload.user_id);
+
+            let instId = '';
+
+            await axios
+                .post('/student/follow-inst', {
+                    inst_id: payload.inst_id,
+                    user_id: payload.user_id
+                })
+                .then(response => {
+                    instId = response.data.instId;
+                    console.log(response);
+                    commit('followInsts', instId);
+                    commit('setInstId', instId);
+                    commit('showRefollowDialog');
                 })
         },
         async registerEvent({state, commit}, payload){
@@ -252,7 +330,6 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit('isFollowed');
                     commit('showFollowDialog');
                 })
         },
