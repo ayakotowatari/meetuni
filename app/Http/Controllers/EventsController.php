@@ -147,7 +147,8 @@ class EventsController extends Controller
         // $events=[];
 
         foreach($subjects as $subject){
-            $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+            $events[] = Event::with('bookings')
+                    ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
@@ -155,6 +156,9 @@ class EventsController extends Controller
                     ->where(function($query){
                         $query->where('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 1);
+                    })
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
                     })
                     ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
@@ -192,7 +196,8 @@ class EventsController extends Controller
 
         foreach($destinations as $destination){
 
-            $events[] = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+            $events[] = Event::with('bookings')
+                            ->join('insts', 'events.inst_id', '=', 'insts.id')
                             ->join('countries', 'insts.country_id', '=', 'countries.id')
                             ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                             ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
@@ -202,6 +207,9 @@ class EventsController extends Controller
                                 $query->where('event_levels.level_id', 1)
                                       ->orWhere('event_levels.level_id', 6)
                                       ->orWhere('event_levels.level_id', 10);
+                            })
+                            ->whereDoesntHave('bookings', function(Builder $query){
+                                $query->where('student_id', '=', Auth::user()->id);
                             })
                             ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                             ->get();
@@ -234,7 +242,8 @@ class EventsController extends Controller
 
         // DD($region);
 
-        $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        $events = Event::with('bookings')
+                    ->join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->where('event_regions.region_id', $region)
@@ -243,6 +252,9 @@ class EventsController extends Controller
                         $query->where('event_levels.level_id', 1)
                               ->orWhere('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 10);
+                    })
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
                     })
                     ->get();
 
