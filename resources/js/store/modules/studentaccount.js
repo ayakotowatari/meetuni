@@ -13,6 +13,7 @@ export const studentaccount = {
         isBooked: false,
         bookings: [],
         bookingId: '',
+        eventId: '',
         categories: [],
         allerror: [],
     },
@@ -31,8 +32,9 @@ export const studentaccount = {
             // console.log(state);
         },
         setLikedEvents(state, payload){
+            state.likedEvents = payload
             // console.log(payload);
-            payload.forEach(event => state.likedEvents.push(event))
+            // payload.forEach(event => state.likedEvents.push(event))
             // console.log('setLikedEvents');
             // console.log(state);
         },
@@ -66,6 +68,9 @@ export const studentaccount = {
         setBookingId(state, payload){
             state.bookingId = payload
         },
+        setEventId(state, payload){
+            state.eventId = payload
+        },
         setallErrors(state,payload){
             state.allerror = payload
         },
@@ -94,7 +99,10 @@ export const studentaccount = {
             event.liked_by_user = true;
             console.log(state);
         },
-        
+        bookedByUser(state, payload){
+            let event = state.likedEvents.find(event=>event.id == payload);
+            event.booked_by_user = true;
+        }
     },
     actions: {
         async fetchAllEvents({commit}){
@@ -109,7 +117,7 @@ export const studentaccount = {
                 });
         },
         async fetchLikedEvents({commit}, payload){
-            // console.log(payload.id);
+            console.log(payload.id);
             // console.log(payload.id);
             // console.log(payload);
 
@@ -126,6 +134,7 @@ export const studentaccount = {
         async registerEvent({state, commit}, payload){
             // console.log(payload)
 
+            let eventId = '';
             let allerror = [];
 
             await axios
@@ -136,6 +145,8 @@ export const studentaccount = {
                     email: payload.email
                 })
                 .then(response => {
+                    eventId = response.data.eventId;
+                    commit('bookedByUser', eventId);
                     commit('closeDialog');
                     commit('isBooked');
                 })
@@ -158,12 +169,18 @@ export const studentaccount = {
                     commit('isBooked');
                 })
         },
-        showDialogWithEvent({state, commit}, payload){
-            // console.log(payload.id);
+        showDialogWithBookingId({state, commit}, payload){
+            console.log(payload.id);
 
             commit('showDialog');
             commit('setBookingId', payload.id);
             
+        },
+        showDialogWithEventId({state, commit}, payload){
+            console.log(payload.id);
+
+            commit('showDialog');
+            commit('setEventId', payload.id);
         },
         async cancelEvent({commit}, payload){
             // console.log(payload.id);

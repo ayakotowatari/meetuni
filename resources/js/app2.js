@@ -31,6 +31,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('navbar-component', require('./components/student/parts/NavbarComponent.vue').default);
 Vue.component('search-component', require('./components/student/parts/SearchComponent.vue').default);
 Vue.component('bookingdialog-component', require('./components/student/events/BookingDialogComponent.vue').default);
+Vue.component('bookingdialog-component', require('./components/student/account/BookingDialogComponent.vue').default);
 Vue.component('cancellationdialog-component', require('./components/student/account/CancellationDialogComponent.vue').default);
 Vue.component('questionsdialog-component', require('./components/student/events/QuestionsDialogComponent.vue').default);
 Vue.component('followdialog-component', require('./components/student/account/FollowDialogComponent.vue').default);

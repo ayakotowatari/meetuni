@@ -25,7 +25,8 @@ class Event extends Model
     ];
 
     protected $appends = [
-        'liked_by_user'
+        'liked_by_user',
+        'booked_by_user'
     ];
 
     public function likes(){
@@ -39,6 +40,19 @@ class Event extends Model
         }
 
         return $this->likes->contains(Auth::user()->id);
+    }
+
+    public function bookings(){
+        return $this->hasMany('App\Models\Booking');
+    }
+
+    public function getBookedByUserAttribute()
+    {
+        if (Auth::guest()){
+            return false;
+        }
+
+        return $this->bookings->contains(Auth::user()->id);
     }
 
 

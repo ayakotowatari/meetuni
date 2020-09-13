@@ -93,6 +93,7 @@ export default {
     },
     computed: {
         ...mapState('studentaccount', [
+            'eventId',
             'allerror'
         ]),
     },
@@ -106,7 +107,7 @@ export default {
         bookEvent(){
             if(this.$refs.form.validate()){
                 this.registerEvent({
-                    event_id: this.event.id,
+                    event_id: this.eventId,
                     first_name: this.first_name,
                     last_name: this.last_name,
                     email: this.email
@@ -114,6 +115,7 @@ export default {
             }
         }
     },
+
 }
 </script>
 

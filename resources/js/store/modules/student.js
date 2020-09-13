@@ -29,16 +29,17 @@ export const student = {
     
     mutations: {
         setAllEvents(state, payload){
-            payload.forEach(event => state.allEvents.push(event))
+            // payload.forEach(event => state.allEvents.push(event))
+            state.allEvents = payload
             // console.log('setAllEvents');
             // console.log(state);
         },
         setRecommendedSubjectEvents(state, payload){
             // console.log(payload);
-            payload.forEach(event => state.recommendedSubjectEvents.push(event))
+            // payload.forEach(event => state.recommendedSubjectEvents.push(event))
             // console.log('setRecommnedeSubjectEvents');
             // console.log(state);
-            // state.recommendedSubjectEvents = payload
+            state.recommendedSubjectEvents = payload
         },
         setRecommendedDestinationEvents(state, payload){
             payload.forEach(event => state.recommendedDestinationEvents.push(event))

@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <v-card flat v-for="(event, index) in likedEvents" :key="index">
+            <v-card flat v-for="event in likedEvents" :key="event.id">
                 <v-row class="pa-3"> 
                     <v-col cols="12" xs="12" md="2">
                         <v-img :src="`/storage/${ event.image }`"></v-img>
@@ -39,7 +39,17 @@
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
-                        <v-btn color="primary" outlined @click="showDialog(`${event.id}`)">Book</v-btn>
+                        <v-btn 
+                            v-if='event.booked_by_user == false'
+                            color="primary" 
+                            outlined 
+                            @click="showDialog(`${event.id}`)"
+                        >Book</v-btn>
+                        <v-btn 
+                            v-if='event.booked_by_user == true'
+                            color="grey" 
+                            outlined 
+                        >Booked</v-btn>
                         </div>
                     </v-col>
                 </v-row>
@@ -52,7 +62,7 @@
 <script>
 import moment from 'moment-timezone'
 
-import BookingDialog from '../events/BookingDialogComponent'
+import BookingDialog from './BookingDialogComponent'
 
 import { mapState, mapActions } from "vuex"
 
@@ -85,12 +95,12 @@ export default {
         //     showDialog: 'showDialog'
         // }),
         ...mapActions('studentaccount',[
-            'showDialogWithEvent',
+            'showDialogWithEventId',
             'unlikeEvent',
             'likeEvent'
         ]),
         showDialog(id){
-            this.showDialogWithEvent({
+            this.showDialogWithEventId({
                 id: id
             })
         },
@@ -111,8 +121,6 @@ export default {
                     user_id: this.user.id
                 })
             }
-
-            
         },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")

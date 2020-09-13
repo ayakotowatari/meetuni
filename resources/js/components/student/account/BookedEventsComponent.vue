@@ -77,10 +77,10 @@ export default {
         //     showDialog: 'showDialog'
         // }),
         ...mapActions('studentaccount',[
-            'showDialogWithEvent'
+            'showDialogWithBookingId'
         ]),
         showDialog(id){
-            this.showDialogWithEvent({
+            this.showDialogWithBookingId({
                 id: id
             })
         },

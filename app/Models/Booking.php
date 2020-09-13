@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    Public function events(){
+        return $this->belongsTo('App\Models\Event');
+    }
+
     public function setFormattedCreatedAttribute($date) {
         $this->attributes['formatted_created'] = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
     }

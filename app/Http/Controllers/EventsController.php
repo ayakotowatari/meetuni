@@ -7,6 +7,8 @@ use App\Models\InstUser;
 use App\Models\Inst;
 use App\Models\Like;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventRegion;
 use App\Models\EventLevel;
@@ -15,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Storage;
 use Validator;
+
+use Illuminate\Database\Eloquent\Builder;
 
 class EventsController extends Controller
 {
@@ -30,9 +34,13 @@ class EventsController extends Controller
 
     public function fetchAllEvents(){
 
-        $events = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+        $events = Event::with('bookings')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('events.id', '>', '82')
                     ->where('events.id', '<', '90')
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
+                    })
                     ->orderBy('events.created_at')
                     ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
@@ -73,15 +81,31 @@ class EventsController extends Controller
         
     }       
 
-    public function fetchLikedEvents(Request $request, $id)
+    public function fetchLikedEvents($id)
     {
         $user_id = $id;
 
-        $events = Event::join('likes', 'events.id', '=', 'likes.event_id')
+        // DD($user_id);
+
+        // $events = Event::with('bookings')
+        //                 ->join('likes', 'events.id', '=', 'likes.event_id')
+        //                 ->join('insts', 'events.inst_id', '=', 'insts.id')
+        //                 ->where('likes.student_id', $user_id)
+        //                 ->doesntHave('bookings')
+        //                 ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
+        //                 ->get();
+
+        $events = Event::with('bookings')
+                        ->join('likes', 'events.id', '=', 'likes.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('likes.student_id', $user_id)
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id', '=', Auth::user()->id);
+                        })
                         ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
                         ->get();
+
+        // DD($events);
 
         // foreach($events as $event){
         //     $event->liked_by_user = true;
@@ -107,17 +131,24 @@ class EventsController extends Controller
 
         // DD($levels);
 
-        $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
-                                ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
-                                ->where('students.id', $id)
-                                ->select('subjects.id')
-                                ->get();
+        // $subjects = Student::join('student_subjects', 'students.id', '=', 'student_subjects.student_id')
+        //                         ->join('subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+        //                         ->where('students.id', $id)
+        //                         ->select('subjects.id')
+        //                         ->get();
+
+        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                        ->where('student_subjects.student_id', $id)
+                        ->select('subjects.id')
+                        ->get();
+        
         // DD($subjects);
 
         // $events=[];
 
         foreach($subjects as $subject){
-            $events[] = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+            $events[] = Event::with('bookings')
+                    ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
@@ -125,6 +156,9 @@ class EventsController extends Controller
                     ->where(function($query){
                         $query->where('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 1);
+                    })
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
                     })
                     ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
@@ -135,25 +169,35 @@ class EventsController extends Controller
         $unique = array_unique($flattened_events);
         $renumbered = array_values($unique);
 
+        // DD($flattened_events);
+
+        // DD($events);
+        // DD($renumbered);
         // DD($unique);
 
-        // return view('student.test', ['events'=>$unique]);
+        // return view('student.test', ['events'=>$renumbered]);
         return response()->json(['events'=>$renumbered],200);
     }
 
     public function recommendDestinationEvents(Request $request, $id)
     {
-        $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
-                            ->join('countries', 'countries.id', '=', 'country_students.country_id')
-                            ->where('students.id', $id)
-                            ->select('countries.id')
-                            ->get();
+        // $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
+        //                     ->join('countries', 'countries.id', '=', 'country_students.country_id')
+        //                     ->where('students.id', $id)
+        //                     ->select('countries.id')
+        //                     ->get();
+
+        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                                ->where('country_students.student_id', $id)
+                                ->select('countries.id')
+                                ->get();
 
         // DD($destinations);
 
         foreach($destinations as $destination){
 
-            $events[] = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+            $events[] = Event::with('bookings')
+                            ->join('insts', 'events.inst_id', '=', 'insts.id')
                             ->join('countries', 'insts.country_id', '=', 'countries.id')
                             ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                             ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
@@ -163,6 +207,9 @@ class EventsController extends Controller
                                 $query->where('event_levels.level_id', 1)
                                       ->orWhere('event_levels.level_id', 6)
                                       ->orWhere('event_levels.level_id', 10);
+                            })
+                            ->whereDoesntHave('bookings', function(Builder $query){
+                                $query->where('student_id', '=', Auth::user()->id);
                             })
                             ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                             ->get();
@@ -195,7 +242,8 @@ class EventsController extends Controller
 
         // DD($region);
 
-        $events = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        $events = Event::with('bookings')
+                    ->join('event_regions', 'events.id', '=', 'event_regions.event_id')
                     ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->where('event_regions.region_id', $region)
@@ -204,6 +252,9 @@ class EventsController extends Controller
                         $query->where('event_levels.level_id', 1)
                               ->orWhere('event_levels.level_id', 6)
                               ->orWhere('event_levels.level_id', 10);
+                    })
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
                     })
                     ->get();
 
