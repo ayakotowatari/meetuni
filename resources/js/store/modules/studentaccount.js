@@ -32,8 +32,9 @@ export const studentaccount = {
             // console.log(state);
         },
         setLikedEvents(state, payload){
+            state.likedEvents = payload
             // console.log(payload);
-            payload.forEach(event => state.likedEvents.push(event))
+            // payload.forEach(event => state.likedEvents.push(event))
             // console.log('setLikedEvents');
             // console.log(state);
         },

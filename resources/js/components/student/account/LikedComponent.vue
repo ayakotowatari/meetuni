@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <v-card flat v-for="(event, index) in likedEvents" :key="index">
+            <v-card flat v-for="event in likedEvents" :key="event.id">
                 <v-row class="pa-3"> 
                     <v-col cols="12" xs="12" md="2">
                         <v-img :src="`/storage/${ event.image }`"></v-img>
@@ -111,8 +111,6 @@ export default {
                     user_id: this.user.id
                 })
             }
-
-            
         },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
