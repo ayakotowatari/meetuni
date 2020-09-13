@@ -34,9 +34,13 @@ class EventsController extends Controller
 
     public function fetchAllEvents(){
 
-        $events = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+        $events = Event::with('bookings')
+                    ->join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('events.id', '>', '82')
                     ->where('events.id', '<', '90')
+                    ->whereDoesntHave('bookings', function(Builder $query){
+                        $query->where('student_id', '=', Auth::user()->id);
+                    })
                     ->orderBy('events.created_at')
                     ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->get();
@@ -96,7 +100,7 @@ class EventsController extends Controller
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('likes.student_id', $user_id)
                         ->whereDoesntHave('bookings', function(Builder $query){
-                            $query->where('student_id', '=', 'likes.student_id');
+                            $query->where('student_id', '=', Auth::user()->id);
                         })
                         ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
                         ->get();

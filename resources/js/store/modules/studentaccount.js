@@ -99,7 +99,10 @@ export const studentaccount = {
             event.liked_by_user = true;
             console.log(state);
         },
-        
+        bookedByUser(state, payload){
+            let event = state.likedEvents.find(event=>event.id == payload);
+            event.booked_by_user = true;
+        }
     },
     actions: {
         async fetchAllEvents({commit}){
@@ -131,6 +134,7 @@ export const studentaccount = {
         async registerEvent({state, commit}, payload){
             // console.log(payload)
 
+            let eventId = '';
             let allerror = [];
 
             await axios
@@ -141,6 +145,8 @@ export const studentaccount = {
                     email: payload.email
                 })
                 .then(response => {
+                    eventId = response.data.eventId;
+                    commit('bookedByUser', eventId);
                     commit('closeDialog');
                     commit('isBooked');
                 })

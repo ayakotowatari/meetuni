@@ -39,7 +39,17 @@
                     </v-col>
                     <v-col cols="2" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
-                        <v-btn color="primary" outlined @click="showDialog(`${event.id}`)">Book</v-btn>
+                        <v-btn 
+                            v-if='event.booked_by_user == false'
+                            color="primary" 
+                            outlined 
+                            @click="showDialog(`${event.id}`)"
+                        >Book</v-btn>
+                        <v-btn 
+                            v-if='event.booked_by_user == true'
+                            color="grey" 
+                            outlined 
+                        >Booked</v-btn>
                         </div>
                     </v-col>
                 </v-row>

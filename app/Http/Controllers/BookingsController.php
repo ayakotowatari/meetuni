@@ -107,6 +107,8 @@ class BookingsController extends Controller
             "email" => 'required',
         ]);
 
+        $event_id = request('id');
+
         $booking = new Booking();
         $booking->event_id = request('id');
         $booking->student_id = $user_id;
@@ -128,6 +130,8 @@ class BookingsController extends Controller
             'formatted_created' => $created_at, 
             'formatted_updated' => $updated_at 
         ]);
+
+        return response()->json(['eventId'=>$event_id], 200);
     }
 
     public function fetchBookedEvents (Request $request, $id)
