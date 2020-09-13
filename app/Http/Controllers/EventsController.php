@@ -272,6 +272,22 @@ class EventsController extends Controller
         }
     }
 
+    public function fetchEventsList(Request $request, $id)
+    {
+        $events = Event::with('bookings')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('insts.id', $id)
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id', '=', Auth::user()->id);
+                        })
+                        ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->get();
+
+        $inst = Inst::find($id);
+
+        return response()->json(['events'=>$events, 'inst'=>$inst],200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
