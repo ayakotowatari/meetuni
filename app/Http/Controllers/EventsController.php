@@ -77,9 +77,11 @@ class EventsController extends Controller
     {
         $user_id = $id;
 
-        $events = Event::join('likes', 'events.id', '=', 'likes.event_id')
+        $events = Event::with('bookings')
+                        ->join('likes', 'events.id', '=', 'likes.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('likes.student_id', $user_id)
+                        ->doesntHave('bookings')
                         ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
                         ->get();
 

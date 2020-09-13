@@ -52,7 +52,7 @@
 <script>
 import moment from 'moment-timezone'
 
-import BookingDialog from '../events/BookingDialogComponent'
+import BookingDialog from './BookingDialogComponent'
 
 import { mapState, mapActions } from "vuex"
 
@@ -85,12 +85,12 @@ export default {
         //     showDialog: 'showDialog'
         // }),
         ...mapActions('studentaccount',[
-            'showDialogWithEvent',
+            'showDialogWithEventId',
             'unlikeEvent',
             'likeEvent'
         ]),
         showDialog(id){
-            this.showDialogWithEvent({
+            this.showDialogWithEventId({
                 id: id
             })
         },

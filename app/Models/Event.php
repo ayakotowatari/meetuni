@@ -41,6 +41,10 @@ class Event extends Model
         return $this->likes->contains(Auth::user()->id);
     }
 
+    Public function bookings(){
+        return $this->hasMany('App\Models\Booking');
+    }
+
 
     // //開始時間のミューテータ
     public function setStartUtcAttribute($value) {

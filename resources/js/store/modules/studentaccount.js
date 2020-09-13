@@ -13,6 +13,7 @@ export const studentaccount = {
         isBooked: false,
         bookings: [],
         bookingId: '',
+        eventId: '',
         categories: [],
         allerror: [],
     },
@@ -65,6 +66,9 @@ export const studentaccount = {
         },
         setBookingId(state, payload){
             state.bookingId = payload
+        },
+        setEventId(state, payload){
+            state.eventId = payload
         },
         setallErrors(state,payload){
             state.allerror = payload
@@ -158,12 +162,18 @@ export const studentaccount = {
                     commit('isBooked');
                 })
         },
-        showDialogWithEvent({state, commit}, payload){
-            // console.log(payload.id);
+        showDialogWithBookingId({state, commit}, payload){
+            console.log(payload.id);
 
             commit('showDialog');
             commit('setBookingId', payload.id);
             
+        },
+        showDialogWithEventId({state, commit}, payload){
+            console.log(payload.id);
+
+            commit('showDialog');
+            commit('setEventId', payload.id);
         },
         async cancelEvent({commit}, payload){
             // console.log(payload.id);
