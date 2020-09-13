@@ -14,10 +14,11 @@ import EventPage from "./components/student/events/EventPageComponent";
 import Following from "./components/student/account/FollowingComponent";
 import Liked from "./components/student/account/LikedComponent";
 import Profile from "./components/student/account/ProfileComponent";
+import EventList from "./components/student/events/EventListComponent";
 
 //テスト
-import TestOne from "./components/student/TestOneComponent";
-import TestThree from "./components/student/TestThreeComponent";
+// import TestOne from "./components/student/TestOneComponent";
+// import TestThree from "./components/student/TestThreeComponent";
 
 //テスト終わる
  
@@ -82,18 +83,23 @@ const routes = [
         name: "profile",
         component: Profile
     },
+    {
+        path: "/student/event-list/:id",
+        name: "event-list",
+        component: EventList
+    }
     
     //テスト
-    {
-        path: "/student/test",
-        name: "testone-component",
-        component: TestOne
-    },
-    {
-        path: "/student/testthree",
-        name: "testthree-component",
-        component: TestThree
-    },
+    // {
+    //     path: "/student/test",
+    //     name: "testone-component",
+    //     component: TestOne
+    // },
+    // {
+    //     path: "/student/testthree",
+    //     name: "testthree-component",
+    //     component: TestThree
+    // },
     //テスト終わり
 
 ];

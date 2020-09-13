@@ -105,13 +105,8 @@ export default {
                 user_id: this.user.id
             })
         },
-        showDialog(id){
-            this.showDialogWithEvent({
-                id: id
-            })
-        },
-        toEventPage(id){
-            this.$router.push({name: 'event-page', params: {id: id}})
+        toEventList(id){
+            this.$router.push({name: 'event-list', params: {id: id}})
         },
     }
 }
