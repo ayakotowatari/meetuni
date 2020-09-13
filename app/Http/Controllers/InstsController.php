@@ -49,8 +49,19 @@ class InstsController extends Controller
                     ->first();
 
         return response()->json(['inst' => $inst],200);
-
     }
+
+    public function fetchFollowedInsts($id)
+    {
+        $insts = Inst::join('follows', 'insts.id', '=', 'follows.inst_id')
+                    ->join('countries', 'insts.country_id', '=', 'countries.id')
+                    ->where('follows.student_id', $id)
+                    ->select('insts.id', 'insts.name', 'countries.country')
+                    ->get();
+
+        return response()->json(['insts' => $insts],200);
+    }
+
 
     /**
      * Show the form for creating a new resource.

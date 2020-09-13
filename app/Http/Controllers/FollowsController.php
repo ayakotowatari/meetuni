@@ -63,7 +63,7 @@ class FollowsController extends Controller
                 'formatted_updated' => $updated_at 
             ]);
 
-        // return response()->json(['event_id' => $event_id],200);
+        return response()->json(['instId' => $inst_id],200);
         
     }
 
@@ -81,7 +81,7 @@ class FollowsController extends Controller
              ->where('inst_id', $inst_id)
              ->delete();
 
-        return response()->json(['inst_id' => $inst_id],200);
+        return response()->json(['instId' => $inst_id],200);
 
         // $currentLike = Like::latest('updated_at')
         //                 ->where('likes.student_id', $user_id)
