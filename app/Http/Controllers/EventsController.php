@@ -18,6 +18,8 @@ use Illuminate\Support\Arr;
 use Storage;
 use Validator;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class EventsController extends Controller
 {
     /**
@@ -75,17 +77,31 @@ class EventsController extends Controller
         
     }       
 
-    public function fetchLikedEvents(Request $request, $id)
+    public function fetchLikedEvents($id)
     {
         $user_id = $id;
+
+        // DD($user_id);
+
+        // $events = Event::with('bookings')
+        //                 ->join('likes', 'events.id', '=', 'likes.event_id')
+        //                 ->join('insts', 'events.inst_id', '=', 'insts.id')
+        //                 ->where('likes.student_id', $user_id)
+        //                 ->doesntHave('bookings')
+        //                 ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
+        //                 ->get();
 
         $events = Event::with('bookings')
                         ->join('likes', 'events.id', '=', 'likes.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('likes.student_id', $user_id)
-                        ->doesntHave('bookings')
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id', '=', 'likes.student_id');
+                        })
                         ->select('events.id', 'events.image', 'insts.name', 'events.title', 'events.date', "events.start_utc", "events.end_utc")
                         ->get();
+
+        // DD($events);
 
         // foreach($events as $event){
         //     $event->liked_by_user = true;

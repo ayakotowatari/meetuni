@@ -114,7 +114,7 @@ export const studentaccount = {
                 });
         },
         async fetchLikedEvents({commit}, payload){
-            // console.log(payload.id);
+            console.log(payload.id);
             // console.log(payload.id);
             // console.log(payload);
 
