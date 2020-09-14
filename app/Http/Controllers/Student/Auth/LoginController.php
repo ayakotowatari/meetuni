@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/student/details';
+    protected $redirectTo = '/student/main';
 
     /**
      * Create a new controller instance.
@@ -29,12 +29,13 @@ class LoginController extends Controller
     }
 
     //ログインフォームのviews
-    public function showLoginForm ()
+    public function showLoginForm()
     {
-        return view ('student.auth.login');
+        return view ('student/auth/login');
     }
+
     //持たせるガードの名前
-    protected function guard ()
+    protected function guard()
     {
         return Auth::guard ('student');
     }

@@ -32,6 +32,7 @@ class EventsController extends Controller
         //
     }
 
+    //学生ページ用
     public function fetchAllEvents(){
 
         // DD($id);
@@ -52,6 +53,7 @@ class EventsController extends Controller
         return response()->json(['events'=>$events],200);
     }
 
+    //学生ページ用
     public function fetchSingleEvent(Request $request, $id){
 
         $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
@@ -99,6 +101,7 @@ class EventsController extends Controller
                         ->join('likes', 'events.id', '=', 'likes.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('likes.student_id', $user_id)
+                        ->whereNull('likes.deleted_at')
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })

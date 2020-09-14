@@ -52,7 +52,7 @@
                   </v-list-item-action>
                   <v-list-item-content>
                   <v-list-item-title class="grey--text">Log out</v-list-item-title>
-                      <form id="logout-form" action="/logout" method="POST">
+                      <form id="logout-form" action="/student/logout" method="POST">
                         <input type="hidden" name="_token" :value="token">
                       </form>
                   </v-list-item-content>
