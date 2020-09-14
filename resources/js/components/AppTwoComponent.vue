@@ -3,7 +3,7 @@
          <navbar-component></navbar-component>
          <v-main class="mx-4 mb-4">
             <router-view
-               v-bind:user="studentUser"
+               v-bind:user="user"
             ></router-view>
          </v-main>
     </v-app>
@@ -20,15 +20,15 @@ export default {
       //  initials: '',
    }),
    mounted(){
-      this.$store.dispatch('fetchStudentUser')
+      this.$store.dispatch('student/fetchStudentUser')
       // this.fetchUser();
       // this.fetchInst();
       // this.fetchInitials();
 
    },
    computed: {
-      ...mapState([
-         'studentUser',
+      ...mapState('student',[
+         'user',
       ]),
    },
    methods: {

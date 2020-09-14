@@ -14,10 +14,14 @@ class Student extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'user_type_id',
         'email',
         'password',
+        'timezone',
         'country_id',
-        'year_id'
+        'year_id',
+        'life',
+        'remember_token'
     ];
 
     public function likes(){

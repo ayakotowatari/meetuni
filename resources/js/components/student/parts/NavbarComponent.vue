@@ -79,15 +79,15 @@ import { mapState } from 'vuex'
        ],
     }),
     mounted() {
-        this.$store.dispatch('fetchUser');
-        this.$store.dispatch('fetchInitials');
+        this.$store.dispatch('student/fetchStudentUser');
+        this.$store.dispatch('student/fetchInitials');
     },
     computed: {
         token() {
             let token = document.head.querySelector('meta[name="csrf-token"]');
             return token.content
         },
-        ...mapState([
+        ...mapState('student', [
             'user',
             'initials'
         ]),

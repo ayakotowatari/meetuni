@@ -412,6 +412,7 @@ export default new Vuex.Store ({
                 .then(res => {
                     payload = res.data.user;
                     commit('setStudentUser', payload)
+                    console.log(payload);
             });
         },
         async fetchCountries({commit}) {

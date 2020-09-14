@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+// Auth前の大学名チェック
+Route::get('inst/search', 'InstsController@index');
+Route::post('inst/search', 'InstsController@search')->name('inst.search');
+
+
 //大学Authentification
 Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
 Route::post('/inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
@@ -38,11 +43,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //             //
 //     大学     //
 //             //
-
-// 大学名チェック
-Route::get('inst/search', 'InstsController@index');
-
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 // 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
@@ -100,6 +100,7 @@ Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //             //
 // 各種情報の取得
 Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
+Route::get('/student/fetch-initials','StudentsController@fetchInitials');
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');

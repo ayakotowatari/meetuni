@@ -179,7 +179,7 @@ export default {
                 subjects: this.selectedSubjects,
             })
             .then(() => {
-                this.$router.push({name: 'student-main'});
+                this.$router.push({path: '/student/main'});
             });
             
         },
