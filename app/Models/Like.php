@@ -11,6 +11,9 @@ class Like extends Model
 {
     //ココ↓
     // use SoftDeletes;
+
+    // protected $table = 'likes';
+    // protected $dates = ['deleted_at'];
     
     public function setFormattedCreatedAttribute($date) {
         $this->attributes['formatted_created'] = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
