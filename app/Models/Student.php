@@ -4,8 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+//ここ書き換えた。
+
+class Student extends Authenticatable
 {
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'user_type_id',
+        'email',
+        'password',
+        'timezone',
+        'country_id',
+        'year_id',
+        'life',
+        'remember_token'
+    ];
+
     public function likes(){
         return $this->belongsToMany('App\Models\Event', 'likes', 'student_id', 'event_id');
     }

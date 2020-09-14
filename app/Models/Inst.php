@@ -18,11 +18,11 @@ class Inst extends Model
 
     public function getFollowedByUserAttribute()
     {
-        if (Auth::guest()){
+        if (Auth::guard('student')->guest()){
             return false;
         }
 
-        return $this->follows->contains(Auth::user()->id);
+        return $this->follows->contains(Auth::guard('student')->user()->id);
     }
 
     //InstUserモデルのデータを引っ張ってくる。

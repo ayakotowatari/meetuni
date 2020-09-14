@@ -330,6 +330,7 @@ export const studentaccount = {
                 })
                 .then(response => {
                     console.log(response);
+                    commit('isFollowed');
                     commit('showFollowDialog');
                 })
         },

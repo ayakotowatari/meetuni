@@ -4,6 +4,8 @@ export const student = {
     namespaced: true,
 
     state: {
+        user: {},
+        initials: '',
         allEvents: [],
         event: [],
         eventsList: [],
@@ -29,6 +31,12 @@ export const student = {
     },
     
     mutations: {
+        setStudentUser(state, payload){
+            state.user = payload
+        },
+        setInitials(state, payload){
+            state.initials = payload
+        },
         setAllEvents(state, payload){
             // payload.forEach(event => state.allEvents.push(event))
             state.allEvents = payload
@@ -148,6 +156,27 @@ export const student = {
     },
 
     actions: {
+        async fetchStudentUser({ commit }){
+            let payload = [];
+
+            await axios
+                .get("/student/fetch-user")
+                .then(res => {
+                    payload = res.data.user;
+                    commit('setStudentUser', payload)
+                    console.log(payload);
+            });
+        },
+        async fetchInitials({ commit }) {
+            let payload = '';
+
+            await axios
+                .get("/student/fetch-initials")
+                .then(res => {
+                    payload = res.data.initials;
+                    commit('setInitials', payload)
+            });
+        },
         async fetchAllEvents({commit}){
             let payload = [];
 

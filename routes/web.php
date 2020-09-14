@@ -15,31 +15,34 @@ Route::get('/', function () {
     return view('home');
 });
 
-//Authentification
-Route::get('inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
+// Auth前の大学名チェック
+Route::get('inst/search', 'InstsController@index');
+Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
-Route::post('inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
 
-Route::post('inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
+//大学Authentification
+Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
+Route::post('/inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
+Route::post('/inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
 
-Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm')->name('studentUser.regiform');
+//学生Authentification
 
-Route::post('student/register', 'Auth\RegisterController@studentUserRegister')->name('student.register');
-
-Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('student.logout');
+Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
+Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
+Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
+//Shops用ログインボタンクリック時
+Route::post('/student/login','Student\Auth\LoginController@login')->name('student.login');
+//Shops用ログアウトボタンクリック時
+Route::post('/student/logout','Student\Auth\LoginController@logout')->name('student.logout');
 
 Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //             //
 //     大学     //
 //             //
-
-// 大学名チェック
-Route::get('inst/search', 'InstsController@index');
-
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 // 各種情報の取得
 Route::get('/inst/fetch-user','InstUsersController@fetchUser');
@@ -97,6 +100,7 @@ Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //             //
 // 各種情報の取得
 Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
+Route::get('/student/fetch-initials','StudentsController@fetchInitials');
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');

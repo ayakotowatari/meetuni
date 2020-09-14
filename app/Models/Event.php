@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,11 +35,11 @@ class Event extends Model
 
     public function getLikedByUserAttribute()
     {
-        if (Auth::guest()){
+        if (Auth::guard('student')->guest()){
             return false;
         }
 
-        return $this->likes->contains(Auth::user()->id);
+        return $this->likes->contains(Auth::guard('student')->user()->id);
     }
 
     public function bookings(){
@@ -48,11 +48,11 @@ class Event extends Model
 
     public function getBookedByUserAttribute()
     {
-        if (Auth::guest()){
+        if (Auth::guard('student')->guest()){
             return false;
         }
 
-        return $this->bookings->contains(Auth::user()->id);
+        return $this->bookings->contains(Auth::guard('student')->user()->id);
     }
 
 

@@ -24,8 +24,24 @@ class StudentsController extends Controller
 
     public function fetchStudentUser()
     {
-        $user = Auth::user();
+        $user = Auth::guard('student')->user();
+        // $user = Auth::user();
         return response()->json(['user'=>$user],200);
+        // DD($user);
+        // return view ('student.test');
+    }
+
+    public function fetchInitials()
+    {
+        $user = Auth::guard('student')->user();
+        $first_name = $user->first_name;
+        $last_name = $user->last_name;
+
+        $initial_first = substr($first_name, 0, 1);
+        $initial_last = substr($last_name, 0, 1);
+        $initials = $initial_first.$initial_last;
+
+        return response()->json(['initials'=>$initials],200);
     }
 
     public function addStudentDetails(Request $request)
@@ -43,11 +59,11 @@ class StudentsController extends Controller
         $country = request('country');
         $year = request('year');
 
-        $student = new Student();
-        $student->id = $user_id;
-        $student->country_id = $country;
-        $student->year_id = $year;
-        $student->save();
+        Student::where('id', $user_id)
+        ->update([ 
+            'country_id' => $country, 
+            'year_id' => $year 
+        ]);
 
         $destinations = request("destinations");
 
