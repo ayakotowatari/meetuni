@@ -15,17 +15,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-//Authentification
+//大学Authentification
 Route::get('inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
-
 Route::post('inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
-
 Route::post('inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
 
+//学生Authentification
+
 Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm')->name('studentUser.regiform');
-
 Route::post('student/register', 'Auth\RegisterController@studentUserRegister')->name('student.register');
-
 Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('student.logout');
 
 Auth::routes();
