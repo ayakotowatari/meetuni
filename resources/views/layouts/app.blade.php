@@ -47,7 +47,7 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('studentUser.regiform') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('student.registration.form') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

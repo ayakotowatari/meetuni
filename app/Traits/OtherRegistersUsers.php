@@ -41,10 +41,10 @@ trait OtherRegistersUsers
         return view('inst.auth.register', ['inst' => $inst_detail]);
     }
 
-    public function showStudentRegistrationForm()
-    {
-        return view('student.auth.register');
-    }
+    // public function showStudentRegistrationForm()
+    // {
+    //     return view('student.auth.register');
+    // }
 
     /**
      * Handle a registration request for the application.
@@ -68,21 +68,21 @@ trait OtherRegistersUsers
                         ?: redirect($this->redirectPath());
     }
 
-    public function studentUserRegister(Request $request, Student $student)
-    {
-        $this->studentValidator($request->all())->validate();
+    // public function studentUserRegister(Request $request, Student $student)
+    // {
+    //     $this->studentValidator($request->all())->validate();
 
-        event(new Registered($user = $this->studentCreate($request->all())));
+    //     event(new Registered($user = $this->studentCreate($request->all())));
 
-        $id = $user->id;
-        // $this->studentTableValidator($request->all())->validate();
-        // $this->studentTableCreate($id, $request->all(), $student);
+    //     $id = $user->id;
+    //     // $this->studentTableValidator($request->all())->validate();
+    //     // $this->studentTableCreate($id, $request->all(), $student);
 
-        $this->guard()->login($user);
+    //     $this->guard()->login($user);
 
-        return $this->studentRegistered($request, $user)
-                        ?: redirect($this->redirectPath());
-    }
+    //     return $this->studentRegistered($request, $user)
+    //                     ?: redirect($this->redirectPath());
+    // }
 
     /**
      * Get the guard to be used during registration.
@@ -131,29 +131,29 @@ trait OtherRegistersUsers
         return redirect('inst/events');
     }
 
-    protected function studentRegistered(Request $request, $user)
-    {
-        //
-        // $user = auth()->user();
-        //     $id = $user->id;
-        //     $nations     =   Nation::all();
-        //     $levels     =    Level::all();
+    // protected function studentRegistered(Request $request, $user)
+    // {
+    //     //
+    //     // $user = auth()->user();
+    //     //     $id = $user->id;
+    //     //     $nations     =   Nation::all();
+    //     //     $levels     =    Level::all();
 
-        //     $events      =   Event::join('insts','events.inst_id','=','insts.id')
-        //                     ->join('event_region','events.id','=','event_region.event_id')
-        //                     ->join('countries','event_region.region_id', '=', 'countries.region_id')
-        //                     ->join('regions','countries.region_id', '=', 'regions.id')
-        //                     ->join('event_level','event.id','=','event_level.event_id')
-        //                     ->join('levels','event_level.level_id','=','levels.id')
-        //                     ->select('insts.name', 'regions.region', 'events.title', 'events.date', 'events.id', 'events.img', 'levels.level' )
-        //                     ->get();
+    //     //     $events      =   Event::join('insts','events.inst_id','=','insts.id')
+    //     //                     ->join('event_region','events.id','=','event_region.event_id')
+    //     //                     ->join('countries','event_region.region_id', '=', 'countries.region_id')
+    //     //                     ->join('regions','countries.region_id', '=', 'regions.id')
+    //     //                     ->join('event_level','event.id','=','event_level.event_id')
+    //     //                     ->join('levels','event_level.level_id','=','levels.id')
+    //     //                     ->select('insts.name', 'regions.region', 'events.title', 'events.date', 'events.id', 'events.img', 'levels.level' )
+    //     //                     ->get();
 
-        //     return view('student.main',[
-        //                 'user'      =>$user,
-        //                 'events'     =>$events,
-        //                 'nations'    =>$nations,
-        //                 'levels'    =>$levels
-        //                 ]);
-        return redirect('student/details');
-    }
+    //     //     return view('student.main',[
+    //     //                 'user'      =>$user,
+    //     //                 'events'     =>$events,
+    //     //                 'nations'    =>$nations,
+    //     //                 'levels'    =>$levels
+    //     //                 ]);
+    //     return redirect('student/details');
+    // }
 }

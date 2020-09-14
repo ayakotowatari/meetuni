@@ -16,17 +16,22 @@ Route::get('/', function () {
 });
 
 //大学Authentification
-Route::get('inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
-Route::post('inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
-Route::post('inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
+Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
+Route::post('/inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
+Route::post('/inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
 
 //学生Authentification
 
-Route::get('student/register', 'Auth\RegisterController@showStudentRegistrationForm')->name('studentUser.regiform');
-Route::post('student/register', 'Auth\RegisterController@studentUserRegister')->name('student.register');
-Route::post('student/logout', 'Auth\LoginController@studentLogout')->name('student.logout');
+Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
+Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
+Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
+//Shops用ログインボタンクリック時
+Route::post('/student/login','Student\Auth\LoginController@login')->name('student.login');
+//Shops用ログアウトボタンクリック時
+Route::post('/student/logout','Student\Auth\LoginController@logout')->name('student.logout');
 
 Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
