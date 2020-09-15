@@ -212,6 +212,8 @@ export const studentaccount = {
         async registerEvent({state, commit}, payload){
             // console.log(payload)
 
+            console.log(payload);
+
             let eventId = '';
             let allerror = [];
 

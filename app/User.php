@@ -18,7 +18,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_type_id', 'first_name', 'last_name', 'email', 'password', 'timezone','life', 'remember_token'
+        'user_type_id', 
+        'first_name', 
+        'last_name', 
+        'email', 
+        'password', 
+        'timezone',
+        'inst_id',
+        'job_title',
+        'department',
+        'life', 
+        'remember_token'
     ];
 
     /**
@@ -39,7 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function instUser(){
-        return $this->hasOne('App\Models\InstUser');
-    }
+    // public function instUser(){
+    //     return $this->hasOne('App\Models\InstUser');
+    // }
 }

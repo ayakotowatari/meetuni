@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Models\InstUser;
+use App\User;
 use App\Models\Inst;
 use App\Models\Like;
 use App\Models\Student;
@@ -39,8 +39,7 @@ class EventsController extends Controller
 
         $events = Event::with('bookings')
                     ->join('insts', 'events.inst_id', '=', 'insts.id')
-                    ->where('events.id', '>', '82')
-                    ->where('events.id', '<', '90')
+                    ->where('events.status_id', 1)
                     ->whereDoesntHave('bookings', function(Builder $query){
                         $query->where('student_id','=', Auth::guard('student')->user()->id);
                     })
@@ -58,6 +57,7 @@ class EventsController extends Controller
 
         $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('events.id', $id)
+                    ->where('events.status_id', 1)
                     ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                     ->first();
 
@@ -100,6 +100,7 @@ class EventsController extends Controller
         $events = Event::with('bookings')
                         ->join('likes', 'events.id', '=', 'likes.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('events.status_id', 1)
                         ->where('likes.student_id', $user_id)
                         ->whereNull('likes.deleted_at')
                         ->whereDoesntHave('bookings', function(Builder $query){
@@ -259,6 +260,7 @@ class EventsController extends Controller
                     ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                     ->where('event_regions.region_id', $region)
                     ->where('event_subjects.subject_id', 1)
+                    ->where('events._id', 1)
                     ->where(function($query){
                         $query->where('event_levels.level_id', 1)
                               ->orWhere('event_levels.level_id', 6)
@@ -288,6 +290,7 @@ class EventsController extends Controller
         $events = Event::with('bookings')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('insts.id', $id)
+                        ->where('events.status_id', 1)
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })
@@ -318,8 +321,8 @@ class EventsController extends Controller
     public function storeBasics(Request $request)
     {
         $user_id = Auth::user()->id;
-        $inst = InstUser::join('insts', 'inst_users.inst_id', 'insts.id')
-                ->where('inst_users.id', $user_id)
+        $inst = User::join('insts', 'users.inst_id', '=', 'insts.id')
+                ->where('users.id', $user_id)
                 ->select('insts.id')
                 ->first();
 
@@ -355,7 +358,7 @@ class EventsController extends Controller
 
         $event->capacity_id = 1;
         $event->status_id = 3;
-        $event->inst_user_id = $user_id;
+        $event->user_id = $user_id;
 
         $event->save();
     }
@@ -364,7 +367,7 @@ class EventsController extends Controller
     {
         $user_id = Auth::user()->id;
         $event = Event::latest('created_at')
-                ->where('events.inst_user_id', $user_id)
+                ->where('events.user_id', $user_id)
                 ->first();
         
         $request->validate([
@@ -416,7 +419,7 @@ class EventsController extends Controller
     {
         $user_id = Auth::user()->id;
         $event = Event::latest('created_at')
-                ->where('events.inst_user_id', $user_id)
+                ->where('events.user_id', $user_id)
                 ->first();
         $event_id = $event->id;
 

@@ -15,7 +15,7 @@ class InstsTableSeeder extends Seeder
             [
                 'name' => 'University of East Anglia',
                 'inst_type_id' => 1,
-                'country_id' => 1,
+                'country_id' => 9,
                 'email_check' => 'something',
                 'life' => 1,
                 "created_at" => now(),
@@ -24,7 +24,7 @@ class InstsTableSeeder extends Seeder
             [
                 'name' => "King's College London",
                 'inst_type_id' => 1,
-                'country_id' => 1,
+                'country_id' => 9,
                 'email_check' => 'something',
                 'life' => 1,
                 "created_at" => now(),
@@ -33,7 +33,7 @@ class InstsTableSeeder extends Seeder
             [
                 'name' => 'Northumbria University',
                 'inst_type_id' => 1,
-                'country_id' => 1,
+                'country_id' => 9,
                 'email_check' => 'something',
                 'life' => 1,
                 "created_at" => now(),

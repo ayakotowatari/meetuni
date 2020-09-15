@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class statusesTableSeeder extends Seeder
+class StatusesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class statusesTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
-                'status' => '',
+                'status' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -28,7 +28,7 @@ class statusesTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
-                'status' => '',
+                'status' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

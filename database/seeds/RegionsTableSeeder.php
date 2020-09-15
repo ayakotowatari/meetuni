@@ -18,7 +18,12 @@ class RegionsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
-                'region' => 'Asia',
+                'region' => 'East Asia',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'region' => 'Americas',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

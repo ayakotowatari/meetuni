@@ -23,7 +23,37 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Architecture, Building and Urban Planning',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -33,7 +63,37 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Science and Engineering',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -43,7 +103,37 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'MBA',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -53,7 +143,37 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Applied and Pure Sciences',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -63,7 +183,37 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Art and Design',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
@@ -73,12 +223,57 @@ class SubjectsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Legal Studies',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
                 'subject' => 'Arts and Humanities',
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                'subject' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

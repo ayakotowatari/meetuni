@@ -40,4 +40,9 @@ class LoginController extends Controller
         return Auth::guard ('student');
     }
 
+    protected function loggedOut(Request $reuqest)
+    {
+        return redirect ('/');
+    }
+
 }

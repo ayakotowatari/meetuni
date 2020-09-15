@@ -18,19 +18,30 @@ class InstsController extends Controller
         return view('inst.auth.search');
     }
 
+    public function home()
+    {
+
+        return view ('inst.home');
+
+    }
+
     public function search(Request $request)
     {
         //値に合致する大学名があるかどうか検索
-        $inst_name = $request -> input('inst_name');
+        $inst_name = request('inst_name');
+
+        // DD($inst_name);
 
         if(Inst::where('name', $inst_name)->exists()){
 
             $inst = Inst::where('name', $inst_name)
                          ->select('id', 'name')
                          ->first();
+
+            // DD($inst);
          
             // return view ('inst.auth.register', ['inst' => $inst]);
-            return redirect() -> route('instUser.regiform', ['inst' => $inst]);
+            return redirect() -> route('instUser.registration.form', ['inst' => $inst]);
             // return redirect(route('instUser.regiform', ['inst' => $inst]));
 
         }else{

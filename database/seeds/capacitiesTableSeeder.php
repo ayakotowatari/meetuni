@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class capacitiesTableSeeder extends Seeder
+class CapacitiesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,22 +18,22 @@ class capacitiesTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
-                'capacity' => '',
+                'capacity' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'capacity' => '',
+                'capacity' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'capacity' => '',
+                'capacity' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'capacity' => '',
+                'capacity' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

@@ -11,22 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 // Auth前の大学名チェック
-Route::get('inst/search', 'InstsController@index');
+Route::get('/inst/home', 'InstsController@home')->name('inst.home');
+Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
 Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
-Route::post('/inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
-Route::post('/inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
+Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
+Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
+Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
+Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
+Route::post('/inst/logout', 'Auth\LoginController@logout')->name('instUser.logout');
 
 //学生Authentification
-
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
 Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
 Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
@@ -45,11 +48,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 //             //
 
 // 各種情報の取得
-Route::get('/inst/fetch-user','InstUsersController@fetchUser');
-Route::get('/inst/fetch-inst','InstUsersController@fetchInst');
-Route::get('/inst/fetch-initials','InstUsersController@fetchInitials');
-Route::get('/inst/fetch-events', 'InstUsersController@fetchEvents');
-Route::get('/inst/fetch-single-event/{id}', 'InstUsersController@fetchSingleEvent');
+Route::get('/inst/fetch-user','UsersController@fetchUser');
+Route::get('/inst/fetch-inst','UsersController@fetchInst');
+Route::get('/inst/fetch-initials','UsersController@fetchInitials');
+Route::get('/inst/fetch-events', 'UsersController@fetchEvents');
+Route::get('/inst/fetch-single-event/{id}', 'UsersController@fetchSingleEvent');
 Route::get('/inst/fetch-levels', 'LevelsController@fetchLevels');
 Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
 Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');

@@ -5,6 +5,11 @@
             v-bind:event="event"
             v-bind:user="user"
         ></questionsdialog-component>
+        <followdialog-component
+            v-bind:dialog="followDialog"
+            v-bind:event="event"
+            v-bind:user="user"
+        ></followdialog-component> 
         
         <v-img 
             :src="`/storage/${ event.image }`" 
@@ -20,14 +25,26 @@
                         {{ formattedStartTime(event.start_utc, user.timezone) }} - 
                         {{ formattedEndTime(event.end_utc, user.timezone) }}
                     </span>
-                    <div class="primary--text event-title mb-2">{{ event.title }}</div>
-                    <div class="grey--text text--darken-1 institution-title"><span class="organiser">Organiser:</span> {{ event.name }}</div>
-                    <v-btn 
-                        class="ma-2 mb-8 hidden-sm-and-down" 
-                        outlined      
-                        color="primary"
-                        @click="showDialog"
-                    >Follow</v-btn>
+                    <div class="primary--text event-title mb-4">{{ event.title }}</div>
+                    <div class="grey--text text--darken-1 institution-title mb-1">
+                        <span class="organiser">Organiser:</span> {{ inst.name }}
+                    </div>
+                    <div class="mb-8">
+                        <v-btn 
+                            v-if="inst.followed_by_user == false"
+                            class="ma-2 hidden-sm-and-down" 
+                            outlined      
+                            color="primary"
+                            @click="follow(`${inst.id}`, `${user.id}`)"
+                        >Follow</v-btn>
+                        <v-btn 
+                            v-if="inst.followed_by_user == true"
+                            class="ma-2 hidden-sm-and-down" 
+                            outlined      
+                            color="primary"
+                            @click="unfollow(`${inst.id}`, `${user.id}`)"
+                        >Followed</v-btn>
+                    </div>
                     <div class="event-info mr-4">
                         {{ event.description }}
                     </div>
@@ -74,8 +91,9 @@
 import moment from 'moment-timezone'
 
 import QuestionsDialog from './QuestionsDialogComponent'
+import FollowDialog from './FollowDialogComponent'
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 // import {createNamespacedHelpers} from 'vuex'
 // const { mapState, mapGetters } = createNamespacedHelpers('student');
@@ -86,6 +104,7 @@ export default {
     },
     components: {
         QuestionsDialog,
+        FollowDialog
     },
     data: function(){
         return{
@@ -96,7 +115,10 @@ export default {
     mounted(){
         this.$store.dispatch('student/fetchSingleEvent', {
             id: this.id
-        })
+        });
+        this.$store.dispatch('studentaccount/fetchInst', {
+            id: this.id
+        });
     },
     computed: {
         ...mapState('student', [
@@ -106,7 +128,10 @@ export default {
             'subjects',
         ]),
         ...mapState('studentaccount', [
+            'inst',
             'dialog',
+            'followDialog',
+            'isFollowed',
             'isBooked'
         ])
     },
@@ -114,6 +139,28 @@ export default {
         ...mapMutations('studentaccount', {
             showDialog: 'showDialog'
         }),
+         ...mapActions('studentaccount', [
+            'followInst',
+            'unfollowInst'
+        ]),
+        follow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.followInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
+        unfollow(id, user_id){
+            console.log(id);
+            console.log(user_id);
+
+            this.unfollowInst({
+                inst_id: id,
+                user_id: user_id
+            })
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },

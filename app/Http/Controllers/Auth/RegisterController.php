@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
-use App\Models\InstUser;
-use App\Models\Student;
-use App\Traits\OtherRegistersUsers;
+use App\Models\Inst;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -26,14 +25,13 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-    use OtherRegistersUsers;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/inst/events';
 
     /**
      * Create a new controller instance.
@@ -43,6 +41,17 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function showInstUserRegistrationForm(Request $request, Inst $inst)
+    {
+        $value = $request->inst;
+
+        $inst_detail = Inst::where('id', $value)
+                        ->select('id', 'name')
+                        ->first();
+
+        return view('inst/auth/register', ['inst' => $inst_detail]);
     }
 
     /**
@@ -55,37 +64,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'first_name' => ['required', 'string', 'max:191'],
+            'last_name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'timezone' => ['required']
+            'timezone' => ['required'],
+            'inst_id' => ['required'],
+            'job_title' => ['required', 'string', 'max:191'],
+            'department' => ['required', 'string', 'max:191'],
         ]);
     }
-
-    protected function instUserValidator(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'timezone' => ['required']
-        ]);
-    }
-
-    // protected function studentValidator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'first_name' => ['required', 'string', 'max:255'],
-    //         'last_name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-    //         'timezone' => ['required']
-    //     ]);
-    // }
-
-
 
     /**
      * Create a new user instance after a valid registration.
@@ -102,69 +90,13 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'timezone' => $data['timezone'],
+            'inst_id' => $data['inst_id'],
+            'job_title'=>$data['job_title'],
+            'department'=>$data['department'],
             'life' => 1,
             'remember_token' => '1234567890abcdefg',
         ]);
+        
     }
-
-    protected function instUserCreate(array $data)
-    {
-        return User::create([
-            'user_type_id' => 5,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'timezone' => $data['timezone'],
-            'life' => 1,
-            'remember_token' => '1234567890abcdefg',
-        ]);
-    }
-
-    protected function studentCreate(array $data)
-    {
-        return User::create([
-            'user_type_id' => 9,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'timezone' => $data['timezone'],
-            'life' => 1,
-            'remember_token' => '1234567890abcdefg',
-        ]);
-    }
-    protected function instUserTableValidator(array $data)
-    {
-        return Validator::make($data, [
-            'inst_id' => ['required', 'integer'],
-            'job_title' => ['required', 'string'],
-            'department' => ['required', 'string'],
-        ]);
-    }
-
-    // protected function studentTableValidator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'country_id' => ['required', 'integer'],
-    //         'year_id' => ['required', 'string'],
-    //     ]);
-    // }
-
-    protected function instUserTableCreate(Int $id, array $data, InstUser $inst_user)
-    {
-        $inst_user = new InstUser();
-        $inst_user->fill(['id'=>$id,'inst_id'=>$data['inst_id'],'job_title'=>$data['job_title'],'department'=>$data['department']]);
-        $inst_user->save();
-        return;
-    }
-
-    // protected function studentTableCreate(Int $id, array $data, Student $student)
-    // {
-    //     $student = new Student();
-    //     $student->fill(['id'=>$id,'country_id'=>$data['country_id'],'year_id'=>$data['year_id']]);
-    //     $student->save();
-    //     return;
-    // }
 
 }
