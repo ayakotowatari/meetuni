@@ -145,7 +145,7 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        id: String
+        id: Number
     },
     data: () => ({
         loading: false,

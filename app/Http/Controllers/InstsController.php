@@ -18,6 +18,13 @@ class InstsController extends Controller
         return view('inst.auth.search');
     }
 
+    public function home()
+    {
+
+        return view ('inst.home');
+
+    }
+
     public function search(Request $request)
     {
         //値に合致する大学名があるかどうか検索

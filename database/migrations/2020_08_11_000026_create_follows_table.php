@@ -17,7 +17,7 @@
 
                         $table->unsignedInteger('student_id');
                         $table->unsignedInteger('inst_id');
-                        $table->integer('notifications');
+                        $table->integer('notifications')->nullable();
                         $table->timestamps();
                         $table->softDeletes();
                         

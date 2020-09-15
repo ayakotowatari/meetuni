@@ -177,7 +177,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        id: String
+        id: Number
         // title: String,
         // date: String,
         // timezone: String,

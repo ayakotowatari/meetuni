@@ -98,7 +98,7 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::guard('student')->user()->id;
         
         $request->validate([
             'id' => 'required',

@@ -18,6 +18,9 @@
                         $table->bigIncrements('id')->unsigned();
                         $table->bigInteger('event_id')->unsigned();
                         $table->bigInteger('student_id')->unsigned();
+                        $table->string('first_name', 191);
+                        $table->string('last_name', 191);
+                        $table->string('email', 191);
                         $table->integer('cancelled');
                         $table->timestamps();
                         $table->softDeletes();

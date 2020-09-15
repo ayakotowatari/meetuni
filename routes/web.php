@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 // Auth前の大学名チェック
-Route::get('inst/search', 'InstsController@index');
+Route::get('/inst/home', 'InstsController@home')->name('inst.home');
+Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
 Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
@@ -28,7 +29,7 @@ Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
 Route::post('/inst/logout', 'Auth\LoginController@logout')->name('instUser.logout');
 
 //学生Authentification
-
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
 Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
 Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
