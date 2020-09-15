@@ -48,10 +48,10 @@
               <v-divider></v-divider>
               <v-list-item text @click="logout">
                   <v-list-item-action>
-                      <v-icon left class="grey--text">mdi-logout-variant</v-icon>
+                      <v-icon left class="grey--text text--darken-1">mdi-logout-variant</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                  <v-list-item-title class="grey--text">Log out</v-list-item-title>
+                  <v-list-item-title class="grey--text text--darken-1">Log out</v-list-item-title>
                       <form id="logout-form" action="/student/logout" method="POST">
                         <input type="hidden" name="_token" :value="token">
                       </form>
