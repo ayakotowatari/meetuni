@@ -21,9 +21,11 @@ Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.regiform');
-Route::post('/inst/register', 'Auth\RegisterController@instUserRegister')->name('instUser.register');
-Route::post('/inst/logout', 'Auth\LoginController@instUserLogout')->name('instUser.logout');
+Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
+Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
+Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
+Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
+Route::post('/inst/logout', 'Auth\LoginController@logout')->name('instUser.logout');
 
 //学生Authentification
 

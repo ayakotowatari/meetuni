@@ -26,20 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    public function redirectTo(){
-        $type = $this->guard()->user()->user_type_id;
-        if($type === 1){
-            return '/home';//viewsでreturnはできない。errorとなる。
-        }
-        if($type === 5){
-            return'/inst/events';
-        }
-        if($type === 9){
-            return '/student/main';
-        }
-    }
+    protected $redirectTo = '/inst/events';
     
     /**
      * Create a new controller instance.
@@ -49,5 +36,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return view('inst/auth/login');
     }
 }

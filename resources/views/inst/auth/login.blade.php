@@ -1,4 +1,4 @@
-@extends('layouts.student.app')
+@extends('layouts.inst.app')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('student.login') }}">
+                    <form method="POST" action="{{ route('instUser.login') }}">
                         @csrf
 
                         <div class="form-group row">
