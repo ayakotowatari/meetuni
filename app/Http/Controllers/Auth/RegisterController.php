@@ -64,14 +64,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'first_name' => ['required', 'string', 'max:191'],
+            'last_name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'timezone' => ['required'],
-            // 'inst_id' => ['required'],
-            // 'job_title' => ['required', 'string', 'max:255'],
-            // 'department' => ['required', 'string', 'max:255'],
+            'inst_id' => ['required'],
+            'job_title' => ['required', 'string', 'max:191'],
+            'department' => ['required', 'string', 'max:191'],
         ]);
     }
 
@@ -84,18 +84,19 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'user_type_id' => 5,
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'timezone' => ['required'],
-            // 'inst_id' => ['required'],
-            // 'job_title' => ['required', 'string', 'max:255'],
-            // 'department' => ['required', 'string', 'max:255'],
+            'user_type_id' => 1,
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'timezone' => $data['timezone'],
+            'inst_id' => $data['inst_id'],
+            'job_title'=>$data['job_title'],
+            'department'=>$data['department'],
             'life' => 1,
             'remember_token' => '1234567890abcdefg',
         ]);
+        
     }
 
 }

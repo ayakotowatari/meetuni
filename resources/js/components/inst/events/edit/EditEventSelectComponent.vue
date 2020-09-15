@@ -11,34 +11,36 @@
                <v-chip v-for="eventRegion in eventRegions" :key="eventRegion.region" class="ma-2">{{ eventRegion.region }}</v-chip>
           </v-col>
       </v-row>
-      <v-row justify="center">
-          <v-col col="12" sm="12" md="8" class="py-0">
-              <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Change</v-btn>
-              <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary" outlined>Save</v-btn>
-          </v-col>
-      </v-row>
-      <v-row justify="center">
-            <v-col col="12" sm="12" md="8">
-                <v-select
-                    v-if="!hideRegions"
-                    v-model="editedRegions"
-                    :items="regions"
-                    item-text="region"
-                    item-value='id'
-                    label="Regions"
-                    outlined
-                    :rules="regionRules" 
-                    multiple
-                    chips
-                    prepend-icon="mdi-globe-model"
-                    hint="What are target regions?"
-                    persistent-hint
-                    required
-                    :error="allerror.regions"
-                    :error-messages="allerror.regions"
-                ></v-select>
-             </v-col>
+      <v-form>
+        <v-row justify="center">
+            <v-col col="12" sm="12" md="8" class="py-0">
+                <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Change</v-btn>
+                <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary" outlined>Save</v-btn>
+            </v-col>
         </v-row>
+        <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-select
+                        v-if="!hideRegions"
+                        v-model="editedRegions"
+                        :items="regions"
+                        item-text="region"
+                        item-value='id'
+                        label="Regions"
+                        outlined
+                        :rules="regionRules" 
+                        multiple
+                        chips
+                        prepend-icon="mdi-globe-model"
+                        hint="What are target regions?"
+                        persistent-hint
+                        required
+                        :error="allerror.regions"
+                        :error-messages="allerror.regions"
+                    ></v-select>
+                </v-col>
+            </v-row>
+        </v-form>
          <v-row justify="center">
           <v-col col="12" sm="12" md="8">
                <h3 class="py-0">Levels</h3>
@@ -53,7 +55,7 @@
         <v-row justify="center">
           <v-col col="12" sm="12" md="8" class="py-0">
               <v-btn @click="hideLevels = !hideLevels" color="primary" outlined>Change</v-btn>
-              <v-btn :disabled="!valid" v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
+              <v-btn v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -166,17 +168,6 @@ export default {
         this.$store.dispatch('fetchSubjects');
     },
     methods: {
-        validate(){
-            if(
-                this.regions != '' && 
-                this.levels != '' && 
-                this.subjects != '' 
-            ){
-                return true
-            }else{
-                return false
-            }
-        },
         updateRegions(){
 
             if(this.valid=true){

@@ -102,7 +102,7 @@
                         v-model="start_time"
                         full-width
                         :allowed-minutes="allowedSteps"
-                        :max="time2"
+                        :max="end_time"
                         @click:minute="$refs.menu2.save(start_time)"
                     ></v-time-picker>
                     </v-menu>
@@ -139,7 +139,7 @@
                         v-model="end_time"
                         full-width
                         :allowed-minutes="allowedSteps"
-                        :min="time"
+                        :min="start_time"
                         @click:minute="$refs.menu3.save(end_time)"
                     ></v-time-picker>
                     </v-menu>

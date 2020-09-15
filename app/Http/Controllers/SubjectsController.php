@@ -21,7 +21,8 @@ class SubjectsController extends Controller
 
     public function fetchSubjects()
     {
-        $subjects = Subject::all();
+        $subjects = Subject::whereNotNull('subject')
+                            ->get();
 
         return response()->json(['subjects'=>$subjects],200);
     }

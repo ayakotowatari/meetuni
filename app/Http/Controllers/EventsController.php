@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Models\InstUser;
+use App\User;
 use App\Models\Inst;
 use App\Models\Like;
 use App\Models\Student;
@@ -318,8 +318,8 @@ class EventsController extends Controller
     public function storeBasics(Request $request)
     {
         $user_id = Auth::user()->id;
-        $inst = InstUser::join('insts', 'inst_users.inst_id', 'insts.id')
-                ->where('inst_users.id', $user_id)
+        $inst = User::join('insts', 'users.inst_id', '=', 'insts.id')
+                ->where('users.id', $user_id)
                 ->select('insts.id')
                 ->first();
 
@@ -355,7 +355,7 @@ class EventsController extends Controller
 
         $event->capacity_id = 1;
         $event->status_id = 3;
-        $event->inst_user_id = $user_id;
+        $event->user_id = $user_id;
 
         $event->save();
     }
@@ -364,7 +364,7 @@ class EventsController extends Controller
     {
         $user_id = Auth::user()->id;
         $event = Event::latest('created_at')
-                ->where('events.inst_user_id', $user_id)
+                ->where('events.user_id', $user_id)
                 ->first();
         
         $request->validate([
@@ -416,7 +416,7 @@ class EventsController extends Controller
     {
         $user_id = Auth::user()->id;
         $event = Event::latest('created_at')
-                ->where('events.inst_user_id', $user_id)
+                ->where('events.user_id', $user_id)
                 ->first();
         $event_id = $event->id;
 

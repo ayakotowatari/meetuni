@@ -33,11 +33,6 @@ class LevelsTableSeeder extends Seeder
                 "updated_at" => now(),
             ],
             [
-                'level' => NULL,
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
                 'level' => 'Undergraduate',
                 "created_at" => now(),
                 "updated_at" => now(),

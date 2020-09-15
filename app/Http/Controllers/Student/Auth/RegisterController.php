@@ -82,7 +82,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return Student::create([
-            'user_type_id' => 9,
+            'user_type_id' => 6,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],

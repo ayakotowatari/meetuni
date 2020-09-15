@@ -47,11 +47,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 //             //
 
 // 各種情報の取得
-Route::get('/inst/fetch-user','InstUsersController@fetchUser');
-Route::get('/inst/fetch-inst','InstUsersController@fetchInst');
-Route::get('/inst/fetch-initials','InstUsersController@fetchInitials');
-Route::get('/inst/fetch-events', 'InstUsersController@fetchEvents');
-Route::get('/inst/fetch-single-event/{id}', 'InstUsersController@fetchSingleEvent');
+Route::get('/inst/fetch-user','UsersController@fetchUser');
+Route::get('/inst/fetch-inst','UsersController@fetchInst');
+Route::get('/inst/fetch-initials','UsersController@fetchInitials');
+Route::get('/inst/fetch-events', 'UsersController@fetchEvents');
+Route::get('/inst/fetch-single-event/{id}', 'UsersController@fetchSingleEvent');
 Route::get('/inst/fetch-levels', 'LevelsController@fetchLevels');
 Route::get('/inst/fetch-subjects', 'SubjectsController@fetchSubjects');
 Route::get('/inst/fetch-regions', 'RegionsController@fetchRegions');
