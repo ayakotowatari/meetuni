@@ -25,9 +25,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //Only university admin can access.
-        Gate :: define ( 'inst-admin' , function ( $user ){
-            return $user -> user_type_id == 1;
+        //Only institution admin can access.
+        Gate::define('institution', function($user){
+            return $user -> user_type_id == 1 || 2;
         });
+
+        Gate::define('student', function($user){
+            return $user -> user_type_id == 6;
+        });
+
+        // Gate :: define ( 'inst-admin' , function ( $user ){
+        //     return $user -> user_type_id == 2;
+        // });
     }
 }

@@ -139,13 +139,19 @@ Route::get('/test', 'HomeController@test');
 
 // Vue
 //Only inst user can access.
-Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){
+Route::group(['middleware' => ['auth', 'can:institution']], function(){
     Route::get('/inst/{any}', function () {
         return view('inst.main');
     })->where('any','.*');
 });
 
-Route::get('/student/{any}', function () {
-    return view('student.main');
-})->where('any','.*');
+Route::group(['middleware' => ['auth:student', 'can:student']], function(){
+    Route::get('/student/{any}', function () {
+        return view('student.main');
+    })->where('any','.*');
+});
+
+// Route::get('/student/{any}', function () {
+//     return view('student.main');
+// })->where('any','.*');
 

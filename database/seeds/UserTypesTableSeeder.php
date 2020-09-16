@@ -14,12 +14,12 @@ class UserTypesTableSeeder extends Seeder
         $data = [
 
             [
-                'user_type' => 'University Admin',
+                'user_type' => 'Institution Super Admin',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'user_type' => NULL,
+                'user_type' => 'Institution Admin',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
