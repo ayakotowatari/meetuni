@@ -23,6 +23,7 @@ Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 //大学Authentification
 Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
+Route::get('/inst/team/register', 'Auth\RegisterController@showInstTeamUserRegistrationForm')->name('instUser.registration.form');
 Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
 Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
 Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
