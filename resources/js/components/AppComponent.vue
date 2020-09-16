@@ -1,13 +1,15 @@
 <template>
     <v-app>
-        <navbar-component></navbar-component>
+        <navbar-component v-bind:user="user"></navbar-component>
         <v-main class="mx-4 mb-4">
-            <router-view></router-view>
+            <router-view v-bind:user="user"></router-view>
         </v-main>
     </v-app>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
 
    data: () => ({
@@ -15,12 +17,20 @@ export default {
       //  inst: {},
       //  initials: '',
    }),
+   mounted(){
+      this.$store.dispatch('fetchUser');
+   },
    created(){
 
       // this.fetchUser();
       // this.fetchInst();
       // this.fetchInitials();
 
+   },
+   computed: {
+      ...mapState([
+         'user'
+      ])
    },
    methods: {
        

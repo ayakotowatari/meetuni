@@ -23,6 +23,7 @@ Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 //大学Authentification
 Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
+Route::get('/inst/team/register', 'Auth\RegisterController@showInstTeamUserRegistrationForm')->name('instUser.registration.form');
 Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
 Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
 Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
@@ -139,13 +140,19 @@ Route::get('/test', 'HomeController@test');
 
 // Vue
 //Only inst user can access.
-Route::group(['middleware' => ['auth', 'can:inst-admin']], function(){
+Route::group(['middleware' => ['auth', 'can:institution']], function(){
     Route::get('/inst/{any}', function () {
         return view('inst.main');
     })->where('any','.*');
 });
 
-Route::get('/student/{any}', function () {
-    return view('student.main');
-})->where('any','.*');
+Route::group(['middleware' => ['auth:student', 'can:student']], function(){
+    Route::get('/student/{any}', function () {
+        return view('student.main');
+    })->where('any','.*');
+});
+
+// Route::get('/student/{any}', function () {
+//     return view('student.main');
+// })->where('any','.*');
 

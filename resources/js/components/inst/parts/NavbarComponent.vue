@@ -45,12 +45,22 @@
         nav
         dense
       >
-      <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
-        <v-list-item-icon>
-          <v-icon>{{ link.icon }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>{{ link.text }}</v-list-item-title>
-      </v-list-item>
+      <div v-if="`${user.user_type_id}`== 2">
+          <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
+              <v-list-item-icon>
+                  <v-icon>{{ link.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ link.text }}</v-list-item-title>
+          </v-list-item>
+      </div>
+       <div v-if="`${user.user_type_id}`== 1">
+          <v-list-item v-for="link in superAdminLinks" :key="link.text" router :to="link.route">
+              <v-list-item-icon>
+                  <v-icon>{{ link.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ link.text }}</v-list-item-title>
+          </v-list-item>
+      </div>
       </v-list>
     </v-navigation-drawer>
 
@@ -63,6 +73,9 @@
 import { mapState } from 'vuex'
 
   export default {
+    props: {
+      user: Object
+    },
     data: () => ({
       drawer: true,
       links: [
@@ -70,10 +83,17 @@ import { mapState } from 'vuex'
         { icon: 'mdi-pencil-outline', text: 'Create Events', route: '/inst/create-events' },
         { icon: 'mdi-file-document-outline', text: 'Drafts', route: '/inst/drafts'},
         { icon: 'mdi-account-details-outline', text: 'My Profile', route: '/inst/profile' },
-       ],
+      ],
+      superAdminLinks : [
+        { icon: 'mdi-home-outline', text: 'My Projects', route: '/inst/events' },
+        { icon: 'mdi-pencil-outline', text: 'Create Events', route: '/inst/create-events' },
+        { icon: 'mdi-file-document-outline', text: 'Drafts', route: '/inst/drafts'},
+        { icon: 'mdi-account-group-outline', text: 'Manage Team', route: '/inst/team' },
+        { icon: 'mdi-account-details-outline', text: 'My Profile', route: '/inst/profile' },
+      ]
     }),
     mounted() {
-        this.$store.dispatch('fetchUser');
+        // this.$store.dispatch('fetchUser');
         this.$store.dispatch('fetchInst');
         this.$store.dispatch('fetchInitials');
     },
@@ -83,7 +103,7 @@ import { mapState } from 'vuex'
             return token.content
         },
         ...mapState([
-            'user',
+            // 'user',
             'inst',
             'initials'
         ]),
