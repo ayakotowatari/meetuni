@@ -133,6 +133,9 @@ Route::post('/student/unlike-event', 'LikesController@unlike');
 Route::post('/student/follow-inst', 'FollowsController@store');
 Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 
+//テスト
+Route::get('/test', 'HomeController@test');
+
 
 // Vue
 //Only inst user can access.
