@@ -26,4 +26,10 @@ class HomeController extends Controller
     {
         return view('student.home');
     }
+
+    public function test()
+    {
+        return view('auth.passwords.confirm');
+
+    }
 }

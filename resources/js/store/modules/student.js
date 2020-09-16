@@ -246,8 +246,10 @@ export const student = {
                 });
         },
         async recommendRegionEvents({commit}, payload){
+            
             let events = [];
-            // console.log(payload.id);
+            console.log('recommedRegionEvents');
+            console.log(payload.id);
 
             await axios
                 .get("/student/event-regions/" + payload.id)
