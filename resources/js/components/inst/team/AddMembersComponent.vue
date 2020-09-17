@@ -1,7 +1,12 @@
 <template>
     <v-container>
         <h1 class="grey--text">Add New Members</h1>
-        <v-form ref="form" class="mt-10">
+        <v-row justify="center" class="mt-10 mb-4">
+            <v-col col="12" sm="12" md="8">
+                <h4 class="grey--text text--darken-3">An email inviting to register will be sent to your team member once you provided their details below and clicked Submit.</h4>
+            </v-col>
+        </v-row>
+        <v-form ref="form">
                 <v-row justify="center">
                     <v-col cols="12" sm="12" md="4">
                         <v-text-field 
@@ -42,7 +47,7 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <v-row justify="center">
+                <!-- <v-row justify="center">
                     <v-col cols="12" sm="12" md="4">
                         <v-text-field 
                             label="Password" 
@@ -60,22 +65,7 @@
                             required
                         ></v-text-field>
                     </v-col>
-                </v-row>
-                <v-row justify="center">
-                    <v-col cols="12" sm="12" md="8">
-                        <v-select
-                            v-model="timezone"
-                            :items="['Asia/Tokyo', 'Europe/London']"
-                            label="Timezone"
-                            :rules="timezoneRules" 
-                            hint="What is the new member's timezone?"
-                            persistent-hint
-                            required
-                            :error="allerror.timezone"
-                            :error-messages="allerror.timezone"
-                        ></v-select>
-                    </v-col>
-                </v-row>
+                </v-row> -->
                 <v-row justify="center">
                     <v-col cols="12" sm="12" md="4">
                         <v-text-field 
@@ -108,7 +98,7 @@
                         class="mx-0" 
                         @click="showDialog"
                         :loading="loading"
-                        >Save
+                        >Submit
                         </v-btn>
                     </v-col>
             </v-row>
@@ -137,20 +127,20 @@ export default {
                 (v) => !!v || 'Confirmation E-mail is required',
                 (v) => v == this.email || 'E-mail must match'
             ],
-            password: '',
-            passwordRules: [
-                (v) => !!v || 'Password is required',
-                (v) => v.length >= 8 || 'Use 8 characters or more for password',
-            ],
-            confirmPasswordRules: [
-                (v) => !!v || 'Confirmation Password is required',
-                (v) => v.length >= 8 || 'Use 8 characters or more for password',
-                (v) => v == this.password || 'Password must match'
-            ],
-            timezone: '',
-            timezoneRules: [
-            v => !!v || 'Timezone is required',
-            ],
+            // password: '',
+            // passwordRules: [
+            //     (v) => !!v || 'Password is required',
+            //     (v) => v.length >= 8 || 'Use 8 characters or more for password',
+            // ],
+            // confirmPasswordRules: [
+            //     (v) => !!v || 'Confirmation Password is required',
+            //     (v) => v.length >= 8 || 'Use 8 characters or more for password',
+            //     (v) => v == this.password || 'Password must match'
+            // ],
+            // timezone: '',
+            // timezoneRules: [
+            // v => !!v || 'Timezone is required',
+            // ],
             job_title: '',
             jobTitleRules: [
                 (v) => !!v || 'Job Title is required',
