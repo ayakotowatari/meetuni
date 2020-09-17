@@ -1,0 +1,13 @@
+1. A would-be admin will send a request for an invitation to the Super Admin. 
+The admin will input his/her first and last name, email, job title and department.
+
+2. The Super Admin can create an invitation by clicking a button.
+The Super Admin needs to input details such as first and last names, email, job title and department. 
+The form also includes institution id as hidden input.
+
+3. In the Controler, the invitation will be processed, which will include the creation of the token. 
+It should have a method where an error message will be processed if the user already exists. 
+
+3. The would-be admin will receive a notification with an accept button/URL. 
+This will redirect the intended user to the registration form.
+

@@ -6,7 +6,7 @@
            </v-col>
        </v-row>
        <v-form class="mb-6" ref="form"> 
-        <v-row justify="center">
+            <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
                     <v-text-field 
                         label="Event Title" 
