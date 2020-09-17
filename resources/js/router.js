@@ -12,6 +12,7 @@ import Dashboard from "./components/inst/dashboard/DashboardComponent";
 import ManageParticipants from "./components/inst/participants/ManageParticipantsComponent";
 import ParticipantStatistics from "./components/inst/participants/ParticipantStatisticsComponent";
 import Team from "./components/inst/team/TeamComponent";
+import AddMembers from "./components/inst/team/AddMembersComponent";
 import InstProfile from "./components/inst/profile/InstProfileComponent";
 
 
@@ -64,6 +65,11 @@ const routes = [
         path: "/inst/team",
         name: "inst-team",
         component: Team
+    },
+    {
+        path: "/inst/team/add-members",
+        name: "add-members",
+        component: AddMembers
     },
     {
         path: "/inst/profile",

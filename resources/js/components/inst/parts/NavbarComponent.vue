@@ -88,7 +88,7 @@ import { mapState } from 'vuex'
         { icon: 'mdi-home-outline', text: 'My Projects', route: '/inst/events' },
         { icon: 'mdi-pencil-outline', text: 'Create Events', route: '/inst/create-events' },
         { icon: 'mdi-file-document-outline', text: 'Drafts', route: '/inst/drafts'},
-        { icon: 'mdi-account-group-outline', text: 'Manage Team', route: '/inst/team' },
+        { icon: 'mdi-account-group-outline', text: 'My Team', route: '/inst/team' },
         { icon: 'mdi-account-details-outline', text: 'My Profile', route: '/inst/profile' },
       ]
     }),

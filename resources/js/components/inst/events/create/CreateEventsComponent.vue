@@ -13,9 +13,8 @@
               </v-btn>
           </template>
   </v-snackbar> -->
-
-  <h1 class="grey--text">Create Events</h1>
   <v-container>
+  <h1 class="grey--text">Create Events</h1>
       <eventbasics-component @basicsAdded = "hideSelect = false"></eventbasics-component>
       <eventselect-component :hideSelect="hideSelect" @selectsAdded = "hideFile = false"></eventselect-component>
       <eventfile-component :hideFile="hideFile" @eventAdded = "dialog = true"></eventfile-component>

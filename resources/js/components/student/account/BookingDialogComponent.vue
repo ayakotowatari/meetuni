@@ -42,7 +42,7 @@
                             <v-col cols="12" sm="12" md="6">
                                 <v-text-field  
                                     label="Confirm Email*" 
-                                    :rules="confirmemailRules"
+                                    :rules="confirmEmailRules"
                                     required
                                 ></v-text-field>
                             </v-col>
@@ -85,7 +85,7 @@ export default {
                 (v) => !!v || 'E-mail is required',
                 (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
             ],
-            confirmemailRules: [
+            confirmEmailRules: [
                 (v) => !!v || 'Confirmation E-mail is required',
                 (v) => v == this.email || 'E-mail must match'
             ],
