@@ -40,6 +40,7 @@ Vue.component('editeventbasics-component', require('./components/inst/events/edi
 Vue.component('editeventselect-component', require('./components/inst/events/edit/EditEventSelectComponent.vue').default);
 Vue.component('editeventfile-component', require('./components/inst/events/edit/EditEventFileComponent.vue').default);
 
+
 //Chart
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
 Vue.component('linechart-component', require('./components/chart/LineChartComponent.vue').default);
