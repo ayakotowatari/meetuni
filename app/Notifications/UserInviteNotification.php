@@ -56,8 +56,8 @@ class UserInviteNotification extends Notification
                     ->subject($this->full_name.' invites you to join meetUni')
                     ->greeting('Greetings!')
                     ->line($this->full_name.' from '.$this->inst.' is to invite you to join the platform: '.config('app.name'))
-                    ->action('Notification Action', $this->notification_url)
-                    ->line('Thank you for registering to our application!');
+                    ->action('Register Here', $this->notification_url)
+                    ->line('Thank you for registering to our service!');
     }
 
     /**
