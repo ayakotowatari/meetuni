@@ -1,5 +1,9 @@
 <template>
     <div>
+        <addmemberdialog-component
+            v-bind:dialog="dialog"
+            v-bind:user="user"
+        ></addmemberdialog-component>
         <v-container>
             <h1 class="grey--text">Add New Members</h1>
             <v-row justify="center" class="mt-10 mb-4">
@@ -90,16 +94,20 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import AddMemberDialog from './AddMemberDialogComponent'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
+    components: {
+        AddMemberDialog
+    },
     props: {
         user: Object,
         inst: Object
     },
     data: function(){
         return {
-            loading: false,
+            // loading: false,
             first_name: '',
             firstNameRules: [
                 v => !!v || 'First name is required',
@@ -129,30 +137,30 @@ export default {
         }
     },
     computed: {
-       
+       ...mapState([
+           'loading',
+           'dialog'
+       ]),
+    //    ...mapMutations({
+    //        invite: 'startLoading'
+    //    })
     },
     methods: {
+        ...mapActions([
+            'inviteMembers',
+        ]),
         invite(){
-
             if(this.$refs.form.validate()){
-                this.loading = true;
 
-                axios
-                    .post('/inst/invite-members', {  
-                        user_id: this.user.id,
-                        inst_id: this.inst.id,
-                        first_name: this.first_name,
-                        last_name: this.last_name,
-                        email: this.email,
-                        job_title: this.job_title,
-                        department: this.department
-                    })
-                    .then(response => {
-                        this.loading = false
-                    })
-                    .catch(error => 
-                        this.allerror = error.response.data.errors,
-                    )
+                this.inviteMembers({
+                    user_id: this.user.id,
+                    inst_id: this.inst.id,
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    email: this.email,
+                    job_title: this.job_title,
+                    department: this.department
+                })
             }
         }
     }
