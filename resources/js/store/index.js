@@ -36,6 +36,7 @@ export default new Vuex.Store ({
         eventLevels: [],
         eventSubjects: [],
         dialog: false,
+        loading: false,
         isPublished: false,
         isOngoing: false,
         isDraft: false,
@@ -148,6 +149,12 @@ export default new Vuex.Store ({
         },
         isDraft(state){
             state.event.status = 'Draft';
+        },
+        startLoading(state){
+            state.loading = true;
+        },
+        stopLoading(state){
+            state.loading = false;
         },
 
         //学生用に追加
@@ -402,6 +409,39 @@ export default new Vuex.Store ({
             router.push({ name: 'events'});
             commit('closeDialog');
         },
+        async inviteMembers({state, commit}, payload){
+
+            commit('startLoading');
+            let allerror = [];
+
+            await axios
+                .post('/inst/invite-members', {  
+                user_id: payload.user_id,
+                inst_id: payload.inst_id,
+                first_name: payload.first_name,
+                last_name: payload.last_name,
+                email: payload.email,
+                job_title: payload.job_title,
+                department: payload.department
+            })
+            .then(response => {
+                commit('stopLoading');
+                commit('showDialog');
+            })
+            .catch(error => 
+                allerror = error.response.data.errors,
+                commit('setallErrors', allerror)
+            )
+        },
+        toAddMembers({state, commit}){
+            router.go()
+            commit('closeDialog');
+        },
+        toTeam({state,commit}){
+            router.push({ name: 'inst-team'});
+            commit('closeDialog');
+        },
+
 
         //学生用に追加
         async fetchStudentUser({ commit }){
@@ -474,69 +514,69 @@ export default new Vuex.Store ({
         },
 
         //テスト
-        async readDetails({commit}){
+        // async readDetails({commit}){
 
-            await axios
-                .get('/inst/testform')
-                .then(res => {
-                //   let id = res.data.testform.id;
-                //   let name = res.data.testform.name;
-                //   let email = res.data.testform.email;
-                let details = res.data.testform
-                  commit("readDetails", details)
-                })
+        //     await axios
+        //         .get('/inst/testform')
+        //         .then(res => {
+        //         //   let id = res.data.testform.id;
+        //         //   let name = res.data.testform.name;
+        //         //   let email = res.data.testform.email;
+        //         let details = res.data.testform
+        //           commit("readDetails", details)
+        //         })
             
-        },
-        async postDetails({state, commit}, payload){
-            console.log(payload.name);
-            console.log(payload.email);
+        // },
+        // async postDetails({state, commit}, payload){
+        //     console.log(payload.name);
+        //     console.log(payload.email);
 
-            let allerror = [];
+        //     let allerror = [];
 
-            const details = {
-                name: payload.name,
-                email: payload.email
-            }
+        //     const details = {
+        //         name: payload.name,
+        //         email: payload.email
+        //     }
 
-            await axios
-                .post('/inst/testform', {
-                    name: details.name,
-                    email: details.email
-                })
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error => 
-                    allerror = error.response.data.errors,
-                    console.log(allerror),
-                    commit('setallErrors', allerror)
-                )
-        },
-        async updateDetails({state, commit}, payload){
-            console.log(payload.name);
-            console.log(payload.email);
+        //     await axios
+        //         .post('/inst/testform', {
+        //             name: details.name,
+        //             email: details.email
+        //         })
+        //         .then(response => {
+        //             console.log(response)
+        //         })
+        //         .catch(error => 
+        //             allerror = error.response.data.errors,
+        //             console.log(allerror),
+        //             commit('setallErrors', allerror)
+        //         )
+        // },
+        // async updateDetails({state, commit}, payload){
+        //     console.log(payload.name);
+        //     console.log(payload.email);
 
-            let allerror = [];
+        //     let allerror = [];
 
-            const details = {
-                name: payload.name,
-                email: payload.email
-            }
+        //     const details = {
+        //         name: payload.name,
+        //         email: payload.email
+        //     }
 
-            await axios
-                .post('/inst/testform/update', {
-                    name: details.name,
-                    email: details.email
-                })
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(error => 
-                    allerror = error.response.data.errors,
-                    console.log(allerror),
-                    commit('setallErrors', allerror)
-                )
-        }
+        //     await axios
+        //         .post('/inst/testform/update', {
+        //             name: details.name,
+        //             email: details.email
+        //         })
+        //         .then(response => {
+        //             console.log(response)
+        //         })
+        //         .catch(error => 
+        //             allerror = error.response.data.errors,
+        //             console.log(allerror),
+        //             commit('setallErrors', allerror)
+        //         )
+        // }
     },
     modules: {
         participants,
