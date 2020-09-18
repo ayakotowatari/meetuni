@@ -15,7 +15,7 @@
                             <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $invite->first_name }}" readonly="readonly" required autocomplete="first_name" autofocus>
 
                                 @error('first_name')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                             <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $invite->last_name }}" readonly="readonly" required autocomplete="last_name" autofocus>
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -40,10 +40,25 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $invite -> email }}" readonly="readonly" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label for="job_title" class="col-md-4 col-form-label text-md-right">{{ __('Job Title') }}</label>
 
                             <div class="col-md-6">
-                                <input id="job_title" type="text" class="form-control @error('job_title') is-invalid @enderror" name="job_title" value="{{ old('job_title') }}" required autocomplete="job_title" autofocus>
+                                <input id="job_title" type="text" class="form-control @error('job_title') is-invalid @enderror" name="job_title" value="{{ $invite -> job_title }}" readonly="readonly" required autocomplete="job_title" autofocus>
 
                                 @error('job_title')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +72,7 @@
                             <label for="department" class="col-md-4 col-form-label text-md-right">{{ __('Department') }}</label>
 
                             <div class="col-md-6">
-                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required autocomplete="department" autofocus>
+                                <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ $invite -> department }}" readonly="readonly" required autocomplete="department" autofocus>
 
                                 @error('department')
                                     <span class="invalid-feedback" role="alert">
@@ -84,7 +99,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $invite -> email }}" readonly="readonly" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -118,6 +133,7 @@
 
                         <input type="hidden" name="inst_id" value="{{ $inst -> id }}">
                         <input type="hidden" name="timezone" id="timezone">
+                        <input type="hidden" name="token" value="{{ $invite -> token }}">
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

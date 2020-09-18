@@ -11,6 +11,8 @@ class UserInviteNotification extends Notification
 {
     use Queueable;
 
+    protected $notification_url;
+
     /**
      * Create a new notification_url instance.
      * @param $notification_url

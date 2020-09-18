@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Notification;
 use App\Models\Inst;
 use App\Models\Event;
 use App\Models\Status;
 use App\Models\Invite;
+use App\Notifications\UserInviteNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
@@ -15,7 +17,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('registration_view');
     }
 
     public function fetchUser()
@@ -91,6 +93,7 @@ class UsersController extends Controller
         ]);
 
         $email = request('email');
+        $inst_id = request('inst_id');
 
         do {
             $token = Str::random(20);
@@ -108,7 +111,7 @@ class UsersController extends Controller
         ]);
 
         $url = URL::temporarySignedRoute(
-            'instUser.registration.form', now()->addMinutes(300), ['token' => $token]
+            'instUser.registration.form', now()->addMinutes(300), ['token' => $token, 'inst_id' => $inst_id ]
         );
 
         Notification::route('mail', $email)
@@ -116,18 +119,20 @@ class UsersController extends Controller
 
     }
 
-    public function registration_view(Request $request, $token)
+    public function registration_view(Request $request, $inst_id, $token)
     {
-        // $value = $request->inst;
+        // DD($token);
+        
+        $value = $inst_id;
 
-        // $inst_detail = Inst::where('id', $value)
-        //                 ->select('id', 'name')
-        //                 ->first();
+        $inst_detail = Inst::where('id', $value)
+                        ->select('id', 'name')
+                        ->first();
 
         $invite = Invite::where('token', $token)
                         ->first();
 
-        return view('inst/auth/register', ['invite' => $invite]);
+        return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
     }
 
 
