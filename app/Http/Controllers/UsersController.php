@@ -114,8 +114,10 @@ class UsersController extends Controller
             'instUser.registration.form', now()->addMinutes(300), ['token' => $token, 'inst_id' => $inst_id ]
         );
 
+        $user = Auth::user();
+
         Notification::route('mail', $email)
-                    ->notify(new UserInviteNotification($url));
+                    ->notify(new UserInviteNotification($url, $user));
 
     }
 

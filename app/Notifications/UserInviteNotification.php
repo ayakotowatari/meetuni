@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -18,9 +19,17 @@ class UserInviteNotification extends Notification
      * @param $notification_url
      * @return void
      */
-    public function __construct($notification_url)
+    public function __construct($notification_url, $user)
     {
         $this->notification_url = $notification_url;
+        $this->full_name = $user->first_name.' '.$user->last_name;
+        
+        $inst = User::join('insts', 'users.inst_id', '=', 'insts.id')
+                    ->where('users.id', $user->id)
+                    ->select('insts.name')
+                    ->first();
+                    
+        $this->inst = $inst->name;
     }
 
     /**
@@ -42,9 +51,11 @@ class UserInviteNotification extends Notification
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
+                    ->subject($this->full_name.' invites you to join meetUni')
                     ->greeting('Greetings!')
-                    ->line('The is to invite you to join our platform'.config('app.name'))
+                    ->line($this->full_name.' from '.$this->inst.' is to invite you to join the platform: '.config('app.name'))
                     ->action('Notification Action', $this->notification_url)
                     ->line('Thank you for registering to our application!');
     }
