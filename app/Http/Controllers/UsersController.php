@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Notification;
 use App\Models\Inst;
 use App\Models\Event;
 use App\Models\Status;
+use App\Models\Invite;
+use App\Notifications\UserInviteNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('registration_view');
     }
 
     public function fetchUser()
@@ -29,7 +34,7 @@ class UsersController extends Controller
         $inst = Inst::join('users', 'insts.id', '=', 'users.inst_id')
                     ->join('countries', 'insts.country_id', '=', 'countries.id')
                     ->where('users.id', $id)
-                    ->select('insts.name', 'countries.country')
+                    ->select('insts.id', 'insts.name', 'countries.country')
                     ->first();
 
         return response()->json(['inst'=>$inst],200);
@@ -73,6 +78,63 @@ class UsersController extends Controller
                     ->first();
 
         return response()->json(['event' => $event],200);
+    }
+
+    public function process_invites(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'inst_id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'job_title' => 'required',
+            'department' => 'required',
+        ]);
+
+        $email = request('email');
+        $inst_id = request('inst_id');
+
+        do {
+            $token = Str::random(20);
+        } while (Invite::where('token', $token)->first());
+
+        Invite::create([
+            'user_id' => request('user_id'),
+            'inst_id' => request('inst_id'),
+            'first_name' => request('first_name'),
+            'last_name' => request('last_name'),
+            'email' => $email,
+            'job_title' => request('job_title'),
+            'department' => request('department'),
+            'token' => $token
+        ]);
+
+        $url = URL::temporarySignedRoute(
+            'instUser.registration.form', now()->addMinutes(300), ['token' => $token, 'inst_id' => $inst_id ]
+        );
+
+        $user = Auth::user();
+
+        Notification::route('mail', $email)
+                    ->notify(new UserInviteNotification($url, $user));
+
+    }
+
+    public function registration_view(Request $request, $inst_id, $token)
+    {
+        // DD($token);
+        
+        $value = $inst_id;
+
+        $inst_detail = Inst::where('id', $value)
+                        ->select('id', 'name')
+                        ->first();
+
+        $invite = Invite::where('token', $token)
+                        ->first();
+
+        return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
     }
 
 

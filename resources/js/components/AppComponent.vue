@@ -1,8 +1,14 @@
 <template>
     <v-app>
-        <navbar-component v-bind:user="user"></navbar-component>
+        <navbar-component 
+            v-bind:user="user"
+            v-bind:inst="inst"
+         ></navbar-component>
         <v-main class="mx-4 mb-4">
-            <router-view v-bind:user="user"></router-view>
+            <router-view 
+               v-bind:user="user"
+               v-bind:inst="inst"
+            ></router-view>
         </v-main>
     </v-app>
 </template>
@@ -19,6 +25,7 @@ export default {
    }),
    mounted(){
       this.$store.dispatch('fetchUser');
+      this.$store.dispatch('fetchInst');
    },
    created(){
 
@@ -29,7 +36,8 @@ export default {
    },
    computed: {
       ...mapState([
-         'user'
+         'user',
+         'inst'
       ])
    },
    methods: {

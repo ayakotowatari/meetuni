@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Models\Inst;
+use App\Models\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    public function showInstUserRegistrationForm(Request $request, Inst $inst)
+    public function showInstTeamUserRegistrationForm(Request $request, Inst $inst)
     {
         $value = $request->inst;
 
@@ -83,6 +84,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $invite = Invite::where('token', $data['token'])->first();
+        $invite->delete();
+
         return User::create([
             'user_type_id' => 2,
             'first_name' => $data['first_name'],

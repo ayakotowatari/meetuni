@@ -74,7 +74,8 @@ import { mapState } from 'vuex'
 
   export default {
     props: {
-      user: Object
+      user: Object,
+      inst: Object
     },
     data: () => ({
       drawer: true,
@@ -94,7 +95,7 @@ import { mapState } from 'vuex'
     }),
     mounted() {
         // this.$store.dispatch('fetchUser');
-        this.$store.dispatch('fetchInst');
+        // this.$store.dispatch('fetchInst');
         this.$store.dispatch('fetchInitials');
     },
     computed: {
@@ -104,7 +105,7 @@ import { mapState } from 'vuex'
         },
         ...mapState([
             // 'user',
-            'inst',
+            // 'inst',
             'initials'
         ]),
     },
