@@ -35,6 +35,8 @@ export default new Vuex.Store ({
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
+        members: [],
+        memberId: '',
         dialog: false,
         loading: false,
         isPublished: false,
@@ -155,6 +157,12 @@ export default new Vuex.Store ({
         },
         stopLoading(state){
             state.loading = false;
+        },
+        setMembers(state, payload){
+            state.members = payload;
+        },
+        setMemberId(state, payload){
+            state.memberId = payload
         },
 
         //学生用に追加
@@ -440,6 +448,39 @@ export default new Vuex.Store ({
         toTeam({state,commit}){
             router.push({ name: 'inst-team'});
             commit('closeDialog');
+        },
+        async fetchTeamMembers({state, commit}){
+
+            let members = [];
+
+            await axios
+                .get('/inst/fetch-members/')
+                .then(response => {
+                    members = response.data.members;
+                    commit('setMembers', members);
+                })
+        },
+        showDeleteMemberDialog({state,commit}, payload){
+
+            let member_id = payload.member_id;
+
+            commit('showDialog');
+            commit('setMemberId', member_id);
+
+        },
+        async deleteTeamMembers({state,commit}, payload){
+
+            // let members = [];
+
+            await axios
+                .post('/inst/delete-members/' + payload.id)
+                .then(response => {
+                    // members = response.data.members,
+                    // commit('setMembers', payload)
+                    commit('closeDialog');
+                    router.go();
+                })
+
         },
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Notification;
+use App\User;
 use App\Models\Inst;
 use App\Models\Event;
 use App\Models\Status;
@@ -137,6 +138,40 @@ class UsersController extends Controller
         return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
     }
 
+    public function fetchTeamMembers()
+    {
+        $user = Auth::user();
+        $inst_id = $user->inst_id;
+        
+        $members = User::where('inst_id', $inst_id)
+                    ->where('user_type_id', 2)
+                    ->where('life', 1)
+                    ->get();
 
+        // DD($members);
+
+        return response()->json(['members' => $members],200);
+    }
+
+    public function deleteTeamMembers($id)
+    {
+        // User::find($id)->delete();
+
+        User::find($id)
+                ->update([ 
+                    'life' => 0, 
+                ]);
+
+        // $user = Auth::user();
+        // $inst_id = $user->inst_id;
+        
+        // $members = User::where('inst_id', $inst_id)
+        //             ->where('user_type_id', 2)
+        //             ->where('life', 1)
+        //             ->get();
+
+        // return response()->json(['members' => $members],200);
+
+    }
 
 }

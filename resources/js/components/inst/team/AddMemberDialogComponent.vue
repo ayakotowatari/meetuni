@@ -19,9 +19,12 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     computed: {
-        ...mapState([
-            'dialog'
-        ])
+        // ...mapState([
+        //     'dialog'
+        // ])
+    },
+    props: {
+        dialog: Boolean
     },
     methods: {
         ...mapActions([
