@@ -2,7 +2,7 @@
     <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="390">
             <v-card>
-                <v-card-title>An invidation has been sent to your member.</v-card-title>
+                <v-card-title>Your request has been received.</v-card-title>
                 <!-- <v-card-text>By clicking Confirm, an invitation will be sent to this new member to register.</v-card-text> -->
                 <v-card-actions>
                 <v-spacer></v-spacer>
@@ -19,9 +19,12 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     computed: {
-        ...mapState([
-            'dialog'
-        ])
+        // ...mapState([
+        //     'dialog'
+        // ])
+    },
+    props: {
+        dialog: Boolean
     },
     methods: {
         ...mapActions([

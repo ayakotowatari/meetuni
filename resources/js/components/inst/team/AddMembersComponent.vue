@@ -95,11 +95,12 @@
 
 <script>
 import AddMemberDialog from './AddMemberDialogComponent'
+
 import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     components: {
-        AddMemberDialog
+        AddMemberDialog,
     },
     props: {
         user: Object,

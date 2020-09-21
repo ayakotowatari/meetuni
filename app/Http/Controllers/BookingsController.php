@@ -56,11 +56,11 @@ class BookingsController extends Controller
         $event_id = $id;
 
         $participants = Booking::join('students', 'bookings.student_id', '=', 'students.id')
-                                ->join('users', 'students.id', '=', 'users.id')
+                                // ->join('users', 'students.id', '=', 'users.id')
                                 ->join('countries', 'students.country_id', '=', 'countries.id')
                                 ->where('bookings.event_id', $event_id)
                                 ->where('bookings.cancelled', '0')
-                                ->select('users.first_name', 'users.last_name', 'users.email', 'bookings.created_at','countries.country')
+                                ->select('students.first_name', 'students.last_name', 'students.email', 'bookings.created_at','countries.country')
                                 ->get();
 
         // $ppts = Book::join('students', 'books.students_id', '=', 'students.id')
