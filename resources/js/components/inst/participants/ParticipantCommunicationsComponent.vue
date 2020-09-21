@@ -1,8 +1,8 @@
 <template>
     <div>
-        <emailtoparticipantdialog-component
+        <emailtoparticipantsdialog-component
             v-bind:dialog="dialog"
-        ></emailtoparticipantdialog-component>
+        ></emailtoparticipantsdialog-component>
         <v-container>
             <v-row class="mb-8">
                     <v-col col="12" sm="12" md="8">
@@ -22,7 +22,9 @@
                 class='mb-6'
                 @click="showDialog"
             >Send emails to registrants</v-btn>
-            <participantsemaillist-component></participantsemaillist-component>
+            <emailtoparticipantslist-component
+                v-bind:emails="requestedEmails"
+            ></emailtoparticipantslist-component>
         </v-container>
     </div>
 </template>
@@ -48,9 +50,15 @@ export default {
             }
 
     },
+    mounted(){
+        this.$store.dispatch('notifications/fetchEmailsToParticipantsList', {
+            id: this.id
+        });
+    },
     computed: {
         ...mapState('notifications', [
-            'dialog'
+            'dialog',
+            'requestedEmails'
         ])
     },
     methods: {

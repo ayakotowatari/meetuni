@@ -57,7 +57,7 @@ export const notifications = {
             let requestedEmails = [];
 
             await axios
-                .get('/inst/emailstoparticipants-liast' + payload.id)
+                .get('/inst/emailstoparticipants-list' + payload.id)
                 .then(response => {
                     requestedEmails = response.data.emails;
                     commit('setRequestedEmails', requestedEmails);

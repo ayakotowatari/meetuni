@@ -68,7 +68,7 @@ class ParticipantNotificationsController extends Controller
         $notification->scheduled_time = $time;
 
         $notification->timezone = request('timezone');
-        $notification->scheduled = 0;
+        $notification->status_id= 5;
 
         $notification->save();
 
@@ -84,8 +84,19 @@ class ParticipantNotificationsController extends Controller
 
     public function fetchList(Request $request, $id)
     {
-        $emails = ParticipantNotification::where('event_id', $id)
+        $emails = ParticipantNotification::join('statuses', 'participant_notifications.status_id', '=', 'statuses.id')
+                                        ->join('events', 'participant_notifications.event_id', '=', 'events.id')
+                                        ->where('event_id', $id)
+                                        ->select(
+                                            'events.title', 
+                                            'participant_notifications.scheduled.date',  
+                                            'participant_notifications.scheduled.time',  
+                                            'participant_notifications.timezone', 
+                                            'statuses.status'
+                                        )
                                         ->first();
+
+        return response()->json(['emails'=>$emails],200);
 
     }
 
