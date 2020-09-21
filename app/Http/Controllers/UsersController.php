@@ -116,9 +116,19 @@ class UsersController extends Controller
         );
 
         $user = Auth::user();
+        $full_name = $user->first_name.' '.$user->last_name;
+
+        $inst = Inst::where('insts.id', $inst_id)
+                    ->select('insts.name')
+                    ->first();
+
+        $inst_name = $inst->name;
 
         Notification::route('mail', $email)
-                    ->notify(new UserInviteNotification($url, $user));
+                    ->notify(new UserInviteNotification($url, $full_name, $inst_name));
+
+        // Notification::route('mail', $email)
+        //             ->notify(new UserInviteNotification($url));
 
     }
 
