@@ -13,17 +13,12 @@ class StatusesTableSeeder extends Seeder
     {
         $data = [
             [
-                'status' => 'Ongoing',
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
                 'status' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
             [
-                'status' => 'Draft',
+                'status' => NULL,
                 "created_at" => now(),
                 "updated_at" => now(),
             ],

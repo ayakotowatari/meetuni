@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         // $this->call(CategoriesTableSeeder::class);
         // $this->call(CountriesTableSeeder::class);
         // $this->call(InstsTableSeeder::class);
-        $this->call(EventsTableSeeder::class);
+        // $this->call(EventsTableSeeder::class);
         // $this->call(InstTypesTableSeeder::class);
         // $this->call(LevelsTableSeeder::class);
         // $this->call(RegionsTableSeeder::class);
-        // $this->call(StatusesTableSeeder::class);
+        $this->call(StatusesTableSeeder::class);
         // $this->call(SubjectsTableSeeder::class);
         // $this->call(UserTypesTableSeeder::class);
         // $this->call(YearsTableSeeder::class);

@@ -1,0 +1,8 @@
+明日やること：
+Send Emails to Participants を、Draft Emails to Participantsに変更。
+最初は、日時を入れずに、内容だけ。そのあとDraftとして保存。
+Communidationsのリストから、Draftを、Scheduleに変える。
+その時に、日時を入力する。
+それからQueueに入れる。
+
+イベントがPublishされたら、Notificationsが送られる。

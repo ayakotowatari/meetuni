@@ -40,7 +40,7 @@ import moment from 'moment-timezone'
 import EventHeader from '../parts/EventHeaderComponent'
 import DashboardMenu from '../dashboard/DashboardMenuComponent'
 import ParticipantsList from './ParticipantsListComponent'
-import EmailToParticipantDialog from './EmailToParticipantDialogComponent'
+import EmailToParticipantsDialog from './EmailToParticipantsDialogComponent'
 
 import { mapState, mapMutations } from 'vuex'
 
@@ -50,7 +50,7 @@ export default {
         EventHeader,
         DashboardMenu,
         ParticipantsList,
-        EmailToParticipantDialog
+        EmailToParticipantsDialog
     },
     data: function(){
         return{
@@ -83,12 +83,12 @@ export default {
 
     },
     computed: {
-        ...mapState ([
+        ...mapState ('notifications', [
             'dialog'
         ])
     },
     methods: {
-        ...mapMutations ({
+        ...mapMutations ('notifications', {
             showDialog: 'showDialog',
         })
         // fetchEventParticipants: function(){
