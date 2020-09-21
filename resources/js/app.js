@@ -42,6 +42,7 @@ Vue.component('editeventfile-component', require('./components/inst/events/edit/
 Vue.component('addmemberdialog-component', require('./components/inst/team/AddMemberDialogComponent.vue').default);
 Vue.component('memberslist-component', require('./components/inst/team/MembersListComponent.vue').default);
 Vue.component('deletememberdialog-component', require('./components/inst/team/DeleteMemberDialogComponent.vue').default);
+Vue.component('emailtoparticipantdialog-component', require('./components/inst/participants/EmailToParticipantDialogComponent.vue').default);
 
 //Chart
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
