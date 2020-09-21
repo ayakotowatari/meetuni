@@ -83,12 +83,12 @@ export default {
 
     },
     computed: {
-        ...mapState ([
+        ...mapState ('notifications', [
             'dialog'
         ])
     },
     methods: {
-        ...mapMutations ({
+        ...mapMutations ('notifications', {
             showDialog: 'showDialog',
         })
         // fetchEventParticipants: function(){

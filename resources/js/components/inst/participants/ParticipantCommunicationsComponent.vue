@@ -1,0 +1,40 @@
+<template>
+    <v-container>
+        <v-row class="mb-8">
+                <v-col col="12" sm="12" md="8">
+                    <eventheader-component></eventheader-component>
+                </v-col>
+            </v-row>
+            <v-row class="mb-8">
+                <h1 class="grey--text mb-6">Communications</h1>
+                <v-spacer></v-spacer>
+                <v-col col="12" sm="12" md="2">
+                    <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
+                </v-col>
+        </v-row>
+    </v-container>
+</template>
+
+<script>
+import EventHeader from '../parts/EventHeaderComponent'
+import DashboardMenu from '../dashboard/DashboardMenuComponent'
+
+export default {
+    components: {
+        EventHeader,
+        DashboardMenu,
+    },
+    data: function(){
+        return{
+                id: this.$route.params.id,
+                
+            }
+
+    },
+
+}
+</script>
+
+<style>
+
+</style>

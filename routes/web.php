@@ -93,15 +93,19 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 
+// Notifications
+Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');
+
+
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');
 // Route::get('/inst/image/test', 'ImagesController@index');
 // Route::get ('/inst/image/get', 'ImagesController@displayImage')-> name('inst.show');
 // Route::get ('/inst/create-event', 'ImagesController@testshow')-> name('inst.show');
 // Route::post('inst/region', 'RegionsController@test');
-Route::get('/inst/testform', 'ImagesController@testform');
-Route::post('/inst/testform', 'ImagesController@addTestform');
-Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
+// Route::get('/inst/testform', 'ImagesController@testform');
+// Route::post('/inst/testform', 'ImagesController@addTestform');
+// Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
 //テスト終わる
 
 //             //

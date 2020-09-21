@@ -36,7 +36,7 @@
                             <v-row justify="center">
                                 <v-col cols="12" sm="12" md="6">
                                     <v-text-field 
-                                        v-model= "respondEmail" 
+                                        v-model= "email" 
                                         label="Respond-to Email" 
                                         :rules="emailRules"
                                         required
@@ -90,7 +90,7 @@
                                         v-model="menu2"
                                         :close-on-content-click="false"
                                         :nudge-right="40"
-                                        :return-value.sync="start_time"
+                                        :return-value.sync="time"
                                         transition="scale-transition"
                                         offset-y
                                         max-width="290px"
@@ -139,8 +139,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="grey" text @click="closeDialog">Not Now</v-btn>
-                <v-btn color="blue darken-1" text @click="bookEvent">Schedule</v-btn>
+                <v-btn color="grey" text @click="closeDialog">Discard</v-btn>
+                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
             </v-card-actions>
             </v-card>
         </v-dialog>
@@ -148,52 +148,74 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
-    data: () => ({
-        subject: '',
-        subjectRules: [
-        v => !!v || 'Subject is required',
-        ],
-        body: '',
-        textareaRules: [
-            v => !!v || v.length <= 300 || 'Max 300 characters'
-        ],
-        respondEmail: '',
-        emailRules: [
-            (v) => !!v || 'E-mail is required',
-            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-        ],
-        confirmemailRules: [
-            (v) => !!v || 'Confirmation E-mail is required',
-            (v) => v == this.email || 'E-mail must match'
-        ],
-        menu: false,
-        date: null,
-        dateRules: [
-            v => !!v || 'Date is required',
-        ],
-        menu2: false,
-        time: null,
-        timeRules: [
-            v => !!v || 'Time is required',
-        ],
-        timezone: '',
-        timezoneRules: [
-        v => !!v || 'Timezone is required',
-        ],
-        allerror: []
-    }),
+    data: function(){
+        return {
+            id: this.$route.params.id,
+            subject: '',
+            subjectRules: [
+            v => !!v || 'Subject is required',
+            ],
+            body: '',
+            textareaRules: [
+                v => !!v || v.length <= 300 || 'Max 300 characters'
+            ],
+            respondEmail: '',
+            email: '',
+            emailRules: [
+                (v) => !!v || 'E-mail is required',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            ],
+            confirmemailRules: [
+                (v) => !!v || 'Confirmation E-mail is required',
+                (v) => v == this.email || 'E-mail must match'
+            ],
+            menu: false,
+            date: null,
+            dateRules: [
+                v => !!v || 'Date is required',
+            ],
+            menu2: false,
+            time: null,
+            timeRules: [
+                v => !!v || 'Time is required',
+            ],
+            timezone: '',
+            timezoneRules: [
+            v => !!v || 'Timezone is required',
+            ],
+        }
+    },
     computed: {
-        ...mapState([
-            'dialog'
+        ...mapState('notifications',[
+            'dialog',
+            'allerror'
         ])
     },
     methods: {
-        ...mapMutations({
+        ...mapMutations('notifications', {
             closeDialog: 'closeDialog'
         }),
+        ...mapActions('notifications',[
+            'saveEmailToParticipants'
+        ]),
+        save(){
+
+            if(this.$refs.form.validate()){
+                this.saveEmailToParticipants({
+                    event_id: this.id,
+                    subject: this.subject,
+                    body_text: this.body,
+                    respond_email: this.email,
+                    scheduled_date: this.date,
+                    scheduled_time: this.time,
+                    timezone: this.timezone
+                })
+            }
+            
+        },
         allowedSteps: m => m % 10 === 0,
     }
 }

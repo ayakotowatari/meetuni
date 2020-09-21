@@ -9,6 +9,7 @@ import { participants } from './modules/participants';
 import { participantcharts } from './modules/participantcharts';
 import { student } from './modules/student';
 import { studentaccount } from './modules/studentaccount';
+import { notifications } from './modules/notifications';
 
 export default new Vuex.Store ({
 
@@ -624,6 +625,7 @@ export default new Vuex.Store ({
         participantcharts,
         student,
         studentaccount,
+        notifications
     }
 
 })

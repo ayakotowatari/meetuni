@@ -14,6 +14,7 @@ import ParticipantStatistics from "./components/inst/participants/ParticipantSta
 import Team from "./components/inst/team/TeamComponent";
 import AddMembers from "./components/inst/team/AddMembersComponent";
 import InstProfile from "./components/inst/profile/InstProfileComponent";
+import ParticipantCommunications from "./components/inst/participants/ParticipantCommunicationsComponent";
 
 
 //テスト
@@ -75,6 +76,11 @@ const routes = [
         path: "/inst/profile",
         name: "inst-profile",
         component: InstProfile
+    },
+    {
+        path: "/inst/participant-communications/:id",
+        name: "participant-communications",
+        component: ParticipantCommunications
     },
     // //テスト
     // {
