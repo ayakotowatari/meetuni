@@ -95,6 +95,7 @@ Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 
 // Notifications
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');
+Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsController@fetchList');
 
 
 // テスト

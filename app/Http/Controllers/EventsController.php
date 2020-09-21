@@ -387,7 +387,7 @@ class EventsController extends Controller
         $event->image = Null;
 
         $event->capacity_id = 1;
-        $event->status_id = 3;
+        $event->status_id = 5;
         $event->user_id = $user_id;
 
         $event->save();
@@ -640,7 +640,7 @@ class EventsController extends Controller
 
     public function unpublishEvent(Request $request, $id)
     {
-        $status_id = 3;
+        $status_id = 5;
 
         Event::where('events.id', $id)
         ->update([ 

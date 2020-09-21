@@ -5,11 +5,15 @@ export const notifications = {
 
     state: {
 
+        requestedEmails: [],
         dialog: false,
         allerror: [],
         
     },
     mutations: {
+        setRequestedEmails(state, payload){
+            state.requestedEmails = payload;
+        },
         showDialog(state){
             state.dialog = true;
         },
@@ -48,6 +52,18 @@ export const notifications = {
                     commit('setallErrors', allerror)
                 )
         },
+        async fetchEmailsToParticipantsList({commit}, payload){
+
+            let requestedEmails = [];
+
+            await axios
+                .get('/inst/emailstoparticipants-liast' + payload.id)
+                .then(response => {
+                    requestedEmails = response.data.emails;
+                    commit('setRequestedEmails', requestedEmails);
+                })
+
+        }
 
     }
 

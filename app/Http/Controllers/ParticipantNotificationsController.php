@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Notification;
+use App\Notifications\EmailToParticipants;
+use Carbon\Carbon;
+
 use App\Models\ParticipantNotification;
+use App\Models\Booking;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ParticipantNotificationsController extends Controller
@@ -47,10 +53,11 @@ class ParticipantNotificationsController extends Controller
         ]);
 
         $user_id = Auth::user()->id;
+        $event_id = request('event_id');
 
         $notification = new ParticipantNotification();
         $notification->user_id = $user_id;
-        $notification->event_id = request('event_id');
+        $notification->event_id = $event_id;
         $notification->subject = request('subject');
         $notification->body_text = request('body_text');
         $notification->respond_email = request('respond_email');
@@ -73,6 +80,36 @@ class ParticipantNotificationsController extends Controller
                             ->update([ 
                                 'time_utc' => $datetime
                             ]);
+    }
+
+    public function fetchList(Request $request, $id)
+    {
+        $emails = ParticipantNotification::where('event_id', $id)
+                                        ->first();
+
+    }
+
+    public function sendEmailToParticipants ()
+    {
+
+        //Notificationを送る準備
+
+        $participants = Booking::join('students', 'bookings.student_id', '=', 'students.id')
+                                ->where('bookings.event_id', $event_id)
+                                ->where('bookings.cancelled', '0')
+                                ->get();
+
+        $time = ParticipantNotification::where('event_id', $event_id)
+                                        ->select('time_utc')
+                                        ->first();
+
+        $when = Carbon::parse($time->time_utc);
+
+        foreach($participants as $participant){
+
+            Notification::send($participant, new EmailToParticipants())->delay($when);
+
+        }
     }
 
     /**

@@ -27,12 +27,13 @@ class CreateParticipantNotificationsTable extends Migration
             $table->string('scheduled_time');
             $table->string('time_utc')->nullable();
             $table->string('timezone', 191);
-            $table->integer('scheduled');
+            $table->bigInteger('status_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign("user_id")->references("id")->on("users");
             $table->foreign("event_id")->references("id")->on("events");
+            $table->foreign("status_id")->references("id")->on("statuses");
 
         });
     }
