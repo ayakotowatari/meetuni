@@ -64,6 +64,31 @@ class ParticipantNotificationsController extends Controller
 
     }
 
+    public function fetchList()
+    {
+        $user_id = Auth::user()->id;
+
+        $emails = ParticipantNotification::join('statuses', 'participant_notifications.status_id', '=', 'statuses.id')
+                                        ->join('events', 'participant_notifications.event_id', '=', 'events.id')
+                                        ->where('participant_notifications.user_id', $user_id)
+                                        ->select(
+                                            'events.id',
+                                            'events.title', 
+                                            'participant_notifications.user_id',  
+                                            'participant_notifications.scheduled_date',  
+                                            'participant_notifications.scheduled_time',  
+                                            'participant_notifications.time_utc',  
+                                            'participant_notifications.timezone', 
+                                            'statuses.status'
+                                        )
+                                        ->get();
+
+        // DD($emails);
+
+        return response()->json(['emails'=>$emails],200);
+
+    }
+
     public function schedule(Request $request)
     {
         $request->validate([
@@ -92,36 +117,36 @@ class ParticipantNotificationsController extends Controller
         $notification->time_utc = $datetime;
         $notification->save();
 
+        return redirect ('/inst/send-emailstoparticipants');
+
     }
 
 
-    public function fetchList()
+    public function test()
     {
-        $user_id = Auth::user()->id;
+        // $user_id = Auth::user()->id;
+        // $event = ParticipantNotification::latest('updated_at')
+        //                                 ->where('user_id', $user_id)
+        //                                 ->select('event_id')
+        //                                 ->first();
+        // // DD($event);
 
-        $emails = ParticipantNotification::join('statuses', 'participant_notifications.status_id', '=', 'statuses.id')
-                                        ->join('events', 'participant_notifications.event_id', '=', 'events.id')
-                                        ->where('participant_notifications.user_id', $user_id)
-                                        ->select(
-                                            'events.id',
-                                            'events.title', 
-                                            'participant_notifications.user_id',  
-                                            'participant_notifications.subject',  
-                                            'participant_notifications.body_text',  
-                                            'participant_notifications.respond_email',  
-                                            'participant_notifications.scheduled_date',  
-                                            'participant_notifications.scheduled_time',  
-                                            'participant_notifications.time_utc',  
-                                            'participant_notifications.timezone', 
-                                            'statuses.status'
-                                        )
-                                        ->get();
+        // $event_id = $event->event_id;
+        // // DD($event_id);
 
-        // DD($emails);
+        // $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
+        //                     ->where('bookings.event_id', $event_id)
+        //                     ->where('bookings.cancelled', '0')
+        //                     ->select('students.email')
+        //                     ->get();
 
-        return response()->json(['emails'=>$emails],200);
+        $students = Student::all();
+
+        DD($students);     
 
     }
+
+   
 
     public function sendEmailToParticipants ()
     {

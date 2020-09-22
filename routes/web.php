@@ -97,6 +97,7 @@ Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');
 Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsController@fetchList');
 Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsController@schedule');
+Route::get('/inst/send-emailstoparticipants', 'StudentsController@sendEmailsToParticipants');
 
 
 // テスト
@@ -108,6 +109,7 @@ Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsCont
 // Route::get('/inst/testform', 'ImagesController@testform');
 // Route::post('/inst/testform', 'ImagesController@addTestform');
 // Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
+Route::get('/inst/test', 'ParticipantNotificationsController@test');
 //テスト終わる
 
 //             //

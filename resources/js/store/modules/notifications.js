@@ -87,7 +87,8 @@ export const notifications = {
                     timezone: payload.timezone
                 })
                 .then(response => {
-                    commit('closeDialog');
+                    commit('closeDialogForSchedule');
+                    router.go();
                 })
                 .catch(error => 
                     allerror = error.response.data.errors,

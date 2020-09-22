@@ -11,3 +11,5 @@ It should have a method where an error message will be processed if the user alr
 3. The would-be admin will receive a notification with an accept button/URL. 
 This will redirect the intended user to the registration form.
 
+
+

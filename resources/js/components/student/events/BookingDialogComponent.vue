@@ -51,6 +51,7 @@
                 </v-container>
                 <small>*indicates required field</small>
                 <p>By clicking 'Register', I accept the Terms of Services and have read the Privacy Policy. I agree that the MeetUni may share my information with the event organizer.</p>
+                <span>{{ event.id }}</span>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -93,7 +94,8 @@ export default {
     },
     computed: {
         ...mapState('studentaccount', [
-            'allerror'
+            'allerror', 
+            'eventId'
         ]),
     },
     methods: {
@@ -104,9 +106,11 @@ export default {
             'registerEvent'
         ]),
         bookEvent(){
+            console.log('check');
+          
             if(this.$refs.form.validate()){
                 this.registerEvent({
-                    event_id: this.event.id,
+                    event_id: this.eventId,
                     first_name: this.first_name,
                     last_name: this.last_name,
                     email: this.email
