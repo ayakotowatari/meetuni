@@ -84,12 +84,12 @@ class ParticipantNotificationsController extends Controller
         $time = request('scheduled_time');
         $notification->scheduled_time = $time;
         $notification->timezone = request('timezone');
+        $notification->status_id = 2;
+        $notification->save();
 
         //UTCへ変換
         $datetime = $date.' '.$time.':00';
         $notification->time_utc = $datetime;
-
-        $notification->status_id = 2;
         $notification->save();
 
     }
