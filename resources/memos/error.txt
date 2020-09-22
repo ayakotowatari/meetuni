@@ -1,3 +1,5 @@
+//現在出ているエラー
+
 Illuminate\Database\Eloquent\ModelNotFoundException: No query results for model [App\Models\Student]. in /Applications/MAMP/htdocs/my-product/meetuni/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php:470
 Stack trace:
 #0 /Applications/MAMP/htdocs/my-product/meetuni/vendor/laravel/framework/src/Illuminate/Queue/SerializesAndRestoresModelIdentifiers.php(102): Illuminate\Database\Eloquent\Builder->firstOrFail()
@@ -29,6 +31,7 @@ Stack trace:
 #26 {main}
 
 //試しに、$students = Student::all();としたときのエラー
+
 BadMethodCallException: Call to undefined method App\Models\Student::routeNotificationFor() in /Applications/MAMP/htdocs/my-product/meetuni/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php:50
 Stack trace:
 #0 /Applications/MAMP/htdocs/my-product/meetuni/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(36): Illuminate\Database\Eloquent\Model::throwBadMethodCallException('routeNotificati...')
