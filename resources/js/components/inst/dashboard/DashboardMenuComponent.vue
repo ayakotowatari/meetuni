@@ -33,7 +33,7 @@ export default {
       links: [
                 { icon: 'mdi-view-dashboard-variant-outline', text: 'Dashboard', route: 'dashboard' },
                 { icon: 'mdi-account-group-outline', text: 'Manage Participants', route: 'manage-participants' },
-                { icon: 'mdi-email-outline', text: 'Communications', route: 'participant-communications' },
+                // { icon: 'mdi-email-outline', text: 'Communications', route: 'participant-communications' },
                 { icon: 'mdi-chart-line', text: 'Participant Statistics', route: 'participant-statistics' },
              ],
   }),

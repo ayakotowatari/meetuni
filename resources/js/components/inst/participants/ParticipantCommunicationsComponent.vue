@@ -2,47 +2,39 @@
     <div>
         <emailtoparticipantsdialog-component
             v-bind:dialog="dialog"
+            v-bind:user="user"
         ></emailtoparticipantsdialog-component>
         <v-container>
-            <v-row class="mb-8">
-                    <v-col col="12" sm="12" md="8">
-                        <eventheader-component></eventheader-component>
-                    </v-col>
-                </v-row>
-                <v-row class="mb-8">
-                    <h1 class="grey--text mb-6">Communications</h1>
-                    <v-spacer></v-spacer>
-                    <v-col col="12" sm="12" md="2">
-                        <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
-                    </v-col>
-            </v-row>
+            <h1 class="grey--text mb-6">Communications</h1>
             <v-btn 
                 color="primary"
                 outlined
                 class='mb-6'
                 @click="showDialog"
-            >Send emails to registrants</v-btn>
+            >Draft emails to registrants</v-btn>
             <emailtoparticipantslist-component
                 v-bind:emails="requestedEmails"
+                v-bind:dialog="dialogForSchedule"
             ></emailtoparticipantslist-component>
         </v-container>
     </div>
 </template>
 
 <script>
-import EventHeader from '../parts/EventHeaderComponent'
-import DashboardMenu from '../dashboard/DashboardMenuComponent'
 import EmailToParticipantsDialog from './EmailToParticipantsDialogComponent'
 import EmailToParticipantsList from './EmailToParticipantsListComponent'
+import ScheduleEmailDialog from './ScheduleEmailDialogComponent'
 
 import { mapState, mapMutations } from 'vuex'
 
 export default {
     components: {
-        EventHeader,
-        DashboardMenu,
         EmailToParticipantsDialog,
-        EmailToParticipantsList
+        EmailToParticipantsList,
+        ScheduleEmailDialog
+    },
+    props: {
+        user: Object
     },
     data: function(){
         return{
@@ -51,13 +43,12 @@ export default {
 
     },
     mounted(){
-        this.$store.dispatch('notifications/fetchEmailsToParticipantsList', {
-            id: this.id
-        });
+        this.$store.dispatch('notifications/fetchEmailsToParticipantsList');
     },
     computed: {
         ...mapState('notifications', [
             'dialog',
+            'dialogForSchedule',
             'requestedEmails'
         ])
     },

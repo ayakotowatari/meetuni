@@ -78,7 +78,7 @@ const routes = [
         component: InstProfile
     },
     {
-        path: "/inst/participant-communications/:id",
+        path: "/inst/participant-communications",
         name: "participant-communications",
         component: ParticipantCommunications
     },

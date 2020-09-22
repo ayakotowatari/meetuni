@@ -47,9 +47,6 @@ class ParticipantNotificationsController extends Controller
             'subject' => 'required | max:191',
             'body_text' => 'required | max:600',
             'respond_email' => 'required',
-            'scheduled_date' => 'required',
-            'scheduled_time' => 'required',
-            'timezone' => 'required',
         ]);
 
         $user_id = Auth::user()->id;
@@ -61,40 +58,60 @@ class ParticipantNotificationsController extends Controller
         $notification->subject = request('subject');
         $notification->body_text = request('body_text');
         $notification->respond_email = request('respond_email');
-
-        $date = request('scheduled_date');
-        $notification->scheduled_date = $date;
-        $time = request('scheduled_time');
-        $notification->scheduled_time = $time;
-
-        $notification->timezone = request('timezone');
         $notification->status_id= 5;
 
         $notification->save();
 
+    }
+
+    public function schedule(Request $request)
+    {
+        $request->validate([
+            'event_id' => 'required',
+            'scheduled_date' => 'required',
+            'scheduled_time' => 'required',
+            'timezone' => 'required',
+        ]);
+
+        $user_id = Auth::user()->id;
+        $event_id = request('event_id');
+
+        $date = request('scheduled_date');
+        $time = request('scheduled_time');
+        $timezone = request('timezone');
+
         //UTCへ変換
         $datetime = $date.' '.$time.':00';
 
-        ParticipantNotification::latest('created_at')
-                            ->where('user_id', $user_id)
+        ParticipantNotification::where('event_id', $event_id)
                             ->update([ 
-                                'time_utc' => $datetime
+                                'scheduled_date' => $date,
+                                'scheduled_time' => $time,
+                                'time_utc' => $datetime,
+                                'timezone' => $timezone,
+                                'status_id' => 2
                             ]);
     }
 
-    public function fetchList(Request $request, $id)
+
+    public function fetchList()
     {
+        $user_id = Auth::user()->id;
+
         $emails = ParticipantNotification::join('statuses', 'participant_notifications.status_id', '=', 'statuses.id')
                                         ->join('events', 'participant_notifications.event_id', '=', 'events.id')
-                                        ->where('event_id', $id)
+                                        ->where('participant_notifications.user_id', $user_id)
                                         ->select(
+                                            'events.id',
                                             'events.title', 
-                                            'participant_notifications.scheduled.date',  
-                                            'participant_notifications.scheduled.time',  
+                                            'participant_notifications.scheduled_date',  
+                                            'participant_notifications.scheduled_time',  
                                             'participant_notifications.timezone', 
                                             'statuses.status'
                                         )
-                                        ->first();
+                                        ->get();
+
+        // DD($emails);
 
         return response()->json(['emails'=>$emails],200);
 
@@ -104,7 +121,6 @@ class ParticipantNotificationsController extends Controller
     {
 
         //Notificationを送る準備
-
         $participants = Booking::join('students', 'bookings.student_id', '=', 'students.id')
                                 ->where('bookings.event_id', $event_id)
                                 ->where('bookings.cancelled', '0')
