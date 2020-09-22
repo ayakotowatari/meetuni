@@ -109,7 +109,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     props: {
         dialog: Boolean,
-        event_id: String
+        event_id: Number,
     },
     data: function(){
         return {

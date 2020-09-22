@@ -61,7 +61,7 @@ export default {
                 },
                 { text: 'Status', value: 'status' },
                 { text: 'Schedule', value: 'schedule' },
-                { text: 'Scheduled Date', value: 'scheduled_date' },
+                { text: 'Delivery Date', value: 'scheduled_date' },
                 { text: 'Time', value: 'scheduled_time' },
                 { text: 'Timezone', value: 'timezone' },
                 { text: 'Edit', value: 'edit' }

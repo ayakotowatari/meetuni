@@ -73,24 +73,25 @@ class ParticipantNotificationsController extends Controller
             'timezone' => 'required',
         ]);
 
-        $user_id = Auth::user()->id;
+
         $event_id = request('event_id');
 
+        $notification = ParticipantNotification::where('event_id', $event_id)
+                                                ->first();
+
         $date = request('scheduled_date');
+        $notification->scheduled_date = $date;
         $time = request('scheduled_time');
-        $timezone = request('timezone');
+        $notification->scheduled_time = $time;
+        $notification->timezone = request('timezone');
 
         //UTCへ変換
         $datetime = $date.' '.$time.':00';
+        $notification->time_utc = $datetime;
 
-        ParticipantNotification::where('event_id', $event_id)
-                            ->update([ 
-                                'scheduled_date' => $date,
-                                'scheduled_time' => $time,
-                                'time_utc' => $datetime,
-                                'timezone' => $timezone,
-                                'status_id' => 2
-                            ]);
+        $notification->status_id = 2;
+        $notification->save();
+
     }
 
 
@@ -104,8 +105,13 @@ class ParticipantNotificationsController extends Controller
                                         ->select(
                                             'events.id',
                                             'events.title', 
+                                            'participant_notifications.user_id',  
+                                            'participant_notifications.subject',  
+                                            'participant_notifications.body_text',  
+                                            'participant_notifications.respond_email',  
                                             'participant_notifications.scheduled_date',  
                                             'participant_notifications.scheduled_time',  
+                                            'participant_notifications.time_utc',  
                                             'participant_notifications.timezone', 
                                             'statuses.status'
                                         )
