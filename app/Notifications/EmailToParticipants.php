@@ -6,19 +6,29 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Carbon\Carbon;
 
 class EmailToParticipants extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $students;
+    protected $message;
+    protected $subject; 
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($students, $message, $subject)
     {
-        //
+        
+        $this->students = $students;
+        $this->message = $message;
+        $this->subject = $subject;
+
+        // $this->delay(Carbon::parse($message->time_utc));
     }
 
     /**
@@ -42,8 +52,8 @@ class EmailToParticipants extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->from(config('mail.from.address'))
-                    ->subject('The introduction to the notification.')
-                    ->markdown('emails.email_to_participants');
+                    ->subject($this->subject)
+                    ->markdown('emails.email_to_participants', ['message' => $this->message]);
     }
 
     /**
