@@ -1,7 +1,7 @@
 <template>
     <div>
         <bookingdialog-component 
-            v-bind:dialog="dialog"
+            v-bind:dialog="bookingDialog"
             v-bind:event="event"
             v-bind:user="user"
         ></bookingdialog-component>
@@ -88,12 +88,11 @@
                 </v-col>
             </v-row>
             <v-btn 
-                v-if="isBooked==false"
                 class="ma-2 hidden-sm-and-down" 
                 dark     
                 block
                 color="primary"
-                @click="showDialog"
+                @click="showDialog(event.id)"
             >Book</v-btn>
              <v-btn 
                 v-if="isBooked"
@@ -156,18 +155,25 @@ export default {
             'inst',
             'dialog',
             'followDialog',
+            'bookingDialog',
             'isFollowed',
             'isBooked'
         ])
     },
     methods: {
         ...mapMutations('studentaccount', {
-            showDialog: 'showDialog',
+            // showDialog: 'showDialog',
         }),
         ...mapActions('studentaccount', [
             'followInst',
-            'unfollowInst'
+            'unfollowInst',
+            'showDialogForBooking'
         ]),
+        showDialog(id){
+            this.showDialogForBooking({
+                event_id: id
+            })
+        },
         follow(id, user_id){
             console.log(id);
             console.log(user_id);

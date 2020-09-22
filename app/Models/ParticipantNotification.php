@@ -30,4 +30,5 @@ class ParticipantNotification extends Model
     //     $datetime->setTimezone('UTC');
     //     $this->attributes['time_utc'] = $datetime;
     // }
+
 }

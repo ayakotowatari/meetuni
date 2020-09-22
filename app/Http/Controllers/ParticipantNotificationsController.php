@@ -117,63 +117,32 @@ class ParticipantNotificationsController extends Controller
         $notification->time_utc = $datetime;
         $notification->save();
 
-        //Notificationを送る準備
-
-        $user_id = Auth::user()->id;
-        $event = ParticipantNotification::latest('updated_at')
-                                        ->where('user_id', $user_id)
-                                        ->select('event_id')
-                                        ->first();
-
-        $event_id = $event->event_id;
-
-        $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
-                            ->where('bookings.event_id', $event_id)
-                            ->where('bookings.cancelled', '0')
-                            ->select('students.email')
-                            ->get();
-
-        // メッセージに含める変数
-        $message = ParticipantNotification::where('event_id', $event_id)
-                                            ->first();
-
-        $subject = $message->subject;
-
-        // $when = Carbon::parse($message->time_utc);
-
-        Notification::send($students, new EmailToParticipants($students, $message, $subject));
-
-        // foreach($students as $student){
-
-        //     Notification::send($student, new EmailToParticipants($student, $message, $subject));
-
-        // }
+        return redirect ('/inst/send-emailstoparticipants');
 
     }
 
+
     public function test()
     {
-        $user_id = Auth::user()->id;
-        $event = ParticipantNotification::latest('updated_at')
-                                        ->where('user_id', $user_id)
-                                        ->select('event_id')
-                                        ->first();
-        // DD($event);
+        // $user_id = Auth::user()->id;
+        // $event = ParticipantNotification::latest('updated_at')
+        //                                 ->where('user_id', $user_id)
+        //                                 ->select('event_id')
+        //                                 ->first();
+        // // DD($event);
 
-        $event_id = $event->event_id;
-        // DD($event_id);
+        // $event_id = $event->event_id;
+        // // DD($event_id);
 
-        $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
-                            ->where('bookings.event_id', $event_id)
-                            ->where('bookings.cancelled', '0')
-                            ->select('students.email')
-                            ->get();
+        // $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
+        //                     ->where('bookings.event_id', $event_id)
+        //                     ->where('bookings.cancelled', '0')
+        //                     ->select('students.email')
+        //                     ->get();
 
-        DD($students);
+        $students = Student::all();
 
-                           
-
-      
+        DD($students);     
 
     }
 

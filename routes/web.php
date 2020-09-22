@@ -97,6 +97,7 @@ Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartData');
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');
 Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsController@fetchList');
 Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsController@schedule');
+Route::get('/inst/send-emailstoparticipants', 'StudentsController@sendEmailsToParticipants');
 
 
 // テスト
