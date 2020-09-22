@@ -1,8 +1,9 @@
 <template>
     <div>
-        <emailtoparticipantdialog-component
+        <emailtoparticipantsdialog-component
             v-bind:dialog="dialog"
-        ></emailtoparticipantdialog-component>
+            v-bind:user="user"
+        ></emailtoparticipantsdialog-component>
         <v-container>
             <v-row class="mb-8">
                 <v-col col="12" sm="12" md="8">
@@ -21,7 +22,7 @@
                 outlined
                 class='mb-6'
                 @click="showDialog"
-            >Send emails to registrants</v-btn>
+            >Draft emails to registrants</v-btn>
             <v-row justify="center" class="mb-6">
                 <v-col cols="12" sm="12" md="12">
                     <h2 class="grey--text text--darken-1">Participants List</h2>
@@ -51,6 +52,9 @@ export default {
         DashboardMenu,
         ParticipantsList,
         EmailToParticipantsDialog
+    },
+    props: {
+        user: Object
     },
     data: function(){
         return{

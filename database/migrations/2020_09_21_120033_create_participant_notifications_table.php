@@ -23,10 +23,10 @@ class CreateParticipantNotificationsTable extends Migration
             $table->text('body_text2', 600)->nullable();
             $table->text('body_text3', 600)->nullable();
             $table->string('respond_email', 191);
-            $table->string('scheduled_date');
-            $table->string('scheduled_time');
+            $table->string('scheduled_date')->nullable();
+            $table->string('scheduled_time')->nullable();
             $table->string('time_utc')->nullable();
-            $table->string('timezone', 191);
+            $table->string('timezone', 191)->nullable();
             $table->bigInteger('status_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

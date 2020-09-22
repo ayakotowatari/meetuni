@@ -12,16 +12,22 @@ class ParticipantNotification extends Model
      public function setTimeUtcAttribute($value) {
 
         $user_id = Auth::user()->id;
-
-        $notification = ParticipantNotification::where('user_id', $user_id)
-                                        ->where('scheduled_time', $value)
-                                        ->first();
-
-        $timezone = $notification->timezone;
+        
+        $timezone = $this->timezone;
 
         //DBに保存するtimezoneはUTC
         $datetime = new Carbon($value, $timezone);
         $datetime->setTimezone('UTC');
         $this->attributes['time_utc'] = $datetime;
     }
+
+    // public function setTimeUtcAttribute($value) {
+
+    //     $user_id = Auth::user()->id;
+
+    //     //DBに保存するtimezoneはUTC
+    //     $datetime = new Carbon($value, Auth::user()->timezone);
+    //     $datetime->setTimezone('UTC');
+    //     $this->attributes['time_utc'] = $datetime;
+    // }
 }
