@@ -15,9 +15,6 @@ use App\Models\StudentSubject;
 use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
 
-use Notification;
-use App\Notifications\EmailToParticipants;
-
 class StudentsController extends Controller
 {
     /**
@@ -101,51 +98,6 @@ class StudentsController extends Controller
             $student_subjects->subject_id = $subject;
             $student_subjects->save();
         }
-    }
-
-    public function sendEmailsToParticipants()
-    {
-        //Notificationを送る準備
-
-        $user = Auth::user()->id;
-        $event = ParticipantNotification::latest('updated_at')
-                                        ->where('user_id', $user_id)
-                                        ->select('event_id')
-                                        ->first();
-
-        $event_id = $event->event_id;
-
-        // $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
-        //                     ->where('bookings.event_id', $event_id)
-        //                     ->where('bookings.cancelled', '0')
-        //                     ->get();
-
-        // $students = Student::with('bookings')
-        //                     ->where('event_id', $event_id)
-        //                     ->where('cancelled', '0')
-        //                     ->get();
-
-        $students = Booking::with('students')
-                            ->where('event_id', $event_id)
-                            ->where('cancelled', 0)
-                            ->get();
-
-        // $students = Student::all();
-
-        // メッセージに含める変数
-        $message = ParticipantNotification::where('event_id', $event_id)
-                                            ->first();
-
-        $subject = $message->subject;
-
-        foreach($students as $student){
-
-            Notification::send($student, new EmailToParticipants($student, $message, $subject));
-
-        }
-
-       
-
     }
 
     public function index()

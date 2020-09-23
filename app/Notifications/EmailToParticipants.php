@@ -12,23 +12,25 @@ class EmailToParticipants extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $student;
+    protected $booking;
     protected $message;
     protected $subject; 
+    protected $event_detail; 
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($student, $message, $subject)
+    public function __construct($booking, $message, $subject, $event_detail)
     {
         
-        $this->student = $student;
+        $this->booking = $booking;
         $this->message = $message;
         $this->subject = $subject;
+        $this->event_detail = $event_detail;
 
-        // $this->delay(Carbon::parse($message->time_utc));
+        $this->delay(Carbon::parse($message->time_utc));
     }
 
     /**
@@ -53,7 +55,7 @@ class EmailToParticipants extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->from(config('mail.from.address'))
                     ->subject($this->subject)
-                    ->markdown('emails.email_to_participants', ['message' => $this->message]);
+                    ->markdown('emails.email_to_participants', ['message' => $this->message, 'event'=>$this->event_detail]);
     }
 
     /**
