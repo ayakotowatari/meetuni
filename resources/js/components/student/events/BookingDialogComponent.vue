@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
             <v-card-title>
-                <span class="headline">Event Booking</span>
+                <span class="headline">Event Booking uomo</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -56,7 +56,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey" text @click="closeDialog">Not Now</v-btn>
-                <v-btn color="blue darken-1" text @click="bookEvent">Register</v-btn>
+                <v-btn color="blue darken-1" text @click="book">Register</v-btn>
             </v-card-actions>
             </v-card>
         </v-dialog>
@@ -103,13 +103,13 @@ export default {
             closeDialog: 'closeDialog'
         }),
         ...mapActions('studentaccount', [
-            'registerEvent'
+            'bookEvent'
         ]),
-        bookEvent(){
+        book(){
             console.log('check');
           
             if(this.$refs.form.validate()){
-                this.registerEvent({
+                this.bookEvent({
                     event_id: this.eventId,
                     first_name: this.first_name,
                     last_name: this.last_name,
