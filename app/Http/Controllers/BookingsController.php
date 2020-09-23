@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Booking;
 use App\Models\Event;
+use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
+use Notification;
+use App\Notifications\EmailToParticipants;
+
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use DatePeriod;
@@ -75,6 +79,55 @@ class BookingsController extends Controller
         return response()->json(['participants'=>$participants],200);
 
     }
+
+    public function sendEmailsToParticipants()
+    {
+        //Notificationを送る準備
+
+        $user_id = Auth::user()->id;
+        $event = ParticipantNotification::latest('updated_at')
+                                        ->where('user_id', $user_id)
+                                        ->select('event_id')
+                                        ->first();
+
+        $event_id = $event->event_id;
+
+        $event_detail = Event::find($event_id);
+
+        $bookings = Booking::where('event_id', $event_id)
+                            ->where('cancelled', 0)
+                            ->get();
+
+        // $students = Student::all();
+
+        // メッセージに含める変数
+        $message = ParticipantNotification::where('event_id', $event_id)
+                                            ->first();
+
+        $subject = $message->subject;
+
+        foreach($bookings as $booking){
+
+            Notification::send($booking, new EmailToParticipants($booking, $message, $subject, $event_detail));
+
+        }
+    }
+
+    public function test()
+    {
+        $user_id = Auth::user()->id;
+        $event = ParticipantNotification::latest('updated_at')
+                                        ->where('user_id', $user_id)
+                                        ->select('event_id')
+                                        ->first();
+
+        $event_id = $event->event_id;
+
+        $event = Event::find($event_id);
+
+        DD($event);
+    }
+
     public function index()
     {
         //
