@@ -7,18 +7,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EventCancellationConfirmation extends Notification
+class EventCancellationConfirmation extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $student;
+    protected $event;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($student, $event)
     {
-        //
+        $this->student = $student;
+        $this->event = $event;
     }
 
     /**
@@ -41,9 +45,9 @@ class EventCancellationConfirmation extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                ->from(config('mail.from.address'))
+                ->subject('Event Booking Cancelled')
+                ->markdown('emails.event_cancellation_confirmation', ['student' => $this->student, 'event'=>$this->event]);
     }
 
     /**

@@ -46,7 +46,7 @@ class EventBookingConfirmation extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                 ->from(config('mail.from.address'))
-                ->subject('Event Booking Confirmation')
+                ->subject('Event Booking Confirmed')
                 ->markdown('emails.event_booking_confirmation', ['student' => $this->student, 'event'=>$this->event]);
     }
 

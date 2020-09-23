@@ -224,9 +224,18 @@ class BookingsController extends Controller
         $updated_at = $currentBooking->updated_at;
 
         Booking::where('bookings.id', $id)
-        ->update([ 
-            'formatted_updated' => $updated_at 
-        ]);         
+            ->update([ 
+                'formatted_updated' => $updated_at 
+        ]);   
+        
+        $student = Auth::guard('student')->user();
+
+        $event_id = $currentBooking->event_id;
+
+        $event = Event::find($event_id);
+
+        $student->sendEventCancellationConfirmation($student, $event);
+        
     }
     
     /**

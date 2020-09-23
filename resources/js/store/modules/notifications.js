@@ -5,6 +5,7 @@ export const notifications = {
 
     state: {
 
+        events: [],
         requestedEmails: [],
         eventId: '',
         dialog: false,
@@ -13,6 +14,9 @@ export const notifications = {
         
     },
     mutations: {
+        setEventsForEmails(state,payload){
+            state.events = payload
+        },
         setRequestedEmails(state, payload){
             state.requestedEmails = payload;
         },
@@ -36,7 +40,42 @@ export const notifications = {
         },
     },
     actions: {
+        async fetchEventsForEmails({commit}) {
+
+            let payload = [];
+
+            await axios
+                .get("/inst/fetchevents-emails")
+                .then(response => {
+                    payload = response.data.events;
+                    commit("setEventsForEmails", payload)
+                });
+        },
         async saveEmailToParticipants({state, commit}, payload){
+
+            console.log('payloda');
+            console.log(payload.user_id);
+           
+            // let participants = [];
+
+            await axios
+                .post("/inst/email-participants/", {
+                    event_id: payload.event_id,
+                    subject: payload.subject,
+                    body_text: payload.body_text,
+                    respond_email: payload.respond_email,
+                })
+                .then(response => {
+                    console.log(response);
+                    commit("closeDialog");
+                    router.go();
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+        async saveEmailToParticipantsFromDashboard({state, commit}, payload){
 
             console.log('payloda');
             console.log(payload.user_id);
