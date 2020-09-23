@@ -14,7 +14,7 @@ import ParticipantStatistics from "./components/inst/participants/ParticipantSta
 import Team from "./components/inst/team/TeamComponent";
 import AddMembers from "./components/inst/team/AddMembersComponent";
 import InstProfile from "./components/inst/profile/InstProfileComponent";
-import ParticipantCommunications from "./components/inst/participants/ParticipantCommunicationsComponent";
+import ParticipantCommunications from "./components/inst/communications/ParticipantCommunicationsComponent";
 
 
 //テスト

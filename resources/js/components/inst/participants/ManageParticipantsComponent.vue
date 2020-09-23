@@ -1,9 +1,9 @@
 <template>
     <div>
-        <emailtoparticipantsdialog-component
+        <emailtoparticipantsdialog2-component
             v-bind:dialog="dialog"
             v-bind:user="user"
-        ></emailtoparticipantsdialog-component>
+        ></emailtoparticipantsdialog2-component>
         <v-container>
             <v-row class="mb-8">
                 <v-col col="12" sm="12" md="8">

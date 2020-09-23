@@ -66,6 +66,7 @@ Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubj
 Route::get('/inst/event-participants/{id}', 'BookingsController@fetchEventParticipants');
 Route::get('/inst/fetch-members', 'UsersController@fetchTeamMembers');
 Route::post('/inst/delete-members/{id}', 'UsersController@deleteTeamMembers');
+Route::get('/inst/fetchevents-emails', 'EventsController@fetchEventsForEmails');
 
 //Charts
 Route::get('/inst/participant-countries/{id}', 'CountriesController@fetchStudentCountries');
@@ -109,7 +110,7 @@ Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToPa
 // Route::get('/inst/testform', 'ImagesController@testform');
 // Route::post('/inst/testform', 'ImagesController@addTestform');
 // Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
-Route::get('/inst/test', 'BookingsController@test');
+Route::get('/inst/test', 'EventsController@test');
 //テスト終わる
 
 //             //
