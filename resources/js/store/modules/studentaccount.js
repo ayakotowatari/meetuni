@@ -52,6 +52,7 @@ export const studentaccount = {
             state.dialog = true
         },
         closeDialog(state){
+            console.log('close');
             state.dialog = false
         },
         closeFollowDialog(state){
@@ -261,6 +262,10 @@ export const studentaccount = {
 
             commit('showDialog');
             commit('setEventId', payload.id);
+        },
+        showDialogForBooking({state, commit}, payload){
+            commit('showDialog');
+            commit('setEventId', payload.event_id);
         },
         async cancelEvent({commit}, payload){
             // console.log(payload.id);

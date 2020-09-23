@@ -1,7 +1,7 @@
 <template>
     <div>
         <bookingdialog-component 
-            v-bind:dialog="bookingDialog"
+            v-bind:dialog="dialog"
             v-bind:event="event"
             v-bind:user="user"
         ></bookingdialog-component>
@@ -88,6 +88,7 @@
                 </v-col>
             </v-row>
             <v-btn 
+                v-if="isBooked == false"
                 class="ma-2 hidden-sm-and-down" 
                 dark     
                 block
@@ -95,7 +96,7 @@
                 @click="showDialog(event.id)"
             >Book</v-btn>
              <v-btn 
-                v-if="isBooked"
+                v-if="isBooked == true"
                 class="ma-2 hidden-sm-and-down" 
                 outlined    
                 block
@@ -150,12 +151,12 @@ export default {
             'regions',
             'levels',
             'subjects',
+            'isBooked'
         ]),
         ...mapState('studentaccount', [
             'inst',
             'dialog',
             'followDialog',
-            'bookingDialog',
             'isFollowed',
             'isBooked'
         ])

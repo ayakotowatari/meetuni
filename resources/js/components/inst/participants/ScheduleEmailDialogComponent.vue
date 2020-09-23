@@ -69,7 +69,6 @@
                                         v-if="menu2"
                                         v-model="time"
                                         full-width
-                                        :allowed-minutes="allowedSteps"
                                         @click:minute="$refs.menu2.save(time)"
                                     ></v-time-picker>
                                     </v-menu>
@@ -153,7 +152,7 @@ export default {
             }
             
         },
-        allowedSteps: m => m % 10 === 0,
+        // allowedSteps: m => m % 10 === 0,
     }
 }
 </script>

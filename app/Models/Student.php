@@ -5,14 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Notifications\Notifiable;
-
-
 //ここ書き換えた。
 
 class Student extends Authenticatable
 {
-    use Notifiable;
    
     protected $fillable = [
         'first_name',
@@ -37,6 +33,10 @@ class Student extends Authenticatable
 
     public function student_subjects(){
         return $this->belongsToMany('App\Models\Subject', 'student_subjects', 'student_id', 'subject_id');
+    }
+
+    public function bookings(){
+        return $this->hasMany('App\Models\Booking');
     }
 
     
