@@ -39,6 +39,10 @@ class Student extends Authenticatable
         return $this->belongsToMany('App\Models\Subject', 'student_subjects', 'student_id', 'subject_id');
     }
 
+    public function bookings(){
+        return $this->hasMany('App\Models\Booking');
+    }
+
     
     
 

@@ -11,6 +11,10 @@ class Booking extends Model
         return $this->belongsTo('App\Models\Event');
     }
 
+    public function students(){
+        return $this->belongsTo('App\Models\Student');
+    }
+
     public function setFormattedCreatedAttribute($date) {
         $this->attributes['formatted_created'] = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
     }

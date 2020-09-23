@@ -68,8 +68,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
-        dialog: Boolean,
         event: Object,
+        dialog: Boolean
     },
     data: function(){
         return {
@@ -95,7 +95,7 @@ export default {
     computed: {
         ...mapState('studentaccount', [
             'allerror', 
-            'eventId'
+            'eventId',
         ]),
     },
     methods: {

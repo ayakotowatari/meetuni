@@ -115,9 +115,19 @@ class StudentsController extends Controller
 
         $event_id = $event->event_id;
 
-        $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
-                            ->where('bookings.event_id', $event_id)
-                            ->where('bookings.cancelled', '0')
+        // $students = Student::join('bookings', 'students.id', '=', 'bookings.student_id')
+        //                     ->where('bookings.event_id', $event_id)
+        //                     ->where('bookings.cancelled', '0')
+        //                     ->get();
+
+        // $students = Student::with('bookings')
+        //                     ->where('event_id', $event_id)
+        //                     ->where('cancelled', '0')
+        //                     ->get();
+
+        $students = Booking::with('students')
+                            ->where('event_id', $event_id)
+                            ->where('cancelled', 0)
                             ->get();
 
         // $students = Student::all();
@@ -128,7 +138,13 @@ class StudentsController extends Controller
 
         $subject = $message->subject;
 
-        Notification::send($students, new EmailToParticipants($students, $message, $subject));
+        foreach($students as $student){
+
+            Notification::send($student, new EmailToParticipants($student, $message, $subject));
+
+        }
+
+       
 
     }
 

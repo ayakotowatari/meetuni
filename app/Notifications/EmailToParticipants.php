@@ -12,7 +12,7 @@ class EmailToParticipants extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $students;
+    protected $student;
     protected $message;
     protected $subject; 
 
@@ -21,10 +21,10 @@ class EmailToParticipants extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($students, $message, $subject)
+    public function __construct($student, $message, $subject)
     {
         
-        $this->students = $students;
+        $this->student = $student;
         $this->message = $message;
         $this->subject = $subject;
 
