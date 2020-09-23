@@ -5,6 +5,10 @@ export const studentaccount = {
 
     state: {
         allEvents: [],
+        event: [],
+        regions: [],
+        levels: [],
+        subjects: [],
         inst: {},
         likedEvents: [],
         followedInsts: [],
@@ -33,6 +37,12 @@ export const studentaccount = {
             payload.forEach(event => state.allEvents.push(event))
             // console.log('setAllEvents');
             // console.log(state);
+        },
+        setEvent(state, payload){
+            state.event = payload.event
+            state.regions = payload.regions
+            state.levels = payload.levels
+            state.subjects = payload.subjects
         },
         setLikedEvents(state, payload){
             state.likedEvents = payload
@@ -130,6 +140,11 @@ export const studentaccount = {
         bookedByUser(state, payload){
             let event = state.likedEvents.find(event=>event.id == payload);
             event.booked_by_user = true;
+        },
+        singleEventBookedByUser(state){
+            console.log('singleEventBookedByUser');
+            let event = state.event
+            event.booked_by_user = true;
         }
     },
     actions: {
@@ -142,6 +157,26 @@ export const studentaccount = {
                     payload = res.data.events;
                     commit("setAllEvents", payload);
                     console.log(payload)
+                });
+        },
+        async fetchSingleEvent({commit}, payload){
+            let event = [];
+            let regions = [];
+            let levels = [];
+            let subjects = [];
+
+            await axios
+                .get("/student/fetch-details/" + payload.id)
+                .then(res => {
+                    event = res.data.event;
+                    regions = res.data.regions;
+                    levels = res.data.levels;
+                    subjects = res.data.subjects
+                    console.log(event)
+                    console.log(regions)
+                    console.log(levels)
+                    console.log(subjects)
+                    commit("setEvent", {event, regions, levels, subjects});
                 });
         },
         async fetchLikedEvents({commit}, payload){
@@ -251,7 +286,8 @@ export const studentaccount = {
                     email: payload.email
                 })
                 .then(response => {
-                    console.log('response');
+                    // eventId = response.data.eventId;
+                    commit('singleEventBookedByUser');
                     commit('closeDialog');
                     commit('isBooked');
                 })

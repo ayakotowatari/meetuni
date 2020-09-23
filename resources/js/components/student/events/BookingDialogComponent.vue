@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
             <v-card-title>
-                <span class="headline">Event Booking uomo</span>
+                <span class="headline">Event Booking</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -51,7 +51,6 @@
                 </v-container>
                 <small>*indicates required field</small>
                 <p>By clicking 'Register', I accept the Terms of Services and have read the Privacy Policy. I agree that the MeetUni may share my information with the event organizer.</p>
-                <span>{{ event.id }}</span>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
