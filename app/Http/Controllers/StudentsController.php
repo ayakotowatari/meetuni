@@ -107,7 +107,7 @@ class StudentsController extends Controller
     {
         //Notificationを送る準備
 
-        $user_id = Auth::user()->id;
+        $user = Auth::user()->id;
         $event = ParticipantNotification::latest('updated_at')
                                         ->where('user_id', $user_id)
                                         ->select('event_id')
