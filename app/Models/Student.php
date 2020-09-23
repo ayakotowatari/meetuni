@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\EventBookingConfirmation;
+
 
 //ここ書き換えた。
 
 class Student extends Authenticatable
 {
+    use Notifiable;
    
     protected $fillable = [
         'first_name',
@@ -37,6 +41,11 @@ class Student extends Authenticatable
 
     public function bookings(){
         return $this->hasMany('App\Models\Booking');
+    }
+
+    public function sendEventBookingConfirmation($student, $event)
+    {
+        $this->notify(new EventBookingConfirmation($student, $event));
     }
 
     

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\Booking;
+use App\Models\Student;
 use App\Models\Event;
 use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
@@ -113,20 +114,20 @@ class BookingsController extends Controller
         }
     }
 
-    public function test()
-    {
-        $user_id = Auth::user()->id;
-        $event = ParticipantNotification::latest('updated_at')
-                                        ->where('user_id', $user_id)
-                                        ->select('event_id')
-                                        ->first();
+    // public function test()
+    // {
+    //     $user_id = Auth::user()->id;
+    //     $event = ParticipantNotification::latest('updated_at')
+    //                                     ->where('user_id', $user_id)
+    //                                     ->select('event_id')
+    //                                     ->first();
 
-        $event_id = $event->event_id;
+    //     $event_id = $event->event_id;
 
-        $event = Event::find($event_id);
+    //     $event = Event::find($event_id);
 
-        DD($event);
-    }
+    //     DD($event);
+    // }
 
     public function index()
     {
@@ -179,10 +180,16 @@ class BookingsController extends Controller
         $updated_at = $currentBooking->updated_at;
         
         Booking::where('bookings.id', $booking_id)
-        ->update([ 
-            'formatted_created' => $created_at, 
-            'formatted_updated' => $updated_at 
-        ]);
+                ->update([ 
+                    'formatted_created' => $created_at, 
+                    'formatted_updated' => $updated_at 
+                ]);
+
+        $student = Auth::guard('student')->user();
+
+        $event = Event::find($event_id);
+
+        $student->sendEventBookingConfirmation($student, $event);
 
         return response()->json(['eventId'=>$event_id], 200);
     }
