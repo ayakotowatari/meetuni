@@ -236,6 +236,30 @@ export const studentaccount = {
                     commit('setallErrors', allerror)
                 )
         },
+        async bookEvent({state, commit}, payload){
+            // console.log(payload)
+
+            console.log(payload);
+
+            let allerror = [];
+
+            await axios
+                .post("/student/register-event", {
+                    id: payload.event_id,
+                    first_name: payload.first_name,
+                    last_name: payload.last_name,
+                    email: payload.email
+                })
+                .then(response => {
+                    console.log('response');
+                    commit('closeDialog');
+                    commit('isBooked');
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
         async fetchBookedEvents({commit}, payload){
 
             // console.log(payload.id);

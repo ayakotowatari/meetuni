@@ -1,10 +1,10 @@
 <template>
     <div>
-        <bookingdialog-component 
+        <bookingdialog2-component 
             v-bind:dialog="dialog"
             v-bind:event="event"
             v-bind:user="user"
-        ></bookingdialog-component>
+        ></bookingdialog2-component>
         <followdialog-component
             v-bind:dialog="followDialog"
             v-bind:event="event"
@@ -151,7 +151,6 @@ export default {
             'regions',
             'levels',
             'subjects',
-            'isBooked'
         ]),
         ...mapState('studentaccount', [
             'inst',
