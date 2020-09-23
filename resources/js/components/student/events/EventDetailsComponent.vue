@@ -1,10 +1,10 @@
 <template>
     <div>
-        <bookingdialog-component 
+        <bookingdialog2-component 
             v-bind:dialog="dialog"
             v-bind:event="event"
             v-bind:user="user"
-        ></bookingdialog-component>
+        ></bookingdialog2-component>
         <followdialog-component
             v-bind:dialog="followDialog"
             v-bind:event="event"
@@ -88,7 +88,7 @@
                 </v-col>
             </v-row>
             <v-btn 
-                v-if="isBooked == false"
+                v-if="event.booked_by_user == false"
                 class="ma-2 hidden-sm-and-down" 
                 dark     
                 block
@@ -96,7 +96,7 @@
                 @click="showDialog(event.id)"
             >Book</v-btn>
              <v-btn 
-                v-if="isBooked == true"
+                v-if="event.booked_by_user == true"
                 class="ma-2 hidden-sm-and-down" 
                 outlined    
                 block
@@ -138,7 +138,7 @@ export default {
         console.log(id);
     },
     mounted(){
-        this.$store.dispatch('student/fetchSingleEvent', {
+        this.$store.dispatch('studentaccount/fetchSingleEvent', {
             id: this.id
         }),
         this.$store.dispatch('studentaccount/fetchInst', {
@@ -146,14 +146,11 @@ export default {
         })
     },
     computed: {
-        ...mapState('student', [
+        ...mapState('studentaccount', [
             'event',
             'regions',
             'levels',
             'subjects',
-            'isBooked'
-        ]),
-        ...mapState('studentaccount', [
             'inst',
             'dialog',
             'followDialog',

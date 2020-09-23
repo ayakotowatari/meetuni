@@ -51,12 +51,11 @@
                 </v-container>
                 <small>*indicates required field</small>
                 <p>By clicking 'Register', I accept the Terms of Services and have read the Privacy Policy. I agree that the MeetUni may share my information with the event organizer.</p>
-                <span>{{ event.id }}</span>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey" text @click="closeDialog">Not Now</v-btn>
-                <v-btn color="blue darken-1" text @click="bookEvent">Register</v-btn>
+                <v-btn color="blue darken-1" text @click="book">Register</v-btn>
             </v-card-actions>
             </v-card>
         </v-dialog>
@@ -103,13 +102,13 @@ export default {
             closeDialog: 'closeDialog'
         }),
         ...mapActions('studentaccount', [
-            'registerEvent'
+            'bookEvent'
         ]),
-        bookEvent(){
+        book(){
             console.log('check');
           
             if(this.$refs.form.validate()){
-                this.registerEvent({
+                this.bookEvent({
                     event_id: this.eventId,
                     first_name: this.first_name,
                     last_name: this.last_name,
