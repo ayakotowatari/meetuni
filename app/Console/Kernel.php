@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
 
-        Commands\SendEmailToParticipants::Class ,
+        // Commands\SendEmailToParticipants::Class,
+        Commands\TestMail::class,
         
     ];
 
@@ -29,8 +30,10 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->command('send:emailtoparticipants')
-                ->everyMinute();
+        // $schedule->command('send:emailtoparticipants')
+        //         ->everyMinute();
+
+        $schedule->command('test:mail')->everyMinute();
     }
 
     /**
