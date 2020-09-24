@@ -110,7 +110,7 @@ Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToPa
 // Route::get('/inst/testform', 'ImagesController@testform');
 // Route::post('/inst/testform', 'ImagesController@addTestform');
 // Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
-Route::get('/inst/test', 'EventsController@test');
+Route::get('/inst/test', 'BookingsController@test');
 //テスト終わる
 
 //             //
