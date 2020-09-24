@@ -26,7 +26,8 @@ class Event extends Model
 
     protected $appends = [
         'liked_by_user',
-        'booked_by_user'
+        'booked_by_user',
+        'title_date'
     ];
 
     public function likes(){
@@ -53,6 +54,11 @@ class Event extends Model
         }
 
         return $this->bookings->contains(Auth::guard('student')->user()->id);
+    }
+
+    public function getTitleDateAttribute()
+    {
+        return $this->title.', '.$this->date;
     }
 
 

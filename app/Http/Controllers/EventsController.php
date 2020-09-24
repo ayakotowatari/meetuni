@@ -14,6 +14,8 @@ use App\Models\EventRegion;
 use App\Models\EventLevel;
 use App\Models\EventSubject;
 use Illuminate\Http\Request;
+use App\Notifications\EventPublishedNotification;
+use Notification;
 use Illuminate\Support\Arr;
 use Storage;
 use Validator;
@@ -636,7 +638,48 @@ class EventsController extends Controller
         ->update([ 
             'status_id' => $status_id
         ]);
+
+        $event = Event::find($id);
+
+        $inst = Inst::join('events', 'events.inst_id', '=', 'insts.id')
+                    ->where('events.id', $id)
+                    ->first();
+
+        $inst_name = $inst->name;
+        $inst_id = $inst->inst_id;
+
+        $students = Student::join('follows', 'students.id', '=', 'follows.student_id')
+                            ->where('follows.inst_id', $inst_id)
+                            ->get();
+
+        foreach($students as $student){
+
+            Notification::send($student, new EventPublishedNotification($student, $event, $inst_name));
+
+        }
+
     }
+
+    public function test ()
+    {
+        $inst = Inst::join('events', 'events.inst_id', '=', 'insts.id')
+                    ->where('events.id', 2)
+                    ->first();
+
+        // DD($inst);
+
+        $inst_id = $inst->inst_id;
+
+        // DD($inst_id);
+
+        $students = Student::join('follows', 'students.id', '=', 'follows.student_id')
+                            ->where('follows.inst_id', $inst_id)
+                            ->get();
+
+        DD($students);
+    }
+
+
 
     public function unpublishEvent(Request $request, $id)
     {
@@ -647,6 +690,24 @@ class EventsController extends Controller
             'status_id' => $status_id
         ]);
     }
+
+    public function fetchEventsForEmails()
+    {
+        $user_id = Auth::user()->id;
+
+        $events = Event::where('user_id', $user_id)
+                    ->where('status_id', 1)
+                    ->get();
+
+        // foreach($events as $event){
+        //     $title_date[] = $event->title.', '.$event->date;
+        // }
+
+        // DD($events);
+
+        return response()->json(['events' => $events],200);
+    }
+
 
     /**
      * Display the specified resource.
