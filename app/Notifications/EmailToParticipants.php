@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Carbon\Carbon;
 
-class EmailToParticipants extends Notification implements ShouldQueue
+class EmailToParticipants extends Notification 
 {
     use Queueable;
 
@@ -30,7 +30,7 @@ class EmailToParticipants extends Notification implements ShouldQueue
         $this->subject = $subject;
         $this->event_detail = $event_detail;
 
-        $this->delay(Carbon::parse($message->time_utc));
+        // $this->delay(Carbon::parse($message->time_utc));
     }
 
     /**

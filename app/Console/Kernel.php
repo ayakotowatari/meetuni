@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+
+        // Commands\SendEmailToParticipants::Class,
+        Commands\TestMail::class,
+        
     ];
 
     /**
@@ -26,6 +29,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // $schedule->command('send:emailtoparticipants')
+        //         ->everyMinute();
+
+        $schedule->command('test:mail')->everyMinute();
     }
 
     /**

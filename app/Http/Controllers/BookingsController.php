@@ -10,6 +10,7 @@ use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
 use Notification;
 use App\Notifications\EmailToParticipants;
+use App\Jobs\SendEmailToParticipantsJob;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -106,28 +107,49 @@ class BookingsController extends Controller
                                             ->first();
 
         $subject = $message->subject;
+        $message_id = $message->id;
 
         foreach($bookings as $booking){
 
-            Notification::send($booking, new EmailToParticipants($booking, $message, $subject, $event_detail));
-
+            // Notification::send($booking, new EmailToParticipants($booking, $message, $subject, $event_detail));
+            dispatch(new SendEmailToParticipantsJob($booking, $message_id, 
+                    new EmailToParticipants($booking, $message, $subject, $event_detail)))
+                    ->delay(Carbon::parse($message->time_utc));
         }
     }
 
-    // public function test()
-    // {
-    //     $user_id = Auth::user()->id;
-    //     $event = ParticipantNotification::latest('updated_at')
-    //                                     ->where('user_id', $user_id)
-    //                                     ->select('event_id')
-    //                                     ->first();
+    public function test()
+    {
+        // $now = date("Y-m-d H:i:00", strtotime(Carbon::now()));
+        // DD($now);
+        
+        $user_id = Auth::user()->id;
+        $event = ParticipantNotification::latest('updated_at')
+                                        ->where('user_id', $user_id)
+                                        ->select('event_id')
+                                        ->first();
 
-    //     $event_id = $event->event_id;
+        $event_id = $event->event_id;
 
-    //     $event = Event::find($event_id);
+        $event = Event::find($event_id);
 
-    //     DD($event);
-    // }
+        $bookings = Booking::where('event_id', $event_id)
+                ->where('cancelled', 0)
+                ->get();
+
+        foreach($bookings as $booking){
+            // DD($booking->email);
+        }
+
+        $message = ParticipantNotification::where('event_id', $event_id)
+                ->first();
+
+        $now = date("Y-m-d H:i:00", strtotime(Carbon::now()));
+        DD($now);
+        $time=$message->where('time_utc', $now)->get();
+        // DD($time);
+
+    }
 
     public function index()
     {

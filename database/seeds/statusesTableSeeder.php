@@ -13,25 +13,25 @@ class StatusesTableSeeder extends Seeder
     {
         $data = [
             [
-                'status' => NULL,
+                'status' => 'Sent',
                 "created_at" => now(),
                 "updated_at" => now(),
             ],
-            [
-                'status' => NULL,
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                'status' => NULL,
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
-            [
-                'status' => 'Complete',
-                "created_at" => now(),
-                "updated_at" => now(),
-            ],
+            // [
+            //     'status' => NULL,
+            //     "created_at" => now(),
+            //     "updated_at" => now(),
+            // ],
+            // [
+            //     'status' => NULL,
+            //     "created_at" => now(),
+            //     "updated_at" => now(),
+            // ],
+            // [
+            //     'status' => 'Complete',
+            //     "created_at" => now(),
+            //     "updated_at" => now(),
+            // ],
         ];
                 DB::table('statuses')->insert($data);
     }

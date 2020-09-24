@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\EventBookingConfirmation;
 use App\Notifications\EventCancellationConfirmation;
+
+// テスト
+use App\Notifications\TestMail;
 // use App\Notifications\EventPublishedNotification;
 
 
@@ -53,6 +56,11 @@ class Student extends Authenticatable
     public function sendEventCancellationConfirmation($student, $event)
     {
         $this->notify(new EventCancellationConfirmation($student, $event));
+    }
+
+    public function sendTestMail($student)
+    {
+        $this->notify(new TestMail($student));
     }
 
     // public function sendEventPublishedNotification($student, $event, $inst)
