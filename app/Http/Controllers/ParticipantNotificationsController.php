@@ -117,7 +117,7 @@ class ParticipantNotificationsController extends Controller
         $notification->time_utc = $datetime;
         $notification->save();
 
-        return redirect ('/inst/send-emailstoparticipants');
+        // return redirect ('/inst/send-emailstoparticipants');
 
     }
 

@@ -118,30 +118,38 @@ class BookingsController extends Controller
         }
     }
 
-    // public function test()
-    // {
-    //     $user_id = Auth::user()->id;
-    //     $event = ParticipantNotification::latest('updated_at')
-    //                                     ->where('user_id', $user_id)
-    //                                     ->select('event_id')
-    //                                     ->first();
+    public function test()
+    {
+        // $now = date("Y-m-d H:i:00", strtotime(Carbon::now()));
+        // DD($now);
+        
+        $user_id = Auth::user()->id;
+        $event = ParticipantNotification::latest('updated_at')
+                                        ->where('user_id', $user_id)
+                                        ->select('event_id')
+                                        ->first();
 
-    //     $event_id = $event->event_id;
+        $event_id = $event->event_id;
 
-    //     $event = Event::find($event_id);
+        $event = Event::find($event_id);
 
-    //     $bookings = Booking::where('event_id', $event_id)
-    //             ->where('cancelled', 0)
-    //             ->get();
+        $bookings = Booking::where('event_id', $event_id)
+                ->where('cancelled', 0)
+                ->get();
 
-    //     foreach($bookings as $booking){
-    //         DD($booking->email);
-    //     }
+        foreach($bookings as $booking){
+            // DD($booking->email);
+        }
 
-    //     $message = ParticipantNotification::where('event_id', $event_id)
-    //             ->first();
+        $message = ParticipantNotification::where('event_id', $event_id)
+                ->first();
 
-    // }
+        $now = date("Y-m-d H:i:00", strtotime(Carbon::now()));
+        DD($now);
+        $time=$message->where('time_utc', $now)->get();
+        // DD($time);
+
+    }
 
     public function index()
     {
