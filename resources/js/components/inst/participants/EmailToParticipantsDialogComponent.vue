@@ -106,12 +106,12 @@ export default {
             closeDialog: 'closeDialog'
         }),
         ...mapActions('notifications',[
-            'saveEmailToParticipants'
+            'saveEmailToParticipantsFromDashboard'
         ]),
         save(){
 
             if(this.$refs.form.validate()){
-                this.saveEmailToParticipants({
+                this.saveEmailToParticipantsFromDashboard({
                     user_id: this.user.id,
                     event_id: this.id,
                     subject: this.subject,

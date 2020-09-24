@@ -14,7 +14,7 @@
             </template>
             <template v-slot:[`item.schedule`]="{ item }">
                 <v-icon
-                v-show="item.status !== 'Scheduled'"
+                v-show="item.status !== 'Sent'"
                 small
                 class="mr-4"
                 @click="showDialog(item.id)"
@@ -79,6 +79,7 @@ export default {
     methods: {
         getColor(status){
             if (status == 'Draft') return 'error'
+            else if (status == 'Sent') return 'info'
             else return 'primary'
         },
         ...mapActions('notifications', [
