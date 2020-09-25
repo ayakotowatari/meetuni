@@ -11,8 +11,10 @@ use App\Models\Status;
 use App\Models\Invite;
 use App\Notifications\UserInviteNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use App\Http\Requests\UpdatePasswordRequest;
 
 class UsersController extends Controller
 {
@@ -146,6 +148,14 @@ class UsersController extends Controller
                         ->first();
 
         return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {   
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+
     }
 
     public function fetchTeamMembers()

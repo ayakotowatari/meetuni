@@ -13,7 +13,7 @@ import ManageParticipants from "./components/inst/participants/ManageParticipant
 import ParticipantStatistics from "./components/inst/participants/ParticipantStatisticsComponent";
 import Team from "./components/inst/team/TeamComponent";
 import AddMembers from "./components/inst/team/AddMembersComponent";
-import InstProfile from "./components/inst/profile/InstProfileComponent";
+import UserProfile from "./components/inst/profile/UserProfileComponent";
 import ParticipantCommunications from "./components/inst/communications/ParticipantCommunicationsComponent";
 
 
@@ -74,8 +74,8 @@ const routes = [
     },
     {
         path: "/inst/profile",
-        name: "inst-profile",
-        component: InstProfile
+        name: "user-profile",
+        component: UserProfile
     },
     {
         path: "/inst/participant-communications",

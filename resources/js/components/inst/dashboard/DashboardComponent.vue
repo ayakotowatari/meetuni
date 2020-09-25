@@ -14,6 +14,7 @@
     </v-row>
     <dashboardsummary-component></dashboardsummary-component>
     <dashboardchart-component></dashboardchart-component>
+    <v-btn depressed outlined color="grey darken-2" class="mt-8" @click="print()">print</v-btn>
   </v-container>
 </template>
 
@@ -47,7 +48,9 @@ created(){
     
 },
 methods: {
-    
+    print(){
+        window.print();
+    }
 },
 computed: {
    

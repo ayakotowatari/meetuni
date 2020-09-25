@@ -44,8 +44,12 @@ Route::post('/student/logout','Student\Auth\LoginController@logout')->name('stud
 
 Auth::routes();
 
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+//大学パスワード変更
+Route::group(['middleware' => ['auth', 'can:institution']], function(){
+    Route::post('/user/update-password', 'UsersController@updatePassword');
+});
 
 //             //
 //     大学     //

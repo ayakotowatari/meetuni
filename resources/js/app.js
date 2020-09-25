@@ -62,6 +62,10 @@ Vue.component('participantsubjectbar-component', require('./components/inst/part
 Vue.component('participantsubjectlist-component', require('./components/inst/participants/ParticipantSubjectListComponent.vue').default);
 Vue.component('barchart-component', require('./components/chart/BarChartComponent.vue').default);
 
+//Profile
+Vue.component('passwordreset-component', require('./components/inst/profile/PasswordResetComponent.vue').default);
+Vue.component('basicsreset-component', require('./components/inst/profile/BasicsResetComponent.vue').default);
+
 //テスト
 
 
