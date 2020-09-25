@@ -216,4 +216,20 @@ class UsersController extends Controller
 
     }
 
+    public function updateEmail(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        
+        $request->validate([
+            'email' => 'required|unique:users|unique:students',
+        ]);
+
+        $user = User::find($user_id);
+        $user->email = request('email');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
 }

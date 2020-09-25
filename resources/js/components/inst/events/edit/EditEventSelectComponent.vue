@@ -186,9 +186,9 @@ export default {
                     this.loading = false;
                     // this.$emit('selectsAdded');
                 })
-                .catch(error => 
+                .catch(error => {
                     this.allerror = error.response.data.errors
-                )
+                })
             }
         },
         updateLevels(){
@@ -205,9 +205,9 @@ export default {
                     this.loading = false;
                     // this.$emit('selectsAdded');
                 })
-                .catch(error => 
+                .catch(error => {
                     this.allerror = error.response.data.errors
-                )
+                })
             }
         },
         updateSubjects(){
@@ -224,9 +224,9 @@ export default {
                     this.loading = false;
                     // this.$emit('selectsAdded');
                 })
-                .catch(error => 
+                .catch(error => {
                     this.allerror = error.response.data.errors
-                )
+                })
             }
         },
     },

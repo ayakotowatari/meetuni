@@ -233,9 +233,9 @@ export default {
                     // this.start_time = '';
                     // this.end_time = '';
                 })
-                .catch(error => 
+                .catch(error => {
                     this.allerror = error.response.data.errors
-                )
+                })
             }
         }
     }

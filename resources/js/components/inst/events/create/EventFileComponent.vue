@@ -122,9 +122,9 @@ export default {
                 // .catch(error => 
                 //     this.allerror = error.response.data.errors
                 // );
-                .catch(error => 
+                .catch(error => {
                         this.allerror = error.response.data.errors
-                    )
+                    })
             }
         },
         toDraft(id){
