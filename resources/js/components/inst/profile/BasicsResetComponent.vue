@@ -13,11 +13,11 @@
                 <v-btn
                     color="primary"
                     outlined
-                    @click="toEdit == !toEdit"
+                    @click="isEditing = !isEditing"
                 >Edit</v-btn>
             </v-col>
         </v-row>
-        <v-form ref="form">
+        <v-form v-if="isEditing" ref="form">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="3">
                     <v-text-field
@@ -71,14 +71,15 @@
                     <v-btn 
                         depressed 
                         color="primary" 
-                        @click="submit"
+                        @click="save"
+                        :loading="loading"
                     >Save
                     </v-btn>
                     <v-btn 
                         color="primary" 
                         outlined
                         class="ml-4" 
-                        @click="cancel"
+                        @click="isEditing = !isEditing"
                     >Cancel
                     </v-btn>
                 </v-col>
@@ -88,13 +89,15 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
     props: {
         user: Object
     },
     data: function(){
         return{
-            isEdited: false,
+            isEditing: false,
             firstnameRules: [
                 v => !!v || 'First Name is required',
             ],
@@ -107,10 +110,13 @@ export default {
             departmentRules: [
                 v => !!v || 'Job Title is required',
             ],
-            allerror: []
         }
     },
     computed: {
+        ...mapState([
+            'loading',
+            'allerror',
+        ]),
         firstName: {
             get(){
                 return this.user.first_name
@@ -145,11 +151,19 @@ export default {
         },
     },
     methods: {
-        reset(){
-            this.$refs.form.reset();
-        },
-        submit(){
-            
+        ...mapActions([
+            'updateProfileBasics'
+        ]),
+        save(){
+            if(this.$refs.form.validate()){
+
+                this.updateProfileBasics({
+                    first_name: this.firstName,
+                    last_name: this.lastName,
+                    job_title: this.jobTitle,
+                    department: this.department
+                })  
+            }
         },
     }
 

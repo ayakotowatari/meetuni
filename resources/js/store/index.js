@@ -504,6 +504,30 @@ export default new Vuex.Store ({
 
         },
 
+        //プロフィール編集
+        async updateProfileBasics({commit}, payload){
+
+            let user = {};
+            commit('startLoading');
+
+            await axios
+                .post('/user/update-basicinfo', {
+                    first_name: payload.first_name,
+                    last_name: payload.last_name,
+                    job_title: payload.job_title,
+                    department: payload.department
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('stopLoading');
+                    commit('setUser', user);
+                })
+                .catch(error => 
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                )
+        },
+
 
         //学生用に追加
         async fetchStudentUser({ commit }){

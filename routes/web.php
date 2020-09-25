@@ -104,6 +104,9 @@ Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsControlle
 Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsController@schedule');
 Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToParticipants');
 
+//Edit Profile
+Route::post('/user/update-basicinfo', 'UsersController@updateBasics');
+
 
 // テスト
 // Route::post('/inst/test/store', 'ImagesController@store');

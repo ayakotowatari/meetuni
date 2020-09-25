@@ -194,4 +194,26 @@ class UsersController extends Controller
 
     }
 
+    public function updateBasics(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'job_title' => 'required',
+            'department' => 'required',
+        ]);
+
+        $user = User::find($user_id);
+        $user->first_name = request('first_name');
+        $user->last_name = request('last_name');
+        $user->job_title = request('job_title');
+        $user->department = request('department');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
 }
