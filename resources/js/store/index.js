@@ -16,7 +16,15 @@ export default new Vuex.Store ({
     state: {
         //状態を管理する
         //component側でstateからデータを取るのはcomputed
-        user: {},
+        user: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: '',
+            timezone: '',
+            job_title: '',
+            department: ''
+        },
         inst: {},
         initials: '',
         events: [],
@@ -131,6 +139,18 @@ export default new Vuex.Store ({
         },
         updateEventEndTime(state,payload){
             state.end_time= payload
+        },
+        updateFirstName(state, payload){
+            state.user.first_name = payload
+        },
+        updateLastName(state, payload){
+            state.user.last_name = payload
+        },
+        updateJobTitle(state, payload){
+            state.user.job_title = payload
+        },
+        updateDepartment(state, payload){
+            state.user.department = payload
         },
         setallErrors(state, payload){
             state.allerror = payload
