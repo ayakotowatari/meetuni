@@ -11,8 +11,10 @@ use App\Models\Status;
 use App\Models\Invite;
 use App\Notifications\UserInviteNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use App\Http\Requests\UpdatePasswordRequest;
 
 class UsersController extends Controller
 {
@@ -148,6 +150,14 @@ class UsersController extends Controller
         return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
     }
 
+    public function updatePassword(UpdatePasswordRequest $request)
+    {   
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+
+    }
+
     public function fetchTeamMembers()
     {
         $user = Auth::user();
@@ -181,6 +191,28 @@ class UsersController extends Controller
         //             ->get();
 
         // return response()->json(['members' => $members],200);
+
+    }
+
+    public function updateBasics(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'job_title' => 'required',
+            'department' => 'required',
+        ]);
+
+        $user = User::find($user_id);
+        $user->first_name = request('first_name');
+        $user->last_name = request('last_name');
+        $user->job_title = request('job_title');
+        $user->department = request('department');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
 
     }
 

@@ -37,6 +37,9 @@ class User extends Authenticatable
         'remember_token'
     ];
 
+    protected $appends = [
+        'full_name',
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -55,7 +58,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
+        // return "{$this->first_name} {$this->last_name}";
+    }
+
+
     // public function instUser(){
     //     return $this->hasOne('App\Models\InstUser');
     // }
+    
 }

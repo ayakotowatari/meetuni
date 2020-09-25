@@ -44,8 +44,12 @@ Route::post('/student/logout','Student\Auth\LoginController@logout')->name('stud
 
 Auth::routes();
 
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+//大学パスワード変更
+Route::group(['middleware' => ['auth', 'can:institution']], function(){
+    Route::post('/user/update-password', 'UsersController@updatePassword');
+});
 
 //             //
 //     大学     //
@@ -99,6 +103,9 @@ Route::post('/inst/email-participants', 'ParticipantNotificationsController@stor
 Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsController@fetchList');
 Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsController@schedule');
 Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToParticipants');
+
+//Edit Profile
+Route::post('/user/update-basicinfo', 'UsersController@updateBasics');
 
 
 // テスト
