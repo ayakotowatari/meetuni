@@ -279,10 +279,10 @@ export const student = {
                     // commit('isLiked', liked);
                     commit('likedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async unlikeEvent({commit}, payload){
 
@@ -303,10 +303,10 @@ export const student = {
                     console.log(eventId);
                     commit('unlikedByUser', eventId);
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async SubjectLikeEvent({commit}, payload){
 
@@ -328,10 +328,10 @@ export const student = {
                     // commit('isLiked', liked);
                     commit('subjectLikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async SubjectUnlikeEvent({commit}, payload){
 
@@ -354,10 +354,10 @@ export const student = {
                     console.log(eventId);
                     commit('subjectUnlikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async DestinationLikeEvent({commit}, payload){
 
@@ -379,10 +379,10 @@ export const student = {
                     // commit('isLiked', liked);
                     commit('destinationLikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async DestinationUnlikeEvent({commit}, payload){
 
@@ -405,10 +405,10 @@ export const student = {
                     console.log(eventId);
                     commit('destinationUnlikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async RegionLikeEvent({commit}, payload){
 
@@ -430,10 +430,10 @@ export const student = {
                     // commit('isLiked', liked);
                     commit('regionLikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async RegionUnlikeEvent({commit}, payload){
 
@@ -456,10 +456,10 @@ export const student = {
                     console.log(eventId);
                     commit('regionUnlikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async fetchEventList({commit}, payload){
 
@@ -495,10 +495,10 @@ export const student = {
                     // commit('isLiked', liked);
                     commit('instLikedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async unlikeInstEvent({commit}, payload){
 
@@ -519,10 +519,10 @@ export const student = {
                     console.log(eventId);
                     commit('instUnlikedByUser', eventId);
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         //テスト
 

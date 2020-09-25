@@ -148,9 +148,9 @@ export default {
                     // this.levels='';
                     // this.subjects='';
                 })
-                .catch(error => 
+                .catch(error => {
                     this.allerror = error.response.data.errors
-                )
+                })
             }
         }
     },

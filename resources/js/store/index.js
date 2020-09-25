@@ -51,6 +51,7 @@ export default new Vuex.Store ({
         isPublished: false,
         isOngoing: false,
         isDraft: false,
+        isEditing: false,
 
         //学生用に追加
         studentUser: {},
@@ -64,7 +65,7 @@ export default new Vuex.Store ({
         //     name: [],
         //     email: []
         // },
-        allerror: [],
+        allerror: {},
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -151,6 +152,15 @@ export default new Vuex.Store ({
         },
         updateDepartment(state, payload){
             state.user.department = payload
+        },
+        updateEmail(state, payload){
+            state.user.email = payload
+        },  
+        setIsEditing(state){
+            state.isEditing = true;
+        },
+        hasFinishedEditing(state){
+            state.isEditing = false
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -355,10 +365,10 @@ export default new Vuex.Store ({
                     loading = false;
                     // this.$emit('basicsAdded');
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit("setallErrors", allerror)
-                )
+                })
         },
         async updateEventDescription({state, commit}, payload){
 
@@ -374,10 +384,10 @@ export default new Vuex.Store ({
                         console.log(response);
                     // this.$emit('basicsAdded');
                     })
-                    .catch(error => 
+                    .catch(error => {
                         allerror = error.response.data.errors,
                         commit('setallErrors', allerror)
-                    )
+                    })
 
         },
         async updateEventFiles({state, commit}, payload){
@@ -403,10 +413,10 @@ export default new Vuex.Store ({
                 // .catch(error => 
                 //     this.allerror = error.response.data.errors
                 // );
-                .catch(error => 
+                .catch(error => {
                         allerror = error.response.data.errors,
                         commit('setallErrors', allerror)
-                    )
+                    })
         },
         async publishEvent({state, commit}, payload){
             console.log(payload.id);
@@ -457,10 +467,10 @@ export default new Vuex.Store ({
                 commit('stopLoading');
                 commit('showDialog');
             })
-            .catch(error => 
+            .catch(error => {
                 allerror = error.response.data.errors,
                 commit('setallErrors', allerror)
-            )
+            })
         },
         toAddMembers({state, commit}){
             router.go()
@@ -521,11 +531,31 @@ export default new Vuex.Store ({
                     user = response.data.user;
                     commit('stopLoading');
                     commit('setUser', user);
+                    commit('hasFinishedEditing');
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
+        },
+        async updateEmail({commit}, payload){
+
+            let allerror = {};
+
+            await axios
+                .post('/user/update-email', {
+                    email: payload.email
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('stopLoading');
+                    commit('setUser', user);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+
         },
 
 
@@ -593,10 +623,11 @@ export default new Vuex.Store ({
                 .then(response => {
                     console.log(response)
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
+                    console.log(allerror),
                     commit('setallErrors', allerror)
-                )
+                })
         },
 
         //テスト

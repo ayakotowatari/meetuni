@@ -63,8 +63,9 @@ Vue.component('participantsubjectlist-component', require('./components/inst/par
 Vue.component('barchart-component', require('./components/chart/BarChartComponent.vue').default);
 
 //Profile
-Vue.component('passwordreset-component', require('./components/inst/profile/PasswordResetComponent.vue').default);
-Vue.component('basicsreset-component', require('./components/inst/profile/BasicsResetComponent.vue').default);
+Vue.component('editpassword-component', require('./components/inst/profile/EditPasswordComponent.vue').default);
+Vue.component('editbasicprofile-component', require('./components/inst/profile/EditBasicProfileComponent.vue').default);
+Vue.component('editemail-component', require('./components/inst/profile/EditEmailComponent.vue').default);
 
 //テスト
 

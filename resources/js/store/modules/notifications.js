@@ -70,10 +70,10 @@ export const notifications = {
                     commit("closeDialog");
                     router.push({name: 'participant-communications', params: {id: payload.user_id}});
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async saveEmailToParticipantsFromDashboard({state, commit}, payload){
 
@@ -95,10 +95,10 @@ export const notifications = {
                     router.go();
                    
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async fetchEmailsToParticipantsList({commit}){
 
@@ -130,10 +130,10 @@ export const notifications = {
                     commit('closeDialogForSchedule');
                     router.go();
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         showDialogForSchedule({state, commit}, payload){
 

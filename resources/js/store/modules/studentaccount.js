@@ -266,10 +266,10 @@ export const studentaccount = {
                     commit('closeDialog');
                     commit('isBooked');
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async bookEvent({state, commit}, payload){
             // console.log(payload)
@@ -291,10 +291,10 @@ export const studentaccount = {
                     commit('closeDialog');
                     commit('isBooked');
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async fetchBookedEvents({commit}, payload){
 
@@ -356,10 +356,10 @@ export const studentaccount = {
                     console.log(response)
                     commit('closeDialog')
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async fetchCategories({state, commit}){
 
@@ -434,10 +434,10 @@ export const studentaccount = {
                     console.log(eventId);
                     commit('unlikedByUser', eventId);
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         async likeEvent({commit}, payload){
 
@@ -459,10 +459,10 @@ export const studentaccount = {
                     // commit('isLiked', liked);
                     commit('likedByUser', eventId)                 
                 })
-                .catch(error => 
+                .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
-                )
+                })
         },
         
     }

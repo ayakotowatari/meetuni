@@ -106,6 +106,7 @@ Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToPa
 
 //Edit Profile
 Route::post('/user/update-basicinfo', 'UsersController@updateBasics');
+Route::post('/user/update-email', 'UsersController@updateEmail');
 
 
 // テスト

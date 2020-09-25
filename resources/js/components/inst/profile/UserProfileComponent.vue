@@ -1,12 +1,17 @@
 <template>
     <v-container>
         <h1 class="subheading grey--text">My Profile</h1>
-        <basicsreset-component
+        <editbasicprofile-component
             v-bind:user="user"
-        ></basicsreset-component>
-        <passwordreset-component
+            class="mb-10"
+        ></editbasicprofile-component>
+        <edit-email
             v-bind:user="user"
-        ></passwordreset-component>
+            class="mb-10"
+        ></edit-email>
+        <editpassword-component
+            v-bind:user="user"
+        ></editpassword-component>
 
     </v-container>
 </template>
@@ -15,14 +20,15 @@
 // import moment from 'moment'
 // import moment from 'moment-timezone'
 
-import PasswordReset from './PasswordResetComponent'
-import BasicsReset from './BasicsResetComponent'
+import EditPassword from './EditPasswordComponent'
+import EditEmail from './EditEmailComponent'
+import EditBasicProfile from './EditBasicProfileComponent'
 
 export default {
     components: {
-        BasicsReset,
-        PasswordReset,
-
+        EditPassword,
+        EditEmail,
+        EditBasicProfile,
     },
     props: {
         user: Object,
