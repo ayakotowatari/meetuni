@@ -11,28 +11,34 @@
             </v-col>
             <v-col cols="12" sm="12" md="1" offset-md="1">
                 <v-btn
-                    v-if="!isEditing"
+                    v-if="!isEditingForTimezone"
                     color="primary"
                     outlined
                     @click="setIsEditing"
                 >Edit</v-btn>
             </v-col>
         </v-row>
-        <v-form v-if="isEditing" ref="form">
+        <v-form v-if="isEditingForTimezone" ref="form">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="6">
                     <v-select
                         v-model="selectedTimezone"
                         :items="timezones"
-                        item-text="timezone"
-                        item-value='id'
+                        item-value='zone'
                         label="Timezones"
                         outlined
                         :rules="timezoneRules" 
                         required
                         :error="allerror.timezones"
                         :error-messages="allerror.timezones"
-                    ></v-select>
+                    >
+                    <template v-slot:selection="data">
+                        {{ data.item.zone }} ({{ data.item.GMT_difference }}) 
+                    </template>
+                     <template v-slot:item="data">
+                         {{ data.item.zone }} ({{ data.item.GMT_difference }})
+                    </template>
+                    </v-select>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -41,7 +47,6 @@
                         depressed 
                         color="primary" 
                         @click="save"
-                        :loading="loading"
                     >Save
                     </v-btn>
                     <v-btn 
@@ -58,17 +63,47 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
         user: Object
     },
+    data: function(){
+        return{
+            selectedTimezone: '',
+            timezoneRules: [
+                v => !!v || 'Timezone is required',
+            ],
+        }
+    },
+    mounted(){
+        this.$store.dispatch('getTimezoneList');
+    },
+    computed: {
+        ...mapState([
+            'timezones',
+            'isEditingForTimezone',
+            'loading',
+            'allerror'
+        ])
+    },
     methods: {
-        ...mapMutations('timezone', {
-            setIsEditing: 'setIsEditing',
-            hasFinishedEditing: 'hasFinishedEditing'
-        })
+        ...mapMutations({
+            setIsEditing: 'setIsEditingForTimezone',
+            hasFinishedEditing: 'hasFinishedEditingForTimezone'
+        }),
+        ...mapActions([
+            'updateTimezone',
+        ]),
+        save(){
+            if(this.$refs.form.validate()){
+
+                this.updateTimezone({
+                    timezone: this.selectedTimezone
+                })
+            }
+        }
     }
 
 }

@@ -54,6 +54,8 @@ export default new Vuex.Store ({
         isDraft: false,
         isEditing: false,
         isEditingForProfileBasics: false,
+        isEditingForTimezone: false,
+        timezones: [],
 
         //学生用に追加
         studentUser: {},
@@ -164,11 +166,17 @@ export default new Vuex.Store ({
         setIsEditingForProfileBasics(state){
             state.isEditingForProfileBasics = true;
         },
+        setIsEditingForTimezone(state){
+            state.isEditingForTimezone = true;
+        },
         hasFinishedEditing(state){
             state.isEditing = false
         },
         hasFinishedEditingForProfileBasics(state){
             state.isEditingForProfileBasics = false
+        },
+        hasFinishedEditingForTimezone(state){
+            state.isEditingForTimezone = false
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -202,6 +210,9 @@ export default new Vuex.Store ({
         },
         setMemberId(state, payload){
             state.memberId = payload
+        },
+        setTimezoneList(state, payload){
+            state.timezones = payload
         },
 
         //学生用に追加
@@ -564,6 +575,80 @@ export default new Vuex.Store ({
                     commit('setallErrors', allerror)
                 })
 
+        },
+        async getTimezoneList({state, commit}){
+
+            let timezone = [];
+            let allerror = [];
+
+            await axios
+                .get('/user/timezone-list')
+                .then(response => {
+                    timezone = response.data.timezone;
+                    commit('setTimezoneList', timezone);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateTimezone({commit}, payload){
+
+            let user = {};
+
+            commit('startLoading');
+
+            await axios
+                .post('/user/update-timezone', {
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditing');
+                }) 
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async getTimezoneList({state, commit}){
+
+            let timezone = [];
+            let allerror = [];
+
+            await axios
+                .get('/user/timezone-list')
+                .then(response => {
+                    timezone = response.data.timezone;
+                    commit('setTimezoneList', timezone);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateTimezone({commit}, payload){
+
+            let user = {};
+
+            commit('startLoading');
+
+            await axios
+                .post('/user/update-timezone', {
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForTimezone');
+                }) 
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
         },
 
 
