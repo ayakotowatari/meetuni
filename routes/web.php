@@ -107,6 +107,7 @@ Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToPa
 //Edit Profile
 Route::post('/user/update-basicinfo', 'UsersController@updateBasics');
 Route::post('/user/update-email', 'UsersController@updateEmail');
+Route::get('/user/timezone-list', 'UsersController@getTimezoneList');
 
 
 // テスト
@@ -118,7 +119,7 @@ Route::post('/user/update-email', 'UsersController@updateEmail');
 // Route::get('/inst/testform', 'ImagesController@testform');
 // Route::post('/inst/testform', 'ImagesController@addTestform');
 // Route::post('/inst/testform/update', 'ImagesController@testformUpdate');
-Route::get('/inst/test', 'BookingsController@test');
+// Route::get('/inst/test', 'UsersController@getTimezoneList');
 //テスト終わる
 
 //             //

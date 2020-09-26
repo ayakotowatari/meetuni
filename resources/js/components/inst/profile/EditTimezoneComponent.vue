@@ -24,8 +24,8 @@
                     <v-select
                         v-model="selectedTimezone"
                         :items="timezones"
-                        item-text="timezone"
-                        item-value='id'
+                        item-text="GMT_difference"
+                        item-value='zone'
                         label="Timezones"
                         outlined
                         :rules="timezoneRules" 
@@ -58,11 +58,29 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     props: {
         user: Object
+    },
+    data: function(){
+        return{
+            selectedTimezone: '',
+            timezoneRules: [
+                v => !!v || 'Timezone is required',
+            ],
+        }
+    },
+    mounted(){
+        this.$store.dispatch('timezone/getTimezoneList');
+    },
+    computed: {
+        ...mapState('timezone', [
+            'timezones',
+            'isEditing',
+            'allerror'
+        ])
     },
     methods: {
         ...mapMutations('timezone', {
