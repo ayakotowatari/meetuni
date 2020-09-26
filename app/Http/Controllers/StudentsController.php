@@ -100,7 +100,22 @@ class StudentsController extends Controller
         }
     }
 
-   
+    public function updateBasics(Request $request)
+    {
+        $request->validate([
+            "first_name" => 'required',
+            'last_name' => 'required',
+        ]);
+
+        $user_id = Auth::guard('student')->user()->id;
+
+        $user = Student::find($user_id);
+        $user->first_name = request('first_name');
+        $user->last_name = request('last_name');
+        $user->save();
+        
+    }
+    
     public function index()
     {
         //

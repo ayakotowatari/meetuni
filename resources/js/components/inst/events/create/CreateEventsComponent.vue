@@ -15,7 +15,7 @@
   </v-snackbar> -->
   <v-container>
   <h1 class="grey--text">Create Events</h1>
-      <eventbasics-component @basicsAdded = "hideSelect = false"></eventbasics-component>
+      <eventbasics-component @basicsAdded = "hideSelect = false" v-bind:user="user"></eventbasics-component>
       <eventselect-component :hideSelect="hideSelect" @selectsAdded = "hideFile = false"></eventselect-component>
       <eventfile-component :hideFile="hideFile" @eventAdded = "dialog = true"></eventfile-component>
   </v-container>
@@ -32,6 +32,9 @@ export default {
     EventBasics,
     EventSelect,
     EventFile
+  },
+  props: {
+      user: Object,
   },
   data: () => ({
     valid: true,

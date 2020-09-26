@@ -68,7 +68,7 @@ export const notifications = {
                 .then(response => {
                     console.log(response);
                     commit("closeDialog");
-                    router.push({name: 'participant-communications', params: {id: payload.user_id}});
+                    router.go();
                 })
                 .catch(error => {
                     allerror = error.response.data.errors,
@@ -92,7 +92,7 @@ export const notifications = {
                 .then(response => {
                     console.log(response);
                     commit("closeDialog");
-                    router.go();
+                    router.push({name: 'participant-communications', params: {id: payload.user_id}});
                    
                 })
                 .catch(error => {

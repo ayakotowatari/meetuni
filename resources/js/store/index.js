@@ -160,6 +160,9 @@ export default new Vuex.Store ({
         updateEmail(state, payload){
             state.user.email = payload
         },  
+        updateTimezone(state, payload){
+            state.user.timezone = payload
+        },
         setIsEditing(state){
             state.isEditing = true
         },

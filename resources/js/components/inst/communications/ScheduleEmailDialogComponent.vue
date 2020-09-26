@@ -78,14 +78,22 @@
                             <v-col cols="12" sm="12" md="6">
                                 <v-select
                                     v-model="timezone"
-                                    :items="['Asia/Tokyo', 'Europe/London']"
+                                    :items="timezones"
+                                    item-value='zone'
                                     label="Timezone"
                                     :rules="timezoneRules" 
                                     persistent-hint
                                     required
                                     :error="allerror.timezone"
                                     :error-messages="allerror.timezone"
-                                ></v-select>
+                                >
+                                <template v-slot:selection="data">
+                                    {{ data.item.zone }} ({{ data.item.GMT_difference }}) 
+                                </template>
+                                <template v-slot:item="data">
+                                    {{ data.item.zone }} ({{ data.item.GMT_difference }})
+                                </template>
+                                </v-select>
                             </v-col>
                         </v-row>
                     </v-form>
@@ -109,6 +117,7 @@ export default {
     props: {
         dialog: Boolean,
         event_id: Number,
+        user: Object
     },
     data: function(){
         return {
@@ -128,10 +137,24 @@ export default {
             ],
         }
     },
+    mounted(){
+        this.$store.dispatch('getTimezoneList');
+    },
     computed: {
         ...mapState('notifications',[
             'allerror'
-        ])
+        ]),
+        ...mapState([
+            'timezones'
+        ]),
+        timezone: {
+            get(){
+                return this.user.timezone
+            },
+            set (value) {
+                this.$store.commit('updateTimezone', value)
+            }
+        },
     },
     methods: {
         ...mapMutations('notifications', {
