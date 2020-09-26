@@ -14,6 +14,8 @@ use App\Models\LevelStudent;
 use App\Models\StudentSubject;
 use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UpdateStudentPasswordRequest;
 
 class StudentsController extends Controller
 {
@@ -115,6 +117,31 @@ class StudentsController extends Controller
         $user->save();
         
     }
+
+    public function updateEmail(Request $request)
+    {
+        $user_id = Auth::guard('student')->user()->id;
+        
+        $request->validate([
+            'email' => 'required|unique:users|unique:students',
+        ]);
+
+        $user = Student::find($user_id);
+        $user->email = request('email');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
+    public function updatePassword(UpdateStudentPasswordRequest $request)
+    {   
+        $user = Auth::guard('student')->user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+
+    }
+
     
     public function index()
     {

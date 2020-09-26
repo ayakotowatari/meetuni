@@ -43,6 +43,7 @@ Vue.component('regioneventcard-component', require('./components/student/main/Re
 //Chart
 //プロフィール編集
 Vue.component('editbasicprofile-component', require('./components/student/profile/EditBasicProfileComponent.vue').default);
+Vue.component('editemail-component', require('./components/student/profile/EditEmailComponent.vue').default);
 Vue.component('editpassword-component', require('./components/student/profile/EditPasswordComponent.vue').default);
 Vue.component('editpreference-component', require('./components/student/profile/EditPreferenceComponent.vue').default);
 Vue.component('edittimezone-component', require('./components/student/profile/EditTimezoneComponent.vue').default);

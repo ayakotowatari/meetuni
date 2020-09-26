@@ -25,6 +25,7 @@ export const student = {
         isLiked: true,
         eventId: '',
         isFollowed: false,
+        isEditing: false,
         isEditingForProfileBasics: false,
         loading: false,
         allerror: [],
@@ -158,6 +159,12 @@ export const student = {
             let event = state.eventsList.find(event=>event.id == payload);
             event.liked_by_user = false;
         },
+        setIsEditing(state){
+            state.isEditing = true
+        },
+        hasFinishedEditing(state){
+            state.isEditing = false
+        },
         setIsEditingForProfileBasics(state){
             state.isEditingForProfileBasics = true
         },
@@ -169,6 +176,9 @@ export const student = {
         },
         updateLastName(state, payload){
             state.user.last_name = payload
+        },
+        updateEmail(state, payload){
+            state.user.email = payload
         },
         startLoading(state){
             state.loading = true;
@@ -564,13 +574,34 @@ export const student = {
                 .then(response => {
                     user = response.data.user;
                     commit('stopLoading');
-                    commit('setUser', user);
+                    commit('setStudentUser', user);
                     commit('hasFinishedEditing');
                 })
                 .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 })
+        },
+        async updateEmail({commit}, payload){
+
+            let allerror = {};
+            let user = {};
+
+            await axios
+                .post('/student/update-email', {
+                    email: payload.email
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setStudentUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditing');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+
         },
         //テスト
 

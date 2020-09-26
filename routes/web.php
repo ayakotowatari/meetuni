@@ -160,9 +160,11 @@ Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 
 //学生プロフィール編集
 Route::post('/student/update-basicinfo', 'StudentsController@updateBasics');
+Route::post('/student/update-email', 'StudentsController@updateEmail');
+Route::post('/student/update-password', 'StudentsController@updatePassword');
 
 //テスト
-Route::get('/test', 'HomeController@test');
+// Route::get('/test', 'HomeController@test');
 
 
 // Vue
