@@ -27,7 +27,9 @@ export const student = {
         isFollowed: false,
         isEditing: false,
         isEditingForProfileBasics: false,
+        isEditingForTimezone: false,
         loading: false,
+        timezones: [],
         allerror: [],
     },
 
@@ -171,6 +173,12 @@ export const student = {
         hasFinishedEditingForProfileBasics(state){
             state.isEditingForProfileBasics = false
         },
+        setIsEditingForTimezone(state){
+            state.isEditingForTimezone = true
+        },
+        hasFinishedEditingForTimezone(state){
+            state.isEditingForTimezone = false
+        },
         updateFirstName(state, payload){
             state.user.first_name = payload
         },
@@ -185,6 +193,9 @@ export const student = {
         },
         stopLoading(state){
             state.loading = false;
+        },
+        setTimezoneList(state, payload){
+            state.timezones = payload
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -602,6 +613,43 @@ export const student = {
                     commit('setallErrors', allerror)
                 })
 
+        },
+        async getTimezoneList({state, commit}){
+
+            let timezone = [];
+            let allerror = [];
+
+            await axios
+                .get('/student/timezone-list')
+                .then(response => {
+                    timezone = response.data.timezone;
+                    commit('setTimezoneList', timezone);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateTimezone({commit}, payload){
+
+            let user = {};
+
+            commit('startLoading');
+
+            await axios
+                .post('/student/update-timezone', {
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setStudentUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForTimezone');
+                }) 
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
         },
         //テスト
 

@@ -142,6 +142,55 @@ class StudentsController extends Controller
 
     }
 
+    public function getTimezoneList()
+    {
+        $timezone = array();
+        $timestamp = time();
+        
+        $timezoneList = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        // DD($timezoneList);
+
+        foreach($timezoneList as $key => $value){
+            date_default_timezone_set($value);
+            $timezone[$key]['zone'] = $value;
+            $timezone[$key]['GMT_difference'] = 'GMT'.date('P', $timestamp);
+            // $value['offset'] = date('P', $timestamp);
+            // $value['diff_from_gtm'] = 'UTC/GMT'.date('P', $timestamp);
+        }
+        $timezones = collect($timezone)->sortBy('GMT_difference');
+
+        $tmp = [];
+        $uniqueTimezone = [];
+        foreach($timezones as $timezone){
+            if(!in_array($timezone['zone'], $tmp)){
+                $tmp[] = $timezone['zone'];
+                $uniqueTimezone[] = $timezone;
+            }
+        }
+
+        // DD($uniqueTimezone);
+
+        return response()->json(['timezone'=>$uniqueTimezone],200);
+
+    }
+
+    public function updateTimezone(Request $request)
+    {
+        $request->validate([
+            'timezone' => 'required',
+        ]);
+        
+        $user_id = Auth::guard('student')->user()->id;
+
+        $user = Student::find($user_id);
+        $user->timezone = request('timezone');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
+
     
     public function index()
     {

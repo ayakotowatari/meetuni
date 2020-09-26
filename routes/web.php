@@ -162,6 +162,8 @@ Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 Route::post('/student/update-basicinfo', 'StudentsController@updateBasics');
 Route::post('/student/update-email', 'StudentsController@updateEmail');
 Route::post('/student/update-password', 'StudentsController@updatePassword');
+Route::get('/student/timezone-list', 'StudentsController@getTimezoneList');
+Route::post('/student/update-timezone', 'StudentsController@updateTimezone');
 
 //テスト
 // Route::get('/test', 'HomeController@test');
