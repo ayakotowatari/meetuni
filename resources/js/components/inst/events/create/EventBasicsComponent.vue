@@ -56,7 +56,8 @@
                 <v-col cols="12" sm="12" md="4">
                     <v-select
                         v-model="timezone"
-                        :items="['0-17', '18-29', '30-54', '54+']"
+                        :items="timezones"
+                        item-value='zone'
                         label="Timezone"
                         outlined
                         :rules="timezoneRules" 
@@ -64,9 +65,16 @@
                         hint="What is your timezone?"
                         persistent-hint
                         required
-                        :error="allerror.timezone"
-                        :error-messages="allerror.timezone"
-                    ></v-select>
+                        :error="allerror.timezones"
+                        :error-messages="allerror.timezones"
+                    >
+                    <template v-slot:selection="data">
+                        {{ data.item.zone }} ({{ data.item.GMT_difference }}) 
+                    </template>
+                     <template v-slot:item="data">
+                         {{ data.item.zone }} ({{ data.item.GMT_difference }})
+                    </template>
+                    </v-select>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -166,7 +174,12 @@
 <script>
 import moment from 'moment'
 
+import { mapState } from 'vuex'
+
 export default {
+    props: {
+        user: Object
+    },
     data: () => ({
         loading: false,
         isSubmitted: false,
@@ -178,7 +191,6 @@ export default {
         dateRules: [
         v => !!v || 'Date is required',
         ],
-        timezone: '',
         timezoneRules: [
         v => !!v || 'Timezone is required',
         ],
@@ -192,6 +204,22 @@ export default {
         end_time: null,
         allerror: []
     }),
+    mounted(){
+        this.$store.dispatch('getTimezoneList');
+    },
+    computed: {
+        ...mapState([
+            'timezones'
+        ]),
+        timezone: {
+            get(){
+                return this.user.timezone
+            },
+            set (value) {
+                this.$store.commit('updateTimezone', value)
+            }
+        },
+    },
     methods: {
         // validate(){
         //     if(

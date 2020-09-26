@@ -3,6 +3,7 @@
         <scheduleemaildialog-component
             v-bind:dialog="dialog"
             v-bind:event_id="eventId"
+            v-bind:user="user"
         ></scheduleemaildialog-component>
         <v-data-table
             :headers="headers"

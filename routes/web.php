@@ -158,6 +158,9 @@ Route::post('/student/unlike-event', 'LikesController@unlike');
 Route::post('/student/follow-inst', 'FollowsController@store');
 Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 
+//学生プロフィール編集
+Route::post('/student/update-basicinfo', 'StudentsController@updateBasics');
+
 //テスト
 Route::get('/test', 'HomeController@test');
 

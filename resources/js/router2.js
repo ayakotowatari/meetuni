@@ -13,7 +13,7 @@ import BookedEvents from "./components/student/account/BookedEventsComponent";
 import EventPage from "./components/student/events/EventPageComponent";
 import Following from "./components/student/account/FollowingComponent";
 import Liked from "./components/student/account/LikedComponent";
-import Profile from "./components/student/account/ProfileComponent";
+import StudentProfile from "./components/student/profile/StudentProfileComponent";
 import EventList from "./components/student/events/EventListComponent";
 
 //テスト
@@ -80,8 +80,8 @@ const routes = [
     },
     {
         path: "/student/profile",
-        name: "profile",
-        component: Profile
+        name: "student-profile",
+        component: StudentProfile
     },
     {
         path: "/student/event-list/:id",

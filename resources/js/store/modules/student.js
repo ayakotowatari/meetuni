@@ -4,7 +4,13 @@ export const student = {
     namespaced: true,
 
     state: {
-        user: {},
+        user: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: '',
+            timezone: '',
+        },
         initials: '',
         allEvents: [],
         event: [],
@@ -19,6 +25,8 @@ export const student = {
         isLiked: true,
         eventId: '',
         isFollowed: false,
+        isEditingForProfileBasics: false,
+        loading: false,
         allerror: [],
     },
 
@@ -149,6 +157,24 @@ export const student = {
         instUnlikedByUser(state,payload){
             let event = state.eventsList.find(event=>event.id == payload);
             event.liked_by_user = false;
+        },
+        setIsEditingForProfileBasics(state){
+            state.isEditingForProfileBasics = true
+        },
+        hasFinishedEditingForProfileBasics(state){
+            state.isEditingForProfileBasics = false
+        },
+        updateFirstName(state, payload){
+            state.user.first_name = payload
+        },
+        updateLastName(state, payload){
+            state.user.last_name = payload
+        },
+        startLoading(state){
+            state.loading = true;
+        },
+        stopLoading(state){
+            state.loading = false;
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -518,6 +544,28 @@ export const student = {
                     eventId = response.data.event_id;
                     console.log(eventId);
                     commit('instUnlikedByUser', eventId);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        //プロフィール編集
+        async updateProfileBasics({commit}, payload){
+
+            let user = {};
+            commit('startLoading');
+
+            await axios
+                .post('/student/update-basicinfo', {
+                    first_name: payload.first_name,
+                    last_name: payload.last_name,
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('stopLoading');
+                    commit('setUser', user);
+                    commit('hasFinishedEditing');
                 })
                 .catch(error => {
                     allerror = error.response.data.errors,
