@@ -11,6 +11,7 @@
             </v-col>
             <v-col cols="12" sm="12" md="1" offset-md="1">
                 <v-btn
+                    v-if="!isEditing"
                     color="primary"
                     outlined
                     @click="isEditing = !isEditing"

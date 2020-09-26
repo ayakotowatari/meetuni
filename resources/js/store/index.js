@@ -10,6 +10,7 @@ import { participantcharts } from './modules/participantcharts';
 import { student } from './modules/student';
 import { studentaccount } from './modules/studentaccount';
 import { notifications } from './modules/notifications';
+import { timezone } from './modules/timezone';
 
 export default new Vuex.Store ({
 
@@ -52,6 +53,7 @@ export default new Vuex.Store ({
         isOngoing: false,
         isDraft: false,
         isEditing: false,
+        isEditingForProfileBasics: false,
 
         //学生用に追加
         studentUser: {},
@@ -157,10 +159,16 @@ export default new Vuex.Store ({
             state.user.email = payload
         },  
         setIsEditing(state){
-            state.isEditing = true;
+            state.isEditing = true
+        },
+        setIsEditingForProfileBasics(state){
+            state.isEditingForProfileBasics = true;
         },
         hasFinishedEditing(state){
             state.isEditing = false
+        },
+        hasFinishedEditingForProfileBasics(state){
+            state.isEditingForProfileBasics = false
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -700,7 +708,8 @@ export default new Vuex.Store ({
         participantcharts,
         student,
         studentaccount,
-        notifications
+        notifications,
+        timezone
     }
 
 })
