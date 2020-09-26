@@ -11,13 +11,14 @@
             </v-col>
             <v-col cols="12" sm="12" md="1" offset-md="1">
                 <v-btn
+                    v-if="!isEditingForProfileBasics"
                     color="primary"
                     outlined
-                    @click="isEditing = !isEditing"
+                    @click="setIsEditing"
                 >Edit</v-btn>
             </v-col>
         </v-row>
-        <v-form v-if="isEditing" ref="form">
+        <v-form v-if="isEditingForProfileBasics" ref="form">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="3">
                     <v-text-field
@@ -79,7 +80,7 @@
                         color="primary" 
                         outlined
                         class="ml-4" 
-                        @click="isEditing = !isEditing"
+                        @click="hasFinishedEditing"
                     >Cancel
                     </v-btn>
                 </v-col>
@@ -89,7 +90,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -97,7 +98,6 @@ export default {
     },
     data: function(){
         return{
-            isEditing: false,
             firstnameRules: [
                 v => !!v || 'First Name is required',
             ],
@@ -114,6 +114,7 @@ export default {
     },
     computed: {
         ...mapState([
+            'isEditingForProfileBasics',
             'loading',
             'allerror',
         ]),
@@ -151,6 +152,10 @@ export default {
         },
     },
     methods: {
+        ...mapMutations({
+            setIsEditing: 'setIsEditingForProfileBasics',
+            hasFinishedEditing: 'hasFinishedEditingForProfileBasics'
+        }),
         ...mapActions([
             'updateProfileBasics'
         ]),
@@ -162,7 +167,8 @@ export default {
                     last_name: this.lastName,
                     job_title: this.jobTitle,
                     department: this.department
-                })  
+                })
+
             }
         },
     }

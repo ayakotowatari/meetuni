@@ -66,6 +66,7 @@ Vue.component('barchart-component', require('./components/chart/BarChartComponen
 Vue.component('editpassword-component', require('./components/inst/profile/EditPasswordComponent.vue').default);
 Vue.component('editbasicprofile-component', require('./components/inst/profile/EditBasicProfileComponent.vue').default);
 Vue.component('editemail-component', require('./components/inst/profile/EditEmailComponent.vue').default);
+Vue.component('edittimezone-component', require('./components/inst/profile/EditTimezoneComponent.vue').default);
 
 //テスト
 
