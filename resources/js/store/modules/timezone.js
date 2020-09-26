@@ -4,8 +4,10 @@ export const timezone = {
     namespaced: true,
 
     state: {
+        user: {},
         isEditing: false,
         timezones: [],
+        loading: false,
         allerror: [],
 
        
@@ -23,6 +25,12 @@ export const timezone = {
         },
         setallErrors(state, payload){
             state.allerror = payload
+        },
+        startLoading(state){
+            state.loading = true
+        },
+        stopLoading(state){
+            state.loading = false
         }
     },
     actions: {
@@ -37,6 +45,27 @@ export const timezone = {
                     timezone = response.data.timezone;
                     commit('setTimezoneList', timezone);
                 })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateTimezone({commit}, payload){
+
+            let user = {};
+
+            commit('startLoading');
+
+            await axios
+                .post('/user/update-timezone', {
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditing');
+                }) 
                 .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)

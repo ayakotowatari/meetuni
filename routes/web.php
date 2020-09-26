@@ -108,6 +108,7 @@ Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToPa
 Route::post('/user/update-basicinfo', 'UsersController@updateBasics');
 Route::post('/user/update-email', 'UsersController@updateEmail');
 Route::get('/user/timezone-list', 'UsersController@getTimezoneList');
+Route::post('/user/update-timezone', 'UsersController@updateTimezone');
 
 
 // テスト

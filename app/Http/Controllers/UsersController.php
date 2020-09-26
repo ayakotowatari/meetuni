@@ -264,4 +264,20 @@ class UsersController extends Controller
 
     }
 
+    public function updateTimezone(Request $request)
+    {
+        $request->validate([
+            'timezone' => 'required',
+        ]);
+        
+        $user_id = Auth::user()->id;
+
+        $user = User::find($user_id);
+        $user->timezone = request('timezone');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
 }

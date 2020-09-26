@@ -48,7 +48,6 @@
                         depressed 
                         color="primary" 
                         @click="save"
-                        :loading="loading"
                     >Save
                     </v-btn>
                     <v-btn 
