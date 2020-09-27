@@ -254,6 +254,38 @@ class StudentsController extends Controller
         return response()->json(['destinations'=>$destinations, 'levels'=>$levels, 'subjects'=>$subjects],200);
         
     }
+
+    public function updateDestinations (Request $request)
+    {
+        $request->validate([
+            'destinations' => 'required',
+        ]);
+
+        $destinations = request("destinations");
+
+        $user_id = Auth::guard('student')->user()->id;
+
+        CountryStudent::where('student_id', $user_id)
+                        ->delete();
+
+        //country_studentsテーブルへの挿入
+        foreach($destinations as $destination){
+
+            $country_student = new CountryStudent();
+            $country_student->student_id = $user_id;
+            $country_student->country_id = $destination;
+            $country_student->save();
+        }
+
+        $updatedDestinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                                    ->join('students', 'country_students.student_id', '=', 'students.id')
+                                    ->where('students.id', $user_id)
+                                    ->select('countries.country')
+                                    ->get();
+
+        return response()->json(['destinations'=>$updatedDestinations],200);
+
+    }
     
     public function index()
     {

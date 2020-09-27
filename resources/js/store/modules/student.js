@@ -245,6 +245,9 @@ export const student = {
         },
         setallErrors(state, payload){
             state.allerror = payload
+        },
+        setStudentDestinations(state, payload){
+            state.preference.destinations = payload
         }
     },
 
@@ -789,6 +792,27 @@ export const student = {
                   commit("setSubjectList", payload)
                 })
         },
+        async updateDestinations({commit}, payload){
+
+            commit('startLoading');
+
+            let destinations = [];
+
+            await axios
+                .post('/student/update-destinations', {
+                    destinations: payload.destinations
+                })
+                .then(res => {
+                    destinations = res.data.destinations;
+                    commit('setStudentDestinations', destinations);
+                    commit('stopLoading');
+                    commit('hasFinishedEditing');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        }
         //テスト
 
     }
