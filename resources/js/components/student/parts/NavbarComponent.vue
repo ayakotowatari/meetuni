@@ -75,7 +75,7 @@ import { mapState } from 'vuex'
         { icon: 'mdi-calendar-month-outline', text: 'Booked Events', route: 'booked-events' },
         { icon: 'mdi-eye-outline', text: 'Following', route: 'following' },
         { icon: 'mdi-heart-outline', text: 'Liked', route: 'liked'},
-        { icon: 'mdi-account-details-outline', text: 'My Profile', route: 'profile' },
+        { icon: 'mdi-account-details-outline', text: 'My Profile', route: 'student-profile' },
        ],
     }),
     mounted() {

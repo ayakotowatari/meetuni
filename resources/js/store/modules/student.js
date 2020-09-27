@@ -25,8 +25,25 @@ export const student = {
         isLiked: true,
         eventId: '',
         isFollowed: false,
+        isEditing: false,
         isEditingForProfileBasics: false,
+        isEditingForTimezone: false,
+        isEditingForYear: false,
         loading: false,
+        timezones: [],
+        year: {
+            id: '',
+            year: ''
+        },
+        years: [],
+        preference: {
+            destinations: [],
+            levels: [],
+            subjects: []
+        },
+        destinationList: [],
+        levelList: [],
+        subjectList: [],
         allerror: [],
     },
 
@@ -158,11 +175,29 @@ export const student = {
             let event = state.eventsList.find(event=>event.id == payload);
             event.liked_by_user = false;
         },
+        setIsEditing(state){
+            state.isEditing = true
+        },
+        hasFinishedEditing(state){
+            state.isEditing = false
+        },
         setIsEditingForProfileBasics(state){
             state.isEditingForProfileBasics = true
         },
         hasFinishedEditingForProfileBasics(state){
             state.isEditingForProfileBasics = false
+        },
+        setIsEditingForTimezone(state){
+            state.isEditingForTimezone = true
+        },
+        hasFinishedEditingForTimezone(state){
+            state.isEditingForTimezone = false
+        },
+        setIsEditingForYear(state){
+            state.isEditingForYear = true
+        },
+        hasFinishedEditingForYear(state){
+            state.isEditingForYear = false
         },
         updateFirstName(state, payload){
             state.user.first_name = payload
@@ -170,11 +205,43 @@ export const student = {
         updateLastName(state, payload){
             state.user.last_name = payload
         },
+        updateEmail(state, payload){
+            state.user.email = payload
+        },
         startLoading(state){
             state.loading = true;
         },
         stopLoading(state){
             state.loading = false;
+        },
+        setTimezoneList(state, payload){
+            state.timezones = payload
+        },
+        setStudentYear(state, payload){
+            state.year = payload
+        },
+        updateYear(state, payload){
+            state.year = payload
+        },
+        updateYearId(state, payload){
+            state.year.id = payload
+        },
+        setYears(state, payload){
+            state.years = payload
+        },
+        setStudentPreference(state, payload){
+            state.preference.destinations = payload.destinations,
+            state.preference.levels = payload.levels,
+            state.preference.subjects = payload.subjects
+        },
+        setDestinationList(state, payload){
+            state.destinationList = payload
+        },
+        setLevelList(state, payload){
+            state.levelList = payload
+        },
+        setSubjectList(state, payload){
+            state.subjectList = payload
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -564,12 +631,162 @@ export const student = {
                 .then(response => {
                     user = response.data.user;
                     commit('stopLoading');
-                    commit('setUser', user);
+                    commit('setStudentUser', user);
                     commit('hasFinishedEditing');
                 })
                 .catch(error => {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
+                })
+        },
+        async updateEmail({commit}, payload){
+
+            let allerror = {};
+            let user = {};
+
+            await axios
+                .post('/student/update-email', {
+                    email: payload.email
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setStudentUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditing');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+
+        },
+        async getTimezoneList({state, commit}){
+
+            let timezone = [];
+            let allerror = [];
+
+            await axios
+                .get('/student/timezone-list')
+                .then(response => {
+                    timezone = response.data.timezone;
+                    commit('setTimezoneList', timezone);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateTimezone({commit}, payload){
+
+            let user = {};
+
+            commit('startLoading');
+
+            await axios
+                .post('/student/update-timezone', {
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    user = response.data.user;
+                    commit('setStudentUser', user);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForTimezone');
+                }) 
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async fetchStudentYear({state, commit}){
+
+            let year= {};
+
+            await axios
+                .get('/student/fetch-year')
+                .then(response => {
+                    year = response.data.year;
+                    // console.log('result');
+                    // console.log(year);
+                    commit('setStudentYear', year);
+                })
+        },
+        async fetchYearsList({state, commit}){
+
+            let years = [];
+
+            await axios
+                .get('/student/fetch-yearlist')
+                .then(response => {
+                    years = response.data.years;
+                    // console.log('result');
+                    // console.log(years);
+                    commit('setYears', years)
+                })
+        },
+        async updateYear({commit}, payload){
+
+            console.log('check');
+            console.log(payload.year_id);
+
+            commit('setIsEditingForYear');
+
+            let year = {};
+
+            await axios
+                .post('/student/uddate-year', {
+                    year_id: payload.year_id
+                })
+                .then(response => {
+                    year = response.data.year;
+                    commit('updateYear', year);
+                    commit('hasFinishedEditingForYear');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async fetchStudentPreference({commit}, payload){
+
+            let destinations = [];
+            let levels = [];
+            let subjects = [];
+
+            await axios
+                .get('/student/fetch-preference')
+                .then(response => {
+                    destinations = response.data.destinations;
+                    levels = response.data.levels;
+                    subjects = response.data.subjects;
+                    commit('setStudentPreference', {destinations: destinations, levels: levels, subjects: subjects})
+                })
+        },
+        async fetchDestinationList({commit}) {
+            let payload = [];
+
+            await axios 
+                .get("/student/fetch-destinations")
+                .then(res => {
+                    payload = res.data.destinations;
+                    commit("setDestinationList", payload)
+                })
+        },
+        async fetchLevelList({commit}) {
+            let payload = [];
+            await axios
+                .get("/student/fetch-levels")
+                .then(res => {
+                  payload = res.data.levels;
+                  commit("setLevelList", payload)
+                })
+        },
+        async fetchSubjectList({commit}) {
+            let payload = [];
+            await axios
+                .get("/student/fetch-subjects")
+                .then(res => {
+                  payload = res.data.subjects;
+                  commit("setSubjectList", payload)
                 })
         },
         //テスト

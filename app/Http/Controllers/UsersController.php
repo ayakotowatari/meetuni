@@ -150,14 +150,6 @@ class UsersController extends Controller
         return view('inst/auth/register', ['invite' => $invite, 'inst' => $inst_detail]);
     }
 
-    public function updatePassword(UpdatePasswordRequest $request)
-    {   
-        $user = Auth::user();
-        $user->password = Hash::make($request->get('newPassword'));
-        $user->save();
-
-    }
-
     public function fetchTeamMembers()
     {
         $user = Auth::user();
@@ -229,6 +221,14 @@ class UsersController extends Controller
         $user->save();
 
         return response()->json(['user'=>$user],200);
+
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {   
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
 
     }
 

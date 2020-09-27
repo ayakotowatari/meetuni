@@ -9,11 +9,14 @@ use App\Models\Student;
 use App\Models\Country;
 use App\Models\Level;
 use App\Models\Year;
+use App\Models\Subject;
 use App\Models\CountryStudent;
 use App\Models\LevelStudent;
 use App\Models\StudentSubject;
 use App\Models\ParticipantNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UpdateStudentPasswordRequest;
 
 class StudentsController extends Controller
 {
@@ -26,7 +29,7 @@ class StudentsController extends Controller
     public function fetchStudentUser()
     {
         $user = Auth::guard('student')->user();
-        // $user = Auth::user();
+    
         return response()->json(['user'=>$user],200);
         // DD($user);
         // return view ('student.test');
@@ -113,6 +116,142 @@ class StudentsController extends Controller
         $user->first_name = request('first_name');
         $user->last_name = request('last_name');
         $user->save();
+        
+    }
+
+    public function updateEmail(Request $request)
+    {
+        $user_id = Auth::guard('student')->user()->id;
+        
+        $request->validate([
+            'email' => 'required|unique:users|unique:students',
+        ]);
+
+        $user = Student::find($user_id);
+        $user->email = request('email');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
+    public function updatePassword(UpdateStudentPasswordRequest $request)
+    {   
+        $user = Auth::guard('student')->user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+
+    }
+
+    public function getTimezoneList()
+    {
+        $timezone = array();
+        $timestamp = time();
+        
+        $timezoneList = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
+        // DD($timezoneList);
+
+        foreach($timezoneList as $key => $value){
+            date_default_timezone_set($value);
+            $timezone[$key]['zone'] = $value;
+            $timezone[$key]['GMT_difference'] = 'GMT'.date('P', $timestamp);
+            // $value['offset'] = date('P', $timestamp);
+            // $value['diff_from_gtm'] = 'UTC/GMT'.date('P', $timestamp);
+        }
+        $timezones = collect($timezone)->sortBy('GMT_difference');
+
+        $tmp = [];
+        $uniqueTimezone = [];
+        foreach($timezones as $timezone){
+            if(!in_array($timezone['zone'], $tmp)){
+                $tmp[] = $timezone['zone'];
+                $uniqueTimezone[] = $timezone;
+            }
+        }
+
+        // DD($uniqueTimezone);
+
+        return response()->json(['timezone'=>$uniqueTimezone],200);
+
+    }
+
+    public function updateTimezone(Request $request)
+    {
+        $request->validate([
+            'timezone' => 'required',
+        ]);
+        
+        $user_id = Auth::guard('student')->user()->id;
+
+        $user = Student::find($user_id);
+        $user->timezone = request('timezone');
+        $user->save();
+
+        return response()->json(['user'=>$user],200);
+
+    }
+
+    public function fetchStudentYear()
+    {
+        $user_id = Auth::guard('student')->user()->id;
+
+        $year = Student::join('years', 'students.year_id', '=', 'years.id')
+                    ->select('years.id', 'years.year')
+                    ->first();
+
+        return response()->json(['year'=>$year],200);
+    }
+
+    public function updateYear(Request $request)
+    {
+        $request->validate([
+            'year_id' => 'required',
+        ]);
+
+        $year_id = request('year_id');
+        
+        $user_id = Auth::guard('student')->user()->id;
+        $student = Student::find($user_id);
+        $student->year_id = $year_id;
+        $student->save();
+
+        $year = Student::join('years', 'students.year_id', '=', 'years.id')
+                        ->where('students.id', $user_id)
+                        ->select('years.id', 'years.year')
+                        ->first();
+
+        return response()->json(['year'=>$year],200);
+    }
+
+    public function fetchPreference()
+    {
+        $user_id = Auth::guard('student')->user()->id;
+
+        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                            ->join('students', 'country_students.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('countries.country')
+                            ->get();
+
+        // DD($destinations);
+
+        $levels = Level::join('level_students', 'levels.id', '=', 'level_students.level_id')
+                            ->join('students', 'level_students.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('levels.level')
+                            ->get();
+
+        // DD($levels);
+
+        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                            ->join('students', 'student_subjects.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('subjects.subject')
+                            ->get();
+
+        // DD($levels);
+
+        return response()->json(['destinations'=>$destinations, 'levels'=>$levels, 'subjects'=>$subjects],200);
         
     }
     

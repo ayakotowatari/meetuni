@@ -160,9 +160,20 @@ Route::post('/student/unfollow-inst', 'FollowsController@unfollow');
 
 //学生プロフィール編集
 Route::post('/student/update-basicinfo', 'StudentsController@updateBasics');
+Route::post('/student/update-email', 'StudentsController@updateEmail');
+Route::post('/student/update-password', 'StudentsController@updatePassword');
+Route::get('/student/timezone-list', 'StudentsController@getTimezoneList');
+Route::post('/student/update-timezone', 'StudentsController@updateTimezone');
+Route::get('/student/fetch-year', 'StudentsController@fetchStudentYear');
+Route::post('/student/uddate-year', 'StudentsController@updateYear');
+Route::get('/student/fetch-yearlist', 'YearsController@fetchYears');
+Route::get('/student/fetch-destinations', 'CountriesController@fetchDestinationList');
+Route::get('/student/fetch-levels', 'LevelsController@fetchLevelList');
+Route::get('/student/fetch-subjects', 'SubjectsController@fetchSubjectList');
+Route::get('/student/fetch-preference', 'StudentsController@fetchPreference');
 
 //テスト
-Route::get('/test', 'HomeController@test');
+// Route::get('/test', 'HomeController@test');
 
 
 // Vue

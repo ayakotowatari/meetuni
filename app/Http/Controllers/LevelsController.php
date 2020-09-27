@@ -57,4 +57,12 @@ class LevelsController extends Controller
 
             return response() -> json(['levels' => $levels, 'level' => $json5, 'total' => $json6]);
     }
+
+    public function fetchLevelList()
+    {
+        $levels = Level::whereNotNull('level')
+                    ->get();
+
+        return response() -> json(['levels'=>$levels]);
+    }
 }
