@@ -167,6 +167,10 @@ Route::post('/student/update-timezone', 'StudentsController@updateTimezone');
 Route::get('/student/fetch-year', 'StudentsController@fetchStudentYear');
 Route::post('/student/uddate-year', 'StudentsController@updateYear');
 Route::get('/student/fetch-yearlist', 'YearsController@fetchYears');
+Route::get('/student/fetch-destinations', 'CountriesController@fetchDestinationList');
+Route::get('/student/fetch-levels', 'LevelsController@fetchLevelList');
+Route::get('/student/fetch-subjects', 'SubjectsController@fetchSubjectList');
+Route::get('/student/fetch-preference', 'StudentsController@fetchPreference');
 
 //テスト
 // Route::get('/test', 'HomeController@test');

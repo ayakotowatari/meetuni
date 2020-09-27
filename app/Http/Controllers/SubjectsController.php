@@ -67,6 +67,14 @@ class SubjectsController extends Controller
 
             return response() -> json(['subject' => $json7, 'total' => $json8]);
     }
+
+    public function fetchSubjectList()
+    {
+        $subjects = Subject::whereNotNull('subject')
+                            ->get();
+
+        return response() -> json(['subjects'=>$subjects]);
+    }
     /**
      * Show the form for creating a new resource.
      *

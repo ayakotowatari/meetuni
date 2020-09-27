@@ -36,6 +36,14 @@ export const student = {
             year: ''
         },
         years: [],
+        preference: {
+            destinations: [],
+            levels: [],
+            subjects: []
+        },
+        destinationList: [],
+        levelList: [],
+        subjectList: [],
         allerror: [],
     },
 
@@ -220,6 +228,20 @@ export const student = {
         },
         setYears(state, payload){
             state.years = payload
+        },
+        setStudentPreference(state, payload){
+            state.preference.destinations = payload.destinations,
+            state.preference.levels = payload.levels,
+            state.preference.subjects = payload.subjects
+        },
+        setDestinationList(state, payload){
+            state.destinationList = payload
+        },
+        setLevelList(state, payload){
+            state.levelList = payload
+        },
+        setSubjectList(state, payload){
+            state.subjectList = payload
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -723,7 +745,50 @@ export const student = {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 })
-        }
+        },
+        async fetchStudentPreference({commit}, payload){
+
+            let destinations = [];
+            let levels = [];
+            let subjects = [];
+
+            await axios
+                .get('/student/fetch-preference')
+                .then(response => {
+                    destinations = response.data.destinations;
+                    levels = response.data.levels;
+                    subjects = response.data.subjects;
+                    commit('setStudentPreference', {destinations: destinations, levels: levels, subjects: subjects})
+                })
+        },
+        async fetchDestinationList({commit}) {
+            let payload = [];
+
+            await axios 
+                .get("/student/fetch-destinations")
+                .then(res => {
+                    payload = res.data.destinations;
+                    commit("setDestinationList", payload)
+                })
+        },
+        async fetchLevelList({commit}) {
+            let payload = [];
+            await axios
+                .get("/student/fetch-levels")
+                .then(res => {
+                  payload = res.data.levels;
+                  commit("setLevelList", payload)
+                })
+        },
+        async fetchSubjectList({commit}) {
+            let payload = [];
+            await axios
+                .get("/student/fetch-subjects")
+                .then(res => {
+                  payload = res.data.subjects;
+                  commit("setSubjectList", payload)
+                })
+        },
         //テスト
 
     }

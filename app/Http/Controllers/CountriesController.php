@@ -87,6 +87,14 @@ class CountriesController extends Controller
 
     }
 
+    public function fetchDestinationList()
+    {
+        $destinations = Country::where('destination', 1)
+                                ->get();
+
+        return response() -> json(['destinations'=>$destinations]);
+    }
+
     public function index()
     {
         //

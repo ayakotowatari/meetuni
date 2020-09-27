@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Country;
 use App\Models\Level;
 use App\Models\Year;
+use App\Models\Subject;
 use App\Models\CountryStudent;
 use App\Models\LevelStudent;
 use App\Models\StudentSubject;
@@ -220,6 +221,38 @@ class StudentsController extends Controller
                         ->first();
 
         return response()->json(['year'=>$year],200);
+    }
+
+    public function fetchPreference()
+    {
+        $user_id = Auth::guard('student')->user()->id;
+
+        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                            ->join('students', 'country_students.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('countries.country')
+                            ->get();
+
+        // DD($destinations);
+
+        $levels = Level::join('level_students', 'levels.id', '=', 'level_students.level_id')
+                            ->join('students', 'level_students.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('levels.level')
+                            ->get();
+
+        // DD($levels);
+
+        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                            ->join('students', 'student_subjects.student_id', '=', 'students.id')
+                            ->where('students.id', $user_id)
+                            ->select('subjects.subject')
+                            ->get();
+
+        // DD($levels);
+
+        return response()->json(['destinations'=>$destinations, 'levels'=>$levels, 'subjects'=>$subjects],200);
+        
     }
     
     public function index()

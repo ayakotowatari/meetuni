@@ -41,6 +41,15 @@
             v-bind:user="user"
             class="mt-6 mb-8"
         ></edityear-component>
+        <v-row justify="center">
+            <v-col col="12" sm="12" md="8">
+                <v-divider></v-divider>
+            </v-col>
+        </v-row>
+        <editpreference-component
+            v-bind:user="user"
+            class="mt-6 mb-8"
+        ></editpreference-component>
 
     </v-container>
 </template>
