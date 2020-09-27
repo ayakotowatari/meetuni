@@ -172,6 +172,8 @@ Route::get('/student/fetch-levels', 'LevelsController@fetchLevelList');
 Route::get('/student/fetch-subjects', 'SubjectsController@fetchSubjectList');
 Route::get('/student/fetch-preference', 'StudentsController@fetchPreference');
 Route::post('/student/update-destinations', 'StudentsController@updateDestinations');
+Route::post('/student/update-levels', 'StudentsController@updateLevels');
+Route::post('/student/update-subjects', 'StudentsController@updateSubjects');
 
 //テスト
 // Route::get('/test', 'HomeController@test');

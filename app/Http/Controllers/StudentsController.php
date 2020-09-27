@@ -286,6 +286,71 @@ class StudentsController extends Controller
         return response()->json(['destinations'=>$updatedDestinations],200);
 
     }
+
+    public function updateLevels (Request $request)
+    {
+        $request->validate([
+            'levels' => 'required',
+        ]);
+
+        $levels = request("levels");
+
+        $user_id = Auth::guard('student')->user()->id;
+
+        LevelStudent::where('student_id', $user_id)
+                        ->delete();
+
+        //country_studentsテーブルへの挿入
+        foreach($levels as $level){
+
+            $level_student = new LevelStudent();
+            $level_student->student_id = $user_id;
+            $level_student->level_id = $level;
+            $level_student->save();
+        }
+
+        $updatedLevels = Level::join('level_students', 'levels.id', '=', 'level_students.level_id')
+                                    ->join('students', 'level_students.student_id', '=', 'students.id')
+                                    ->where('students.id', $user_id)
+                                    ->select('levels.level')
+                                    ->get();
+
+        return response()->json(['levels'=>$updatedLevels],200);
+
+    }
+
+
+    public function updateSubjects (Request $request)
+    {
+        $request->validate([
+            'subjects' => 'required',
+        ]);
+
+        $subjects= request("subjects");
+
+        $user_id = Auth::guard('student')->user()->id;
+
+        StudentSubject::where('student_id', $user_id)
+                        ->delete();
+
+        //country_studentsテーブルへの挿入
+        foreach($subjects as $subject){
+
+            $student_subject = new StudentSubject();
+            $student_subject->student_id = $user_id;
+            $student_subject->subject_id = $subject;
+            $student_subject->save();
+        }
+
+        $updatedSubjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+                                    ->join('students', 'student_subjects.student_id', '=', 'students.id')
+                                    ->where('students.id', $user_id)
+                                    ->select('subjects.subject')
+                                    ->get();
+
+        return response()->json(['subjects'=>$updatedSubjects],200);
+
+    }
     
     public function index()
     {
