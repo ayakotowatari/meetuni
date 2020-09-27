@@ -32,15 +32,15 @@
             v-bind:user="user"
             class="mt-6 mb-8"
         ></edittimezone-component>
-        <!-- <v-row justify="center">
+        <v-row justify="center">
             <v-col col="12" sm="12" md="8">
                 <v-divider></v-divider>
             </v-col>
         </v-row>
-        <editpreference-component
+        <edityear-component
             v-bind:user="user"
             class="mt-6 mb-8"
-        ></editpreference-component> -->
+        ></edityear-component>
 
     </v-container>
 </template>
@@ -50,6 +50,7 @@ import EditBasicProfile from './EditBasicProfileComponent'
 import EditEmail from './EditEmailComponent'
 import EditPassword from './EditPasswordComponent'
 import EditTimezone from './EditTimezoneComponent'
+import EditYear from './EditYearComponent'
 import EditPreference from './EditPreferenceComponent'
 
 export default {
@@ -58,6 +59,7 @@ export default {
         EditEmail,
         EditPassword,
         EditTimezone,
+        EditYear,
         EditPreference
     },
     props: {

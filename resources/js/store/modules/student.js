@@ -28,8 +28,14 @@ export const student = {
         isEditing: false,
         isEditingForProfileBasics: false,
         isEditingForTimezone: false,
+        isEditingForYear: false,
         loading: false,
         timezones: [],
+        year: {
+            id: '',
+            year: ''
+        },
+        years: [],
         allerror: [],
     },
 
@@ -179,6 +185,12 @@ export const student = {
         hasFinishedEditingForTimezone(state){
             state.isEditingForTimezone = false
         },
+        setIsEditingForYear(state){
+            state.isEditingForYear = true
+        },
+        hasFinishedEditingForYear(state){
+            state.isEditingForYear = false
+        },
         updateFirstName(state, payload){
             state.user.first_name = payload
         },
@@ -196,6 +208,18 @@ export const student = {
         },
         setTimezoneList(state, payload){
             state.timezones = payload
+        },
+        setStudentYear(state, payload){
+            state.year = payload
+        },
+        updateYear(state, payload){
+            state.year = payload
+        },
+        updateYearId(state, payload){
+            state.year.id = payload
+        },
+        setYears(state, payload){
+            state.years = payload
         },
         setallErrors(state, payload){
             state.allerror = payload
@@ -651,6 +675,55 @@ export const student = {
                     commit('setallErrors', allerror)
                 })
         },
+        async fetchStudentYear({state, commit}){
+
+            let year= {};
+
+            await axios
+                .get('/student/fetch-year')
+                .then(response => {
+                    year = response.data.year;
+                    // console.log('result');
+                    // console.log(year);
+                    commit('setStudentYear', year);
+                })
+        },
+        async fetchYearsList({state, commit}){
+
+            let years = [];
+
+            await axios
+                .get('/student/fetch-yearlist')
+                .then(response => {
+                    years = response.data.years;
+                    // console.log('result');
+                    // console.log(years);
+                    commit('setYears', years)
+                })
+        },
+        async updateYear({commit}, payload){
+
+            console.log('check');
+            console.log(payload.year_id);
+
+            commit('setIsEditingForYear');
+
+            let year = {};
+
+            await axios
+                .post('/student/uddate-year', {
+                    year_id: payload.year_id
+                })
+                .then(response => {
+                    year = response.data.year;
+                    commit('updateYear', year);
+                    commit('hasFinishedEditingForYear');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        }
         //テスト
 
     }

@@ -28,7 +28,7 @@ class StudentsController extends Controller
     public function fetchStudentUser()
     {
         $user = Auth::guard('student')->user();
-        // $user = Auth::user();
+    
         return response()->json(['user'=>$user],200);
         // DD($user);
         // return view ('student.test');
@@ -190,7 +190,37 @@ class StudentsController extends Controller
 
     }
 
+    public function fetchStudentYear()
+    {
+        $user_id = Auth::guard('student')->user()->id;
 
+        $year = Student::join('years', 'students.year_id', '=', 'years.id')
+                    ->select('years.id', 'years.year')
+                    ->first();
+
+        return response()->json(['year'=>$year],200);
+    }
+
+    public function updateYear(Request $request)
+    {
+        $request->validate([
+            'year_id' => 'required',
+        ]);
+
+        $year_id = request('year_id');
+        
+        $user_id = Auth::guard('student')->user()->id;
+        $student = Student::find($user_id);
+        $student->year_id = $year_id;
+        $student->save();
+
+        $year = Student::join('years', 'students.year_id', '=', 'years.id')
+                        ->where('students.id', $user_id)
+                        ->select('years.id', 'years.year')
+                        ->first();
+
+        return response()->json(['year'=>$year],200);
+    }
     
     public function index()
     {

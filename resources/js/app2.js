@@ -47,6 +47,7 @@ Vue.component('editemail-component', require('./components/student/profile/EditE
 Vue.component('editpassword-component', require('./components/student/profile/EditPasswordComponent.vue').default);
 Vue.component('editpreference-component', require('./components/student/profile/EditPreferenceComponent.vue').default);
 Vue.component('edittimezone-component', require('./components/student/profile/EditTimezoneComponent.vue').default);
+Vue.component('edityear-component', require('./components/student/profile/EditYearComponent.vue').default);
 
 
 //テスト

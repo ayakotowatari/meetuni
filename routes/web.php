@@ -164,6 +164,9 @@ Route::post('/student/update-email', 'StudentsController@updateEmail');
 Route::post('/student/update-password', 'StudentsController@updatePassword');
 Route::get('/student/timezone-list', 'StudentsController@getTimezoneList');
 Route::post('/student/update-timezone', 'StudentsController@updateTimezone');
+Route::get('/student/fetch-year', 'StudentsController@fetchStudentYear');
+Route::post('/student/uddate-year', 'StudentsController@updateYear');
+Route::get('/student/fetch-yearlist', 'YearsController@fetchYears');
 
 //テスト
 // Route::get('/test', 'HomeController@test');
