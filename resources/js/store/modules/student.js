@@ -29,6 +29,9 @@ export const student = {
         isEditingForProfileBasics: false,
         isEditingForTimezone: false,
         isEditingForYear: false,
+        isEditingForDestinations: false,
+        isEditingForLevels: false,
+        isEditingForSubjects: false,
         loading: false,
         timezones: [],
         year: {
@@ -199,6 +202,24 @@ export const student = {
         hasFinishedEditingForYear(state){
             state.isEditingForYear = false
         },
+        setIsEditingForDestinations(state){
+            state.isEditingForDestinations=true
+        },
+        hasFinishedEditingForDestinations(state){
+            state.isEditingForDestinations=false
+        },
+        setIsEditingForLevels(state){
+            state.isEditingForLevels=true
+        },
+        hasFinishedEditingForLevels(state){
+            state.isEditingForLevels=false
+        },
+        setIsEditingForSubjects(state){
+            state.isEditingForSubjects=true
+        },
+        hasFinishedEditingForSubjects(state){
+            state.isEditingForSubjects=false
+        },
         updateFirstName(state, payload){
             state.user.first_name = payload
         },
@@ -245,7 +266,16 @@ export const student = {
         },
         setallErrors(state, payload){
             state.allerror = payload
-        }
+        },
+        setStudentDestinations(state, payload){
+            state.preference.destinations = payload
+        },
+        setStudentLevels(state, payload){
+            state.preference.levels = payload
+        },
+        setStudentSubjects(state, payload){
+            state.preference.subjects = payload
+        },
     },
 
     actions: {
@@ -789,6 +819,69 @@ export const student = {
                   commit("setSubjectList", payload)
                 })
         },
+        async updateDestinations({commit}, payload){
+
+            commit('startLoading');
+
+            let destinations = [];
+
+            await axios
+                .post('/student/update-destinations', {
+                    destinations: payload.destinations
+                })
+                .then(res => {
+                    destinations = res.data.destinations;
+                    commit('setStudentDestinations', destinations);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForDestinations');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateLevels({commit}, payload){
+
+            commit('startLoading');
+
+            let levels = [];
+
+            await axios
+                .post('/student/update-levels', {
+                    levels: payload.levels
+                })
+                .then(res => {
+                    levels = res.data.levels;
+                    commit('setStudentLevels', levels);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForLevels');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
+        async updateSubjects({commit}, payload){
+
+            commit('startLoading');
+
+            let subjects= [];
+
+            await axios
+                .post('/student/update-subjects', {
+                    subjects: payload.subjects
+                })
+                .then(res => {
+                    subjects = res.data.subjects;
+                    commit('setStudentSubjects', subjects);
+                    commit('stopLoading');
+                    commit('hasFinishedEditingForSubjects');
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        }
         //テスト
 
     }

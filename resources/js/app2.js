@@ -45,10 +45,11 @@ Vue.component('regioneventcard-component', require('./components/student/main/Re
 Vue.component('editbasicprofile-component', require('./components/student/profile/EditBasicProfileComponent.vue').default);
 Vue.component('editemail-component', require('./components/student/profile/EditEmailComponent.vue').default);
 Vue.component('editpassword-component', require('./components/student/profile/EditPasswordComponent.vue').default);
-Vue.component('editpreference-component', require('./components/student/profile/EditPreferenceComponent.vue').default);
 Vue.component('edittimezone-component', require('./components/student/profile/EditTimezoneComponent.vue').default);
 Vue.component('edityear-component', require('./components/student/profile/EditYearComponent.vue').default);
-
+Vue.component('editdestinations-component', require('./components/student/profile/EditDestinationsComponent.vue').default);
+Vue.component('editlevels-component', require('./components/student/profile/EditLevelsComponent.vue').default);
+Vue.component('editsubjects-component', require('./components/student/profile/EditSubjectsComponent.vue').default);
 
 //テスト
 Vue.component('testone-component', require('./components/student/TestOneComponent.vue').default);
