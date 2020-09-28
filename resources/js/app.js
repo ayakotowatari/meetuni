@@ -49,6 +49,7 @@ Vue.component('scheduleemaildialog-component', require('./components/inst/commun
 
 //Chart
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
+Vue.component('eventlikeschart-component', require('./components/inst/dashboard/EventLikesChartComponent.vue').default);
 Vue.component('linechart-component', require('./components/chart/LineChartComponent.vue').default);
 Vue.component('participantslist-component', require('./components/inst/participants/ParticipantsListComponent.vue').default);
 Vue.component('piechart-component', require('./components/chart/PieChartComponent.vue').default);

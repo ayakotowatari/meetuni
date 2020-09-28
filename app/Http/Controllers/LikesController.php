@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use DatePeriod;
+
 class LikesController extends Controller
 {
     /**
@@ -94,6 +98,40 @@ class LikesController extends Controller
         //     ->update([ 
         //         'formatted_updated' => $updated_at 
         //     ]);
+    }
+
+    public function fillChartDataForLikes (Request $request, $id)
+    {
+        $today = Carbon::today();
+        $likes = Like::where('likes.formatted_created', '>', $today->subDays(7))
+            ->where('likes.event_id', $id)
+            ->groupBy('likes.formatted_created')
+            ->orderBy('likes.formatted_created')
+            ->select('likes.formatted_created as date', DB::raw('count(likes.formatted_created) as total'))
+            ->get();
+
+        $likes = collect($likes)->keyBy('date')
+                    ->map(function($item){
+                        $item->date = \Carbon\Carbon::parse($item->date)->format('Y-m-d');
+                        return $item;
+                    });
+        
+        // return response() -> json(['chartData' => $bookings]);
+
+        // $periods = new DatePeriod($bookings->min('date'), \Carbon\CarbonInterval::day(), $bookings->max('date')->addDay());   
+        $periods = new DatePeriod(Carbon::today()->subDays(7), \Carbon\CarbonInterval::day(), Carbon::today()->addDay());
+
+        $graph = array_map(function ($period) use ($likes){
+            $date = $period->format('Y-m-d');
+
+            return (object)[
+                'date' => $period->format('D M j'),
+                'total' => $likes->has($date) ? $likes->get($date)->total : 0,
+            ];
+        }, iterator_to_array($periods));
+
+         return response() -> json(['chartDataForLikes' => $graph]);
+
     }
 
 

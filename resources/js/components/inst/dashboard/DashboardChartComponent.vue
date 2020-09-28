@@ -39,7 +39,7 @@
                     elevation="12"
                     max-width="calc(100% - 32px)"
                 >
-                    <eventbookingchart-component :width="400" :height="300"></eventbookingchart-component>
+                    <eventlikeschart-component :width="400" :height="300"></eventlikeschart-component>
                 </v-sheet>
                 <v-card-text class="pt-0">
                     <div class="title font-weight-light mb-2 mt-6">Latest Likes</div>
@@ -61,6 +61,7 @@
 
 <script>
 import EventBookingChart from './EventBookingChartComponent'
+import EventLikesChart from './EventLikesChartComponent'
 
 export default {
     components: {
