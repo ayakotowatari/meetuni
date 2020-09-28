@@ -21,7 +21,7 @@
         <div v-if="isEditingForSubjects">
             <v-row justify="center">
                 <v-col col="12" sm="12" md="6">
-                    <v-card outlined height="300px" class="pa-2 mb-4">
+                    <v-card outlined height="100%" class="pa-2 mb-4">
                         <v-chip-group 
                             v-model="selectedSubjects" 
                             column 

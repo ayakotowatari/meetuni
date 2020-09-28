@@ -298,7 +298,7 @@ export const student = {
             });
         },
         async fetchSingleBookedEvent({commit}, payload){
-            let event = [];
+            let event = {};
             let regions = [];
             let levels = [];
             let subjects = [];
