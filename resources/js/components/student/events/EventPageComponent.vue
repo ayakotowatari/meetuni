@@ -10,81 +10,91 @@
             v-bind:event="event"
             v-bind:user="user"
         ></followdialog-component> 
-        
-        <v-img 
-            :src="`/storage/${ event.image }`" 
-            cover 
-            aspect-ratio="2.5"
-        >
-        </v-img>
-        <v-container>
-            <v-row>
-                <v-col col="12" sm="12" md="6">
-                    <div>{{ formattedDate(event.date, user.timezone) }}</div>
-                    <span class="event-info">
-                        {{ formattedStartTime(event.start_utc, user.timezone) }} - 
-                        {{ formattedEndTime(event.end_utc, user.timezone) }}
-                    </span>
-                    <div class="primary--text event-title mb-4">{{ event.title }}</div>
-                    <div class="grey--text text--darken-1 institution-title mb-1">
-                        <span class="organiser">Organiser:</span> {{ inst.name }}
-                    </div>
-                    <div class="mb-8">
-                        <v-btn 
-                            v-if="inst.followed_by_user == false"
-                            class="ma-2 hidden-sm-and-down" 
-                            outlined      
-                            color="primary"
-                            @click="follow(`${inst.id}`, `${user.id}`)"
-                        >Follow</v-btn>
-                        <v-btn 
-                            v-if="inst.followed_by_user == true"
-                            class="ma-2 hidden-sm-and-down" 
-                            outlined      
-                            color="primary"
-                            @click="unfollow(`${inst.id}`, `${user.id}`)"
-                        >Followed</v-btn>
-                    </div>
-                    <div class="event-info mr-4">
-                        {{ event.description }}
-                    </div>
-                </v-col>
-                <v-col col="12" sm="12" md="6" class="hidden-sm-and-down">
-                    <v-card dark color="info darken-3" flat class="mx-auto pb-4 px-4">
-                        <v-card-title>Have any questions?</v-card-title>
-                        <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
-                        <v-card-actions>
-                            <v-btn
-                                text
-                                @click="showDialog"
-                            >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-col>
-            </v-row>
-            <v-row class="hidden-md-and-up">
-                 <v-col col="12" sm="12">
-                    <v-card dark color="info darken-3" flat class="mb-10 pb-4 px-4">
-                        <v-card-title>Have any questions?</v-card-title>
-                        <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
-                        <v-card-actions>
-                            <v-btn
-                                text
-                                @click="showDialog"
-                            >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-        <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
-            <v-btn>
-                <span>Tap Here to Join the Event</span>
-                <v-icon>mdi-account-group-outline</v-icon>
-            </v-btn>
-        </v-bottom-navigation>
+        <div v-if="event !== null">
+            <v-img 
+                :src="`/storage/${ event.image }`" 
+                cover 
+                aspect-ratio="2.5"
+            >
+            </v-img>
+            <v-container>
+                <v-row>
+                    <v-col col="12" sm="12" md="6">
+                        <div>{{ formattedDate(event.date, user.timezone) }}</div>
+                        <span class="event-info">
+                            {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+                            {{ formattedEndTime(event.end_utc, user.timezone) }}
+                        </span>
+                        <div class="primary--text event-title mb-4">{{ event.title }}</div>
+                        <div class="grey--text text--darken-1 institution-title mb-1">
+                            <span class="organiser">Organiser:</span> {{ inst.name }}
+                        </div>
+                        <div class="mb-8">
+                            <v-btn 
+                                v-if="inst.followed_by_user == false"
+                                class="ma-2 hidden-sm-and-down" 
+                                outlined      
+                                color="primary"
+                                @click="follow(`${inst.id}`, `${user.id}`)"
+                            >Follow</v-btn>
+                            <v-btn 
+                                v-if="inst.followed_by_user == true"
+                                class="ma-2 hidden-sm-and-down" 
+                                outlined      
+                                color="primary"
+                                @click="unfollow(`${inst.id}`, `${user.id}`)"
+                            >Followed</v-btn>
+                        </div>
+                        <div class="event-info mr-4">
+                            {{ event.description }}
+                        </div>
+                    </v-col>
+                    <v-col col="12" sm="12" md="6" class="hidden-sm-and-down">
+                        <v-card dark color="info darken-3" flat class="mx-auto pb-4 px-4">
+                            <v-card-title>Have any questions?</v-card-title>
+                            <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
+                            <v-card-actions>
+                                <v-btn
+                                    text
+                                    @click="showDialog"
+                                >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+                <v-row class="hidden-md-and-up">
+                    <v-col col="12" sm="12">
+                        <v-card dark color="info darken-3" flat class="mb-10 pb-4 px-4">
+                            <v-card-title>Have any questions?</v-card-title>
+                            <v-card-subtitle>Take this chance to ask questions before the event so that the organiser can talk about exactly what you are interested in!</v-card-subtitle>
+                            <v-card-actions>
+                                <v-btn
+                                    text
+                                    @click="showDialog"
+                                >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+            <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
+                <v-btn>
+                    <span>Tap Here to Join the Event</span>
+                    <v-icon>mdi-account-group-outline</v-icon>
+                </v-btn>
+            </v-bottom-navigation>
+        </div>
+        <div v-if="event == null">
+            <v-container>
+                <v-row justify="center">
+                    <v-col col="12" xs="12" md="4">
+                        <h2 class="grey--text mt-8">You haven't booked a place for this event.</h2> 
+                    </v-col>
+                </v-row>
+            </v-container>
+        </div>
     </div>
 </template>
 
