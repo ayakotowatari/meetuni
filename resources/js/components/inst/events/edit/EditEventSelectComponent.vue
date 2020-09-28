@@ -146,6 +146,9 @@ import { mapState } from 'vuex'
 export default {
     props: {
         id: String,
+        eventRegions: Array,
+        eventLevels: Array,
+        eventSubjects: Array
     },
     data: () => ({
         loading: false,
@@ -235,9 +238,6 @@ export default {
             'regions',
             'levels',
             'subjects', 
-            'eventRegions',
-            'eventLevels',
-            'eventSubjects'
         ])
     }
 }

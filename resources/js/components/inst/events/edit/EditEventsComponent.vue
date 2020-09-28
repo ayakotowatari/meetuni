@@ -25,24 +25,31 @@
     <eventheader-component></eventheader-component>
      
     <v-row class="mb-10">
-      <v-col>
-        <div class="mb-24">
-          <span>Status: </span>
-          <v-chip :color="getColor(event.status)" class="ma-2">{{ event.status }}</v-chip>
-        </div>
-        <v-btn
-          v-if="event.status === 'Draft'"
-          color="error"
-          outlined
-          @click="publish"
-        >Publish</v-btn>
-         <v-btn
-          v-if="event.status === 'Ongoing'"
-          color="primary"
-          outlined
-          @click="unpublish"
-        >Unpublish</v-btn>
-      </v-col>
+        <v-col>
+            <div class="mb-24">
+                <span>Status: </span>
+                <v-chip :color="getColor(event.status)" class="ma-2">{{ event.status }}</v-chip>
+            </div>
+            <v-btn
+                v-if="
+                  event.status == 'Draft' && 
+                  event.description !== null && 
+                  event.files !== null &&
+                  eventRegions !== null &&
+                  eventLevels !== null &&
+                  eventSubjects != null
+                "
+                color="error"
+                outlined
+                @click="publish"
+            >Publish</v-btn>
+            <v-btn
+                v-if="event.status == 'Ongoing'"
+                color="primary"
+                outlined
+                @click="unpublish"
+            >Unpublish</v-btn>
+        </v-col>
     </v-row>
 
     <h1 class="grey--text mb-6">Edit Events</h1>
@@ -58,6 +65,9 @@
       <editeventselect-component
         v-bind:id="id"
         class="my-10"
+        v-bind:eventRegions="eventRegions"
+        v-bind:eventLevels="eventLevels"
+        v-bind:eventSubjects="eventSubjects"
       ></editeventselect-component>
 
       <v-divider></v-divider>
@@ -99,6 +109,15 @@ mounted(){
     this.$store.dispatch('fetchSingleEvent', {
           id: this.id
     });
+    this.$store.dispatch('fetchEventRegions', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventLevels', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventSubjects', {
+        id: this.id
+    });
 },
 computed: {
     ...mapState ([
@@ -106,6 +125,9 @@ computed: {
         'dialog',
         'isPublished',
         'isUnpublished',
+        'eventRegions',
+        'eventLevels',
+        'eventSubjects'
     ])
 },
 methods: {
