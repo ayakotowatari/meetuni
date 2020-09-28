@@ -62,6 +62,7 @@ Vue.component('participantdestinationlist-component', require('./components/inst
 Vue.component('participantsubjectbar-component', require('./components/inst/participants/ParticipantSubjectBarComponent.vue').default);
 Vue.component('participantsubjectlist-component', require('./components/inst/participants/ParticipantSubjectListComponent.vue').default);
 Vue.component('barchart-component', require('./components/chart/BarChartComponent.vue').default);
+Vue.component('bookingsnumber-component', require('./components/inst/dashboard/BookingsNumberComponent.vue').default);
 
 //Profile
 Vue.component('editpassword-component', require('./components/inst/profile/EditPasswordComponent.vue').default);

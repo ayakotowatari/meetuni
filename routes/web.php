@@ -98,6 +98,7 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 // Generate charts
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartDataForBookings');
 Route::get('/inst/event-likes/{id}', 'LikesController@fillChartDataForLikes');
+Route::get('/inst/bookings-number/{id}', 'BookingsController@countBookingsNumber');
 
 // Notifications
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');

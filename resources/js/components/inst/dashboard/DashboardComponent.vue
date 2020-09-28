@@ -12,7 +12,9 @@
             <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
         </v-col>
     </v-row>
-    <dashboardsummary-component></dashboardsummary-component>
+    <dashboardsummary-component
+        v-bind:id="id"
+    ></dashboardsummary-component>
     <dashboardchart-component></dashboardchart-component>
     <v-btn depressed outlined color="grey darken-2" class="mt-8" @click="print()">print</v-btn>
   </v-container>
