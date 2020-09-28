@@ -49,6 +49,7 @@
     <v-container>
       <editeventbasics-component
         v-bind:id="id"
+        v-bind:event="event"
         class="mb-10"
       ></editeventbasics-component>
 
@@ -63,6 +64,7 @@
 
       <editeventfile-component
         v-bind:id="id"
+        v-bind:event="event"
       ></editeventfile-component>
     </v-container>    
   </v-container>

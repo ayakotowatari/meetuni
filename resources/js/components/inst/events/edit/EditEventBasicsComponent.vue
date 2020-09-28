@@ -8,7 +8,7 @@
         <v-form class="mb-6" ref="form">
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
-                    <p>{{ title }}</p> 
+                    <p>{{ event.title }}</p> 
                     <v-text-field 
                         label="Event Title" 
                         outlined
@@ -23,7 +23,7 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="8">
-                    <p>{{ date }}</p>
+                    <p>{{ event.date }}</p>
                     <v-menu
                         ref="menu"
                         v-model="menu"
@@ -73,13 +73,13 @@
                     ></v-select>
                     <div class="selected">
                         <span>Currently selected: </span>
-                        <v-chip class="ma-2">{{ timezone }}</v-chip>
+                        <v-chip class="ma-2">{{ event.timezone }}</v-chip>
                     </div>
                 </v-col>
             </v-row>
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="4">
-                    <p>{{ start_time }}</p>
+                    <p>{{ event.start_time }}</p>
                     <v-menu
                         ref="menu2"
                         v-model="menu2"
@@ -116,7 +116,7 @@
                     </v-menu>
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
-                    <p>{{ end_time }}</p>
+                    <p>{{ event.end_time }}</p>
                     <v-menu
                         ref="menu3"
                         v-model="menu3"
@@ -177,7 +177,8 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        id: Number
+        id: String,
+        event: Object
         // title: String,
         // date: String,
         // timezone: String,
@@ -204,21 +205,17 @@ export default {
         allerror: []
     }),
     mounted(){
-        this.$store.dispatch('fetchSingleEvent', {
-            id: this.id
-        });
+        // this.$store.dispatch('fetchSingleEvent', {
+        //     id: this.id
+        // });
     },
     computed: {
-        ...mapState([
-            'title',
-            'date',
-            'timezone',
-            'start_time',
-            'end_time',
-        ]),
+        // ...mapState([
+        //     'event'
+        // ]),
         title: {
             get(){
-                return this.$store.state.title
+                return this.$store.state.event.title
             },
             set (value) {
                 this.$store.commit('updateEventTitle', value)
@@ -226,7 +223,7 @@ export default {
         },
         date: {
             get(){
-                return this.$store.state.date
+                return this.$store.state.event.date
             },
             set (value) {
                 this.$store.commit('updateEventDate', value)
@@ -234,7 +231,7 @@ export default {
         },
         timezone: {
             get(){
-                return this.$store.state.timezone
+                return this.$store.state.event.timezone
             },
             set (value) {
                 this.$store.commit('updateEventTimezone', value)
@@ -242,7 +239,7 @@ export default {
         },
         start_time: {
             get(){
-                return this.$store.state.start_time
+                return this.$store.state.event.start_time
             },
             set (value) {
                 this.$store.commit('updateEventStartTime', value)
@@ -250,7 +247,7 @@ export default {
         },
         end_time: {
             get(){
-                return this.$store.state.end_time
+                return this.$store.state.event.end_time
             },
             set (value) {
                 this.$store.commit('updateEventEndTime', value)

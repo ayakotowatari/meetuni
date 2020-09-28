@@ -32,16 +32,18 @@ export default new Vuex.Store ({
         regions: [],
         levels: [],
         subjects: [],
-        event: {},
-        title: '',
-        date: '',
-        timezone: '',
-        start_time: '',
-        end_time: '',
-        start_utc: '',
-        end_utc: '',
-        description: '',
-        files: '',
+        event: {
+            title: '',
+            date: '',
+            timezone: '',
+            start_time: '',
+            end_time: '',
+            start_utc: '',
+            end_utc: '',
+            description: '',
+            files: '',
+            status: ''
+        },
         eventRegions: [],
         eventLevels: [],
         eventSubjects: [],
@@ -104,16 +106,16 @@ export default new Vuex.Store ({
             state.subjects = payload
         },
         setSingleEvent(state,payload){
-            state.event = payload
-            state.title = payload.title
-            state.date = payload.date
-            state.timezone = payload.timezone
-            state.start_time = payload.start_time
-            state.end_time = payload.end_time
-            state.start_utc = payload.start_utc
-            state.end_utc = payload.end_utc
-            state.description = payload.description
-            state.files = payload.image
+            state.event.title = payload.title
+            state.event.date = payload.date
+            state.event.timezone = payload.timezone
+            state.event.start_time = payload.start_time
+            state.event.end_time = payload.end_time
+            state.event.start_utc = payload.start_utc
+            state.event.end_utc = payload.end_utc
+            state.event.description = payload.description
+            state.event.files = payload.image
+            state.event.status = payload.status
         },
         setEventRegions(state, payload){
             state.eventRegions = payload
@@ -125,25 +127,25 @@ export default new Vuex.Store ({
             state.eventSubjects = payload
         },
         updateEventDescription(state, payload){
-            state.description = payload
+            state.event.description = payload
         },
         updateEventFiles(state, payload){
-            state.files = payload
+            state.event.files = payload
         },
         updateEventTitle(state,payload){
-            state.title = payload
+            state.event.title = payload
         },
         updateEventDate(state,payload){
-            state.date = payload
+            state.event.date = payload
         },
         updateEventTimezone(state,payload){
-            state.timezone = payload
+            state.event.timezone = payload
         },
         updateEventStartTime(state,payload){
-            state.start_time = payload
+            state.event.start_time = payload
         },
         updateEventEndTime(state,payload){
-            state.end_time= payload
+            state.event.end_time= payload
         },
         updateFirstName(state, payload){
             state.user.first_name = payload

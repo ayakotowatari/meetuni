@@ -8,7 +8,7 @@
         </v-row>
         <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
-            {{ description }}
+            {{ event.description }}
             <v-textarea
                 v-model="description"
                 counter
@@ -44,7 +44,7 @@
     </v-row>
     <v-row justify="center">
         <v-col col="12" sm="12" md="8">
-            <v-img :src="`/storage/${ files }`" aspect-ratio="1.7"></v-img>
+            <v-img :src="`/storage/${ event.files }`" aspect-ratio="1.7"></v-img>
         </v-col>
     </v-row>
     <v-row justify="center">
@@ -91,7 +91,8 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        id: Number
+        id: String,
+        event: Object
         // description: String,
         // files: String
 
@@ -106,18 +107,18 @@ export default {
         allerror: [],
     }),
     mounted(){
-        this.$store.dispatch('fetchSingleEvent', {
-            id: this.id
-        });
+        // this.$store.dispatch('fetchSingleEvent', {
+        //     id: this.id
+        // });
     },
     computed: {
-        ...mapState ([
-            'description',
-            'files'
-        ]),
+        // ...mapState ([
+        //     'description',
+        //     'files'
+        // ]),
         description: {
             get(){
-                return this.$store.state.description
+                return this.$store.state.event.description
             },
             set (value) {
                 this.$store.commit('updateEventDescription', value)
@@ -125,7 +126,7 @@ export default {
         },
         files: {
             get(){
-                return this.$store.state.files
+                return this.$store.state.event.files
             },
             set(value){
                 this.$store.commit('updateEventFiles', value)

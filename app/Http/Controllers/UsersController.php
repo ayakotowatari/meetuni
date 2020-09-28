@@ -73,12 +73,19 @@ class UsersController extends Controller
         $user_id = Auth::user()->id;
 
         $event_id = $id;
-        $event = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
-                    ->join('regions', 'regions.id', '=', 'event_regions.region_id')
-                    ->join('statuses', 'events.status_id', '=', 'statuses.id')
-                    ->where([['events.id', $event_id], ['events.user_id', $user_id]])
-                    ->select('events.id', 'events.title', 'events.timezone', 'events.date', 'events.start_time', 'events.end_time', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'statuses.status', 'regions.region')
+        // $event = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+        //             ->join('regions', 'regions.id', '=', 'event_regions.region_id')
+        //             ->join('statuses', 'events.status_id', '=', 'statuses.id')
+        //             ->where([['events.id', $event_id], ['events.user_id', $user_id]])
+        //             ->select('events.id', 'events.title', 'events.timezone', 'events.date', 'events.start_time', 'events.end_time', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'statuses.status', 'regions.region')
+        //             ->first();
+
+        $event = Event::join('statuses', 'events.status_id', '=', 'statuses.id')
+                    ->where('events.id', $event_id)
+                    ->select('events.id', 'events.title', 'events.timezone', 'events.date', 'events.start_time', 'events.end_time', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'statuses.status')
                     ->first();
+
+        // DD($event);
 
         return response()->json(['event' => $event],200);
     }
