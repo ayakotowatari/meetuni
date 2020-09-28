@@ -14,7 +14,7 @@
 import LineChart from '../../chart/LineChartComponent'
 
 export default {
-    name: 'EventBookingChartComponent',
+    name: 'LikesChartComponent',
     components: {
         LineChart
     },
@@ -72,35 +72,35 @@ export default {
         }
     }), 
     mounted(){
-        this.fillChartDataForBooking();
+        this.fillChartDataForLikes();
     },
     methods: {
-        async fillChartDataForBooking(){
+        async fillChartDataForLikes(){
              await axios
-                .get('/inst/event-bookings/' + this.$route.params.id)
+                .get('/inst/event-likes/' + this.$route.params.id)
                 .then(response => {
-                    console.log(response.data.chartDataForBooking);
+                    console.log(response.data.chartDataForLikes);
 
-                    let chartData = response.data.chartDataForBooking;
+                    let chartData = response.data.chartDataForLikes;
 
                     console.log(chartData[0].date);
                     console.log(chartData[0].total);
 
-                    let bookingdata = new Array(chartData.length);
+                    let likesdata = new Array(chartData.length);
                     let labels = new Array(chartData.length);
 
                     for(let i = 0; i<chartData.length; i++){
-                        bookingdata[i] = chartData[i].total;
+                        likesdata[i] = chartData[i].total;
                         labels[i] = chartData[i].date;
                     };
 
-                    console.log(bookingdata);
+                    console.log(likesdata);
                     
                     this.chartdata = {
                         labels: labels,
                         datasets: [{
                             label: '',
-                            data: bookingdata,
+                            data: likesdata,
                             backgroundColor: '#323EDD',
                             borderColor: '#323EDD',
                             borderWidth: 2,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="hideBasics == false">
        <v-row justify="center">
            <v-col cols="12" sm="12" md="8">
                <h2 class="grey--text text--darken-1">Step 1</h2>
@@ -154,16 +154,24 @@
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col col="12" sm="12" md="1" offset-md="7">
+                <v-col col="12" sm="12" md="8">
                     <v-btn 
-                    :disabled = "isSubmitted"
-                    depressed 
-                    block 
-                    color="primary" 
-                    class="mx-0" 
-                    @click="submit"
-                    :loading="loading"
+                        :disabled = "basicsAreSubmitted"
+                        depressed 
+                        class="mr-3"
+                        color="primary" 
+                        @click="submit"
+                        :loading="loading"
                     >Save
+                    </v-btn>
+                     <v-btn 
+                        :disabled = "!basicsAreSubmitted"
+                        depressed 
+                        outlined
+                        color="primary" 
+                        @click="next"
+                        :loading="loading"
+                    >Next
                     </v-btn>
                 </v-col>
             </v-row>
@@ -181,8 +189,9 @@ export default {
         user: Object
     },
     data: () => ({
+        hideBasics: false,
         loading: false,
-        isSubmitted: false,
+        basicsAreSubmitted: false,
         title: '',
         titleRules: [
         v => !!v || 'Event title is required',
@@ -242,7 +251,6 @@ export default {
         submit(){
             if(this.$refs.form.validate()){
                 this.loading = true;
-                this.isSubmitted = true;
 
                 axios
                 .post("/inst/create-basics", {
@@ -254,7 +262,7 @@ export default {
                 })
                 .then(response => {
                     this.loading = false;
-                    this.$emit('basicsAdded');
+                    this.basicsAreSubmitted = true;
                     // this.title = '';
                     // this.date = '';
                     // this.timezone = '';
@@ -265,6 +273,10 @@ export default {
                     this.allerror = error.response.data.errors
                 })
             }
+        },
+        next(){
+            this.$emit('openSecondEventForm');
+            this.hideBasics = true;
         }
     }
 }

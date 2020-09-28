@@ -25,30 +25,48 @@
     <eventheader-component></eventheader-component>
      
     <v-row class="mb-10">
-      <v-col>
-        <div class="mb-24">
-          <span>Status: </span>
-          <v-chip :color="getColor(event.status)" class="ma-2">{{ event.status }}</v-chip>
-        </div>
-        <v-btn
-          v-if="event.status === 'Draft'"
-          color="error"
-          outlined
-          @click="publish"
-        >Publish</v-btn>
-         <v-btn
-          v-if="event.status === 'Ongoing'"
-          color="primary"
-          outlined
-          @click="unpublish"
-        >Unpublish</v-btn>
-      </v-col>
+        <v-col>
+            <div class="mb-4">
+                <span>Status: </span>
+                <v-chip :color="getColor(event.status)" class="ma-2">{{ event.status }}</v-chip>
+            </div>
+            <v-btn
+                v-if="
+                  event.status == 'Draft' && 
+                  event.description !== null && 
+                  event.files !== null &&
+                  eventRegions !== null &&
+                  eventLevels !== null &&
+                  eventSubjects != null
+                "
+                color="error"
+                outlined
+                @click="publish"
+            >Publish</v-btn>
+            <v-btn
+                v-if="event.status == 'Ongoing'"
+                color="primary"
+                outlined
+                @click="unpublish"
+            >Unpublish</v-btn>
+            <h3 
+                class="grey--text text--darken-2"
+                v-if="
+                  event.description == null || 
+                  event.files == null ||
+                  eventRegions == null ||
+                  eventLevels == null ||
+                  eventSubjects == null
+                "
+            >Some information needs to be filled before publishing this event.</h3>
+        </v-col>
     </v-row>
 
     <h1 class="grey--text mb-6">Edit Events</h1>
     <v-container>
       <editeventbasics-component
         v-bind:id="id"
+        v-bind:event="event"
         class="mb-10"
       ></editeventbasics-component>
 
@@ -57,12 +75,16 @@
       <editeventselect-component
         v-bind:id="id"
         class="my-10"
+        v-bind:eventRegions="eventRegions"
+        v-bind:eventLevels="eventLevels"
+        v-bind:eventSubjects="eventSubjects"
       ></editeventselect-component>
 
       <v-divider></v-divider>
 
       <editeventfile-component
         v-bind:id="id"
+        v-bind:event="event"
       ></editeventfile-component>
     </v-container>    
   </v-container>
@@ -97,6 +119,15 @@ mounted(){
     this.$store.dispatch('fetchSingleEvent', {
           id: this.id
     });
+    this.$store.dispatch('fetchEventRegions', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventLevels', {
+        id: this.id
+    });
+    this.$store.dispatch('fetchEventSubjects', {
+        id: this.id
+    });
 },
 computed: {
     ...mapState ([
@@ -104,6 +135,9 @@ computed: {
         'dialog',
         'isPublished',
         'isUnpublished',
+        'eventRegions',
+        'eventLevels',
+        'eventSubjects'
     ])
 },
 methods: {

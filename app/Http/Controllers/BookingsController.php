@@ -23,7 +23,7 @@ class BookingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fillChartData (Request $request, $id)
+    public function fillChartDataForBookings (Request $request, $id)
     {
         $today = Carbon::today();
         $bookings = Booking::where('bookings.formatted_created', '>', $today->subDays(7))
@@ -54,7 +54,7 @@ class BookingsController extends Controller
             ];
         }, iterator_to_array($periods));
 
-         return response() -> json(['chartData' => $graph]);
+         return response() -> json(['chartDataForBooking' => $graph]);
 
     }
     public function fetchEventParticipants(Request $request, $id){
