@@ -41,19 +41,13 @@ export default {
     },
     data: function(){
         return {
-            id: this.$route.params.id
+            // id: this.$route.params.id
         }
     },
     mounted(){
-        this.$store.dispatch('student/recommendSubjectEvents', {
-            id: this.id
-        });
-        this.$store.dispatch('student/recommendDestinationEvents', {
-            id: this.id
-        });
-         this.$store.dispatch('student/recommendRegionEvents', {
-            id: this.id
-        });
+        this.$store.dispatch('student/recommendSubjectEvents');
+        this.$store.dispatch('student/recommendDestinationEvents');
+         this.$store.dispatch('student/recommendRegionEvents');
     },
     created(){
         

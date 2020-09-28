@@ -6,14 +6,14 @@
                 <h3 class="subline grey--text">Find online university <br class="sm">information sessions <br> and taster lectures.</h3>
             </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
             <v-col col="12" sm="12" md="6">
                 <search-component></search-component>
             </v-col>
-        </v-row>
+        </v-row> -->
         <v-tabs class="mb-12">
             <v-tab router :to="{name: 'all-events'}">All</v-tab>
-            <v-tab router :to="{name: 'recommended-events', params: {id: this.user.id}}">For You</v-tab>
+            <v-tab router :to="{name: 'recommended-events'}">For You</v-tab>
             <v-tab>Item Three</v-tab>
         </v-tabs>
         <router-view v-bind:user="user"></router-view>
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import SearchComponent from '../parts/SearchComponent'
+// import SearchComponent from '../parts/SearchComponent'
 
 export default {
     components: {
-        SearchComponent
+        // SearchComponent
     },
     props: {
         user: Object,

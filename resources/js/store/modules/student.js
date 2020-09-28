@@ -344,38 +344,37 @@ export const student = {
                     commit("setInst", inst)
                 })
         },
-        async recommendSubjectEvents({commit}, payload){
+        async recommendSubjectEvents({commit}){
             let events = {};
             // console.log(payload.id);
 
             await axios
-                .get("/student/event-subjects/" + payload.id)
+                .get("/student/event-subjects")
                 .then(res => {
                     events = res.data.events;
                     console.log(events);
                     commit("setRecommendedSubjectEvents", events)
                 });
         },
-        async recommendDestinationEvents({commit}, payload){
+        async recommendDestinationEvents({commit}){
             let events = [];
             // console.log(payload.id);
 
             await axios
-                .get("/student/event-destinations/" + payload.id)
+                .get("/student/event-destinations")
                 .then(res => {
                     events = res.data.events;
                     // console.log(events);
                     commit("setRecommendedDestinationEvents", events)
                 });
         },
-        async recommendRegionEvents({commit}, payload){
+        async recommendRegionEvents({commit}){
             
             let events = [];
             console.log('recommedRegionEvents');
-            console.log(payload.id);
 
             await axios
-                .get("/student/event-regions/" + payload.id)
+                .get("/student/event-regions")
                 .then(res => {
                     events = res.data.events;
                     // console.log(events);

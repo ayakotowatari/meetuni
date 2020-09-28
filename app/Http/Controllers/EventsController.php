@@ -127,7 +127,7 @@ class EventsController extends Controller
         // return view ('student.test', ['events'=>$events]);
     }
 
-    public function recommendSubjectEvents(Request $request, $id){
+    public function recommendSubjectEvents(Request $request){
 
         // $levels = Student::join('level_students', 'students.id' ,'=', 'level_students.student_id')
         //                     ->join('levels', 'levels.id', '=', 'level_students.level_id')
@@ -143,8 +143,10 @@ class EventsController extends Controller
         //                         ->select('subjects.id')
         //                         ->get();
 
+        $user_id = Auth::guard('student')->user()->id;
+
         $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
-                        ->where('student_subjects.student_id', $id)
+                        ->where('student_subjects.student_id', $user_id)
                         ->select('subjects.id')
                         ->get();
         
@@ -194,7 +196,7 @@ class EventsController extends Controller
         return response()->json(['events'=>$uniqueEvents],200);
     }
 
-    public function recommendDestinationEvents(Request $request, $id)
+    public function recommendDestinationEvents(Request $request)
     {
         // $destinations = Student::join('country_students', 'students.id' ,'=', 'country_students.student_id')
         //                     ->join('countries', 'countries.id', '=', 'country_students.country_id')
@@ -202,8 +204,10 @@ class EventsController extends Controller
         //                     ->select('countries.id')
         //                     ->get();
 
+        $user_id = Auth::guard('student')->user()->id;
+
         $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
-                                ->where('country_students.student_id', $id)
+                                ->where('country_students.student_id', $user_id)
                                 ->select('countries.id')
                                 ->get();
 
@@ -256,11 +260,13 @@ class EventsController extends Controller
 
     }
 
-    public function recommendRegionEvents(Request $request, $id)
+    public function recommendRegionEvents(Request $request)
     {
+        $user_id = Auth::guard('student')->user()->id;
+
         $region = Student::join('countries', 'students.country_id', '=', 'countries.id')
                         ->join('regions', 'countries.region_id', '=', 'regions.id')
-                        ->where('students.id', $id)
+                        ->where('students.id', $user_id)
                         ->select('regions.id')
                         ->first();
 
