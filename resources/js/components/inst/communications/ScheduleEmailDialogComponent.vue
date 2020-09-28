@@ -116,7 +116,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     props: {
         dialog: Boolean,
-        event_id: Number,
+        event_id: String,
         user: Object
     },
     data: function(){

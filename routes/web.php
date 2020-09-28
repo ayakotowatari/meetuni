@@ -133,15 +133,16 @@ Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');
 Route::get('/student/fetch-events', 'EventsController@fetchAllEvents');
-Route::get('/student/event-subjects/{id}', 'EventsController@recommendSubjectEvents');
-Route::get('/student/event-destinations/{id}', 'EventsController@recommendDestinationEvents');
-Route::get('/student/event-regions/{id}', 'EventsController@recommendRegionEvents');
+Route::get('/student/event-subjects', 'EventsController@recommendSubjectEvents');
+Route::get('/student/event-destinations', 'EventsController@recommendDestinationEvents');
+Route::get('/student/event-regions', 'EventsController@recommendRegionEvents');
 Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent');
 Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst');
 Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents');
 Route::get('/student/fetch-likedevents/{id}', 'EventsController@fetchLikedEvents');
 Route::get('/student/fetch-followinginsts/{id}', 'InstsController@fetchFollowedInsts');
 Route::get('/student/fetch-eventlist/{id}', 'EventsController@fetchEventsList');
+Route::get('/student/fetch-bookedevent/{id}', 'EventsController@fetchSingleBookedEvent');
 
 //学生追加情報の登録
 Route::post('/student/add-details', 'StudentsController@addStudentDetails');

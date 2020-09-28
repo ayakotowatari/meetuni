@@ -15,6 +15,7 @@ import Following from "./components/student/account/FollowingComponent";
 import Liked from "./components/student/account/LikedComponent";
 import StudentProfile from "./components/student/profile/StudentProfileComponent";
 import EventList from "./components/student/events/EventListComponent";
+import SearchEvents from "./components/student/main/SearchEventsComponent";
 
 //テスト
 // import TestOne from "./components/student/TestOneComponent";
@@ -47,9 +48,16 @@ const routes = [
                 {
                     //RecommendedEvents will be rendered inside Main's <router-view>
                     //when /main/recommended-events is matched.
-                    path: "recommended-events/:id",
+                    path: "recommended-events",
                     name: "recommended-events",
                     component: RecommendedEvents
+                },
+                {
+                    //RecommendedEvents will be rendered inside Main's <router-view>
+                    //when /main/recommended-events is matched.
+                    path: "search-events",
+                    name: "search-events",
+                    component: SearchEvents
                 },
             ]
     },
