@@ -15,9 +15,19 @@
   </v-snackbar> -->
   <v-container>
   <h1 class="grey--text">Create Events</h1>
-      <eventbasics-component @openSecondEventForm = "hideSelect = false" v-bind:user="user"></eventbasics-component>
-      <eventselect-component v-if="hideSelect == false" @selectsAdded = "hideFile = false"></eventselect-component>
-      <eventfile-component :hideFile="hideFile" @eventAdded = "dialog = true"></eventfile-component>
+      <eventbasics-component 
+          @openSecondEventForm = "hideSelects = false" 
+          v-bind:user="user"
+      ></eventbasics-component>
+      <eventselect-component 
+          :hideSelects="hideSelects"
+          @openThirdEventForm = "hideFile = false"
+          @closeSecondEventForm = "hideSelects = true"
+      ></eventselect-component>
+      <eventfile-component 
+          :hideFile="hideFile"
+          @eventAdded = "dialog = true"
+      ></eventfile-component>
   </v-container>
 </div>
 </template>
@@ -38,7 +48,7 @@ export default {
   },
   data: () => ({
     valid: true,
-    hideSelect: true,
+    hideSelects: true,
     hideFile: true,
     loading: false,
     allerror: [],

@@ -1,11 +1,11 @@
 <template>
-<div>
+    <div v-if="hideSelects == false">
         <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
                 <h2 class="grey--text text--darken-1">Step 2</h2>
             </v-col>
         </v-row>
-        <v-form class="mb-6" :disabled="hideSelect" ref="form">
+        <v-form class="mb-6" :disabled="hideSelects" ref="form">
         <v-row justify="center">
                 <v-col col="12" sm="12" md="8">
                     <v-select
@@ -70,16 +70,24 @@
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col col="12" sm="12" md="1" offset-md="7">
+                <v-col col="12" sm="12" md="8">
                     <v-btn 
-                    :disabled = "isSubmitted"
-                    depressed 
-                    block 
-                    color="primary" 
-                    class="mx-0" 
-                    :loading="loading"
-                    @click="submit"
+                        :disabled = "selectsAreSubmitted"
+                        depressed 
+                        class="mr-3"
+                        color="primary" 
+                        @click="submit"
+                        :loading="loading"
                     >Save
+                    </v-btn>
+                     <v-btn 
+                        :disabled = "!selectsAreSubmitted"
+                        depressed 
+                        outlined
+                        color="primary" 
+                        @click="next"
+                        :loading="loading"
+                    >Next
                     </v-btn>
                 </v-col>
             </v-row>
@@ -92,12 +100,12 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        hideSelect: Boolean
+        hideSelects: Boolean
     },
     data: () => ({
         // hideSelect: true,
+        selectsAreSubmitted: false,
         loading: false,
-        isSubmitted: false,
         selectedRegions: [],
         regionRules: [
         v => !!v || 'Region is required',
@@ -117,6 +125,13 @@ export default {
       this.$store.dispatch('fetchLevels');
       this.$store.dispatch('fetchSubjects')
     },
+    computed: {
+        ...mapState([
+          'regions',
+          'levels',
+          'subjects'
+        ])
+    },
     methods: {
         // validate(){
         //     if(
@@ -133,7 +148,6 @@ export default {
         submit(){
             if(this.$refs.form.validate()){
                 this.loading = true;
-                this.isSubmitted = true;
 
                 axios
                 .post("/inst/create-selects", {
@@ -143,7 +157,7 @@ export default {
                 })
                  .then(response => {
                     this.loading = false;
-                    this.$emit('selectsAdded');
+                    this.selectsAreSubmitted = true;
                     // this.regions='';
                     // this.levels='';
                     // this.subjects='';
@@ -152,15 +166,12 @@ export default {
                     this.allerror = error.response.data.errors
                 })
             }
+        },
+        next(){
+                this.$emit('openThirdEventForm');
+                this.$emit('closeSecondEventForm');
         }
     },
-    computed: {
-        ...mapState([
-          'regions',
-          'levels',
-          'subjects'
-        ])
-    }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="hideFile == false">
         <v-row justify="center">
             <v-dialog v-model="dialog" persistent max-width="420">
             <v-card>
@@ -19,49 +19,49 @@
           </v-col>
       </v-row>
       <v-form :disabled="hideFile" class="mb-6" ref="form">
-      <v-row justify="center">
-            <v-col cols="12" sm="12" md="8">
-            <v-textarea
-                v-model="description"
-                counter
-                label="Event Description"
-                outlined
-                rows="10"
-                prepend-icon="mdi-pencil-outline"
-                :rules="textareaRules"
-                :error="allerror.description"
-                :error-messages="allerror.description"
-            ></v-textarea>
-            </v-col>
-        </v-row>
-         <v-row justify="center">
-            <v-col col="12" sm="12" md="8">
-            <v-file-input 
-                v-model="files"
-                accept="image/*" 
-                label="Event Image"
-                outlined
-                placeholder="Pick an image"
-                prepend-icon="mdi-camera-outline"
-                :rules="imageRules"
-                :error="allerror.image"
-                :error-messages="allerror.image">
-            </v-file-input>
-            </v-col>
-        </v-row>
         <v-row justify="center">
-            <v-col col="12" sm="12" md="1" offset-md="7">
-                <v-btn 
-                :disabled="isSubmitted"
-                depressed 
-                block 
-                color="primary" 
-                class="mx-0 mt-3" 
-                @click="submit"
-                >Save
-                </v-btn>
-            </v-col>
-        </v-row>
+                <v-col cols="12" sm="12" md="8">
+                <v-textarea
+                    v-model="description"
+                    counter
+                    label="Event Description"
+                    outlined
+                    rows="10"
+                    prepend-icon="mdi-pencil-outline"
+                    :rules="textareaRules"
+                    :error="allerror.description"
+                    :error-messages="allerror.description"
+                ></v-textarea>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                <v-file-input 
+                    v-model="files"
+                    accept="image/*" 
+                    label="Event Image"
+                    outlined
+                    placeholder="Pick an image"
+                    prepend-icon="mdi-camera-outline"
+                    :rules="imageRules"
+                    :error="allerror.image"
+                    :error-messages="allerror.image">
+                </v-file-input>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col col="12" sm="12" md="8">
+                    <v-btn 
+                        :disabled = "fileIsSubmitted"
+                        depressed 
+                        class="mr-3"
+                        color="primary" 
+                        @click="submit"
+                        :loading="loading"
+                    >Save
+                    </v-btn>
+                </v-col>
+            </v-row>
         </v-form>
   </div>
 </template>
@@ -73,7 +73,7 @@ export default {
     },
     data: () => ({
         id: '',
-        isSubmitted: false,
+        fileIsSubmitted: false,
         dialog: false,
         loading: false,
         description: '',
@@ -101,7 +101,6 @@ export default {
         submit(){
             if(this.$refs.form.validate()){
             this.loading = true;
-            this.isSubmitted = true;
 
             let data = new FormData();
             data.append("description", this.description);
@@ -113,11 +112,8 @@ export default {
                 .post("/inst/create-file", data, config)
                 .then(response => {
                     this.loading = false;
-                    // this.$emit('redirect');
                     this.event = response.data.event;
                     this.dialog = true;
-                    // this.description='';
-                    // this.files='';
                 })
                 // .catch(error => 
                 //     this.allerror = error.response.data.errors
