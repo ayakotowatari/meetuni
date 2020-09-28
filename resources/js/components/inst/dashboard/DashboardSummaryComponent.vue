@@ -1,28 +1,8 @@
 <template>
     <v-row class="mb-10">
-        <v-col col="12" sm="12" md="4">
-            <v-card
-                class="mx-auto"
-                max-width="344"
-                outlined
-            >
-                <v-list-item three-line>
-                <v-list-item-content>
-                    <v-list-item-title class="headline mb-1">Bookings</v-list-item-title>
-                    <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                </v-list-item-content>
-
-                <v-list-item-avatar
-                    size="80"
-                    color="info"
-                ></v-list-item-avatar>
-                </v-list-item>
-
-                <v-card-actions>
-                <v-btn text>Manage Participants</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-col>
+        <bookingsnumber-component
+            v-bind:id="id"
+        ></bookingsnumber-component>
         <v-col col="12" sm="12" md="4">
             <v-card
                 class="mx-auto"
@@ -74,8 +54,16 @@
 </template>
 
 <script>
-export default {
+import BookingsNumber from './DashboardChartComponent'
 
+export default {
+    components: {
+        BookingsNumber
+    },
+    props: {
+        id: String
+    }
+   
 }
 </script>
 

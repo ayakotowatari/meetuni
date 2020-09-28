@@ -1,5 +1,3 @@
-import Axios from "axios"
-
 export const timezone = {
     namespaced: true,
 

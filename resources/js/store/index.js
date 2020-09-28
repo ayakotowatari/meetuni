@@ -11,6 +11,7 @@ import { student } from './modules/student';
 import { studentaccount } from './modules/studentaccount';
 import { notifications } from './modules/notifications';
 import { timezone } from './modules/timezone';
+import { chart } from './modules/chart';
 
 export default new Vuex.Store ({
 
@@ -799,7 +800,8 @@ export default new Vuex.Store ({
         student,
         studentaccount,
         notifications,
-        timezone
+        timezone,
+        chart
     }
 
 })

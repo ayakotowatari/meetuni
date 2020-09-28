@@ -57,6 +57,17 @@ class BookingsController extends Controller
          return response() -> json(['chartDataForBooking' => $graph]);
 
     }
+
+    public function countBookingsNumber(Request $request, $id)
+    {
+        $bookings = Booking::where('event_id', $id)
+                        ->where('cancelled', 0)
+                        ->count();
+
+        return response() -> json(['bookings' => $bookings]);
+
+    }
+
     public function fetchEventParticipants(Request $request, $id){
 
         $event_id = $id;
@@ -259,6 +270,7 @@ class BookingsController extends Controller
         $student->sendEventCancellationConfirmation($student, $event);
         
     }
+
     
     /**
      * Display the specified resource.
