@@ -28,7 +28,7 @@
                         <div>{{ formattedStartTime(event.start_utc, user.timezone) }} 
                             - {{ formattedEndTime(event.end_utc, user.timezone) }} </div>
                     </v-col>
-                    <v-col cols="2" xs="6" sm="2" md="1">
+                    <v-col cols="6" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
                         <v-icon 
                             class="icon" 
@@ -37,7 +37,7 @@
                         >mdi-heart</v-icon>
                         </div>
                     </v-col>
-                    <v-col cols="2" xs="6" sm="2" md="1">
+                    <v-col cols="6" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
                         <v-btn 
                             v-if='event.booked_by_user == false'

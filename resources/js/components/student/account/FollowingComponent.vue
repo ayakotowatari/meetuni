@@ -12,11 +12,11 @@
                     <!-- <v-col cols="12" xs="12" md="2">
                         <v-img :src="`/storage/${ inst.image }`"></v-img>
                     </v-col> -->
-                    <v-col cols="12" xs="12" md="2">
+                    <v-col cols="12" sm="12" md="2">
                         <div class="caption grey--text">Institution Name</div>
                         <div>{{ inst.name }}</div>
                     </v-col>
-                    <v-col cols="12" xs="12" md="2">
+                    <v-col cols="12" sm="12" md="2">
                         <div class="caption grey--text">Country</div>
                         <div>{{ inst.country }}</div>
                     </v-col>
@@ -32,7 +32,7 @@
                             </v-btn>
                         </div>
                     </v-col>
-                    <v-col cols="12" xs="6" sm="2" md="2">
+                    <v-col cols="12" sm="2" md="2">
                         <div class="mt-md-10">
                             <v-btn 
                                 v-if ="inst.followed_by_user == true"

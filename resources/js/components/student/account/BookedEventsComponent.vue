@@ -27,16 +27,16 @@
                         <div>{{ formattedStartTime(booking.start_utc, user.timezone) }} 
                             - {{ formattedEndTime(booking.end_utc, user.timezone) }} </div>
                     </v-col>
-                    <v-col cols="12" xs="2" sm="2" md="1">
+                    <v-col cols="6" xs="6" sm="2" md="1">
                         <div class="caption grey--text">Event Page</div>
                         <div>
-                        <v-icon color="info darken-2" @click="toEventPage(`${booking.event_id}`)">mdi-open-in-new</v-icon>
+                        <v-icon color="info darken-2" class="block" @click="toEventPage(`${booking.event_id}`)">mdi-open-in-new</v-icon>
                         </div>
                     </v-col>
-                    <v-col cols="12" xs="2" sm="2" md="1">
+                    <v-col cols="6" xs="6" sm="2" md="1">
                         <div class="caption grey--text">Cancel</div>
                         <div>
-                        <v-icon color="grey" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
+                        <v-icon color="grey" class="block" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
                         </div>
                     </v-col>
                 </v-row>
@@ -101,5 +101,8 @@ export default {
 </script>
 
 <style>
+.block{
+    display:inline-block;
+}
 
 </style>

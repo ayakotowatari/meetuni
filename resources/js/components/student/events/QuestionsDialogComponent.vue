@@ -12,7 +12,7 @@
                     <v-container>
                         <v-form ref="form">
                             <v-row>
-                                <v-col cols="12" sm="12" md="12">
+                                <v-col cols="12" xs="12" md="12">
                                     <v-select
                                         v-model="selectedCategory"
                                         :items="categories"
@@ -28,7 +28,7 @@
                                         :error-messages="allerror.category"
                                     ></v-select>
                                 </v-col>
-                                <v-col cols="12" sm="12" md="12">
+                                <v-col cols="12" xs="12" md="12">
                                     <v-textarea
                                         v-model="queryContents"
                                         counter

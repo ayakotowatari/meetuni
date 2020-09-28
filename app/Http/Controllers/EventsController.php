@@ -85,6 +85,43 @@ class EventsController extends Controller
         
     }       
 
+    public function fetchSingleBookedEvent(Request $request, $id)
+    {
+        $event_id = $id;
+        
+        $user_id = Auth::guard('student')->user()->id;
+
+        $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->join('bookings', 'events.id', '=', 'bookings.event_id')
+                    ->where('events.id', $event_id)
+                    ->where('bookings.student_id', $user_id)
+                    ->where('events.status_id', 1)
+                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->first();
+
+        $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                        ->join('regions', 'event_regions.region_id', '=', 'regions.id')
+                        ->where('events.id', $event_id)
+                        ->select('regions.region')
+                        ->get();
+
+        $levels = Event::join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                        ->join('levels', 'event_levels.level_id', '=', 'levels.id')
+                        ->where('events.id', $event_id)
+                        ->select('levels.level')
+                        ->get();
+
+        $subjects = Event::join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                        ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
+                        ->where('events.id', $event_id)
+                        ->select('subjects.subject')
+                        ->get();
+
+        return response()->json(['event'=>$event, 'regions'=>$regions, 'levels'=>$levels, 'subjects'=>$subjects],200);
+
+
+    }
+
     public function fetchLikedEvents($id)
     {
         $user_id = $id;

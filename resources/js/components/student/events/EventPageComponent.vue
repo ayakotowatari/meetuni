@@ -71,6 +71,7 @@
                         <v-card-actions>
                             <v-btn
                                 text
+                                @click="showDialog"
                             >Ask questions <v-icon right dark>mdi-account-question-outline</v-icon>
                             </v-btn>
                         </v-card-actions>
@@ -113,7 +114,7 @@ export default {
         console.log(id);
     },
     mounted(){
-        this.$store.dispatch('student/fetchSingleEvent', {
+        this.$store.dispatch('student/fetchSingleBookedEvent', {
             id: this.id
         });
         this.$store.dispatch('studentaccount/fetchInst', {

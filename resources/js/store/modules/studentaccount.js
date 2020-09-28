@@ -5,7 +5,7 @@ export const studentaccount = {
 
     state: {
         allEvents: [],
-        event: [],
+        event: {},
         regions: [],
         levels: [],
         subjects: [],
@@ -172,10 +172,10 @@ export const studentaccount = {
                     regions = res.data.regions;
                     levels = res.data.levels;
                     subjects = res.data.subjects
-                    console.log(event)
-                    console.log(regions)
-                    console.log(levels)
-                    console.log(subjects)
+                    // console.log(event)
+                    // console.log(regions)
+                    // console.log(levels)
+                    // console.log(subjects)
                     commit("setEvent", {event, regions, levels, subjects});
                 });
         },

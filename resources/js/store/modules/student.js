@@ -13,7 +13,8 @@ export const student = {
         },
         initials: '',
         allEvents: [],
-        event: [],
+        event: {},
+        // bookedEvent: {},
         eventsList: [],
         inst: {},
         regions: [],
@@ -70,6 +71,12 @@ export const student = {
             state.allEvents = payload
             // console.log('setAllEvents');
             // console.log(state);
+        },
+        setBookedEvent(state, payload){
+            state.event = payload.event
+            state.regions = payload.regions
+            state.levels = payload.levels
+            state.subjects = payload.subjects
         },
         setRecommendedSubjectEvents(state, payload){
             // console.log(payload);
@@ -289,6 +296,26 @@ export const student = {
                     commit('setStudentUser', payload)
                     console.log(payload);
             });
+        },
+        async fetchSingleBookedEvent({commit}, payload){
+            let event = [];
+            let regions = [];
+            let levels = [];
+            let subjects = [];
+
+            await axios
+                .get("/student/fetch-bookedevent/" + payload.id)
+                .then(res => {
+                    event = res.data.event;
+                    regions = res.data.regions;
+                    levels = res.data.levels;
+                    subjects = res.data.subjects
+                    // console.log(event)
+                    // console.log(regions)
+                    // console.log(levels)
+                    // console.log(subjects)
+                    commit("setBookedEvent", {event, regions, levels, subjects});
+                });
         },
         async fetchInitials({ commit }) {
             let payload = '';
