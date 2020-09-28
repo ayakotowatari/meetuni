@@ -8,7 +8,9 @@
         </v-row>
         <v-row justify="center">
             <v-col cols="12" sm="12" md="8">
-            {{ event.description }}
+            <div class="mb-8">
+                {{ event.description }}
+            </div>
             <v-textarea
                 v-model="description"
                 counter
@@ -23,10 +25,9 @@
             </v-col>
         </v-row>
         <v-row justify="center">
-            <v-col col="12" sm="12" md="1" offset-md="7">
+            <v-col col="12" sm="12" md="8">
                 <v-btn 
                 depressed 
-                outlined
                 color="primary" 
                 class="mx-0" 
                 @click="updateDescription"

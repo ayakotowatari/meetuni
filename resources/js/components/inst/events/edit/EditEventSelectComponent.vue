@@ -14,8 +14,8 @@
       <v-form ref="form">
             <v-row justify="center">
                 <v-col col="12" sm="12" md="8" class="py-0">
-                    <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Change</v-btn>
-                    <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary" outlined>Save</v-btn>
+                    <v-btn @click="hideRegions = !hideRegions" color="primary" outlined class="py-0">Edit</v-btn>
+                    <v-btn v-if="!hideRegions" @click="updateRegions" class="ml-4" color="primary">Save</v-btn>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -55,8 +55,8 @@
         <v-form ref="form">
             <v-row justify="center">
             <v-col col="12" sm="12" md="8" class="py-0">
-                <v-btn @click="hideLevels = !hideLevels" color="primary" outlined>Change</v-btn>
-                <v-btn v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary" outlined>Save</v-btn>
+                <v-btn @click="hideLevels = !hideLevels" color="primary" outlined>Edit</v-btn>
+                <v-btn v-if="!hideLevels" @click="updateLevels" class="ml-4" color="primary">Save</v-btn>
             </v-col>
             </v-row>
             <v-row justify="center">
@@ -96,8 +96,8 @@
         <v-form ref="form">
             <v-row justify="center">
             <v-col col="12" sm="12" md="8" class="py-0">
-                <v-btn @click="hideSubjects = !hideSubjects" color="primary" outlined>Change</v-btn>
-                <v-btn v-if="!hideSubjects" @click="updateSubjects" class="ml-4" color="primary" outlined>Save</v-btn>
+                <v-btn @click="hideSubjects = !hideSubjects" color="primary" outlined>Edit</v-btn>
+                <v-btn v-if="!hideSubjects" @click="updateSubjects" class="ml-4" color="primary">Save</v-btn>
             </v-col>
             </v-row>
             <v-row justify="center">
@@ -173,6 +173,16 @@ export default {
         this.$store.dispatch('fetchRegions');
         this.$store.dispatch('fetchLevels');
         this.$store.dispatch('fetchSubjects');
+    },
+    computed: {
+        editedRegions: {
+            get(){
+                return this.$store.state.eventRegions
+            },
+            set (value) {
+                this.$store.commit('updateEventTitle', value)
+            }
+        },
     },
     methods: {
         updateRegions(){

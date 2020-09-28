@@ -26,7 +26,7 @@
      
     <v-row class="mb-10">
         <v-col>
-            <div class="mb-24">
+            <div class="mb-4">
                 <span>Status: </span>
                 <v-chip :color="getColor(event.status)" class="ma-2">{{ event.status }}</v-chip>
             </div>
@@ -49,6 +49,16 @@
                 outlined
                 @click="unpublish"
             >Unpublish</v-btn>
+            <h3 
+                class="grey--text text--darken-2"
+                v-if="
+                  event.description == null || 
+                  event.files == null ||
+                  eventRegions == null ||
+                  eventLevels == null ||
+                  eventSubjects == null
+                "
+            >Some information needs to be filled before publishing this event.</h3>
         </v-col>
     </v-row>
 
