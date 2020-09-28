@@ -7,10 +7,10 @@
                 @click.prevent="expand(event.id)"
             >
                 <v-img
-                class="white--text align-end"
-                height="180px"
-                :src="`/storage/${ event.image }`"
-                aspect-ratio="1.7"  
+                    class="white--text align-end"
+                    height="180px"
+                    :src="`/storage/${ event.image }`"
+                    aspect-ratio="1.7"  
                 >
                 </v-img>
                  <v-card-actions>
