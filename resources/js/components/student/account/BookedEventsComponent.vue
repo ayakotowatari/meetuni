@@ -5,43 +5,54 @@
         ></cancellationdialog-component>
         <v-container>
             <h1 class="primary--text mb-8">Booked Events</h1>
-            <v-card flat v-for="booking in bookings" :key="booking.title">
-                <v-row class="pa-3"> 
-                    <v-col cols="12" xs="12" md="2">
-                        <v-img :src="`/storage/${ booking.image }`" ></v-img>
-                    </v-col>
-                    <v-col cols="12" xs="12" md="2">
-                        <div class="caption grey--text">Institution Name</div>
-                        <div>{{ booking.name }}</div>
-                    </v-col>
-                    <v-col cols="12" xs="12" md="2">
-                        <div class="caption grey--text">Event Title</div>
-                        <div>{{ booking.title }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="6" sm="4" md="2">
-                        <div class="caption grey--text">Date</div>
-                        <div>{{ formattedDate(booking.date, user.timezone) }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="6" sm="4" md="2">
-                        <div class="caption grey--text">Time</div>
-                        <div>{{ formattedStartTime(booking.start_utc, user.timezone) }} 
-                            - {{ formattedEndTime(booking.end_utc, user.timezone) }} </div>
-                    </v-col>
-                    <v-col cols="6" xs="6" sm="2" md="1">
-                        <div class="caption grey--text">Event Page</div>
-                        <div>
-                        <v-icon color="info darken-2" class="block" @click="toEventPage(`${booking.event_id}`)">mdi-open-in-new</v-icon>
-                        </div>
-                    </v-col>
-                    <v-col cols="6" xs="6" sm="2" md="1">
-                        <div class="caption grey--text">Cancel</div>
-                        <div>
-                        <v-icon color="grey" class="block" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
-                        </div>
-                    </v-col>
-                </v-row>
-                <v-divider></v-divider>
-            </v-card>
+            <div v-if="bookings !== null">
+                <v-card flat v-for="booking in bookings" :key="booking.title">
+                    <v-row class="pa-3"> 
+                        <v-col cols="12" xs="12" md="2">
+                            <v-img :src="`/storage/${ booking.image }`" ></v-img>
+                        </v-col>
+                        <v-col cols="12" xs="12" md="2">
+                            <div class="caption grey--text">Institution Name</div>
+                            <div>{{ booking.name }}</div>
+                        </v-col>
+                        <v-col cols="12" xs="12" md="2">
+                            <div class="caption grey--text">Event Title</div>
+                            <div>{{ booking.title }}</div>
+                        </v-col>
+                        <v-col cols="6" xs="6" sm="4" md="2">
+                            <div class="caption grey--text">Date</div>
+                            <div>{{ formattedDate(booking.date, user.timezone) }}</div>
+                        </v-col>
+                        <v-col cols="6" xs="6" sm="4" md="2">
+                            <div class="caption grey--text">Time</div>
+                            <div>{{ formattedStartTime(booking.start_utc, user.timezone) }} 
+                                - {{ formattedEndTime(booking.end_utc, user.timezone) }} </div>
+                        </v-col>
+                        <v-col cols="6" xs="6" sm="2" md="1">
+                            <div class="caption grey--text">Event Page</div>
+                            <div>
+                            <v-icon color="info darken-2" class="block" @click="toEventPage(`${booking.event_id}`)">mdi-open-in-new</v-icon>
+                            </div>
+                        </v-col>
+                        <v-col cols="6" xs="6" sm="2" md="1">
+                            <div class="caption grey--text">Cancel</div>
+                            <div>
+                            <v-icon color="grey" class="block" @click="showDialog(`${booking.id}`)">mdi-table-cancel</v-icon>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                </v-card>
+            </div>
+            <div v-if="bookings == null">
+                <v-container>
+                    <v-row justify="center">
+                        <v-col col="12" xs="12" md="4">
+                            <h2 class="grey--text mt-8">You haven't booked any event yet.</h2> 
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </div>
         </v-container>
     </div>
 </template>
