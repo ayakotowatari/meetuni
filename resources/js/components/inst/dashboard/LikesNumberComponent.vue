@@ -19,7 +19,7 @@
             </v-list-item>
 
             <v-card-actions>
-                <v-btn text>Manage Participants</v-btn>
+                <v-btn text @click="toManageParticipants">Manage Participants</v-btn>
             </v-card-actions>
         </v-card>
 </v-col>
@@ -41,6 +41,11 @@ export default {
         ...mapState('chart', [
             'eventLikesNumber'
         ])
+    },
+    methods: {
+        toManageParticipants(){
+            this.$router.push({name: 'manage-participants', params: {id: this.id}})
+        }
     }
 
 }

@@ -41,7 +41,7 @@ data: function(){
     return{
             id: this.$route.params.id,
         }
-    console.log(id);
+    // console.log(id);
 },
 mounted(){
    

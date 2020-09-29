@@ -79,12 +79,12 @@ export default {
              await axios
                 .get('/inst/event-bookings/' + this.$route.params.id)
                 .then(response => {
-                    console.log(response.data.chartDataForBooking);
+                    // console.log(response.data.chartDataForBooking);
 
                     let chartData = response.data.chartDataForBooking;
 
-                    console.log(chartData[0].date);
-                    console.log(chartData[0].total);
+                    // console.log(chartData[0].date);
+                    // console.log(chartData[0].total);
 
                     let bookingdata = new Array(chartData.length);
                     let labels = new Array(chartData.length);
@@ -94,7 +94,7 @@ export default {
                         labels[i] = chartData[i].date;
                     };
 
-                    console.log(bookingdata);
+                    // console.log(bookingdata);
                     
                     this.chartdata = {
                         labels: labels,

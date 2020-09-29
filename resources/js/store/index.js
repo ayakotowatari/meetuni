@@ -397,8 +397,8 @@ export default new Vuex.Store ({
         },
         async updateEventDescription({state, commit}, payload){
 
-            console.log(payload.id);
-            console.log(payload.description);
+            // console.log(payload.id);
+            // console.log(payload.description);
 
             await axios
                     .post('/inst/update-description', {
@@ -406,7 +406,7 @@ export default new Vuex.Store ({
                         description: payload.description
                     })
                     .then(response => {
-                        console.log(response);
+                        // console.log(response);
                     // this.$emit('basicsAdded');
                     })
                     .catch(error => {
@@ -417,8 +417,8 @@ export default new Vuex.Store ({
         },
         async updateEventFiles({state, commit}, payload){
 
-            console.log(payload.id);
-            console.log(payload.image);
+            // console.log(payload.id);
+            // console.log(payload.image);
 
             let allerror = [];
             
@@ -431,7 +431,7 @@ export default new Vuex.Store ({
             await axios
                 .post("/inst/update-image", data, config)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     // this.loading = false;
                     // this.$emit('eventAdded');
                 })
@@ -444,11 +444,11 @@ export default new Vuex.Store ({
                     })
         },
         async publishEvent({state, commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
             await axios
               .post('/inst/publish-event/' + payload.id)
               .then(res => {
-                console.log(res);
+                // console.log(res);
                 commit('showDialog');
                 commit('isPublished');
                 commit('isOngoing');
@@ -459,7 +459,7 @@ export default new Vuex.Store ({
             await axios
               .post('/inst/unpublish-event/' + payload.id)
               .then(res => {
-                console.log(res);
+                // console.log(res);
                 commit('isUnpublished');
                 commit('showDialog');
                 commit('isDraft');
@@ -667,7 +667,7 @@ export default new Vuex.Store ({
                 .then(res => {
                     payload = res.data.user;
                     commit('setStudentUser', payload)
-                    console.log(payload);
+                    // console.log(payload);
             });
         },
         async fetchCountries({commit}) {
@@ -703,12 +703,12 @@ export default new Vuex.Store ({
         async addStudentDetails({state, commit}, payload){
             let allerror = [];
 
-            console.log(payload.id);
-            console.log(payload.country);
-            console.log(payload.year);
-            console.log(payload.destinations);
-            console.log(payload.levels);
-            console.log(payload.subjects);
+            // console.log(payload.id);
+            // console.log(payload.country);
+            // console.log(payload.year);
+            // console.log(payload.destinations);
+            // console.log(payload.levels);
+            // console.log(payload.subjects);
 
             await axios 
                 .post("/student/add-details", {
@@ -720,11 +720,11 @@ export default new Vuex.Store ({
                     subjects: payload.subjects
                 })
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch(error => {
                     allerror = error.response.data.errors,
-                    console.log(allerror),
+                    // console.log(allerror),
                     commit('setallErrors', allerror)
                 })
         },
