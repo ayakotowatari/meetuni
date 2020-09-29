@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Student\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -28,5 +32,33 @@ class ResetPasswordController extends Controller
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
     
-    protected $redirectTo = '/inst/events';
+    protected $redirectTo = '/student/main';
+
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest:student');
+    }
+
+    public function showResetForm(Request $request, $token = null)
+    {
+        return view('student.auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('student');
+    }
+
+    protected function broker()
+    {
+        return Password::broker('students');
+    }
+
 }

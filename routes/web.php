@@ -36,10 +36,14 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
 Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
 Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
-//Shops用ログインボタンクリック時
 Route::post('/student/login','Student\Auth\LoginController@login')->name('student.login');
-//Shops用ログアウトボタンクリック時
 Route::post('/student/logout','Student\Auth\LoginController@logout')->name('student.logout');
+
+//学生パスワードリセット
+Route::get('password/student/reset', 'Student\Auth\ForgotPasswordController@showLinkRequestForm')->name('student.password.request');
+Route::post('password/student/email', 'Student\Auth\ForgotPasswordController@sendResetLinkEmail')->name('student.password.email');
+Route::get('password/student/reset/{token}', 'Student\Auth\ResetPasswordController@showResetForm')->name('student.password.reset');
+Route::post('password/student/reset', 'Student\Auth\ResetPasswordController@reset')->name('student.password.update');
 
 Auth::routes();
 

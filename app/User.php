@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 // use App\Traits\HasLocalDates;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use SoftDeletes;
 
