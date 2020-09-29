@@ -60,7 +60,7 @@
             <div v-if="likedEvents == null">
                 <v-container>
                     <v-row justify="center">
-                        <v-col col="12" xs="12" md="4">
+                        <v-col cols="12" xs="12" md="4">
                             <h2 class="grey--text mt-8">You haven't followed any universities yet.</h2> 
                         </v-col>
                     </v-row>
