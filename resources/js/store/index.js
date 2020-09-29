@@ -44,6 +44,7 @@ export default new Vuex.Store ({
             end_utc: '',
             description: '',
             files: '',
+            user_id: '',
             status: ''
         },
         eventRegions: [],
@@ -117,6 +118,7 @@ export default new Vuex.Store ({
             state.event.end_utc = payload.end_utc
             state.event.description = payload.description
             state.event.files = payload.image
+            state.event.user_id = payload.user_id
             state.event.status = payload.status
         },
         setEventRegions(state, payload){

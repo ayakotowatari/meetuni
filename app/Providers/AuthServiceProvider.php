@@ -30,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user -> user_type_id == 1 || 2;
         });
 
+        Gate::define('superAdmin', function($user){
+            return $user -> user_type_id == 1;
+        });
+
         Gate::define('student', function($user){
             return $user -> user_type_id == 6;
         });
