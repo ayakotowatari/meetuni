@@ -39,19 +39,35 @@ class EventsController extends Controller
 
         // DD($id);
 
-        $events = Event::with('bookings')
-                    ->join('insts', 'events.inst_id', '=', 'insts.id')
-                    ->where('events.status_id', 1)
-                    ->whereDoesntHave('bookings', function(Builder $query){
-                        $query->where('student_id','=', Auth::guard('student')->user()->id);
-                    })
-                    ->orderBy('events.created_at')
-                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-                    ->get();
+        $user = Auth::guard('student')->user();
 
-        // return view ('student/test', ['events'=>$events]);
+        if($user){
 
-        return response()->json(['events'=>$events],200);
+            $events = Event::with('bookings')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('events.status_id', 1)
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id','=', Auth::guard('student')->user()->id);
+                        })
+                        ->orderBy('events.created_at')
+                        ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->get();
+            // return view ('student/test', ['events'=>$events]);
+            return response()->json(['events'=>$events],200);
+
+        }else{
+
+            $events = Event::with('bookings')
+            ->join('insts', 'events.inst_id', '=', 'insts.id')
+            ->where('events.status_id', 1)
+            ->orderBy('events.created_at')
+            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+            ->get();
+            // return view ('student/test', ['events'=>$events]);
+            return response()->json(['events'=>$events],200);
+
+        }
+        
     }
 
     public function fetchEventOwner(Request $request, $id)

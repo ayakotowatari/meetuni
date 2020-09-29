@@ -95,8 +95,8 @@ const routes = [
         path: "/student/event-list/:id",
         name: "event-list",
         component: EventList
-    }
-    
+    },
+
     //テスト
     // {
     //     path: "/student/test",
