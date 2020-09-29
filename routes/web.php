@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
     Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels')->name('user.fetch.event.levels');
     Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects')->name('user.fetch.event.subjects');
     Route::get('/inst/event-participants/{id}', 'BookingsController@fetchEventParticipants')->name('user.fetch.event.participants');
+    Route::get('/inst/fetch-eventowner/{id}', 'EventsController@fetchEventOwner')->name('user.fetch.event.owner');
 });
 
 // スーパー管理者のメンバー管理
