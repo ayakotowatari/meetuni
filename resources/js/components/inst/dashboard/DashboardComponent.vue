@@ -19,7 +19,7 @@
             <dashboardchart-component></dashboardchart-component>
             <v-btn depressed outlined color="grey darken-2" class="mt-8" @click="print()">print</v-btn>
         </v-container>
-        <v-container v-if="eventOwner.user_id !== user_id">
+        <v-container v-if="eventOwner.user_id !== user.id">
           <v-row justify="center">
               <v-col cols="12" xs="12" md="4">
                   <h2 class="grey--text mt-8">You are not authorized to view this Dashboard.</h2> 
