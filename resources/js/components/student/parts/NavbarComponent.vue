@@ -10,7 +10,12 @@
       <v-btn text color="grey darken-1" @click.stop="toTopPage">
             <span>top page</span>
       </v-btn>
-      <v-menu open-on-hover top offset-y>
+      <v-menu 
+          open-on-hover 
+          top 
+          offset-y
+          :close-on-content-click="closeOnContentClick"
+      >
           <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -77,6 +82,7 @@ import { mapState } from 'vuex'
         { icon: 'mdi-heart-outline', text: 'Liked', route: 'liked'},
         { icon: 'mdi-account-details-outline', text: 'My Profile', route: 'student-profile' },
        ],
+      closeOnContentClick: true,
     }),
     mounted() {
         this.$store.dispatch('student/fetchStudentUser');
