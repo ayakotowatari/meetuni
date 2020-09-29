@@ -26,7 +26,7 @@
 <script>
 export default {
   props: {
-      id: String,
+      id: Number,
   },
   data: () => ({
       offset: true,

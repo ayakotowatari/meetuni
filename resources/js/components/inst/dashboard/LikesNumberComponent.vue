@@ -30,7 +30,7 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        id: String
+        id: Number
     },
     mounted(){
         this.$store.dispatch('chart/fetchEventLikesNumber', {
