@@ -22,7 +22,7 @@ Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::post('/inst/invite-members', 'UsersController@process_invites')->name('process_invites');
+Route::post('/inst/invite-members', 'UsersController@process_invites')->name('inst.process_invites');
 Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('instUser.registration.form');
 
 // Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
@@ -47,9 +47,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //大学パスワード変更
-Route::group(['middleware' => ['auth', 'can:institution']], function(){
-    Route::post('/user/update-password', 'UsersController@updatePassword');
-});
+// Route::group(['middleware' => ['auth', 'can:institution']], function(){
+//     Route::post('/user/update-password', 'UsersController@updatePassword');
+// });
+Route::post('/user/update-password', 'UsersController@updatePassword')->name('inst.update.password');
 
 //             //
 //     大学     //
