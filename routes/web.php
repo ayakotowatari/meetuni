@@ -99,6 +99,8 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartDataForBookings');
 Route::get('/inst/event-likes/{id}', 'LikesController@fillChartDataForLikes');
 Route::get('/inst/bookings-number/{id}', 'BookingsController@countBookingsNumber');
+Route::get('/inst/likes-number/{id}', 'LikesController@countLikesNumber');
+Route::get('/inst/questions-number/{id}', 'QueriesController@countQuestionsNumber');
 
 // Notifications
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');

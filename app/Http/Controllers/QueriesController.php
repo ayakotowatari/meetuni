@@ -51,6 +51,15 @@ class QueriesController extends Controller
         $query->save();
     }
 
+    public function countQuestionsNumber(Request $request, $id)
+    {
+        $questions = Query::where('event_id', $id)
+                        ->count();
+
+        return response() -> json(['questions' => $questions]);
+
+    }
+
     /**
      * Display the specified resource.
      *
