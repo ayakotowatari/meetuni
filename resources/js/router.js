@@ -15,7 +15,7 @@ import Team from "./components/inst/team/TeamComponent";
 import AddMembers from "./components/inst/team/AddMembersComponent";
 import UserProfile from "./components/inst/profile/UserProfileComponent";
 import ParticipantCommunications from "./components/inst/communications/ParticipantCommunicationsComponent";
-import EventQuestions from "./components/inst/dashboard/EventQuestionsComponent";
+import EventQuestions from "./components/inst/participants/EventQuestionsComponent";
 
 
 //テスト

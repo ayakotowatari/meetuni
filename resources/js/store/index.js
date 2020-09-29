@@ -12,6 +12,7 @@ import { studentaccount } from './modules/studentaccount';
 import { notifications } from './modules/notifications';
 import { timezone } from './modules/timezone';
 import { chart } from './modules/chart';
+import { studentdetails } from './modules/studentdetails';
 
 export default new Vuex.Store ({
 
@@ -61,10 +62,10 @@ export default new Vuex.Store ({
         timezones: [],
 
         //学生用に追加
-        studentUser: {},
-        countries: [],
-        destinations: [],
-        years: [],
+        // studentUser: {},
+        // countries: [],
+        // destinations: [],
+        // years: [],
         // participants:[],
         //テスト
         // details: {
@@ -221,19 +222,19 @@ export default new Vuex.Store ({
             state.timezones = payload
         },
 
-        //学生用に追加
-        setStudentUser(state, payload){
-            state.studentUser = payload
-        },
-        setCountries(state,payload){
-            state.countries = payload
-        },
-        setDestinations(state,payload){
-            state.destinations = payload
-        },
-        setYears(state,payload){
-            state.years = payload
-        },
+        // //学生用に追加
+        // setStudentUser(state, payload){
+        //     state.studentUser = payload
+        // },
+        // setCountries(state,payload){
+        //     state.countries = payload
+        // },
+        // setDestinations(state,payload){
+        //     state.destinations = payload
+        // },
+        // setYears(state,payload){
+        //     state.years = payload
+        // },
         // setParticipants(state, payload){
         //     state.participants = payload
         // }
@@ -801,7 +802,8 @@ export default new Vuex.Store ({
         studentaccount,
         notifications,
         timezone,
-        chart
+        chart,
+        studentdetails
     }
 
 })

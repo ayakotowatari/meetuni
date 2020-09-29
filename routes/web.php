@@ -133,6 +133,9 @@ Route::post('/user/update-timezone', 'UsersController@updateTimezone');
 // 各種情報の取得
 Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
 Route::get('/student/fetch-initials','StudentsController@fetchInitials');
+Route::get('/student/fetch-regions','RegionsController@fetchRegions');
+Route::get('/student/fetch-levels','LevelsController@fetchLevels');
+Route::get('/student/fetch-subjects','SubjectsController@fetchSubjects');
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');

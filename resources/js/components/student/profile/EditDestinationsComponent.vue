@@ -66,7 +66,8 @@ export default {
     },
     data: function(){
         return{
-            selectedDestinations: [],        }
+            selectedDestinations: [],        
+            }
     },
     mounted(){
         this.$store.dispatch('student/fetchStudentPreference')
