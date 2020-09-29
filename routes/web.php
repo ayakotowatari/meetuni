@@ -17,20 +17,20 @@
 
 // Auth前の大学名チェック
 Route::get('/inst/home', 'InstsController@home')->name('inst.home');
-Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
+// Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
+// Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::post('/inst/invite-members', 'UsersController@process_invites')->name('inst.process_invites');
-Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('instUser.registration.form');
+Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
+Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('user.registration.form');
 
 // Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
 // Route::get('/inst/team/register', 'Auth\RegisterController@showInstTeamUserRegistrationForm')->name('instUser.registration.form');
-Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
-Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
-Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
-Route::post('/inst/logout', 'Auth\LoginController@logout')->name('instUser.logout');
+Route::post('/inst/register', 'Auth\RegisterController@register')->name('user.register');
+Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('user.login.form');
+Route::post('/inst/login','Auth\LoginController@login')->name('user.login');
+Route::post('/inst/logout', 'Auth\LoginController@logout')->name('user.logout');
 
 //学生Authentification
 Route::get('/', 'HomeController@index')->name('home');

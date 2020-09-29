@@ -121,7 +121,7 @@ class UsersController extends Controller
         ]);
 
         $url = URL::temporarySignedRoute(
-            'instUser.registration.form', now()->addMinutes(300), ['token' => $token, 'inst_id' => $inst_id ]
+            'user.registration.form', now()->addMinutes(300), ['token' => $token, 'inst_id' => $inst_id ]
         );
 
         $user = Auth::user();
