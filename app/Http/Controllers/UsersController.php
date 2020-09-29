@@ -82,7 +82,7 @@ class UsersController extends Controller
 
         $event = Event::join('statuses', 'events.status_id', '=', 'statuses.id')
                     ->where('events.id', $event_id)
-                    ->select('events.id', 'events.title', 'events.timezone', 'events.date', 'events.start_time', 'events.end_time', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'statuses.status')
+                    ->select('events.title', 'events.timezone', 'events.date', 'events.start_time', 'events.end_time', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'events.user_id', 'statuses.status')
                     ->first();
 
         // DD($event);

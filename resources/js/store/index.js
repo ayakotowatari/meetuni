@@ -44,7 +44,11 @@ export default new Vuex.Store ({
             end_utc: '',
             description: '',
             files: '',
+            user_id: '',
             status: ''
+        },
+        eventOwner: {
+            user_id:''
         },
         eventRegions: [],
         eventLevels: [],
@@ -92,6 +96,11 @@ export default new Vuex.Store ({
         setInst(state, payload){
             state.inst = payload
         },
+        setEventOwner(state, payload){
+            state.eventOwner = payload
+            console.log('setEventOwner')
+            console.log(payload);
+        },
         setInitials(state, payload){
             state.initials = payload
         },
@@ -117,6 +126,7 @@ export default new Vuex.Store ({
             state.event.end_utc = payload.end_utc
             state.event.description = payload.description
             state.event.files = payload.image
+            state.event.user_id = payload.user_id
             state.event.status = payload.status
         },
         setEventRegions(state, payload){
@@ -277,6 +287,21 @@ export default new Vuex.Store ({
                     payload = res.data.inst;
                     commit('setInst', payload)
             });
+        },
+        async fetchEventOwner({commit}, payload){
+
+            console.log(payload.id);
+
+            let owner = {};
+
+            await axios
+                .get('/inst/fetch-eventowner/' + payload.id)
+                .then(response => {
+                    owner = response.data.owner;
+                    commit('setEventOwner', owner);
+                    console.log('check');
+                    console.log(owner);
+                })
         },
         async fetchInitials({ commit }) {
             let payload = '';
