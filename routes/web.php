@@ -16,13 +16,12 @@
 // });
 
 // Auth前の大学名チェック
-Route::get('/inst/home', 'InstsController@home')->name('inst.home');
+// Route::get('/inst/home', 'InstsController@home')->name('inst.home');
 // Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
 // Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
 Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('user.registration.form');
 
 // Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
@@ -37,10 +36,14 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
 Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
 Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
-//Shops用ログインボタンクリック時
 Route::post('/student/login','Student\Auth\LoginController@login')->name('student.login');
-//Shops用ログアウトボタンクリック時
 Route::post('/student/logout','Student\Auth\LoginController@logout')->name('student.logout');
+
+//学生パスワードリセット
+Route::get('password/student/reset', 'Student\Auth\ForgotPasswordController@showLinkRequestForm')->name('student.password.request');
+Route::post('password/student/email', 'Student\Auth\ForgotPasswordController@sendResetLinkEmail')->name('student.password.email');
+Route::get('password/student/reset/{token}', 'Student\Auth\ResetPasswordController@showResetForm')->name('student.password.reset');
+Route::post('password/student/reset', 'Student\Auth\ResetPasswordController@reset')->name('student.password.update');
 
 Auth::routes();
 
@@ -70,10 +73,12 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
     Route::get('/inst/fetch-event-levels/{id}', 'LevelsController@fetchEventLevels')->name('user.fetch.event.levels');
     Route::get('/inst/fetch-event-subjects/{id}', 'SubjectsController@fetchEventSubjects')->name('user.fetch.event.subjects');
     Route::get('/inst/event-participants/{id}', 'BookingsController@fetchEventParticipants')->name('user.fetch.event.participants');
+    Route::get('/inst/fetch-eventowner/{id}', 'EventsController@fetchEventOwner')->name('user.fetch.event.owner');
 });
 
 // スーパー管理者のメンバー管理
 Route::group(['middleware' => ['auth', 'can:superAdmin']], function(){
+    Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
     Route::get('/inst/fetch-members', 'UsersController@fetchTeamMembers')->name('user.fetch.members');
     Route::post('/inst/delete-members/{id}', 'UsersController@deleteTeamMembers')->name('user.delete.members');
 });

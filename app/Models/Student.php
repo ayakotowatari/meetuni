@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\EventBookingConfirmation;
 use App\Notifications\EventCancellationConfirmation;
+use App\Notifications\StudentResetPassword;
 
 // テスト
 use App\Notifications\TestMail;
@@ -67,5 +68,11 @@ class Student extends Authenticatable
     // {
     //     $this->notify(new EventPublishedNotification($student, $event, $inst));
     // }
+
+    // Override default reset password
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new StudentResetPassword($token));
+    }
 
 }

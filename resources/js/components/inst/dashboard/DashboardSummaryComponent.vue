@@ -24,7 +24,7 @@ export default {
         QuestionsNumber
     },
     props: {
-        id: String
+        id: Number
     }
    
 }

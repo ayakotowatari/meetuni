@@ -54,6 +54,23 @@ class EventsController extends Controller
         return response()->json(['events'=>$events],200);
     }
 
+    public function fetchEventOwner(Request $request, $id)
+    {
+        $event_id = $id;
+        
+        $owner = Event::where('id', $event_id)
+                    ->select('user_id')
+                    ->first();
+
+        // $owner_id = $owner->user_id;
+
+        // DD($owner_id);
+
+        // DD($owner);
+
+        return response()->json(['owner'=>$owner],200);
+    }
+
     //学生ページ用
     public function fetchSingleEvent(Request $request, $id){
 
