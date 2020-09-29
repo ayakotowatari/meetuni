@@ -16,13 +16,12 @@
 // });
 
 // Auth前の大学名チェック
-Route::get('/inst/home', 'InstsController@home')->name('inst.home');
+// Route::get('/inst/home', 'InstsController@home')->name('inst.home');
 // Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
 // Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
 Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('user.registration.form');
 
 // Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
@@ -75,6 +74,7 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
 
 // スーパー管理者のメンバー管理
 Route::group(['middleware' => ['auth', 'can:superAdmin']], function(){
+    Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
     Route::get('/inst/fetch-members', 'UsersController@fetchTeamMembers')->name('user.fetch.members');
     Route::post('/inst/delete-members/{id}', 'UsersController@deleteTeamMembers')->name('user.delete.members');
 });
