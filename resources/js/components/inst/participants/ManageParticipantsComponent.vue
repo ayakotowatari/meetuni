@@ -6,14 +6,14 @@
         ></emailtoparticipantsdialog2-component>
         <v-container>
             <v-row class="mb-8">
-                <v-col col="12" sm="12" md="8">
+                <v-col cols="12" sm="12" md="8">
                     <eventheader-component></eventheader-component>
                 </v-col>
             </v-row>
             <v-row class="mb-8">
                 <h1 class="grey--text mb-6">Manage Participants</h1>
                 <v-spacer></v-spacer>
-                <v-col col="12" sm="12" md="2">
+                <v-col cols="12" sm="12" md="2">
                     <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
                 </v-col>
             </v-row>

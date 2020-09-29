@@ -19,7 +19,7 @@
             </v-list-item>
 
             <v-card-actions>
-                <v-btn text>Details</v-btn>
+                <v-btn text @click="toEventQuestions">Details</v-btn>
             </v-card-actions>
         </v-card>
 </v-col>
@@ -41,6 +41,11 @@ export default {
         ...mapState('chart', [
             'eventQuestionsNumber'
         ])
+    },
+    methods: {
+        toEventQuestions(){
+            this.$router.push({name: 'event-questions', params: {id: this.id}})
+        }
     }
 
 }

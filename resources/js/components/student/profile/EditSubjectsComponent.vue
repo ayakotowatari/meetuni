@@ -20,7 +20,7 @@
         </v-row>
         <div v-if="isEditingForSubjects">
             <v-row justify="center">
-                <v-col col="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6">
                     <v-card outlined height="100%" class="pa-2 mb-4">
                         <v-chip-group 
                             v-model="selectedSubjects" 
@@ -35,7 +35,7 @@
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col col="12" sm="12" md="6" class="py-0">
+                <v-col cols="12" sm="12" md="6" class="py-0">
                     <v-btn 
                         depressed 
                         color="primary" 

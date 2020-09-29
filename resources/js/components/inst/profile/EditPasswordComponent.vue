@@ -20,7 +20,7 @@
         </v-row>
         <v-form v-if="isEditing" ref="form">
             <v-row justify="center">
-                <v-col col="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6">
                         <v-text-field 
                             v-model="currentPassword"
                             label="Current Password" 
@@ -33,7 +33,7 @@
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col col="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6">
                         <v-text-field 
                             label="New Password" 
                             v-model="newPassword" 
@@ -47,7 +47,7 @@
                 </v-col>
             </v-row>
                 <v-row justify="center">
-                <v-col col="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6">
                         <v-text-field 
                             label="Confirm New Password" 
                             v-model="newPassword_confirmation"
@@ -59,7 +59,7 @@
                 </v-col>
             </v-row>
             <v-row justify="center">
-                <v-col col="12" sm="12" md="6" class="py-0">
+                <v-col cols="12" sm="12" md="6" class="py-0">
                     <v-btn 
                         depressed 
                         color="primary" 
