@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <v-row class="mb-8">
-        <v-col col="12" sm="12" md="8">
+        <v-col cols="12" sm="12" md="8">
             <eventheader-component></eventheader-component>
         </v-col>
     </v-row>
     <v-row class="mb-8">
         <h1 class="grey--text mb-6">Dashboard</h1>
         <v-spacer></v-spacer>
-        <v-col col="12" sm="12" md="2">
+        <v-col cols="12" sm="12" md="2">
             <dashboardmenu-component v-bind:id="id"></dashboardmenu-component>
         </v-col>
     </v-row>
@@ -41,7 +41,7 @@ data: function(){
     return{
             id: this.$route.params.id,
         }
-    console.log(id);
+    // console.log(id);
 },
 mounted(){
    

@@ -1,7 +1,7 @@
 <template>
 <div>
     <v-row>
-        <v-col col="12" sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
             <v-card
                 class="mt-4 mx-auto"
                 max-width="480"
@@ -28,7 +28,7 @@
                 </v-card-text>
             </v-card>
         </v-col>
-        <v-col col="12" sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
             <v-card
                 class="mt-4 mx-auto"
                 max-width="480"

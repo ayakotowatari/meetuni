@@ -17,20 +17,20 @@
 
 // Auth前の大学名チェック
 Route::get('/inst/home', 'InstsController@home')->name('inst.home');
-Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
-Route::post('inst/search', 'InstsController@search')->name('inst.search');
+// Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
+// Route::post('inst/search', 'InstsController@search')->name('inst.search');
 
 
 //大学Authentification
-Route::post('/inst/invite-members', 'UsersController@process_invites')->name('process_invites');
-Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('instUser.registration.form');
+Route::post('/inst/invite-members', 'UsersController@process_invites')->name('user.process_invites');
+Route::get('/inst/{inst_id}/register/{token}', 'UsersController@registration_view')->name('user.registration.form');
 
 // Route::get('/inst/register', 'Auth\RegisterController@showInstUserRegistrationForm')->name('instUser.registration.form');
 // Route::get('/inst/team/register', 'Auth\RegisterController@showInstTeamUserRegistrationForm')->name('instUser.registration.form');
-Route::post('/inst/register', 'Auth\RegisterController@register')->name('instUser.register');
-Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('instUser.login.form');
-Route::post('/inst/login','Auth\LoginController@login')->name('instUser.login');
-Route::post('/inst/logout', 'Auth\LoginController@logout')->name('instUser.logout');
+Route::post('/inst/register', 'Auth\RegisterController@register')->name('user.register');
+Route::get('/inst/login','Auth\LoginController@showLoginForm')->name('user.login.form');
+Route::post('/inst/login','Auth\LoginController@login')->name('user.login');
+Route::post('/inst/logout', 'Auth\LoginController@logout')->name('user.logout');
 
 //学生Authentification
 Route::get('/', 'HomeController@index')->name('home');
@@ -47,9 +47,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //大学パスワード変更
-Route::group(['middleware' => ['auth', 'can:institution']], function(){
-    Route::post('/user/update-password', 'UsersController@updatePassword');
-});
+// Route::group(['middleware' => ['auth', 'can:institution']], function(){
+//     Route::post('/user/update-password', 'UsersController@updatePassword');
+// });
+Route::post('/user/update-password', 'UsersController@updatePassword')->name('inst.update.password');
 
 //             //
 //     大学     //
@@ -99,6 +100,8 @@ Route::post('/inst/unpublish-event/{id}', 'EventsController@unpublishEvent');
 Route::get('/inst/event-bookings/{id}', 'BookingsController@fillChartDataForBookings');
 Route::get('/inst/event-likes/{id}', 'LikesController@fillChartDataForLikes');
 Route::get('/inst/bookings-number/{id}', 'BookingsController@countBookingsNumber');
+Route::get('/inst/likes-number/{id}', 'LikesController@countLikesNumber');
+Route::get('/inst/questions-number/{id}', 'QueriesController@countQuestionsNumber');
 
 // Notifications
 Route::post('/inst/email-participants', 'ParticipantNotificationsController@store');
@@ -131,6 +134,9 @@ Route::post('/user/update-timezone', 'UsersController@updateTimezone');
 // 各種情報の取得
 Route::get('/student/fetch-user','StudentsController@fetchStudentUser');
 Route::get('/student/fetch-initials','StudentsController@fetchInitials');
+Route::get('/student/fetch-regions','RegionsController@fetchRegions');
+Route::get('/student/fetch-levels','LevelsController@fetchLevels');
+Route::get('/student/fetch-subjects','SubjectsController@fetchSubjects');
 Route::get('/student/fetch-countries','CountriesController@fetchCountries');
 Route::get('/student/fetch-destinations','CountriesController@fetchDestinations');
 Route::get('/student/fetch-years','YearsController@fetchYears');

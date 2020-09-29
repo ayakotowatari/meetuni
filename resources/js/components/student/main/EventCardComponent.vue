@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col col="12" sm="12" md="3" class="mb-6" v-for="event in events" :key="event.id">
+        <v-col cols="12" sm="12" md="3" class="mb-6" v-for="event in events" :key="event.id">
             <v-card
                 class="mx-auto"
                 max-width="400"

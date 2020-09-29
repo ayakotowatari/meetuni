@@ -79,12 +79,12 @@ export default {
              await axios
                 .get('/inst/event-likes/' + this.$route.params.id)
                 .then(response => {
-                    console.log(response.data.chartDataForLikes);
+                    // console.log(response.data.chartDataForLikes);
 
                     let chartData = response.data.chartDataForLikes;
 
-                    console.log(chartData[0].date);
-                    console.log(chartData[0].total);
+                    // console.log(chartData[0].date);
+                    // console.log(chartData[0].total);
 
                     let likesdata = new Array(chartData.length);
                     let labels = new Array(chartData.length);
@@ -94,7 +94,7 @@ export default {
                         labels[i] = chartData[i].date;
                     };
 
-                    console.log(likesdata);
+                    // console.log(likesdata);
                     
                     this.chartdata = {
                         labels: labels,

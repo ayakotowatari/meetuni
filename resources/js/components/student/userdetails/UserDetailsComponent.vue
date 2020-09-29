@@ -130,15 +130,15 @@ export default {
         e6: 1,
     }),
     mounted(){
-        this.$store.dispatch('fetchRegions');
-        this.$store.dispatch('fetchCountries');
-        this.$store.dispatch('fetchYears');
-        this.$store.dispatch('fetchDestinations');
-        this.$store.dispatch('fetchLevels');
-        this.$store.dispatch('fetchSubjects');
+        this.$store.dispatch('studentdetails/fetchRegions');
+        this.$store.dispatch('studentdetails/fetchCountries');
+        this.$store.dispatch('studentdetails/fetchYears');
+        this.$store.dispatch('studentdetails/fetchDestinations');
+        this.$store.dispatch('studentdetails/fetchLevels');
+        this.$store.dispatch('studentdetails/fetchSubjects');
     },
     computed: {
-        ...mapState([
+        ...mapState('studentdetails', [
             'regions',
             'countries',
             'years',
@@ -147,7 +147,7 @@ export default {
             'subjects', 
             'allerror'
         ]),
-        ...mapGetters([
+        ...mapGetters('studentdetails', [
             'filterCountries'
         ]),
         filteredCountries(){
@@ -159,7 +159,7 @@ export default {
         // }
     },
     methods: {
-        ...mapActions([
+        ...mapActions('studentdetails', [
             'addStudentDetails'
         ]),
         submit(){

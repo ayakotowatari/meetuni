@@ -134,6 +134,15 @@ class LikesController extends Controller
 
     }
 
+    public function countLikesNumber(Request $request, $id)
+    {
+        $likes = Like::where('event_id', $id)
+                        ->count();
+
+        return response() -> json(['likes' => $likes]);
+
+    }
+
 
     /**
      * Display the specified resource.
