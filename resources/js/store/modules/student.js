@@ -49,7 +49,7 @@ export const student = {
         destinationList: [],
         levelList: [],
         subjectList: [],
-        dialogForLogInToLike: false,
+        dialogForLoginToLike: false,
         allerror: [],
     },
 
@@ -288,11 +288,11 @@ export const student = {
         setEventId(state, payload){
             state.eventId = payload
         },
-        showDialogForLogInToLike(state){
-            state.dialogForLogInToLike = true;
+        showDialogForLoginToLike(state){
+            state.dialogForLoginToLike = true;
         },
-        closeDialogForLogInToLike(state){
-            state.dialogForLogInToLike = false;
+        closeDialogForLoginToLike(state){
+            state.dialogForLoginToLike = false;
         }
 
     },
@@ -922,19 +922,35 @@ export const student = {
         },
 
         //未認証ユーザー用
-        showDialogForLogInToLike({state, commit}, payload){
+        showDialogForLoginToLike({state, commit}, payload){
 
-            console.log(payload.event_id);
+            // console.log('check');
+            // console.log(payload.event_id);
 
-            commit('showDialogForLogInToLike');
+            commit('showDialogForLoginToLike');
             commit('setEventId', payload.event_id);
 
         },
-        loginToLike({commit}, payload){
+        async loginToLike({commit}, payload){
 
-            
-
+            axios
+                .post(payload.url, {
+                    email: payload.email,
+                    password: payload.password
+                })
+                .then(response => {
+                    console.log(response);
+                    router.push({path: '/student/main'});
+                    commit('closeDialogForLoginToLike');
+                })
+                
         }
+        // loginPageToLike({commit}, payload){
+
+        //     console.log(payload.event_id);
+        //     router.push({name: 'student-login', params: {id: payload.event_id}});
+            
+        // }
 
     }
 }

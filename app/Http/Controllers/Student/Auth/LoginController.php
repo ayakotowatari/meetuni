@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     protected function loggedOut(Request $reuqest)
     {
-        return redirect ('/student/login');
+        return redirect ('/student/main');
     }
 
 }

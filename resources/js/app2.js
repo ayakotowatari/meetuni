@@ -39,7 +39,7 @@ Vue.component('eventcard-component', require('./components/student/main/EventCar
 Vue.component('subjecteventcard-component', require('./components/student/main/SubjectEventCardComponent.vue').default);
 Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);
 Vue.component('regioneventcard-component', require('./components/student/main/RegionEventCardComponent.vue').default);
-Vue.component('unauthenticateddialog-component', require('./components/student/unauthenticated/UnauthenticatedDialogComponent.vue').default);
+Vue.component('unauthenticateddialog-component', require('./components/student/auth/UnauthenticatedDialogComponent.vue').default);
 
 
 //Chart

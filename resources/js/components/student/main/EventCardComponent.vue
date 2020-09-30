@@ -1,7 +1,7 @@
 <template>
     <div>
         <unauthenticateddialog-component
-            v-bind:dialog="dialogForLogInToLike"
+            v-bind:dialog="dialogForLoginToLike"
             v-bind:eventId="eventId"
         ></unauthenticateddialog-component>
         <v-row>
@@ -32,14 +32,8 @@
                             justify="end"
                             >
                             <v-icon 
-                                v-if="user !== null"
                                 @click.stop="like(`${event.id}`, event.liked_by_user)"
                                 :color="event.liked_by_user == true ? 'error' : null"
-                                class="like mr-3"
-                            >mdi-heart</v-icon>
-                            <v-icon 
-                                v-if="user === null"
-                                @click.stop="openDialogForLogIn(`${event.id}`)"
                                 class="like mr-3"
                             >mdi-heart</v-icon>
                             <v-icon class="mr-1">mdi-share-variant</v-icon>
@@ -72,7 +66,7 @@
 <script>
 import moment from 'moment-timezone'
 
-import UnauthenticatedDialog from '../unauthenticated/UnauthenticatedDialogComponent'
+import UnauthenticatedDialog from '../auth/UnauthenticatedDialogComponent'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -93,7 +87,7 @@ export default {
         ...mapState('student', [
             'eventId',
             'allerror',
-            'dialogForLogInToLike'
+            'dialogForLoginToLike'
         ])
     },
     methods: {
@@ -101,7 +95,7 @@ export default {
             'likeEvent',
             'unlikeEvent',
             'eventId',
-            'showDialogForLogInToLike',
+            'showDialogForLoginToLike',
         ]),
         like(id, liked){
 
@@ -114,10 +108,17 @@ export default {
                     event_id: id,
                 });
             }else{
-                this.likeEvent({
-                    user_id: this.user.id,
-                    event_id: id,
-                })
+                if(this.user !== null){
+                        this.likeEvent({
+                        user_id: this.user.id,
+                        event_id: id,
+                    })
+                }else{
+                    this.showDialogForLoginToLike({
+                        event_id: id
+                    })
+                }
+                
                 
                 // this.allEvents = this.allEvents.map(event => {
                 //     if(event.id === this.eventId){
@@ -130,13 +131,13 @@ export default {
         expand(id){
             this.$router.push({name: 'event-details', params: {id: id}})
         },
-        openDialogForLogIn(id){
-            // console.log('check');
-            // console.log(id);
-            this.showDialogForLogInToLike({
-                event_id: id
-            })
-        },
+        // openDialogForLogIn(id){
+        //     // console.log('check');
+        //     // console.log(id);
+        //     this.showDialogForLogInToLike({
+        //         event_id: id
+        //     })
+        // },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },
