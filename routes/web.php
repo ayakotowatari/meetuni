@@ -152,26 +152,28 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
 //             //
 // 各種情報の取得
 Route::group(['middleware' => ['auth:student', 'can:student']], function(){
-    Route::get('/student/fetch-user','StudentsController@fetchStudentUser')->name('student.fetch.user');
-    Route::get('/student/fetch-initials','StudentsController@fetchInitials')->name('student.fetch.initials');
-    Route::get('/student/fetch-regions','RegionsController@fetchRegions')->name('student.fetch.regions');
-    Route::get('/student/fetch-levels','LevelsController@fetchLevels')->name('student.fetch.levels');
-    Route::get('/student/fetch-subjects','SubjectsController@fetchSubjects')->name('student.fetch.subjects');
-    Route::get('/student/fetch-countries','CountriesController@fetchCountries')->name('student.fetch.countries');
-    Route::get('/student/fetch-destinations','CountriesController@fetchDestinations')->name('student.fetch.destinations');
-    Route::get('/student/fetch-years','YearsController@fetchYears')->name('student.fetch.years');
-    Route::get('/student/fetch-events', 'EventsController@fetchAllEvents')->name('student.fetch.events');
-    Route::get('/student/event-subjects', 'EventsController@recommendSubjectEvents')->name('student.event.subjects');
-    Route::get('/student/event-destinations', 'EventsController@recommendDestinationEvents')->name('student.event.destinations');
-    Route::get('/student/event-regions', 'EventsController@recommendRegionEvents')->name('student.event.regions');
-    Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent')->name('student.fetch.details');
-    Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst')->name('student.fetch.inst');
-    Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents')->name('student.fetch.bookedevents');
-    Route::get('/student/fetch-likedevents/{id}', 'EventsController@fetchLikedEvents')->name('student.fetch.likedevents');
-    Route::get('/student/fetch-followinginsts/{id}', 'InstsController@fetchFollowedInsts')->name('student.fetch.followinginsts');
-    Route::get('/student/fetch-eventlist/{id}', 'EventsController@fetchEventsList')->name('student.fetch.eventlist');
-    Route::get('/student/fetch-bookedevent/{id}', 'EventsController@fetchSingleBookedEvent')->name('student.fetch.bookedevent');
+   
 });
+
+Route::get('/student/fetch-user','StudentsController@fetchStudentUser')->name('student.fetch.user');
+Route::get('/student/fetch-initials','StudentsController@fetchInitials')->name('student.fetch.initials');
+Route::get('/student/fetch-regions','RegionsController@fetchRegions')->name('student.fetch.regions');
+Route::get('/student/fetch-levels','LevelsController@fetchLevels')->name('student.fetch.levels');
+Route::get('/student/fetch-subjects','SubjectsController@fetchSubjects')->name('student.fetch.subjects');
+Route::get('/student/fetch-countries','CountriesController@fetchCountries')->name('student.fetch.countries');
+Route::get('/student/fetch-destinations','CountriesController@fetchDestinations')->name('student.fetch.destinations');
+Route::get('/student/fetch-years','YearsController@fetchYears')->name('student.fetch.years');
+Route::get('/student/fetch-events', 'EventsController@fetchAllEvents')->name('student.fetch.events');
+Route::get('/student/event-subjects', 'EventsController@recommendSubjectEvents')->name('student.event.subjects');
+Route::get('/student/event-destinations', 'EventsController@recommendDestinationEvents')->name('student.event.destinations');
+Route::get('/student/event-regions', 'EventsController@recommendRegionEvents')->name('student.event.regions');
+Route::get('/student/fetch-details/{id}', 'EventsController@fetchSingleEvent')->name('student.fetch.details');
+Route::get('/student/fetch-inst/{id}', 'InstsController@fetchInst')->name('student.fetch.inst');
+Route::get('/student/fetch-bookedevents/{id}', 'BookingsController@fetchBookedEvents')->name('student.fetch.bookedevents');
+Route::get('/student/fetch-likedevents/{id}', 'EventsController@fetchLikedEvents')->name('student.fetch.likedevents');
+Route::get('/student/fetch-followinginsts/{id}', 'InstsController@fetchFollowedInsts')->name('student.fetch.followinginsts');
+Route::get('/student/fetch-eventlist/{id}', 'EventsController@fetchEventsList')->name('student.fetch.eventlist');
+Route::get('/student/fetch-bookedevent/{id}', 'EventsController@fetchSingleBookedEvent')->name('student.fetch.bookedevent');
 
 //学生追加情報の登録
 Route::group(['middleware' => ['auth:student', 'can:student']], function(){
@@ -187,6 +189,8 @@ Route::group(['middleware' => ['auth:student', 'can:student']], function(){
     Route::post('/student/like-event', 'LikesController@store')->name('student.like.event');
     Route::post('/student/unlike-event', 'LikesController@unlike')->name('student.unlike.event');
 });
+
+// Route::get('/student/test', 'LikesController@test');
 
 
 //学生フォロー
@@ -228,11 +232,13 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
     })->where('any','.*');
 });
 
-Route::group(['middleware' => ['auth:student', 'can:student']], function(){
-    Route::get('/student/{any}', function () {
-        return view('student.main');
-    })->where('any','.*');
-});
+// Route::group(['middleware' => ['auth:student', 'can:student']], function(){
+    
+// });
+
+Route::get('/student/{any}', function () {
+    return view('student.main');
+})->where('any','.*');
 
 // Route::get('/student/{any}', function () {
 //     return view('student.main');

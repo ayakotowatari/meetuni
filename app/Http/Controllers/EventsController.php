@@ -39,19 +39,35 @@ class EventsController extends Controller
 
         // DD($id);
 
-        $events = Event::with('bookings')
-                    ->join('insts', 'events.inst_id', '=', 'insts.id')
-                    ->where('events.status_id', 1)
-                    ->whereDoesntHave('bookings', function(Builder $query){
-                        $query->where('student_id','=', Auth::guard('student')->user()->id);
-                    })
-                    ->orderBy('events.created_at')
-                    ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-                    ->get();
+        $user = Auth::guard('student')->user();
 
-        // return view ('student/test', ['events'=>$events]);
+        if($user){
 
-        return response()->json(['events'=>$events],200);
+            $events = Event::with('bookings')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->where('events.status_id', 1)
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id','=', Auth::guard('student')->user()->id);
+                        })
+                        ->orderBy('events.created_at')
+                        ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->get();
+            // return view ('student/test', ['events'=>$events]);
+            return response()->json(['events'=>$events],200);
+
+        }else{
+
+            $events = Event::with('bookings')
+            ->join('insts', 'events.inst_id', '=', 'insts.id')
+            ->where('events.status_id', 1)
+            ->orderBy('events.created_at')
+            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+            ->get();
+            // return view ('student/test', ['events'=>$events]);
+            return response()->json(['events'=>$events],200);
+
+        }
+        
     }
 
     public function fetchEventOwner(Request $request, $id)
@@ -77,7 +93,7 @@ class EventsController extends Controller
         $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
                     ->where('events.id', $id)
                     ->where('events.status_id', 1)
-                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.timezone', 'events.description', 'events.image')
                     ->first();
 
         $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
@@ -197,57 +213,65 @@ class EventsController extends Controller
         //                         ->select('subjects.id')
         //                         ->get();
 
-        $user_id = Auth::guard('student')->user()->id;
+        $user = Auth::guard('student')->user();
 
-        $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
+        if($user){
+
+            $user_id = $user->id;
+
+            $subjects = Subject::join('student_subjects', 'subjects.id', '=', 'student_subjects.subject_id')
                         ->where('student_subjects.student_id', $user_id)
                         ->select('subjects.id')
                         ->get();
         
-        // DD($subjects);
+            // DD($subjects);
 
-        // $events=[];
+            // $events=[];
 
-        foreach($subjects as $subject){
-            $events[] = Event::with('bookings')
-                    ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
-                    ->join('insts', 'events.inst_id', '=', 'insts.id')
-                    ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
-                    ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
-                    ->where('event_subjects.subject_id', $subject->id)
-                    ->where(function($query){
-                        $query->where('event_levels.level_id', 5)
-                              ->orWhere('event_levels.level_id', 1)
-                              ->orWhere('event_levels.level_id', 9);
-                    })
-                    ->whereDoesntHave('bookings', function(Builder $query){
-                        $query->where('student_id', '=', Auth::guard('student')->user()->id);
-                    })
-                    ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-                    ->get();
-        };
-        // DD($events);
-        $array = $events;
-        $flattened_events = Arr::flatten($array);
-        // $unique = array_unique($flattened_events);
-        $tmp = [];
-        $uniqueEvents = [];
-        foreach($flattened_events as $event){
-            if(!in_array($event['id'], $tmp)){
-                $tmp[] = $event['id'];
-                $uniqueEvents[] = $event;
+            foreach($subjects as $subject){
+                $events[] = Event::with('bookings')
+                        ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                        ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
+                        ->where('event_subjects.subject_id', $subject->id)
+                        ->where(function($query){
+                            $query->where('event_levels.level_id', 5)
+                                ->orWhere('event_levels.level_id', 1)
+                                ->orWhere('event_levels.level_id', 9);
+                        })
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id', '=', Auth::guard('student')->user()->id);
+                        })
+                        ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->get();
+            };
+            // DD($events);
+            $array = $events;
+            $flattened_events = Arr::flatten($array);
+            // $unique = array_unique($flattened_events);
+            $tmp = [];
+            $uniqueEvents = [];
+            foreach($flattened_events as $event){
+                if(!in_array($event['id'], $tmp)){
+                    $tmp[] = $event['id'];
+                    $uniqueEvents[] = $event;
+                }
             }
+            // $renumbered = array_values($unique);
+
+            // DD($uniqueEvents);
+
+            // DD($events);
+            // DD($renumbered);
+            // DD($unique);
+
+            // return view('student.test', ['events'=>$renumbered]);
+            return response()->json(['events'=>$uniqueEvents],200);
+
         }
-        // $renumbered = array_values($unique);
 
-        // DD($uniqueEvents);
-
-        // DD($events);
-        // DD($renumbered);
-        // DD($unique);
-
-        // return view('student.test', ['events'=>$renumbered]);
-        return response()->json(['events'=>$uniqueEvents],200);
+        
     }
 
     public function recommendDestinationEvents(Request $request)
@@ -258,116 +282,130 @@ class EventsController extends Controller
         //                     ->select('countries.id')
         //                     ->get();
 
-        $user_id = Auth::guard('student')->user()->id;
+        $user = Auth::guard('student')->user();
 
-        $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
-                                ->where('country_students.student_id', $user_id)
-                                ->select('countries.id')
+        if($user){
+
+            $user_id = $user->id;
+
+            $destinations = Country::join('country_students', 'countries.id', '=', 'country_students.country_id')
+                                    ->where('country_students.student_id', $user_id)
+                                    ->select('countries.id')
+                                    ->get();
+    
+            // DD($destinations);
+    
+            foreach($destinations as $destination){
+    
+                $events[] = Event::with('bookings')
+                                ->join('insts', 'events.inst_id', '=', 'insts.id')
+                                ->join('countries', 'insts.country_id', '=', 'countries.id')
+                                ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                                ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                                ->where('countries.id', $destination->id)
+                                ->where('event_subjects.subject_id', 1)
+                                ->where(function($query){
+                                    $query->where('event_levels.level_id', 1)
+                                          ->orWhere('event_levels.level_id', 5)
+                                          ->orWhere('event_levels.level_id', 9);
+                                })
+                                ->whereDoesntHave('bookings', function(Builder $query){
+                                    $query->where('student_id', '=', Auth::guard('student')->user()->id);
+                                })
+                                ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                                 ->get();
-
-        // DD($destinations);
-
-        foreach($destinations as $destination){
-
-            $events[] = Event::with('bookings')
-                            ->join('insts', 'events.inst_id', '=', 'insts.id')
-                            ->join('countries', 'insts.country_id', '=', 'countries.id')
-                            ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
-                            ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
-                            ->where('countries.id', $destination->id)
-                            ->where('event_subjects.subject_id', 1)
-                            ->where(function($query){
-                                $query->where('event_levels.level_id', 1)
-                                      ->orWhere('event_levels.level_id', 5)
-                                      ->orWhere('event_levels.level_id', 9);
-                            })
-                            ->whereDoesntHave('bookings', function(Builder $query){
-                                $query->where('student_id', '=', Auth::guard('student')->user()->id);
-                            })
-                            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-                            ->get();
-        }
-
-        // DD($events);
-
-        $array = $events;
-        $flattened_events = Arr::flatten($array);
-        // $unique = array_unique($flattened_events);
-        // $renumbered = array_values($unique);
-
-        $tmp = [];
-        $uniqueEvents = [];
-        foreach($flattened_events as $event){
-            if(!in_array($event['id'], $tmp)){
-                $tmp[] = $event['id'];
-                $uniqueEvents[] = $event;
             }
+    
+            // DD($events);
+    
+            $array = $events;
+            $flattened_events = Arr::flatten($array);
+            // $unique = array_unique($flattened_events);
+            // $renumbered = array_values($unique);
+    
+            $tmp = [];
+            $uniqueEvents = [];
+            foreach($flattened_events as $event){
+                if(!in_array($event['id'], $tmp)){
+                    $tmp[] = $event['id'];
+                    $uniqueEvents[] = $event;
+                }
+            }
+    
+            // DD($unique);
+    
+            // DD($unique);
+    
+            return response()->json(['events'=>$uniqueEvents],200);
+    
+
+
         }
-
-        // DD($unique);
-
-        // DD($unique);
-
-        return response()->json(['events'=>$uniqueEvents],200);
-
+        
         // return view('student.test',['events'=>$unique]);
 
     }
 
     public function recommendRegionEvents(Request $request)
     {
-        $user_id = Auth::guard('student')->user()->id;
+        $user = Auth::guard('student')->user();
 
-        $region = Student::join('countries', 'students.country_id', '=', 'countries.id')
-                        ->join('regions', 'countries.region_id', '=', 'regions.id')
-                        ->where('students.id', $user_id)
-                        ->select('regions.id')
-                        ->first();
+        if($user){
+            
+            $user_id = $user->id;
 
-        // DD($region);
-
-        $events = Event::with('bookings')
-                    ->join('event_regions', 'events.id', '=', 'event_regions.event_id')
-                    ->join('insts', 'events.inst_id', '=', 'insts.id')
-                    ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
-                    ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
-                    ->where('event_regions.region_id', $region->id)
-                    ->where('event_subjects.subject_id', 1)
-                    ->where('events.status_id', 1)
-                    ->where(function($query){
-                        $query->where('event_levels.level_id', 1)
-                              ->orWhere('event_levels.level_id', 5)
-                              ->orWhere('event_levels.level_id', 9);
-                    })
-                    ->whereDoesntHave('bookings', function(Builder $query){
-                        $query->where('student_id', '=', Auth::guard('student')->user()->id);
-                    })
-                    ->select('events.id', 'insts.name', 'events.title','events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
-                    ->get();
-
-        // DD($events);
-
-        // $array = $events;
-        // $flattened_events = Arr::flatten($array);
-
-        $array = $events;
-        $flattened_events = Arr::flatten($array);
-
-        $tmp = [];
-        $uniqueEvents = [];
-        foreach($flattened_events as $event){
-            if(!in_array($event['id'], $tmp)){
-                $tmp[] = $event['id'];
-                $uniqueEvents[] = $event;
+            $region = Student::join('countries', 'students.country_id', '=', 'countries.id')
+                            ->join('regions', 'countries.region_id', '=', 'regions.id')
+                            ->where('students.id', $user_id)
+                            ->select('regions.id')
+                            ->first();
+    
+            // DD($region);
+    
+            $events = Event::with('bookings')
+                        ->join('event_regions', 'events.id', '=', 'event_regions.event_id')
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
+                        ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
+                        ->where('event_regions.region_id', $region->id)
+                        ->where('event_subjects.subject_id', 1)
+                        ->where('events.status_id', 1)
+                        ->where(function($query){
+                            $query->where('event_levels.level_id', 1)
+                                  ->orWhere('event_levels.level_id', 5)
+                                  ->orWhere('event_levels.level_id', 9);
+                        })
+                        ->whereDoesntHave('bookings', function(Builder $query){
+                            $query->where('student_id', '=', Auth::guard('student')->user()->id);
+                        })
+                        ->select('events.id', 'insts.name', 'events.title','events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->get();
+    
+            // DD($events);
+    
+            // $array = $events;
+            // $flattened_events = Arr::flatten($array);
+    
+            $array = $events;
+            $flattened_events = Arr::flatten($array);
+    
+            $tmp = [];
+            $uniqueEvents = [];
+            foreach($flattened_events as $event){
+                if(!in_array($event['id'], $tmp)){
+                    $tmp[] = $event['id'];
+                    $uniqueEvents[] = $event;
+                }
             }
+    
+            // DD($uniqueEvents);
+    
+            //  return view('student.test',['events'=>$unique]);
+    
+            return response()->json(['events'=>$uniqueEvents],200);
+    
         }
-
-        // DD($uniqueEvents);
-
-        //  return view('student.test',['events'=>$unique]);
-
-        return response()->json(['events'=>$uniqueEvents],200);
-
+       
         // if($events->isEmpty()){
         //     return 'There was no record';
         // }else{

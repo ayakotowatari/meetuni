@@ -10,7 +10,15 @@
       <v-btn text color="grey darken-1" @click.stop="toTopPage">
             <span>top page</span>
       </v-btn>
+      <v-btn 
+          text color="primary" 
+          v-if="user == null"
+          @click="toLogIn"
+      >
+          <span>Log in</span>
+      </v-btn>
       <v-menu 
+          v-if="user !== null"
           open-on-hover 
           top 
           offset-y
@@ -95,15 +103,19 @@ import { mapState } from 'vuex'
         },
         ...mapState('student', [
             'user',
-            'initials'
+            'initials',
+            'isLoggedIn'
         ]),
     },
     methods: {
         logout() {
-            document.getElementById('logout-form').submit()
+            document.getElementById('logout-form').submit();
         },
         toTopPage(){
           this.$router.push({path: '/student/main'})
+        },
+        toLogIn(){
+            window.location.href = "/student/login";
         }
     }
   }

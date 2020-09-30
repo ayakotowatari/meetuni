@@ -11,7 +11,10 @@
             <v-tab router :to="{name: 'recommended-events'}">For You</v-tab>
             <v-tab router :to="{name: 'search-events'}">Search</v-tab>
         </v-tabs>
-        <router-view v-bind:user="user"></router-view>
+        <router-view 
+            v-bind:user="user"
+            v-bind:isLoggedIn="isLoggedIn"
+        ></router-view>
     </v-container>
   
 </template>
@@ -20,6 +23,7 @@
 export default {
     props: {
         user: Object,
+        isLoggedIn: Boolean
     },
 }
 </script>

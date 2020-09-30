@@ -1,5 +1,11 @@
 <template>
     <div>
+        <tobookdialog-component
+            v-bind:eventId="eventId"
+            v-bind:user="user"
+            v-bind:dialog="dialogForLoginToBook"
+        >
+        </tobookdialog-component>
         <bookingdialog2-component 
             v-bind:dialog="dialog"
             v-bind:event="event"
@@ -41,28 +47,54 @@
                     <div class="primary--text event-title mb-2">{{ event.title }}</div>
                 </v-col>
             </v-row>
-            <v-row class="mb-8">
-                <v-col col="12" sm="12" md="6">
-                    <div class="event-info mr-4">
-                        {{ event.description }}
-                    </div>
-                </v-col>
-            </v-row>
-            <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
-                    <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
-                    <span class="event-info">{{ formattedDate(event.date, user.timezone) }}</span>
-                </v-col>
-            </v-row>
-            <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
-                    <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
-                    <span class="event-info">
-                        {{ formattedStartTime(event.start_utc, user.timezone) }} - 
-                        {{ formattedEndTime(event.end_utc, user.timezone) }}
-                    </span>
-                </v-col>
-            </v-row>
+            <div v-if="user !== null">
+                <v-row class="mb-8">
+                    <v-col col="12" sm="12" md="6">
+                        <div class="event-info mr-4">
+                            {{ event.description }}
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
+                        <span class="event-info">{{ formattedDate(event.date, user.timezone) }}</span>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
+                        <span class="event-info">
+                            {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+                            {{ formattedEndTime(event.end_utc, user.timezone) }}
+                        </span>
+                    </v-col>
+                </v-row>
+            </div>
+             <div v-if="user == null">
+                <v-row class="mb-8">
+                    <v-col col="12" sm="12" md="6">
+                        <div class="event-info mr-4">
+                            {{ event.description }}
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
+                        <span class="event-info">{{ formattedDate(event.date, event.timezone) }}</span>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
+                        <span class="event-info">
+                            {{ formattedStartTime(event.start_utc, event.timezone) }} - 
+                            {{ formattedEndTime(event.end_utc, event.timezone) }}
+                        </span>
+                    </v-col>
+                </v-row>
+            </div>
             <v-row class="mb-6">
                 <v-col col="12" sm="12" md="12">
                     <v-icon medium class="mr-8">mdi-book-multiple-outline</v-icon>
@@ -117,6 +149,7 @@ import moment from 'moment-timezone'
 
 import BookingDialog from './BookingDialogComponent'
 import FollowDialog from './FollowDialogComponent'
+import ToBookDialog from '../auth/ToBookDialogComponent'
 
 import { mapState, mapMutations, mapActions } from 'vuex'
 
@@ -129,7 +162,8 @@ export default {
     },
     components: {
         BookingDialog,
-        FollowDialog
+        FollowDialog,
+        ToBookDialog
     },
     data: function(){
         return{
@@ -155,7 +189,9 @@ export default {
             'dialog',
             'followDialog',
             'isFollowed',
-            'isBooked'
+            'isBooked',
+            'dialogForLoginToBook',
+            'eventId'
         ])
     },
     methods: {
@@ -165,12 +201,21 @@ export default {
         ...mapActions('studentaccount', [
             'followInst',
             'unfollowInst',
-            'showDialogForBooking'
+            'showDialogForBooking',
+            'showDialogForLoginToBook'
         ]),
         showDialog(id){
-            this.showDialogForBooking({
-                event_id: id
-            })
+
+            if(this.user !== null){
+                this.showDialogForBooking({
+                    event_id: id
+                 })
+            }else{
+                this.showDialogForLoginToBook({
+                    event_id: id
+                })
+            }
+           
         },
         follow(id, user_id){
             console.log(id);
