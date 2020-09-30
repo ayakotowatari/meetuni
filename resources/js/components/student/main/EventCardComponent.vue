@@ -95,7 +95,6 @@ export default {
         ...mapActions('student',[
             'likeEvent',
             'unlikeEvent',
-            'eventId',
             'showDialogForLoginToLike',
         ]),
         like(id, liked){
@@ -105,13 +104,13 @@ export default {
 
             if(liked_status){
                 this.unlikeEvent({
-                    user_id: this.user.id,
+                    // user_id: this.user.id,
                     event_id: id,
                 });
             }else{
                 if(this.user !== null){
                         this.likeEvent({
-                        user_id: this.user.id,
+                        // user_id: this.user.id,
                         event_id: id,
                     })
                 }else{

@@ -13,7 +13,7 @@
             required
         ></v-text-field>
         <!-- <input type="hidden" name="event_id" :value="eventId"> -->
-        <v-btn @click="login(event_id)">Login</v-btn>
+        <v-btn @click="login()">Login</v-btn>
     </v-form>
 
 </template>
@@ -33,17 +33,21 @@ export default {
         ...mapActions('student', [
             'loginToLike'
         ]),
-        login(id){    
+        login(){    
+            console.log('check');
+            console.log(this.event_id);
 
-            let data = {
-                email: this.email,
-                password: this.password,
-                event_id: id
-            }
+            // let data = {
+            //     email: this.email,
+            //     password: this.password,
+            //     event_id: this.event_id
+            // }
 
             this.loginToLike({
                 url: "/student/login",
-                data: data
+                email: this.email,
+                password: this.password,
+                event_id: this.event_id
             })
             
         }

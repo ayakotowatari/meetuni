@@ -190,6 +190,8 @@ Route::group(['middleware' => ['auth:student', 'can:student']], function(){
     Route::post('/student/unlike-event', 'LikesController@unlike')->name('student.unlike.event');
 });
 
+// Route::get('/student/test', 'LikesController@test');
+
 
 //学生フォロー
 Route::group(['middleware' => ['auth:student', 'can:student']], function(){
