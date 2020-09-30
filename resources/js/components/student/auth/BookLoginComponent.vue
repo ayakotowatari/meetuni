@@ -14,8 +14,8 @@
                     outlined
                     required
                 ></v-text-field>
-                <v-btn block dark color="info darken-3" class="mb-2" @click="login()">Login</v-btn>
-                <v-btn text color="info darken-3" class="pa-0" @click="toRegister()">register</v-btn>
+                <v-btn block dark color="primary" class="mb-2" @click="login()">Login</v-btn>
+                <v-btn text color="primary" class="pa-0" @click="toRegister()">register</v-btn>
             </v-col>
         </v-row>
         <!-- <input type="hidden" name="event_id" :value="eventId"> -->

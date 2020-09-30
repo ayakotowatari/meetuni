@@ -430,7 +430,8 @@ export const student = {
         async likeEvent({commit}, payload){
 
             // console.log(payload.user_id);
-            // console.log(payload.event_id);
+            console.log('check');
+            console.log(payload.event_id);
 
             let allerror = [];
             let eventId = '';
@@ -443,6 +444,8 @@ export const student = {
                 .then(response => {
                     // console.log(response);
                     eventId = response.data.event_id
+                    console.log('result');
+                    console.log(eventId);
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
                     commit('likedByUser', eventId)                 

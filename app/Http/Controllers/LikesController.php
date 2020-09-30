@@ -46,14 +46,14 @@ class LikesController extends Controller
 
     public function store(Request $request)
     {
-        $user_id = Auth::guard('student')->user()->id;
-        // DD($user_id);
-        
         $request->validate([
             'event_id' => 'required'
         ]);
 
         $event_id = request('event_id');
+        $user_id = Auth::guard('student')->user()->id;
+        // DD($user_id);
+        
 
         $like = new Like();
         $like->student_id = $user_id;
@@ -75,7 +75,7 @@ class LikesController extends Controller
                 'formatted_updated' => $updated_at 
             ]);
 
-        // return response()->json(['event_id' => $event_id],200);
+        return response()->json(['event_id' => $event_id],200);
     }
 
     public function unlike(Request $request)
