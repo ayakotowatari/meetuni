@@ -1,9 +1,9 @@
 <template>
     <div>
-        <unauthenticateddialog-component
+        <tolikedialog-component
             v-bind:dialog="dialogForLoginToLike"
             v-bind:eventId="eventId"
-        ></unauthenticateddialog-component>
+        ></tolikedialog-component>
         <v-row>
             <v-col cols="12" sm="12" md="3" class="mb-6" v-for="event in events" :key="event.id">
                 <v-card
@@ -66,13 +66,13 @@
 <script>
 import moment from 'moment-timezone'
 
-import UnauthenticatedDialog from '../auth/UnauthenticatedDialogComponent'
+import ToLikeDialog from '../auth/ToLikeDialogComponent'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
     components: {
-        UnauthenticatedDialog
+        ToLikeDialog
     },
     props: {
         user: Object,

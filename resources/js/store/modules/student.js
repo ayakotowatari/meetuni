@@ -300,7 +300,6 @@ export const student = {
         closeDialogForLoginToLike(state){
             state.dialogForLoginToLike = false;
         },
-      
     },
 
     actions: {
@@ -1009,6 +1008,12 @@ export const student = {
                         // router.push({path: '/student/main'});
                         window.location = '/student/details'
                     })
+            },
+            openLoginPage({state, commit}, payload){
+
+                router.push({name: 'student-loginlike', params: {id: payload.event_id}});
+                commit('closeDialogForLoginToLike');
+
             }
         // loginPageToLike({commit}, payload){
 

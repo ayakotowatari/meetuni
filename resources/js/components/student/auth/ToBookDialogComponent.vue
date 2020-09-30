@@ -1,30 +1,19 @@
 <template>
     <v-row justify="center">
-        <v-dialog 
-            v-model="dialog" 
-            fullscreen
-            hide-overlay
-            transition="dialog-bottom-transition"
-        >
+        <v-dialog v-model="dialog" persistent max-width="320">
             <v-card>
-                <v-toolbar flat>
-                <v-btn
-                    icon
-                    @click="closeDialog"
-                >
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                </v-toolbar>
-                <v-row justify="center">
-                    <v-col cols="12" sm="12" md="4">
-                        <h3>Sign in to book this event</h3>
-                    </v-col>
-                </v-row>
-                 <v-row justify="center">
-                    <v-col cols="12" sm="12" md="4">
-                        <v-btn @click="openLoginPage(eventId)">Sign in</v-btn>
-                    </v-col>
-                </v-row>
+                <v-card-title class="headline">
+                    <p>Sign in to <span class="primary--text">like</span> this event</p> 
+                </v-card-title>
+                <!-- <v-card-subtitle>
+                    <p>{{ event.date }}</p>
+                    <p>{{ event.title }}</p>
+                </v-card-subtitle> -->
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey" text @click="closeDialog">not now</v-btn>
+                <v-btn color="info darken-1" text @click="open(eventId)">sign in</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-row>
@@ -44,22 +33,24 @@ export default {
         }
     },
     computed: {
-        
+    
     },
     methods: {
-        ...mapMutations('student', {
-            closeDialog: "closeDialogForLoginToLike"
+        ...mapMutations('studentaccount', {
+            closeDialog: "closeDialogForLoginToBook"
         }),
-        ...mapActions('student', [
-            'loginPageToLike'
+        ...mapActions('studentaccount', [
+            'openLoginPageToBook'
         ]),
-        closeDialog(){
-            this.dialog = false;
-        },
-        openLoginPage(id){
+        // closeDialog(){
+        //     this.dialog = false;
+        // },
+        open(id){
             // console.log('check');
             // console.log(id);
-            this.$router.push({name: 'student-loginbook', params: {id: id}});
+            this.openLoginPageToBook({
+                event_id: id
+            })
             // window.location = '/student/login'
         }
     }

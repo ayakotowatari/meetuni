@@ -495,7 +495,12 @@ export const studentaccount = {
                     commit('showDialog');
                     commit('setEventId', event_id);
                 })
-            },
+        },
+        openLoginPageToBook({state, commit}, payload){
+
+            router.push({name: 'student-loginbook', params: {id: payload.event_id}});
+            commit('closeDialogForLoginToBook');
+        }
         
     }
 }

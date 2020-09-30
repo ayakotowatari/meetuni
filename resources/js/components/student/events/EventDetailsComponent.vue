@@ -125,19 +125,19 @@
                 dark     
                 block
                 color="primary"
-                @click="showDialog(event.id)"
-            >Book</v-btn>
+                @click.stop="showDialog(event.id)"
+            >book</v-btn>
              <v-btn 
                 v-if="event.booked_by_user == true"
                 class="ma-2 hidden-sm-and-down" 
                 outlined    
                 block
                 color="primary"
-            >Booked</v-btn>
+            >booked</v-btn>
         </v-container>
         <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
             <v-btn>
-                <span>BOOK</span>
+                <span>book</span>
                 <v-icon>mdi-calendar-check-outline</v-icon>
             </v-btn>
         </v-bottom-navigation>
