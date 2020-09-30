@@ -28,6 +28,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // public function authenticated(Request $request, $user)
+    // {
+    //     return view('student.main', ['user'->$user]);
+    //     // return response()->json(['user'=>$user]);
+    // }
+
     //ログインフォームのviews
     public function showLoginForm()
     {

@@ -12,13 +12,13 @@
       </v-btn>
       <v-btn 
           text color="primary" 
-          v-if="user === null"
+          v-if="isLoggedIn == false"
           @click="toLogIn"
       >
           <span>Log in</span>
       </v-btn>
       <v-menu 
-          v-if="user !== null"
+          v-if="isLoggedIn == true"
           open-on-hover 
           top 
           offset-y
@@ -103,12 +103,13 @@ import { mapState } from 'vuex'
         },
         ...mapState('student', [
             'user',
-            'initials'
+            'initials',
+            'isLoggedIn'
         ]),
     },
     methods: {
         logout() {
-            document.getElementById('logout-form').submit()
+            document.getElementById('logout-form').submit();
         },
         toTopPage(){
           this.$router.push({path: '/student/main'})

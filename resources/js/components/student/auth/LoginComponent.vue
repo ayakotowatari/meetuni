@@ -35,11 +35,15 @@ export default {
         ]),
         login(id){    
 
-            this.loginToLike({
-                url: "/student/login",
+            let data = {
                 email: this.email,
                 password: this.password,
                 event_id: id
+            }
+
+            this.loginToLike({
+                url: "/student/login",
+                data: data
             })
             
         }

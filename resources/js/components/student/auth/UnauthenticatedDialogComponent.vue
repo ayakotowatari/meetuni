@@ -57,8 +57,8 @@ export default {
             this.dialog = false;
         },
         openLoginPage(id){
-            console.log('check');
-            console.log(id);
+            // console.log('check');
+            // console.log(id);
             this.$router.push({name: 'student-loginlike', params: {id: id}});
             // window.location = '/student/login'
         }

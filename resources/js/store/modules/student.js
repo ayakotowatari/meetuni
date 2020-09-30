@@ -12,6 +12,7 @@ export const student = {
             password: '',
             timezone: '',
         },
+        isLoggedIn: false,
         initials: '',
         allEvents: [],
         event: {},
@@ -65,6 +66,9 @@ export const student = {
         setStudentUser(state, payload){
             state.user = payload
         },
+        isLoggedIn(state){
+            state.isLoggedIn = true
+        },  
         setInitials(state, payload){
             state.initials = payload
         },
@@ -306,6 +310,7 @@ export const student = {
                 .then(res => {
                     payload = res.data.user;
                     commit('setStudentUser', payload)
+                    commit('isLoggedIn');
                     console.log(payload);
             });
         },
@@ -932,16 +937,49 @@ export const student = {
 
         },
         async loginToLike({commit}, payload){
+            console.log('check');
+            console.log(payload.event_id);
+
+            let event_id = payload.event_id;
+            let user = {};
 
             axios
-                .post(payload.url, {
-                    email: payload.email,
-                    password: payload.password
-                })
+                .post(payload.url, payload.data)
                 .then(response => {
-                    console.log(response);
-                    router.push({path: '/student/main'});
+                    // console.log(response);
                     commit('closeDialogForLoginToLike');
+                    // router.push({path: '/student/main'});
+                    window.location = "/student/main"
+
+                    // axios
+                    // .get("/student/fetch-user")
+                    // .then(res => {
+                    //     payload = res.data.user;
+                    //     commit('setStudentUser', payload)
+                    //     commit('isLoggedIn');
+                    //     // console.log(payload);
+                    //  });
+
+                    // let eventId = '';
+
+                    //  axios
+                    //     .post('/student/like-event', {
+                    //         user_id: payload.id,
+                    //         event_id: event_id
+                    //     })
+                    //     .then(response => {
+                    //         // console.log(response);
+                    //         eventId = response.data.event_id
+                    //         // commit('setEventId', eventId);
+                    //         // commit('isLiked', liked);
+                    //         commit('likedByUser', eventId)                 
+                    //     })
+                    //     .catch(error => {
+                    //         allerror = error.response.data.errors,
+                    //         commit('setallErrors', allerror)
+                    //     })
+
+
                 })
                 
         }

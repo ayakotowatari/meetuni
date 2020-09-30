@@ -76,6 +76,7 @@ export default {
     },
     props: {
         user: Object,
+        isLoogedIn: Boolean,
         events: Array
     },
     data: function(){
@@ -118,7 +119,6 @@ export default {
                         event_id: id
                     })
                 }
-                
                 
                 // this.allEvents = this.allEvents.map(event => {
                 //     if(event.id === this.eventId){

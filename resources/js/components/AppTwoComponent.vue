@@ -4,6 +4,7 @@
          <v-main class="mx-4 mb-4">
             <router-view
                v-bind:user="user"
+               v-bind:isLoggedIn="isLoggedIn"
             ></router-view>
          </v-main>
     </v-app>
@@ -29,6 +30,7 @@ export default {
    computed: {
       ...mapState('student',[
          'user',
+         'isLoggedIn'
       ]),
    },
    methods: {
