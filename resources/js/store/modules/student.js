@@ -988,6 +988,25 @@ export const student = {
                         window.location = "/student/main"
                     })
             },
+            async register({state}, payload){
+
+                console.log(payload.timezone);
+
+                await axios
+                    .post(payload.url, {
+                        first_name: payload.first_name,
+                        last_name: payload.last_name,
+                        email: payload.email,
+                        password: payload.password,
+                        password_confirmation: payload.password_confirmation,
+                        timezone: payload.timezone
+                    })
+                    .then(response => {
+                        // console.log(response);
+                        // router.push({path: '/student/main'});
+                        window.location = '/student/details'
+                    })
+            }
         // loginPageToLike({commit}, payload){
 
         //     console.log(payload.event_id);
