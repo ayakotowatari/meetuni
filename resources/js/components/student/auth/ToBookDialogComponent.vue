@@ -17,7 +17,7 @@
                 </v-toolbar>
                 <v-row justify="center">
                     <v-col cols="12" sm="12" md="4">
-                        <h3>Sign in to save this event</h3>
+                        <h3>Sign in to book this event</h3>
                     </v-col>
                 </v-row>
                  <v-row justify="center">

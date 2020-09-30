@@ -19,6 +19,7 @@ import SearchEvents from "./components/student/main/SearchEventsComponent";
 import LikeLogin from "./components/student/auth/LikeLoginComponent"
 import Login from "./components/student/auth/LoginComponent"
 import BookLogin from "./components/student/auth/BookLoginComponent"
+import StudentRegister from "./components/student/auth/RegisterComponent"
 
 //テスト
 // import TestOne from "./components/student/TestOneComponent";
@@ -113,6 +114,11 @@ const routes = [
         path: "/student/login-book/:id",
         name: "student-loginbook",
         component: BookLogin
+    },
+    {
+        path: "/student/register-main",
+        name: "student-register",
+        component: StudentRegister
     },
 
     //テスト

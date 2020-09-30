@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <div v-if="likedEvents !== null">
+            <div v-if="likedEvents > 0">
                 <v-card flat v-for="event in likedEvents" :key="event.id">
                     <v-row class="pa-3"> 
                         <v-col cols="12" xs="12" md="2">
@@ -57,11 +57,11 @@
                     <v-divider></v-divider>
                 </v-card>
             </div>
-            <div v-if="likedEvents == null">
+            <div v-if="likedEvents == 0">
                 <v-container>
                     <v-row justify="center">
                         <v-col cols="12" xs="12" md="4">
-                            <h2 class="grey--text mt-8">You haven't followed any universities yet.</h2> 
+                            <h2 class="grey--text mt-8">You haven't liked any events yet.</h2> 
                         </v-col>
                     </v-row>
                 </v-container>
