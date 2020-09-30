@@ -1,7 +1,8 @@
 <template>
     <div>
         <unauthenticateddialog-component
-            v-bind:dialog="dialog"
+            v-bind:dialog="dialogForLogInToLike"
+            v-bind:eventId="eventId"
         ></unauthenticateddialog-component>
         <v-row>
             <v-col cols="12" sm="12" md="3" class="mb-6" v-for="event in events" :key="event.id">
@@ -38,7 +39,7 @@
                             >mdi-heart</v-icon>
                             <v-icon 
                                 v-if="user === null"
-                                @click.stop="dialog =!dialog"
+                                @click.stop="openDialogForLogIn(`${event.id}`)"
                                 class="like mr-3"
                             >mdi-heart</v-icon>
                             <v-icon class="mr-1">mdi-share-variant</v-icon>
@@ -86,19 +87,21 @@ export default {
     data: function(){
         return {
             selectedId: '',
-            dialog: false,
         }
     },
     computed: {
         ...mapState('student', [
             'eventId',
             'allerror',
+            'dialogForLogInToLike'
         ])
     },
     methods: {
         ...mapActions('student',[
             'likeEvent',
             'unlikeEvent',
+            'eventId',
+            'showDialogForLogInToLike',
         ]),
         like(id, liked){
 
@@ -127,9 +130,13 @@ export default {
         expand(id){
             this.$router.push({name: 'event-details', params: {id: id}})
         },
-        // openDialogToLogIn(){
-        //     this.dialog = true;
-        // },
+        openDialogForLogIn(id){
+            // console.log('check');
+            // console.log(id);
+            this.showDialogForLogInToLike({
+                event_id: id
+            })
+        },
         formattedDate(value, timezone){
             return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
         },

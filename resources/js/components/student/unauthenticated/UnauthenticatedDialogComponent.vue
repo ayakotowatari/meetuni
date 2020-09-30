@@ -10,15 +10,19 @@
                 <v-toolbar flat>
                 <v-btn
                     icon
-                    @click="dialog = !dialog"
+                    @click="closeDialog"
                 >
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
                 </v-toolbar>
                 <v-row justify="center">
-                    <v-col cols="12" sm="12" md="6">
+                    <v-col cols="12" sm="12" md="4">
                         <h3>Sign in to save this event</h3>
-
+                    </v-col>
+                </v-row>
+                 <v-row justify="center">
+                    <v-col cols="12" sm="12" md="4">
+                        <v-btn @click="toLogIn(eventId)">Sign in</v-btn>
                     </v-col>
                 </v-row>
             </v-card>
@@ -31,7 +35,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     props: {
-        dialog: Boolean
+        dialog: Boolean,
+        eventId: Number
     },
     data: function(){
         return {
@@ -42,11 +47,19 @@ export default {
         
     },
     methods: {
+        ...mapMutations('student', {
+            closeDialog: "closeDialogForLogInToLike"
+        }),
+        ...mapActions('student', [
+            'loginToLike'
+        ]),
         closeDialog(){
             this.dialog = false;
         },
-        toLogIn(){
-            window.location.href = "/student/login";
+        toLogIn(id){
+            // console.log('check');
+            // console.log(id);
+            this.$router.push({name: 'student-login', params: {id: payload.event_id}});
         }
     }
 }

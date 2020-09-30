@@ -1,4 +1,5 @@
 // import moment from 'moment-timezone'
+import router from "../../router"
 
 export const student = {
     namespaced: true,
@@ -48,6 +49,7 @@ export const student = {
         destinationList: [],
         levelList: [],
         subjectList: [],
+        dialogForLogInToLike: false,
         allerror: [],
     },
 
@@ -283,6 +285,16 @@ export const student = {
         setStudentSubjects(state, payload){
             state.preference.subjects = payload
         },
+        setEventId(state, payload){
+            state.eventId = payload
+        },
+        showDialogForLogInToLike(state){
+            state.dialogForLogInToLike = true;
+        },
+        closeDialogForLogInToLike(state){
+            state.dialogForLogInToLike = false;
+        }
+
     },
 
     actions: {
@@ -907,8 +919,22 @@ export const student = {
                     allerror = error.response.data.errors,
                     commit('setallErrors', allerror)
                 })
+        },
+
+        //未認証ユーザー用
+        showDialogForLogInToLike({state, commit}, payload){
+
+            console.log(payload.event_id);
+
+            commit('showDialogForLogInToLike');
+            commit('setEventId', payload.event_id);
+
+        },
+        loginToLike({commit}, payload){
+
+            
+
         }
-        //テスト
 
     }
 }
