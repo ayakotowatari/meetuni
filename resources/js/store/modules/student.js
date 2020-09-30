@@ -1,5 +1,5 @@
 // import moment from 'moment-timezone'
-import router from "../../router"
+import router from "../../router2"
 
 export const student = {
     namespaced: true,
