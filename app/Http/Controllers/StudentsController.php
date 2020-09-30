@@ -38,14 +38,18 @@ class StudentsController extends Controller
     public function fetchInitials()
     {
         $user = Auth::guard('student')->user();
-        $first_name = $user->first_name;
-        $last_name = $user->last_name;
 
-        $initial_first = substr($first_name, 0, 1);
-        $initial_last = substr($last_name, 0, 1);
-        $initials = $initial_first.$initial_last;
+        if($user){
+            $first_name = $user->first_name;
+            $last_name = $user->last_name;
+    
+            $initial_first = substr($first_name, 0, 1);
+            $initial_last = substr($last_name, 0, 1);
+            $initials = $initial_first.$initial_last;
 
-        return response()->json(['initials'=>$initials],200);
+            return response()->json(['initials'=>$initials],200);
+        }
+
     }
 
     public function addStudentDetails(Request $request)

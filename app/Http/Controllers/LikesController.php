@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use Illuminate\Http\Request;
+use Auth;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -37,14 +38,21 @@ class LikesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // public function test(){
+    //     $user_id = Auth::guard('student')->user()->id;
+    //     DD($user_id);
+    // }
+
     public function store(Request $request)
     {
+        $user_id = Auth::guard('student')->user()->id;
+        // DD($user_id);
+        
         $request->validate([
-            'user_id' => 'required',
             'event_id' => 'required'
         ]);
 
-        $user_id = request('user_id');
         $event_id = request('event_id');
 
         $like = new Like();
@@ -67,17 +75,17 @@ class LikesController extends Controller
                 'formatted_updated' => $updated_at 
             ]);
 
-        return response()->json(['event_id' => $event_id],200);
+        // return response()->json(['event_id' => $event_id],200);
     }
 
     public function unlike(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
+            // 'user_id' => 'required',
             'event_id' => 'required'
         ]);
 
-        $user_id = request('user_id');
+        $user_id = Auth::guard('student')->user()->id;
         $event_id = request('event_id');
 
         Like::where('likes.student_id', $user_id)

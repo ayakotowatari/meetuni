@@ -16,6 +16,7 @@ import Liked from "./components/student/account/LikedComponent";
 import StudentProfile from "./components/student/profile/StudentProfileComponent";
 import EventList from "./components/student/events/EventListComponent";
 import SearchEvents from "./components/student/main/SearchEventsComponent";
+import StudentLogin from "./components/student/auth/LoginComponent"
 
 //テスト
 // import TestOne from "./components/student/TestOneComponent";
@@ -95,8 +96,13 @@ const routes = [
         path: "/student/event-list/:id",
         name: "event-list",
         component: EventList
-    }
-    
+    },
+    {
+        path: "/student/login-like/:id",
+        name: "student-loginlike",
+        component: StudentLogin
+    },
+
     //テスト
     // {
     //     path: "/student/test",
