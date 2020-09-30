@@ -22,6 +22,7 @@ export const studentaccount = {
         instId: '',
         eventId: '',
         categories: [],
+        dialogForLoginToBook: false,
         allerror: [],
     },
     getters: {
@@ -145,6 +146,12 @@ export const studentaccount = {
             console.log('singleEventBookedByUser');
             let event = state.event
             event.booked_by_user = true;
+        },
+        showDialogForLoginToBook(state){
+            state.dialogForLoginToBook = true;
+        },
+        closeDialogForLoginToBook(state){
+            state.dialogForLoginToBook = false;
         }
     },
     actions: {
@@ -464,6 +471,31 @@ export const studentaccount = {
                     commit('setallErrors', allerror)
                 })
         },
+        showDialogForLoginToBook({commit}, payload){
+            commit('showDialogForLoginToBook');
+            commit('setEventId', payload.event_id);
+        },
+        async loginToBook({commit}, payload){
+            // console.log('checkagain');
+            // console.log(payload.event_id);
+
+            let event_id = payload.event_id;
+            let user = {};
+
+            await axios
+                .post(payload.url, {
+                    email: payload.email,
+                    password: payload.password,
+                })
+                .then(response => {
+                    // console.log(response);
+                    commit('closeDialogForLoginToBook');
+                    // router.push({path: '/student/main'});
+                    window.location = `/student/event-details/${event_id}`;
+                    commit('showDialog');
+                    commit('setEventId', event_id);
+                })
+            },
         
     }
 }

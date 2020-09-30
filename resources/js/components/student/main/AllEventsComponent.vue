@@ -22,7 +22,7 @@ export default {
     },
     props: {
         user: Object,
-        isLoggedIn:Boolean
+        isLoggedIn: Boolean
     },
     data: () => ({
 

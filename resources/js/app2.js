@@ -40,6 +40,7 @@ Vue.component('subjecteventcard-component', require('./components/student/main/S
 Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);
 Vue.component('regioneventcard-component', require('./components/student/main/RegionEventCardComponent.vue').default);
 Vue.component('unauthenticateddialog-component', require('./components/student/auth/UnauthenticatedDialogComponent.vue').default);
+Vue.component('tobookdialog-component', require('./components/student/auth/ToBookDialogComponent.vue').default);
 
 
 //Chart

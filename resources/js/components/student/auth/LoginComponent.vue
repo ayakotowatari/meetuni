@@ -1,19 +1,25 @@
 <template>
     <v-form>
-        <v-text-field
-            v-model="email"
-            label="Email" 
-            outlined
-            required
-        ></v-text-field>
-         <v-text-field 
-            v-model="password"
-            label="Password" 
-            outlined
-            required
-        ></v-text-field>
+         <v-row justify="center" class="mt-10">
+            <v-col cols="12" sm="12" md="3">
+                <v-text-field
+                    v-model="email"
+                    label="Email" 
+                    outlined
+                    required
+                ></v-text-field>
+                <v-text-field 
+                    v-model="password"
+                    label="Password" 
+                    outlined
+                    required
+                ></v-text-field>
+                <v-btn block dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
+                <v-btn text color="primary" class="pa-0">register</v-btn>
+            </v-col>
+        </v-row>
         <!-- <input type="hidden" name="event_id" :value="eventId"> -->
-        <v-btn @click="login()">Login</v-btn>
+        
     </v-form>
 
 </template>
@@ -24,30 +30,19 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data: function(){
         return{
-            event_id: this.$route.params.id,
             email: '',
             password: '',
         }
     },
     methods: {
         ...mapActions('student', [
-            'loginToLike'
+            'login'
         ]),
-        login(){    
-            console.log('check');
-            console.log(this.event_id);
-
-            // let data = {
-            //     email: this.email,
-            //     password: this.password,
-            //     event_id: this.event_id
-            // }
-
-            this.loginToLike({
+        goLogin(){    
+            this.login({
                 url: "/student/login",
                 email: this.email,
                 password: this.password,
-                event_id: this.event_id
             })
             
         }

@@ -92,10 +92,12 @@ export const student = {
             state.recommendedSubjectEvents = payload
         },
         setRecommendedDestinationEvents(state, payload){
-            payload.forEach(event => state.recommendedDestinationEvents.push(event))
+            // payload.forEach(event => state.recommendedDestinationEvents.push(event))
+            state.recommendedDestinationEvents = payload
         },
         setRecommendedRegionEvents(state, payload){
-            payload.forEach(event => state.recommendedRegionEvents.push(event))
+            // payload.forEach(event => state.recommendedRegionEvents.push(event))
+            state.recommendedRegionEvents = payload
         },
         setEvent(state, payload){
             state.event = payload.event
@@ -297,8 +299,8 @@ export const student = {
         },
         closeDialogForLoginToLike(state){
             state.dialogForLoginToLike = false;
-        }
-
+        },
+      
     },
 
     actions: {
@@ -970,7 +972,22 @@ export const student = {
                             commit('setallErrors', allerror)
                         })
                 })
-            }
+            },
+            async login({state}, payload){
+                console.log('checkagain');
+                console.log(payload.event_id);
+    
+                await axios
+                    .post(payload.url, {
+                        email: payload.email,
+                        password: payload.password,
+                    })
+                    .then(response => {
+                        // console.log(response);
+                        // router.push({path: '/student/main'});
+                        window.location = "/student/main"
+                    })
+            },
         // loginPageToLike({commit}, payload){
 
         //     console.log(payload.event_id);

@@ -12,13 +12,13 @@
       </v-btn>
       <v-btn 
           text color="primary" 
-          v-if="isLoggedIn == false"
+          v-if="user == null"
           @click="toLogIn"
       >
           <span>Log in</span>
       </v-btn>
       <v-menu 
-          v-if="isLoggedIn == true"
+          v-if="user !== null"
           open-on-hover 
           top 
           offset-y

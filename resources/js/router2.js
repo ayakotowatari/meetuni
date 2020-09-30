@@ -16,7 +16,9 @@ import Liked from "./components/student/account/LikedComponent";
 import StudentProfile from "./components/student/profile/StudentProfileComponent";
 import EventList from "./components/student/events/EventListComponent";
 import SearchEvents from "./components/student/main/SearchEventsComponent";
-import StudentLogin from "./components/student/auth/LoginComponent"
+import LikeLogin from "./components/student/auth/LikeLoginComponent"
+import Login from "./components/student/auth/LoginComponent"
+import BookLogin from "./components/student/auth/BookLoginComponent"
 
 //テスト
 // import TestOne from "./components/student/TestOneComponent";
@@ -100,7 +102,17 @@ const routes = [
     {
         path: "/student/login-like/:id",
         name: "student-loginlike",
-        component: StudentLogin
+        component: LikeLogin
+    },
+    {
+        path: "/student/login-main",
+        name: "student-login",
+        component: Login
+    },
+    {
+        path: "/student/login-book/:id",
+        name: "student-loginbook",
+        component: BookLogin
     },
 
     //テスト
