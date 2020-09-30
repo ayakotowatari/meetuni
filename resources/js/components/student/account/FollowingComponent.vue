@@ -7,7 +7,7 @@
          ></refollowdialog-component>
         <v-container>
             <h1 class="mb-8 info--text">Following</h1>
-            <div v-if="followedInsts > 0">
+            <div v-if="followedInsts !== null">
                 <v-card flat v-for="inst in followedInsts" :key="inst.id">
                     <v-row class="pa-3" justify="center"> 
                         <!-- <v-col cols="12" xs="12" md="2">

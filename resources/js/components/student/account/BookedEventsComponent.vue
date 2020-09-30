@@ -5,7 +5,7 @@
         ></cancellationdialog-component>
         <v-container>
             <h1 class="primary--text mb-8">Booked Events</h1>
-            <div v-if="bookings > 0">
+            <div v-if="bookings !== null">
                 <v-card flat v-for="booking in bookings" :key="booking.title">
                     <v-row class="pa-3"> 
                         <v-col cols="12" xs="12" md="2">

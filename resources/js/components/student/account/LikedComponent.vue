@@ -6,7 +6,7 @@
         ></bookingdialog-component>
         <v-container>
             <h1 class="mb-8"><span class="error--text">Liked</span> <span class="grey--text">Events</span></h1>
-            <div v-if="likedEvents > 0">
+            <div v-if="likedEvents !== null">
                 <v-card flat v-for="event in likedEvents" :key="event.id">
                     <v-row class="pa-3"> 
                         <v-col cols="12" xs="12" md="2">

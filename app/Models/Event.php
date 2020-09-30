@@ -53,7 +53,7 @@ class Event extends Model
             return false;
         }
 
-        return $this->bookings->contains(Auth::guard('student')->user()->id);
+        return $this->bookings->contains('student_id', Auth::guard('student')->user()->id);
     }
 
     public function getTitleDateAttribute()
