@@ -15,6 +15,12 @@
 //     return view('home');
 // });
 
+//学生トップページ
+Route::get('/', 'HomeController@index')->name('home');
+//大学トップページ
+Route::get('/institution', 'HomeController@institution')->name('institution');
+Route::get('/institution/login', 'Auth\LoginController@institutionLogin')->name('institution.login');
+
 // Auth前の大学名チェック
 // Route::get('/inst/home', 'InstsController@home')->name('inst.home');
 // Route::get('inst/search', 'InstsController@index')->name('inst.search.page');
@@ -32,7 +38,6 @@ Route::post('/inst/login','Auth\LoginController@login')->name('user.login');
 Route::post('/inst/logout', 'Auth\LoginController@logout')->name('user.logout');
 
 //学生Authentification
-Route::get('/', 'HomeController@index')->name('home');
 Route::get('/student/register', 'Student\Auth\RegisterController@showRegistrationForm')->name('student.registration.form');
 Route::post('/student/register', 'Student\Auth\RegisterController@register')->name('student.register');
 Route::get('/student/login','Student\Auth\LoginController@showLoginForm')->name('student.login.form');
@@ -47,14 +52,15 @@ Route::post('password/student/reset', 'Student\Auth\ResetPasswordController@rese
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 //大学パスワード変更
 // Route::group(['middleware' => ['auth', 'can:institution']], function(){
 //     Route::post('/user/update-password', 'UsersController@updatePassword');
 // });
-Route::post('/user/update-password', 'UsersController@updatePassword')->name('user.update.password');
-
+Route::group(['middleware' => ['auth', 'can:institution']], function(){
+    Route::post('/user/update-password', 'UsersController@updatePassword')->name('user.update.password');
+});
 //             //
 //     大学     //
 //             //
@@ -222,7 +228,6 @@ Route::group(['middleware' => ['auth:student', 'can:student']], function(){
 
 //テスト
 // Route::get('/test', 'HomeController@test');
-
 
 // Vue
 //Only inst user can access.

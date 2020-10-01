@@ -267,7 +267,19 @@ export default new Vuex.Store ({
     actions: {
         //非同期処理をする
         //componentsではmethodsで展開
+        async login({state}, payload){
 
+            await axios
+                .post(payload.url, {
+                    email: payload.email,
+                    password: payload.password,
+                })
+                .then(response => {
+                    // console.log(response);
+                    // router.push({path: '/student/main'});
+                    window.location = "/inst/events"
+                })
+        },
         async fetchUser({ commit }){
             let payload = [];
 

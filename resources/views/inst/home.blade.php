@@ -1,23 +1,23 @@
-@extends('layouts.inst.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        <title>meetUni</title>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+        <!-- Styles -->
+        
+</head>
+<body>
+    <div id="app">
+        <home-component></home-component>
     </div>
-</div>
-@endsection
+<script src="{{ asset('js/app.js') }}" defer></script>
+</body>
+</html>
+

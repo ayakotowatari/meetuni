@@ -44,9 +44,14 @@ class LoginController extends Controller
         return view('inst/auth/login');
     }
 
+    public function institutionLogin()
+    {
+        return view('inst/auth/login_vue');
+    }
+
     protected function loggedOut(Request $reuqest)
     {
-        return redirect ('/inst/login');
+        return redirect ('/institution/login');
     }
 
 }

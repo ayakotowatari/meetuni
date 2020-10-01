@@ -27,8 +27,13 @@ Vue.use(Vuetify);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+//ログイン
+Vue.component('login-component', require('./components/inst/auth/LoginComponent.vue').default);
+
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('home-component', require('./components/inst/home/HomeComponent.vue').default);
 Vue.component('navbar-component', require('./components/inst/parts/NavbarComponent.vue').default);
+Vue.component('homenavbar-component', require('./components/inst/parts/HomeNavbarComponent.vue').default);
 Vue.component('dashboardmenu-component', require('./components/inst/dashboard/DashboardMenuComponent.vue').default);
 Vue.component('dashboardsummary-component', require('./components/inst/dashboard/DashboardSummaryComponent.vue').default);
 Vue.component('dashboardchart-component', require('./components/inst/dashboard/DashboardChartComponent.vue').default);
