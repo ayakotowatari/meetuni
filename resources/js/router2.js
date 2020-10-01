@@ -20,6 +20,7 @@ import LikeLogin from "./components/student/auth/LikeLoginComponent"
 import Login from "./components/student/auth/LoginComponent"
 import BookLogin from "./components/student/auth/BookLoginComponent"
 import StudentRegister from "./components/student/auth/RegisterComponent"
+import FollowLogin from "./components/student/auth/FollowLoginComponent"
 
 //テスト
 // import TestOne from "./components/student/TestOneComponent";
@@ -119,6 +120,11 @@ const routes = [
         path: "/student/register-main",
         name: "student-register",
         component: StudentRegister
+    },
+    {
+        path: "/student/login-follow/:id",
+        name: "student-loginfollow",
+        component: FollowLogin
     },
 
     //テスト

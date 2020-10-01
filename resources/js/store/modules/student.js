@@ -1015,7 +1015,7 @@ export const student = {
                 router.push({name: 'student-loginlike', params: {id: payload.event_id}});
                 commit('closeDialogForLoginToLike');
 
-            }
+            },
         // loginPageToLike({commit}, payload){
 
         //     console.log(payload.event_id);

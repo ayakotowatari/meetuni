@@ -2,10 +2,13 @@
     <div>
         <tobookdialog-component
             v-bind:eventId="eventId"
-            v-bind:user="user"
             v-bind:dialog="dialogForLoginToBook"
         >
         </tobookdialog-component>
+        <tofollowdialog-component
+            v-bind:dialog="dialogForLoginToFollow"
+            v-bind:eventId="eventId"
+        ></tofollowdialog-component>
         <bookingdialog2-component 
             v-bind:dialog="dialog"
             v-bind:event="event"
@@ -16,6 +19,7 @@
             v-bind:event="event"
             v-bind:user="user"
         ></followdialog-component> 
+       
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 
@@ -31,14 +35,14 @@
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="follow(`${inst.id}`, `${user.id}`)"
+                        @click="follow(`${inst.id}`, `${event.id}`)"
                     >Follow</v-btn>
                     <v-btn 
                         v-if="inst.followed_by_user == true"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="unfollow(`${inst.id}`, `${user.id}`)"
+                        @click="unfollow(`${inst.id}`)"
                     >Followed</v-btn>
                 </v-col>
             </v-row>
@@ -150,6 +154,7 @@ import moment from 'moment-timezone'
 import BookingDialog from './BookingDialogComponent'
 import FollowDialog from './FollowDialogComponent'
 import ToBookDialog from '../auth/ToBookDialogComponent'
+import ToFollowDialog from '../auth/ToFollowDialogComponent'
 
 import { mapState, mapMutations, mapActions } from 'vuex'
 
@@ -163,7 +168,8 @@ export default {
     components: {
         BookingDialog,
         FollowDialog,
-        ToBookDialog
+        ToBookDialog,
+        ToFollowDialog
     },
     data: function(){
         return{
@@ -177,7 +183,11 @@ export default {
         }),
         this.$store.dispatch('studentaccount/fetchInst', {
             id: this.id
+        }),
+        this.$store.dispatch('studentaccount/followInst', {
+            inst_id: window.localStorage.getItem('instId')
         })
+
     },
     computed: {
         ...mapState('studentaccount', [
@@ -191,6 +201,7 @@ export default {
             'isFollowed',
             'isBooked',
             'dialogForLoginToBook',
+            'dialogForLoginToFollow',
             'eventId'
         ])
     },
@@ -202,7 +213,8 @@ export default {
             'followInst',
             'unfollowInst',
             'showDialogForBooking',
-            'showDialogForLoginToBook'
+            'showDialogForLoginToBook',
+            'showDialogForLoginToFollow',
         ]),
         showDialog(id){
 
@@ -217,22 +229,29 @@ export default {
             }
            
         },
-        follow(id, user_id){
-            console.log(id);
-            console.log(user_id);
+        follow(id, event_id){
+            // console.log(id);
+            // console.log(user_id);
+            // console.log('checked');
+            // console.log(event_id);
 
-            this.followInst({
-                inst_id: id,
-                user_id: user_id
-            })
+            if(this.user !== null){
+                this.followInst({
+                    inst_id: id,
+                })
+            }else{
+                localStorage.setItem('instId',id);
+                this.showDialogForLoginToFollow({
+                    event_id: event_id
+                });
+            }
+            
         },
-        unfollow(id, user_id){
-            console.log(id);
-            console.log(user_id);
+        unfollow(id){
+            // console.log(id);
 
             this.unfollowInst({
                 inst_id: id,
-                user_id: user_id
             })
         },
         formattedDate(value, timezone){

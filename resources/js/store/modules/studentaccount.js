@@ -23,6 +23,7 @@ export const studentaccount = {
         eventId: '',
         categories: [],
         dialogForLoginToBook: false,
+        dialogForLoginToFollow: false,
         allerror: [],
     },
     getters: {
@@ -78,7 +79,7 @@ export const studentaccount = {
         },
         showRefollowDialog(state){
             state.refollowDialog = true
-            console.log('showRefollowDialog');
+            // console.log('showRefollowDialog');
         },
         isBooked(state){
             state.isBooked = true
@@ -114,16 +115,16 @@ export const studentaccount = {
             state.inst.followed_by_user = false
         },
         followInsts(state, payload){
-            console.log('unfollowInsts');
+            // console.log('unfollowInsts');
             let inst = state.followedInsts.find(inst=>inst.id == payload);
             inst.followed_by_user = true;
         },
         unfollowInsts(state, payload){
-            console.log('unfollowInsts');
-            console.log(payload);
+            // console.log('unfollowInsts');
+            // console.log(payload);
             let inst = state.followedInsts.find(inst=>inst.id == payload);
             inst.followed_by_user = false;
-            console.log(state);
+            // console.log(state);
         },
         unlikedByUser(state, payload){
             let event = state.likedEvents.find(event=>event.id == payload);
@@ -131,19 +132,19 @@ export const studentaccount = {
             event.liked_by_user = false;
         },
         likedByUser(state,payload){  
-            console.log('LikedByUser');
-            console.log(payload);
+            // console.log('LikedByUser');
+            // console.log(payload);
             let event = state.likedEvents.find(event=>event.id == payload);
-            console.log(event);
+            // console.log(event);
             event.liked_by_user = true;
-            console.log(state);
+            // console.log(state);
         },
         bookedByUser(state, payload){
             let event = state.likedEvents.find(event=>event.id == payload);
             event.booked_by_user = true;
         },
         singleEventBookedByUser(state){
-            console.log('singleEventBookedByUser');
+            // console.log('singleEventBookedByUser');
             let event = state.event
             event.booked_by_user = true;
         },
@@ -152,6 +153,12 @@ export const studentaccount = {
         },
         closeDialogForLoginToBook(state){
             state.dialogForLoginToBook = false;
+        },
+        showDialogForLoginToFollow(state){
+            state.dialogForLoginToFollow = true;
+        },
+        closeDialogForLoginToFollow(state){
+            state.dialogForLoginToFollow = false;
         }
     },
     actions: {
@@ -163,7 +170,7 @@ export const studentaccount = {
                 .then(res => {
                     payload = res.data.events;
                     commit("setAllEvents", payload);
-                    console.log(payload)
+                    // console.log(payload)
                 });
         },
         async fetchSingleEvent({commit}, payload){
@@ -187,7 +194,7 @@ export const studentaccount = {
                 });
         },
         async fetchLikedEvents({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
             // console.log(payload.id);
             // console.log(payload);
 
@@ -202,7 +209,7 @@ export const studentaccount = {
                 })
         },
         async fetchFollowingInsts({commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
             // console.log(payload.id);
             // console.log(payload);
 
@@ -217,8 +224,8 @@ export const studentaccount = {
                 })
         },
         async unfollowInsts({commit}, payload){
-            console.log(payload.inst_id);
-            console.log(payload.user_id);
+            // console.log(payload.inst_id);
+            // console.log(payload.user_id);
 
             let instId = '';
 
@@ -229,13 +236,13 @@ export const studentaccount = {
                 })
                 .then(response => {
                     instId = response.data.instId
-                    console.log(response);
+                    // console.log(response);
                     commit('unfollowInsts', instId);
                 })
         },
         async followInsts({commit}, payload){
-            console.log(payload.inst_id);
-            console.log(payload.user_id);
+            // console.log(payload.inst_id);
+            // console.log(payload.user_id);
 
             let instId = '';
 
@@ -255,7 +262,7 @@ export const studentaccount = {
         async registerEvent({state, commit}, payload){
             // console.log(payload)
 
-            console.log(payload);
+            // console.log(payload);
 
             let eventId = '';
             let allerror = [];
@@ -281,7 +288,7 @@ export const studentaccount = {
         async bookEvent({state, commit}, payload){
             // console.log(payload)
 
-            console.log(payload);
+            // console.log(payload);
 
             let allerror = [];
 
@@ -318,14 +325,14 @@ export const studentaccount = {
                 })
         },
         showDialogWithBookingId({state, commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             commit('showDialog');
             commit('setBookingId', payload.id);
             
         },
         showDialogWithEventId({state, commit}, payload){
-            console.log(payload.id);
+            // console.log(payload.id);
 
             commit('showDialog');
             commit('setEventId', payload.id);
@@ -342,7 +349,7 @@ export const studentaccount = {
                     id: payload.id
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     commit('closeDialog');
                     router.go();
                 })
@@ -360,7 +367,7 @@ export const studentaccount = {
                     contents: payload.contents
                 })
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                     commit('closeDialog')
                 })
                 .catch(error => {
@@ -376,13 +383,13 @@ export const studentaccount = {
                 .get('/student/fetch-categories')
                 .then(response => {
                     categories = response.data.categories;
-                    console.log(categories);
+                    // console.log(categories);
                     commit('setCategories', categories);
                 })
         },
         async fetchInst({commit}, payload){
 
-            console.log(payload.id);
+            // console.log(payload.id);
 
             let inst = [];
 
@@ -394,28 +401,24 @@ export const studentaccount = {
                 })
         },
         async followInst({commit}, payload){
-            console.log(payload.inst_id);
-            console.log(payload.user_id);
+            // console.log(payload.inst_id);
 
             await axios
                 .post('/student/follow-inst', {
                     inst_id: payload.inst_id,
-                    user_id: payload.user_id
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     commit('isFollowed');
                     commit('showFollowDialog');
                 })
         },
         async unfollowInst({commit}, payload){
-            console.log(payload.inst_id);
-            console.log(payload.user_id);
+            // console.log(payload.inst_id);
 
             await axios
                 .post('/student/unfollow-inst', {
                     inst_id: payload.inst_id,
-                    user_id: payload.user_id
                 })
                 .then(response => {
                     console.log(response);
@@ -500,7 +503,30 @@ export const studentaccount = {
 
             router.push({name: 'student-loginbook', params: {id: payload.event_id}});
             commit('closeDialogForLoginToBook');
-        }
-        
+        },
+        showDialogForLoginToFollow({commit}, payload){
+            commit('showDialogForLoginToFollow');
+            commit('setEventId', payload.event_id);
+        },
+        openLoginPageToFollow({state, commit}, payload){
+            router.push({name: 'student-loginfollow', params: {id: payload.event_id}});
+            commit('closeDialogForLoginToFollow');
+        },
+        async loginToFollow({commit}, payload){
+
+            let event_id = payload.event_id;
+
+            await axios
+                .post(payload.url, {
+                    email: payload.email,
+                    password: payload.password,
+                })
+                .then(response => {
+                    commit('closeDialogForLoginToFollow');
+                    // router.push({path: '/student/main'});
+                    window.location = `/student/event-details/${event_id}`;
+                    commit('setEventId', event_id);
+                })
+        },
     }
 }
