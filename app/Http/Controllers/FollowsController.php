@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Follow;
 use Illuminate\Http\Request;
+use Auth;
 
 class FollowsController extends Controller
 {
@@ -37,11 +38,10 @@ class FollowsController extends Controller
     {
         $request->validate([
             'inst_id' => 'required',
-            'user_id' => 'required'
         ]);
 
         $inst_id = request('inst_id');
-        $user_id = request('user_id');
+        $user_id = Auth::guard('student')->user()->id;
 
         $follow = new Follow();
         $follow->student_id = $user_id;
@@ -70,11 +70,10 @@ class FollowsController extends Controller
     public function unfollow(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'inst_id' => 'required'
         ]);
 
-        $user_id = request('user_id');
+        $user_id = Auth::guard('student')->user()->id;
         $inst_id = request('inst_id');
 
         Follow::where('student_id', $user_id)

@@ -10,6 +10,9 @@
             <v-btn text color="grey darken-1" @click.stop="toTopPage">
                 <span>top page</span>
             </v-btn>
+            <v-btn text color="grey darken-1" @click.stop="toContact">
+                <span>contact</span>
+            </v-btn>
             <v-btn 
                 text color="primary" 
                 @click.stop="toLogin"
@@ -42,6 +45,9 @@ export default {
         },
         toLogin(){
             window.location = "/institution/login"
+        },
+        toContact(){
+            window.location = "/institution/contact";
         }
         
     }

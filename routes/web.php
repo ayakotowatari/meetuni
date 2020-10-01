@@ -20,6 +20,7 @@ Route::get('/', 'HomeController@index')->name('home');
 //大学トップページ
 Route::get('/institution', 'HomeController@institution')->name('institution');
 Route::get('/institution/login', 'Auth\LoginController@institutionLogin')->name('institution.login');
+Route::get('/institution/contact', '@institutionLogin')->name('institution.login');
 
 // Auth前の大学名チェック
 // Route::get('/inst/home', 'InstsController@home')->name('inst.home');
