@@ -48,12 +48,6 @@ export default {
             console.log('check');
             console.log(this.event_id);
 
-            // let data = {
-            //     email: this.email,
-            //     password: this.password,
-            //     event_id: this.event_id
-            // }
-
             this.loginToLike({
                 url: "/student/login",
                 email: this.email,

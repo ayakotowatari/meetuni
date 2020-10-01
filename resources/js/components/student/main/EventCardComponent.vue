@@ -114,6 +114,8 @@ export default {
                         event_id: id,
                     })
                 }else{
+                    localStorage.setItem('likeId',id);
+
                     this.showDialogForLoginToLike({
                         event_id: id
                     })

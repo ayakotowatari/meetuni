@@ -956,23 +956,24 @@ export const student = {
                     // console.log(response);
                     commit('closeDialogForLoginToLike');
                     // router.push({path: '/student/main'});
-                    window.location = "/student/main"
-                    axios
-                        .post('/student/like-event', {
-                            // user_id: payload.user_id,
-                            event_id: payload.event_id
-                        })
-                        .then(response => {
-                            // console.log(response);
-                            eventId = response.data.event_id
-                            commit('setEventId', eventId);
-                            // commit('isLiked', liked);
-                            commit('likedByUser', eventId)                 
-                        })
-                        .catch(error => {
-                            allerror = error.response.data.errors,
-                            commit('setallErrors', allerror)
-                        })
+                    window.location = "/student/main";
+
+                    // axios
+                    //     .post('/student/like-event', {
+                    //         // user_id: payload.user_id,
+                    //         event_id: payload.event_id
+                    //     })
+                    //     .then(response => {
+                    //         // console.log(response);
+                    //         eventId = response.data.event_id
+                    //         commit('setEventId', eventId);
+                    //         // commit('isLiked', liked);
+                    //         commit('likedByUser', eventId)                 
+                    //     })
+                    //     .catch(error => {
+                    //         allerror = error.response.data.errors,
+                    //         commit('setallErrors', allerror)
+                    //     })
                 })
             },
             async login({state}, payload){
