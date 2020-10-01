@@ -2,7 +2,15 @@
     <v-app>
         <homenavbar-component></homenavbar-component>
         <v-main class="mx-4 mb-4">
-           
+            <v-container>
+                <v-row class="mt-4 mb-6">
+                    <v-col cols="12" sm="12" md="8">
+                        <h1 class="topline primary--text">A few steps away from <br class="md"> the students across the world</h1>
+                        <h3 class="subline grey--text">Reach out and get students registered to your online information sessions and taster lectures.</h3>
+                    </v-col>
+                </v-row>
+                <h1>Why use meetUni ?</h1>
+            </v-container>
         </v-main>
     </v-app>
 </template>
@@ -76,6 +84,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.topline{
+    font-size: 48px;
+    line-height: 1.2em;
+    margin-bottom: 0.5em;
+}
+.subline{
+    font-size: 24px;
+}
+.sm{
+    display:none;
+}
+
+@media(max-width:780px){
+    .topline{
+        font-size: 36px;
+    }
+    .md{
+        display:none;
+    }
+    .sm{
+        display:block;
+    }
+}
+
 
 </style>
