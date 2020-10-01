@@ -24,12 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('student.home');
+        return redirect('/student/main');
     }
 
     public function test()
     {
         return view('auth.passwords.confirm');
+
+    }
+
+    public function institution()
+    {
+        return view('inst.home');
 
     }
 }
