@@ -17,12 +17,7 @@ import ParticipantCommunications from "./components/inst/communications/Particip
 import EventQuestions from "./components/inst/participants/EventQuestionsComponent";
 
 //テスト
-// import Test from "./components/inst/TestComponent"
-// import TestTwo from "./components/inst/TestTwoComponent"
-import TestThree from "./components/inst/TestThreeComponent"
-import TestFour from "./components/inst/TestFourComponent"
-import TestFive from "./components/inst/TestFiveComponent"
-import TestSix from "./components/inst/TestSixComponent"
+
 //テスト終わる
  
 const routes = [

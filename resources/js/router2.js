@@ -23,8 +23,6 @@ import StudentRegister from "./components/student/auth/RegisterComponent"
 import FollowLogin from "./components/student/auth/FollowLoginComponent"
 
 //テスト
-// import TestOne from "./components/student/TestOneComponent";
-// import TestThree from "./components/student/TestThreeComponent";
 
 //テスト終わる
  

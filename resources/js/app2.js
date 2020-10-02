@@ -56,8 +56,6 @@ Vue.component('editlevels-component', require('./components/student/profile/Edit
 Vue.component('editsubjects-component', require('./components/student/profile/EditSubjectsComponent.vue').default);
 
 //テスト
-Vue.component('testone-component', require('./components/student/TestOneComponent.vue').default);
-Vue.component('testtwo-component', require('./components/student/TestTwoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
