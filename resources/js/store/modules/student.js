@@ -51,7 +51,7 @@ export const student = {
         levelList: [],
         subjectList: [],
         dialogForLoginToLike: false,
-        allerror: [],
+        allerror: {},
     },
 
     getters: {
@@ -989,6 +989,10 @@ export const student = {
                         // console.log(response);
                         // router.push({path: '/student/main'});
                         window.location = "/student/main"
+                    })
+                    .catch(error => {
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
                     })
             },
             async register({state}, payload){
