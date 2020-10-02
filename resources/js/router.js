@@ -87,26 +87,26 @@ const routes = [
     //     name: "testtwo",
     //     component: TestTwo
     // },
-    {
-        path: "/inst/testthree",
-        name: "testthree",
-        component: TestThree
-    },
-    {
-        path: "/inst/testfour",
-        name: "testfour",
-        component: TestFour
-    },
-    {
-        path: "/inst/testfive",
-        name: "testfive",
-        component: TestFive
-    },
-    {
-        path: "/inst/testsix",
-        name: "testsix",
-        component: TestSix
-    },
+    // {
+    //     path: "/inst/testthree",
+    //     name: "testthree",
+    //     component: TestThree
+    // },
+    // {
+    //     path: "/inst/testfour",
+    //     name: "testfour",
+    //     component: TestFour
+    // },
+    // {
+    //     path: "/inst/testfive",
+    //     name: "testfive",
+    //     component: TestFive
+    // },
+    // {
+    //     path: "/inst/testsix",
+    //     name: "testsix",
+    //     component: TestSix
+    // },
 
 ];
  
