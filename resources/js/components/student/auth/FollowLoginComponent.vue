@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row justify="center" class="mb-3">
-            <v-col cols="12" sm="12" md="3">
+            <v-col cols="12" sm="12" md="8">
                 <h2 class="grey--text text--darken-2">Student Login</h2>
             </v-col>
         </v-row>
@@ -59,7 +59,7 @@ export default {
         ...mapActions('studentaccount', [
             'loginToFollow'
         ]),
-        login(){    
+        goLogin(){    
 
             this.loginToFollow({
                 url: "/student/login",
