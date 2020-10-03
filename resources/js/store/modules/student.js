@@ -955,8 +955,8 @@ export const student = {
                 .then(response => {
                     // console.log(response);
                     commit('closeDialogForLoginToLike');
-                    // router.push({path: '/student/main'});
-                    window.location = "/student/main";
+                    router.push({path: '/student/main'});
+                    // window.location = "/student/main";
 
                     // axios
                     //     .post('/student/like-event', {
@@ -986,7 +986,7 @@ export const student = {
                         password: payload.password,
                     })
                     .then(response => {
-                        // console.log(response);
+                        console.log(response);
                         // router.push({path: '/student/main'});
                         window.location = "/student/main"
                     })
