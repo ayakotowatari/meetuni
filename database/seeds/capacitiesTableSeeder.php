@@ -44,5 +44,6 @@ class CapacitiesTableSeeder extends Seeder
             ],
         ];
                 DB::table('capacities')->insert($data);
+
     }
 }
