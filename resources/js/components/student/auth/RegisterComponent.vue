@@ -38,14 +38,20 @@
                             <v-text-field 
                                 v-model="password"
                                 label="Password" 
+                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword ? 'text' : 'password'"
                                 outlined
                                 required
+                                @click:append="showPassword = !showPassword"
                             ></v-text-field>
                             <v-text-field 
                                 v-model="password_confirmation"
                                 label="Confirm Password" 
+                                :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword2 ? 'text' : 'password'"
                                 outlined
                                 required
+                                @click:append="showPassword2 = !showPassword2"
                             ></v-text-field>
 
                             <input type="hidden" name="timezone" :value="timezone">
@@ -75,6 +81,8 @@ export default {
             password: '',
             password_confirmation: '',
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            showPassword: false,
+            showPassword2: false
         }
     },
     methods: {

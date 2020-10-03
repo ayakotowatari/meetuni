@@ -30,8 +30,11 @@
                                 <v-text-field 
                                     v-model="password"
                                     label="Password" 
+                                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="showPassword ? 'text' : 'password'"
                                     outlined
                                     required
+                                    @click:append="showPassword = !showPassword"
                                 ></v-text-field>
                                 <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
                             </v-col>
@@ -59,7 +62,11 @@ export default {
         return{
             email: '',
             password: '',
+            showPassword: 'false',
         }
+    },
+    computed: {
+        
     },
     methods: {
         ...mapActions([

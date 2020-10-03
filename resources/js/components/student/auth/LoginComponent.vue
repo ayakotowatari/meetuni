@@ -14,7 +14,7 @@
                 </v-img>
             </v-col>
             <v-col cols="12" sm="12" md="4">
-                <v-form>
+                <v-form ref="form">
                     <v-row justify="center">
                         <v-col cols="12" sm="12" md="12">
                             <v-text-field
@@ -22,12 +22,17 @@
                                 label="Email" 
                                 outlined
                                 required
+                                :rules="emailRules" 
                             ></v-text-field>
                             <v-text-field 
                                 v-model="password"
                                 label="Password" 
+                                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="showPassword ? 'text' : 'password'"
                                 outlined
                                 required
+                                @click:append="showPassword = !showPassword"
+                                :rules="passwordRules" 
                             ></v-text-field>
                         <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
                         <v-btn text color="primary" class="pa-0" @click="toRegister()">register</v-btn>
@@ -47,19 +52,36 @@ export default {
     data: function(){
         return{
             email: '',
+            emailRules: [
+                (v) => !!v || 'E-mail is required',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            ],
             password: '',
+            passwordRules: [
+                 (v) => !!v || v.length >= 8 || 'Minimum 8 characters'
+            ],
+            showPassword: false,
         }
+    },
+    computed: {
+        ...mapState('student', [
+
+        ])
     },
     methods: {
         ...mapActions('student', [
             'login'
         ]),
         goLogin(){    
-            this.login({
-                url: "/student/login",
-                email: this.email,
-                password: this.password,
-            })
+
+            if(this.$refs.form.validate()){
+                this.login({
+                    url: "/student/login",
+                    email: this.email,
+                    password: this.password,
+                })
+            }
+           
             
         },
         toRegister(){

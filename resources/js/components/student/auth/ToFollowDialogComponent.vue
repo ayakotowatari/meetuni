@@ -26,7 +26,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     props: {
         dialog: Boolean,
-        eventId: String
+        eventId: Number
     },
     data: function(){
         return {

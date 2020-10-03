@@ -3,7 +3,7 @@
         <v-dialog v-model="dialog" persistent max-width="320">
             <v-card>
                 <v-card-title class="headline">
-                    <p>Sign in to <span class="primary--text">like</span> this event</p> 
+                    <p>Sign in to <span class="primary--text">book</span> this event</p> 
                 </v-card-title>
                 <!-- <v-card-subtitle>
                     <p>{{ event.date }}</p>
@@ -25,7 +25,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     props: {
         dialog: Boolean,
-        eventId: String
+        eventId: Number
     },
     data: function(){
         return {
