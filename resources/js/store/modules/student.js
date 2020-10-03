@@ -51,7 +51,7 @@ export const student = {
         levelList: [],
         subjectList: [],
         dialogForLoginToLike: false,
-        allerror: [],
+        allerror: {},
     },
 
     getters: {
@@ -92,10 +92,12 @@ export const student = {
             state.recommendedSubjectEvents = payload
         },
         setRecommendedDestinationEvents(state, payload){
-            payload.forEach(event => state.recommendedDestinationEvents.push(event))
+            // payload.forEach(event => state.recommendedDestinationEvents.push(event))
+            state.recommendedDestinationEvents = payload
         },
         setRecommendedRegionEvents(state, payload){
-            payload.forEach(event => state.recommendedRegionEvents.push(event))
+            // payload.forEach(event => state.recommendedRegionEvents.push(event))
+            state.recommendedRegionEvents = payload
         },
         setEvent(state, payload){
             state.event = payload.event
@@ -297,8 +299,7 @@ export const student = {
         },
         closeDialogForLoginToLike(state){
             state.dialogForLoginToLike = false;
-        }
-
+        },
     },
 
     actions: {
@@ -428,7 +429,8 @@ export const student = {
         async likeEvent({commit}, payload){
 
             // console.log(payload.user_id);
-            // console.log(payload.event_id);
+            console.log('check');
+            console.log(payload.event_id);
 
             let allerror = [];
             let eventId = '';
@@ -441,6 +443,8 @@ export const student = {
                 .then(response => {
                     // console.log(response);
                     eventId = response.data.event_id
+                    console.log('result');
+                    console.log(eventId);
                     // commit('setEventId', eventId);
                     // commit('isLiked', liked);
                     commit('likedByUser', eventId)                 
@@ -952,25 +956,70 @@ export const student = {
                     // console.log(response);
                     commit('closeDialogForLoginToLike');
                     // router.push({path: '/student/main'});
-                    window.location = "/student/main"
-                    axios
-                        .post('/student/like-event', {
-                            // user_id: payload.user_id,
-                            event_id: payload.event_id
-                        })
-                        .then(response => {
-                            // console.log(response);
-                            eventId = response.data.event_id
-                            commit('setEventId', eventId);
-                            // commit('isLiked', liked);
-                            commit('likedByUser', eventId)                 
-                        })
-                        .catch(error => {
-                            allerror = error.response.data.errors,
-                            commit('setallErrors', allerror)
-                        })
+                    window.location = "/student/main";
+
+                    // axios
+                    //     .post('/student/like-event', {
+                    //         // user_id: payload.user_id,
+                    //         event_id: payload.event_id
+                    //     })
+                    //     .then(response => {
+                    //         // console.log(response);
+                    //         eventId = response.data.event_id
+                    //         commit('setEventId', eventId);
+                    //         // commit('isLiked', liked);
+                    //         commit('likedByUser', eventId)                 
+                    //     })
+                    //     .catch(error => {
+                    //         allerror = error.response.data.errors,
+                    //         commit('setallErrors', allerror)
+                    //     })
                 })
-            }
+            },
+            async login({state}, payload){
+                console.log('checkagain');
+                console.log(payload.event_id);
+    
+                await axios
+                    .post(payload.url, {
+                        email: payload.email,
+                        password: payload.password,
+                    })
+                    .then(response => {
+                        // console.log(response);
+                        // router.push({path: '/student/main'});
+                        window.location = "/student/main"
+                    })
+                    .catch(error => {
+                        allerror = error.response.data.errors,
+                        commit('setallErrors', allerror)
+                    })
+            },
+            async register({state}, payload){
+
+                console.log(payload.timezone);
+
+                await axios
+                    .post(payload.url, {
+                        first_name: payload.first_name,
+                        last_name: payload.last_name,
+                        email: payload.email,
+                        password: payload.password,
+                        password_confirmation: payload.password_confirmation,
+                        timezone: payload.timezone
+                    })
+                    .then(response => {
+                        // console.log(response);
+                        // router.push({path: '/student/main'});
+                        window.location = '/student/details'
+                    })
+            },
+            openLoginPage({state, commit}, payload){
+
+                router.push({name: 'student-loginlike', params: {id: payload.event_id}});
+                commit('closeDialogForLoginToLike');
+
+            },
         // loginPageToLike({commit}, payload){
 
         //     console.log(payload.event_id);

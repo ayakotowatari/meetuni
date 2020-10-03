@@ -44,7 +44,7 @@
                     <v-divider></v-divider>
                 </v-card>
             </div>
-            <div v-if="bookings == null">
+            <div v-if="bookings == 0">
                 <v-container>
                     <v-row justify="center">
                         <v-col col="12" xs="12" md="4">

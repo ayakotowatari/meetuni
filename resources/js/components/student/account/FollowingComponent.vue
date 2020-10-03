@@ -55,7 +55,7 @@
                     <v-divider></v-divider>
                 </v-card>
             </div>
-            <div v-if="followedInsts == null">
+            <div v-if="followedInsts == 0">
                 <v-container>
                     <v-row justify="center">
                         <v-col col="12" xs="12" md="4">

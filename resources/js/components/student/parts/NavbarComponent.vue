@@ -12,13 +12,20 @@
       </v-btn>
       <v-btn 
           text color="primary" 
-          v-if="isLoggedIn == false"
-          @click="toLogIn"
+          v-if="user == null"
+          @click.stop="toLogin"
       >
           <span>Log in</span>
       </v-btn>
+      <v-btn 
+          text color="primary" 
+          v-if="user == null"
+          @click.stop="toRegister"
+      >
+          <span>Register</span>
+      </v-btn>
       <v-menu 
-          v-if="isLoggedIn == true"
+          v-if="user !== null"
           open-on-hover 
           top 
           offset-y
@@ -114,8 +121,14 @@ import { mapState } from 'vuex'
         toTopPage(){
           this.$router.push({path: '/student/main'})
         },
-        toLogIn(){
-            window.location.href = "/student/login";
+        // toLogIn(){
+        //     window.location.href = "/student/login";
+        // }
+        toLogin(){
+          this.$router.push({name: 'student-login'})
+        },
+        toRegister(){
+          this.$router.push({name: 'student-register'})
         }
     }
   }

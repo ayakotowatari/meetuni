@@ -1,5 +1,14 @@
 <template>
     <div>
+        <tobookdialog-component
+            v-bind:eventId="eventId"
+            v-bind:dialog="dialogForLoginToBook"
+        >
+        </tobookdialog-component>
+        <tofollowdialog-component
+            v-bind:dialog="dialogForLoginToFollow"
+            v-bind:eventId="eventId"
+        ></tofollowdialog-component>
         <bookingdialog2-component 
             v-bind:dialog="dialog"
             v-bind:event="event"
@@ -10,6 +19,7 @@
             v-bind:event="event"
             v-bind:user="user"
         ></followdialog-component> 
+       
         <v-img 
             :src="`/storage/${ event.image }`" 
             cover 
@@ -25,14 +35,14 @@
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="follow(`${inst.id}`, `${user.id}`)"
+                        @click="follow(`${inst.id}`, `${event.id}`)"
                     >Follow</v-btn>
                     <v-btn 
                         v-if="inst.followed_by_user == true"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
-                        @click="unfollow(`${inst.id}`, `${user.id}`)"
+                        @click="unfollow(`${inst.id}`)"
                     >Followed</v-btn>
                 </v-col>
             </v-row>
@@ -41,28 +51,54 @@
                     <div class="primary--text event-title mb-2">{{ event.title }}</div>
                 </v-col>
             </v-row>
-            <v-row class="mb-8">
-                <v-col col="12" sm="12" md="6">
-                    <div class="event-info mr-4">
-                        {{ event.description }}
-                    </div>
-                </v-col>
-            </v-row>
-            <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
-                    <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
-                    <span class="event-info">{{ formattedDate(event.date, user.timezone) }}</span>
-                </v-col>
-            </v-row>
-            <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
-                    <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
-                    <span class="event-info">
-                        {{ formattedStartTime(event.start_utc, user.timezone) }} - 
-                        {{ formattedEndTime(event.end_utc, user.timezone) }}
-                    </span>
-                </v-col>
-            </v-row>
+            <div v-if="user !== null">
+                <v-row class="mb-8">
+                    <v-col col="12" sm="12" md="6">
+                        <div class="event-info mr-4">
+                            {{ event.description }}
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
+                        <span class="event-info">{{ formattedDate(event.date, user.timezone) }}</span>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
+                        <span class="event-info">
+                            {{ formattedStartTime(event.start_utc, user.timezone) }} - 
+                            {{ formattedEndTime(event.end_utc, user.timezone) }}
+                        </span>
+                    </v-col>
+                </v-row>
+            </div>
+             <div v-if="user == null">
+                <v-row class="mb-8">
+                    <v-col col="12" sm="12" md="6">
+                        <div class="event-info mr-4">
+                            {{ event.description }}
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
+                        <span class="event-info">{{ formattedDate(event.date, event.timezone) }}</span>
+                    </v-col>
+                </v-row>
+                <v-row class="mb-6">
+                    <v-col col="12" sm="12" md="12">
+                        <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
+                        <span class="event-info">
+                            {{ formattedStartTime(event.start_utc, event.timezone) }} - 
+                            {{ formattedEndTime(event.end_utc, event.timezone) }}
+                        </span>
+                    </v-col>
+                </v-row>
+            </div>
             <v-row class="mb-6">
                 <v-col col="12" sm="12" md="12">
                     <v-icon medium class="mr-8">mdi-book-multiple-outline</v-icon>
@@ -93,19 +129,19 @@
                 dark     
                 block
                 color="primary"
-                @click="showDialog(event.id)"
-            >Book</v-btn>
+                @click.stop="showDialog(event.id)"
+            >book</v-btn>
              <v-btn 
                 v-if="event.booked_by_user == true"
                 class="ma-2 hidden-sm-and-down" 
                 outlined    
                 block
                 color="primary"
-            >Booked</v-btn>
+            >booked</v-btn>
         </v-container>
         <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
             <v-btn>
-                <span>BOOK</span>
+                <span>book</span>
                 <v-icon>mdi-calendar-check-outline</v-icon>
             </v-btn>
         </v-bottom-navigation>
@@ -117,6 +153,8 @@ import moment from 'moment-timezone'
 
 import BookingDialog from './BookingDialogComponent'
 import FollowDialog from './FollowDialogComponent'
+import ToBookDialog from '../auth/ToBookDialogComponent'
+import ToFollowDialog from '../auth/ToFollowDialogComponent'
 
 import { mapState, mapMutations, mapActions } from 'vuex'
 
@@ -129,7 +167,9 @@ export default {
     },
     components: {
         BookingDialog,
-        FollowDialog
+        FollowDialog,
+        ToBookDialog,
+        ToFollowDialog
     },
     data: function(){
         return{
@@ -143,7 +183,11 @@ export default {
         }),
         this.$store.dispatch('studentaccount/fetchInst', {
             id: this.id
+        }),
+        this.$store.dispatch('studentaccount/followInst', {
+            inst_id: window.localStorage.getItem('instId')
         })
+
     },
     computed: {
         ...mapState('studentaccount', [
@@ -155,7 +199,10 @@ export default {
             'dialog',
             'followDialog',
             'isFollowed',
-            'isBooked'
+            'isBooked',
+            'dialogForLoginToBook',
+            'dialogForLoginToFollow',
+            'eventId'
         ])
     },
     methods: {
@@ -165,29 +212,46 @@ export default {
         ...mapActions('studentaccount', [
             'followInst',
             'unfollowInst',
-            'showDialogForBooking'
+            'showDialogForBooking',
+            'showDialogForLoginToBook',
+            'showDialogForLoginToFollow',
         ]),
         showDialog(id){
-            this.showDialogForBooking({
-                event_id: id
-            })
-        },
-        follow(id, user_id){
-            console.log(id);
-            console.log(user_id);
 
-            this.followInst({
-                inst_id: id,
-                user_id: user_id
-            })
+            if(this.user !== null){
+                this.showDialogForBooking({
+                    event_id: id
+                 })
+            }else{
+                this.showDialogForLoginToBook({
+                    event_id: id
+                })
+            }
+           
         },
-        unfollow(id, user_id){
-            console.log(id);
-            console.log(user_id);
+        follow(id, event_id){
+            // console.log(id);
+            // console.log(user_id);
+            // console.log('checked');
+            // console.log(event_id);
+
+            if(this.user !== null){
+                this.followInst({
+                    inst_id: id,
+                })
+            }else{
+                localStorage.setItem('instId',id);
+                this.showDialogForLoginToFollow({
+                    event_id: event_id
+                });
+            }
+            
+        },
+        unfollow(id){
+            // console.log(id);
 
             this.unfollowInst({
                 inst_id: id,
-                user_id: user_id
             })
         },
         formattedDate(value, timezone){

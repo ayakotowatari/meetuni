@@ -39,7 +39,9 @@ Vue.component('eventcard-component', require('./components/student/main/EventCar
 Vue.component('subjecteventcard-component', require('./components/student/main/SubjectEventCardComponent.vue').default);
 Vue.component('destinationeventcard-component', require('./components/student/main/DestinationEventCardComponent.vue').default);
 Vue.component('regioneventcard-component', require('./components/student/main/RegionEventCardComponent.vue').default);
-Vue.component('unauthenticateddialog-component', require('./components/student/auth/UnauthenticatedDialogComponent.vue').default);
+Vue.component('tolikedialog-component', require('./components/student/auth/ToLikeDialogComponent.vue').default);
+Vue.component('tobookdialog-component', require('./components/student/auth/ToBookDialogComponent.vue').default);
+Vue.component('tofollowdialog-component', require('./components/student/auth/ToFollowDialogComponent.vue').default);
 
 
 //Chart
@@ -54,8 +56,6 @@ Vue.component('editlevels-component', require('./components/student/profile/Edit
 Vue.component('editsubjects-component', require('./components/student/profile/EditSubjectsComponent.vue').default);
 
 //テスト
-Vue.component('testone-component', require('./components/student/TestOneComponent.vue').default);
-Vue.component('testtwo-component', require('./components/student/TestTwoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -22,13 +22,22 @@ export default {
     },
     props: {
         user: Object,
-        isLoggedIn:Boolean
+        isLoggedIn: Boolean
     },
     data: () => ({
 
     }),
+    beforeMount(){
+        
+    },
     mounted(){
+        // console.log('check');
+        // console.log(window.localStorage.getItem('likeId'))
         this.$store.dispatch('student/fetchAllEvents');
+
+        this.$store.dispatch('student/likeEvent', {
+            event_id: window.localStorage.getItem('likeId')
+        })
     },
     computed: {
         ...mapState('student', [

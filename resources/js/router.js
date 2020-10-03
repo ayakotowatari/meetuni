@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
  
 Vue.use(VueRouter);
  
-import Home from "./components/HomeComponent";
 // import ExampleComponent from "./components/ExampleComponent";
 import Events from "./components/inst/events/EventsComponent";
 import CreateEvents from "./components/inst/events/create/CreateEventsComponent";
@@ -17,22 +16,11 @@ import UserProfile from "./components/inst/profile/UserProfileComponent";
 import ParticipantCommunications from "./components/inst/communications/ParticipantCommunicationsComponent";
 import EventQuestions from "./components/inst/participants/EventQuestionsComponent";
 
-
 //テスト
-// import Test from "./components/inst/TestComponent"
-// import TestTwo from "./components/inst/TestTwoComponent"
-import TestThree from "./components/inst/TestThreeComponent"
-import TestFour from "./components/inst/TestFourComponent"
-import TestFive from "./components/inst/TestFiveComponent"
-import TestSix from "./components/inst/TestSixComponent"
+
 //テスト終わる
  
 const routes = [
-    {
-        path: "/inst",
-        name: "home",
-        component: Home
-    },
     {
         path: "/inst/events",
         name: "events",
@@ -99,26 +87,26 @@ const routes = [
     //     name: "testtwo",
     //     component: TestTwo
     // },
-    {
-        path: "/inst/testthree",
-        name: "testthree",
-        component: TestThree
-    },
-    {
-        path: "/inst/testfour",
-        name: "testfour",
-        component: TestFour
-    },
-    {
-        path: "/inst/testfive",
-        name: "testfive",
-        component: TestFive
-    },
-    {
-        path: "/inst/testsix",
-        name: "testsix",
-        component: TestSix
-    },
+    // {
+    //     path: "/inst/testthree",
+    //     name: "testthree",
+    //     component: TestThree
+    // },
+    // {
+    //     path: "/inst/testfour",
+    //     name: "testfour",
+    //     component: TestFour
+    // },
+    // {
+    //     path: "/inst/testfive",
+    //     name: "testfive",
+    //     component: TestFive
+    // },
+    // {
+    //     path: "/inst/testsix",
+    //     name: "testsix",
+    //     component: TestSix
+    // },
 
 ];
  
