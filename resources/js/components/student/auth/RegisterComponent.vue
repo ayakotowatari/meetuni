@@ -105,9 +105,14 @@ export default {
             ],
             password: '',
             passwordRules: [
-                 (v) => !!v || v.length >= 8 || 'Minimum 8 characters'
+                (v) => !!v || 'Password is required',
+                (v) => v.length >= 8 || 'Minimum 8 characters'
             ],
             password_confirmation: '',
+            confirmPasswordRules: [
+                (v) => !!v || 'Confirmation Password is required',
+                (v) => v == this.password || 'Password must match'
+            ],      
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             showPassword: false,
             showPassword2: false
