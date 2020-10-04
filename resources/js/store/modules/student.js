@@ -51,7 +51,11 @@ export const student = {
         levelList: [],
         subjectList: [],
         dialogForLoginToLike: false,
-        allerror: {},
+        allerror: [],
+        allLoginError: {
+            email: null,
+            password: null
+        },
     },
 
     getters: {
@@ -280,8 +284,13 @@ export const student = {
             state.subjectList = payload
         },
         setallErrors(state, payload){
+            console.log('errors')
             state.allerror = payload
         },
+        setallLoginErrors(state, payload){
+            console.log('check')
+            state.allLoginError = payload
+        },  
         setStudentDestinations(state, payload){
             state.preference.destinations = payload
         },
@@ -944,8 +953,9 @@ export const student = {
             // console.log('checkagain');
             // console.log(payload.event_id);
 
-            let event_id = payload.event_id;
-            let user = {};
+            // let event_id = payload.event_id;
+            // let user = {};
+            let allerror = [];
 
             await axios
                 .post(payload.url, {
@@ -975,10 +985,16 @@ export const student = {
                     //         commit('setallErrors', allerror)
                     //     })
                 })
+                .catch(error => {
+                    allerror = error.response.data.errors
+                    commit('setallLoginErrors', allerror)
+                })
             },
-            async login({state}, payload){
+            async login({state, commit}, payload){
                 console.log('checkagain');
                 console.log(payload.event_id);
+
+                let allerror = [];
     
                 await axios
                     .post(payload.url, {
@@ -991,8 +1007,8 @@ export const student = {
                         window.location = "/student/main"
                     })
                     .catch(error => {
-                        allerror = error.response.data.errors,
-                        commit('setallErrors', allerror)
+                        allerror = error.response.data.errors
+                        commit('setallLoginErrors', allerror)
                     })
             },
             async register({state}, payload){
@@ -1015,10 +1031,9 @@ export const student = {
                     })
             },
             openLoginPage({state, commit}, payload){
-
-                router.push({name: 'student-loginlike', params: {id: payload.event_id}});
                 commit('closeDialogForLoginToLike');
-
+                router.push({name: 'student-loginlike', params: {id: payload.event_id}});
+                // commit('setallErrorsLoaded');
             },
         // loginPageToLike({commit}, payload){
 

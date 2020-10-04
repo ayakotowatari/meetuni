@@ -12,7 +12,7 @@
                 <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="grey" text @click="closeDialog">not now</v-btn>
-                <v-btn color="info darken-1" text @click="login">sign in</v-btn>
+                <v-btn color="info darken-1" text @click="open(eventId)">sign in</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -43,15 +43,12 @@ export default {
             'loginPageToLike',
             'openLoginPage'
         ]),
-        // open(id){
-        //     // console.log('check');
-        //     // console.log(id);
-        //     this.openLoginPage({
-        //         event_id: id
-        //     })
-        // },
-        login(){
-            window.location.href = "/student/login";
+        open(id){
+            // console.log('check');
+            // console.log(id);
+            this.openLoginPage({
+                event_id: id
+            })
         }
     }
 }
