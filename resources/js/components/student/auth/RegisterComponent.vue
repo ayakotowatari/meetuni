@@ -22,18 +22,27 @@
                                 label="First Name" 
                                 outlined
                                 required
+                                :rules="firstnameRules"
+                                :error="allRegisterError.first_name"
+                                :error-messages="allRegisterError.first_name"
                             ></v-text-field>
                             <v-text-field
                                 v-model="last_name"
                                 label="Last Name" 
                                 outlined
                                 required
+                                :rules="lastnameRules"
+                                :error="allRegisterError.last_name"
+                                :error-messages="allRegisterError.last_name"
                             ></v-text-field>
                             <v-text-field
                                 v-model="email"
                                 label="Email" 
                                 outlined
                                 required
+                                :rules="emailRules" 
+                                :error="allRegisterError.email"
+                                :error-messages="allRegisterError.email"
                             ></v-text-field>
                             <v-text-field 
                                 v-model="password"
@@ -42,6 +51,9 @@
                                 :type="showPassword ? 'text' : 'password'"
                                 outlined
                                 required
+                                :rules="passwordRules" 
+                                :error="allRegisterError.password"
+                                :error-messages="allRegisterError.password"
                                 @click:append="showPassword = !showPassword"
                             ></v-text-field>
                             <v-text-field 
@@ -51,6 +63,9 @@
                                 :type="showPassword2 ? 'text' : 'password'"
                                 outlined
                                 required
+                                :rules="confirmPasswordRules" 
+                                :error="allRegisterError.password_confirmation"
+                                :error-messages="allRegisterError.password_confirmation"
                                 @click:append="showPassword2 = !showPassword2"
                             ></v-text-field>
 
@@ -76,14 +91,32 @@ export default {
     data: function(){
         return{
             first_name: '',
+            firstnameRules: [
+                v => !!v || 'First Name is required',
+            ],
             last_name: '',
+            lastnameRules: [
+                v => !!v || 'Last Name is required',
+            ],
             email: '',
+            emailRules: [
+                (v) => !!v || 'E-mail is required',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            ],
             password: '',
+            passwordRules: [
+                 (v) => !!v || v.length >= 8 || 'Minimum 8 characters'
+            ],
             password_confirmation: '',
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             showPassword: false,
             showPassword2: false
         }
+    },
+    computed: {
+        ...mapState('student', [
+            'allRegisterError'
+        ])
     },
     methods: {
         ...mapActions('student', [

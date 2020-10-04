@@ -56,6 +56,13 @@ export const student = {
             email: null,
             password: null
         },
+        allRegisterError: {
+            first_name: null,
+            last_name: null,
+            email: null,
+            password: null,
+            password_confirmation: null
+        }
     },
 
     getters: {
@@ -284,12 +291,16 @@ export const student = {
             state.subjectList = payload
         },
         setallErrors(state, payload){
-            console.log('errors')
+            // console.log('errors')
             state.allerror = payload
         },
         setallLoginErrors(state, payload){
-            console.log('check')
+            // console.log('check')
             state.allLoginError = payload
+        },  
+        setallRegisterErrors(state, payload){
+            // console.log('check')
+            state.allRegisterError = payload
         },  
         setStudentDestinations(state, payload){
             state.preference.destinations = payload
@@ -1011,9 +1022,11 @@ export const student = {
                         commit('setallLoginErrors', allerror)
                     })
             },
-            async register({state}, payload){
+            async register({state, commit}, payload){
 
                 console.log(payload.timezone);
+
+                let allerror = [];
 
                 await axios
                     .post(payload.url, {
@@ -1028,6 +1041,10 @@ export const student = {
                         // console.log(response);
                         // router.push({path: '/student/main'});
                         window.location = '/student/details'
+                    })
+                    .catch(error => {
+                        allerror = error.response.data.errors
+                        commit('setallRegisterErrors', allerror)
                     })
             },
             openLoginPage({state, commit}, payload){
