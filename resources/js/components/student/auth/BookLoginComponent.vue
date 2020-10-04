@@ -22,6 +22,9 @@
                                 label="Email" 
                                 outlined
                                 required
+                                :rules="emailRules" 
+                                :error="allLoginError.email"
+                                :error-messages="allLoginError.email"
                             ></v-text-field>
                             <v-text-field 
                                 v-model="password"
@@ -30,6 +33,9 @@
                                 :type="showPassword ? 'text' : 'password'"
                                 outlined
                                 required
+                                :rules="passwordRules" 
+                                :error="allLoginError.password"
+                                :error-messages="allLoginError.password"
                                 @click:append="showPassword = !showPassword"
                             ></v-text-field>
                         <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
@@ -51,9 +57,22 @@ export default {
         return{
             event_id: this.$route.params.id,
             email: '',
+            emailRules: [
+                (v) => !!v || 'E-mail is required',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            ],
             password: '',
+            passwordRules: [
+                (v) => !!v || 'Password is required',
+                (v) => v.length >= 8 || 'Minimum 8 characters'
+            ],
             showPassword: false,
         }
+    },
+    computed: {
+        ...mapState('studentaccount', [
+            'allLoginError',
+        ]),
     },
     methods: {
         ...mapActions('studentaccount', [

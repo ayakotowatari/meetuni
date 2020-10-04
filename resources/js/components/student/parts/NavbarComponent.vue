@@ -111,7 +111,7 @@ import { mapState } from 'vuex'
         ...mapState('student', [
             'user',
             'initials',
-            'isLoggedIn'
+            'isLoggedIn',
         ]),
     },
     methods: {
@@ -121,9 +121,9 @@ import { mapState } from 'vuex'
         toTopPage(){
           this.$router.push({path: '/student/main'})
         },
-        // toLogIn(){
+        // toLogin(){
         //     window.location.href = "/student/login";
-        // }
+        // },
         toLogin(){
           this.$router.push({name: 'student-login'})
         },

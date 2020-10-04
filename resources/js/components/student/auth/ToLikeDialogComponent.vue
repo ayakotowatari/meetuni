@@ -49,7 +49,6 @@ export default {
             this.openLoginPage({
                 event_id: id
             })
-            
         }
     }
 }

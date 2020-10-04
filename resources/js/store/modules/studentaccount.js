@@ -25,6 +25,10 @@ export const studentaccount = {
         dialogForLoginToBook: false,
         dialogForLoginToFollow: false,
         allerror: [],
+        allLoginError: {
+            email: null,
+            password: null
+        },
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -99,6 +103,10 @@ export const studentaccount = {
         setallErrors(state,payload){
             state.allerror = payload
         },
+        setallLoginErrors(state, payload){
+            console.log('check')
+            state.allLoginError = payload
+        },  
         setCategories(state, payload){
             state.categories = payload
         },
@@ -483,7 +491,9 @@ export const studentaccount = {
             // console.log(payload.event_id);
 
             let event_id = payload.event_id;
-            let user = {};
+            // let user = {};
+
+            let allerror = [];
 
             await axios
                 .post(payload.url, {
@@ -495,8 +505,12 @@ export const studentaccount = {
                     commit('closeDialogForLoginToBook');
                     // router.push({path: '/student/main'});
                     window.location = `/student/event-details/${event_id}`;
-                    commit('showDialog');
+                    commit('showDialogForLoginToBook');
                     commit('setEventId', event_id);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors
+                    commit('setallLoginErrors', allerror)
                 })
         },
         openLoginPageToBook({state, commit}, payload){
@@ -516,6 +530,8 @@ export const studentaccount = {
 
             let event_id = payload.event_id;
 
+            let allerror = [];
+
             await axios
                 .post(payload.url, {
                     email: payload.email,
@@ -526,6 +542,10 @@ export const studentaccount = {
                     // router.push({path: '/student/main'});
                     window.location = `/student/event-details/${event_id}`;
                     commit('setEventId', event_id);
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors
+                    commit('setallLoginErrors', allerror)
                 })
         },
     }
