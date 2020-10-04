@@ -23,6 +23,8 @@
                                 outlined
                                 required
                                 :rules="emailRules" 
+                                :error="allLoginError.email"
+                                :error-messages="allLoginError.email"
                             ></v-text-field>
                             <v-text-field 
                                 v-model="password"
@@ -33,6 +35,8 @@
                                 required
                                 @click:append="showPassword = !showPassword"
                                 :rules="passwordRules" 
+                                :error="allLoginError.password"
+                                :error-messages="allLoginError.password"
                             ></v-text-field>
                         <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
                         <v-btn text color="primary" class="pa-0" @click="toRegister()">register</v-btn>
@@ -58,15 +62,19 @@ export default {
             ],
             password: '',
             passwordRules: [
-                 (v) => !!v || v.length >= 8 || 'Minimum 8 characters'
+                (v) => !!v || 'Password is required',
+                (v) => v.length >= 8 || 'Minimum 8 characters'
             ],
             showPassword: false,
         }
     },
+    mounted(){
+       
+    },
     computed: {
         ...mapState('student', [
-
-        ])
+            'allLoginError',
+        ]),
     },
     methods: {
         ...mapActions('student', [

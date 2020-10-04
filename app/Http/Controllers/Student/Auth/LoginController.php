@@ -37,7 +37,7 @@ class LoginController extends Controller
     //ログインフォームのviews
     public function showLoginForm()
     {
-        return view ('student/auth/login');
+        return view ('student/auth/login_vue');
     }
 
     //持たせるガードの名前
