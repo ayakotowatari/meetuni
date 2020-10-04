@@ -121,12 +121,12 @@ import { mapState } from 'vuex'
         toTopPage(){
           this.$router.push({path: '/student/main'})
         },
-        // toLogIn(){
-        //     window.location.href = "/student/login";
-        // }
         toLogin(){
-          this.$router.push({name: 'student-login'})
+            window.location.href = "/student/login";
         },
+        // toLogin(){
+        //   this.$router.push({name: 'student-login'})
+        // },
         toRegister(){
           this.$router.push({name: 'student-register'})
         }
