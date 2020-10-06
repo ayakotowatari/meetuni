@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:emailtoparticipants')
                 ->everyMinute();
 
-        $schedule->command('test:mail')->everyMinute();
+        // $schedule->command('test:mail')->everyMinute();
     }
 
     /**
