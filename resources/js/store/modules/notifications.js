@@ -1,4 +1,4 @@
-import router from "../../router2"
+import router from "../../router"
 
 export const notifications = {
     namespaced: true,
@@ -10,6 +10,7 @@ export const notifications = {
         eventId: '',
         dialog: false,
         dialogForSchedule: false,
+        dialogForReschedule: false,
         allerror: [],
         
     },
@@ -26,11 +27,17 @@ export const notifications = {
         showDialogForSchedule(state){
             state.dialogForSchedule = true;
         },
+        showDialogForReschedule(state){
+            state.dialogForReschedule = true;
+        },
         closeDialog(state){
             state.dialog = false;
         },
         closeDialogForSchedule(state){
             state.dialogForSchedule = false;
+        },
+        closeDialogForReschedule(state){
+            state.dialogForReschedule = false;
         },
         setEventId(state, payload){
             state.eventId = payload;
@@ -91,8 +98,8 @@ export const notifications = {
                 })
                 .then(response => {
                     console.log(response);
-                    commit("closeDialog");
                     router.push({name: 'participant-communications', params: {id: payload.user_id}});
+                    commit("closeDialog");
                    
                 })
                 .catch(error => {
@@ -135,6 +142,25 @@ export const notifications = {
                     commit('setallErrors', allerror)
                 })
         },
+        async rescheduleEmailToParticipants({commit}, payload){
+            console.log(payload);
+
+            await axios
+                .post('/inst/reschedule-emailstoparticipants', {
+                    event_id: payload.event_id,
+                    scheduled_date: payload.scheduled_date,
+                    scheduled_time: payload.scheduled_time,
+                    timezone: payload.timezone
+                })
+                .then(response => {
+                    commit('closeDialogForReschedule');
+                    router.go();
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallErrors', allerror)
+                })
+        },
         showDialogForSchedule({state, commit}, payload){
 
             console.log('dialog');
@@ -142,6 +168,15 @@ export const notifications = {
 
             commit('setEventId', payload.event_id);
             commit('showDialogForSchedule');
+
+        },
+        showDialogForReschedule({state, commit}, payload){
+
+            console.log('dialog');
+            console.log(payload.event_id);
+
+            commit('setEventId', payload.event_id);
+            commit('showDialogForReschedule');
 
         }
 

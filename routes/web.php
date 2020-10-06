@@ -128,6 +128,7 @@ Route::group(['middleware' => ['auth', 'can:institution']], function(){
     Route::post('/inst/email-participants', 'ParticipantNotificationsController@store')->name('user.email.participants');
     Route::get('/inst/emailstoparticipants-list', 'ParticipantNotificationsController@fetchList')->name('user.email.participantslist');
     Route::post('/inst/schedule-emailstoparticipants', 'ParticipantNotificationsController@schedule')->name('user.schedule.emailstoparticipants');
+    Route::post('/inst/reschedule-emailstoparticipants', 'ParticipantNotificationsController@reschedule')->name('user.reschedule.emailstoparticipants');
     Route::get('/inst/send-emailstoparticipants', 'BookingsController@sendEmailsToParticipants')->name('user.send.emailstoparticipants');
     Route::get('/inst/fetchevents-emails', 'EventsController@fetchEventsForEmails')->name('user.fetch.event.emails');
 });

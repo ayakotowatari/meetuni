@@ -5,6 +5,11 @@
             v-bind:event_id="eventId"
             v-bind:user="user"
         ></scheduleemaildialog-component>
+        <rescheduleemaildialog-component
+            v-bind:dialog="dialogForReschedule"
+            v-bind:event_id="eventId"
+            v-bind:user="user"
+        ></rescheduleemaildialog-component>
         <v-data-table
             :headers="headers"
             :items="emails"
@@ -15,20 +20,28 @@
             </template>
             <template v-slot:[`item.schedule`]="{ item }">
                 <v-icon
-                v-show="item.status !== 'Sent'"
-                small
-                class="mr-4"
-                @click="showDialog(item.id)"
+                    v-show="item.status == 'Draft'"
+                    small
+                    class="mr-4"
+                    @click="showDialog(item.id)"
+                >
+                mdi-clock-outline
+                </v-icon>
+                <v-icon
+                    v-show="item.status == 'Scheduled'"
+                    small
+                    class="mr-4"
+                    @click="showRescheduleDialog(item.id)"
                 >
                 mdi-clock-outline
                 </v-icon>
             </template>
             <template v-slot:[`item.edit`]="{ item }">
                 <v-icon
-                v-show="item.status !== 'Draft'"
-                small
-                class="mr-4"
-                @click="edit(item.id)"
+                    v-show="item.status !== 'Draft'"
+                    small
+                    class="mr-4"
+                    @click="edit(item.id)"
                 >
                 mdi-pencil-outline
                 </v-icon>
@@ -39,17 +52,20 @@
 
 <script>
 import ScheduleEmailDialog from './ScheduleEmailDialogComponent'
+import RescheduleEmailDialog from './RescheduleEmailDialogComponent'
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
     components: {
-        ScheduleEmailDialog
+        ScheduleEmailDialog,
+        RescheduleEmailDialog
     },
     props: {
         user: Object,
         emails: Array,
-        dialog: Boolean
+        dialog: Boolean,
+        dialogForReschedule: Boolean
     },
     data: function(){
         return {
@@ -84,12 +100,18 @@ export default {
             else return 'primary'
         },
         ...mapActions('notifications', [
-            'showDialogForSchedule'
+            'showDialogForSchedule',
+            'showDialogForReschedule'
         ]),
         showDialog(id){
             console.log('check');
             console.log(id);
             this.showDialogForSchedule({
+                event_id: id
+            })
+        },
+        showRescheduleDialog(id){
+             this.showDialogForReschedule({
                 event_id: id
             })
         }

@@ -15,6 +15,7 @@
             <emailtoparticipantslist-component
                 v-bind:emails="requestedEmails"
                 v-bind:dialog="dialogForSchedule"
+                v-bind:dialogForReschedule="dialogForReschedule"
             ></emailtoparticipantslist-component>
         </v-container>
     </div>
@@ -23,7 +24,6 @@
 <script>
 import EmailToParticipantsDialog from './EmailToParticipantsDialogComponent'
 import EmailToParticipantsList from './EmailToParticipantsListComponent'
-import ScheduleEmailDialog from './ScheduleEmailDialogComponent'
 
 import { mapState, mapMutations } from 'vuex'
 
@@ -31,7 +31,6 @@ export default {
     components: {
         EmailToParticipantsDialog,
         EmailToParticipantsList,
-        ScheduleEmailDialog
     },
     props: {
         user: Object
@@ -49,7 +48,8 @@ export default {
         ...mapState('notifications', [
             'dialog',
             'dialogForSchedule',
-            'requestedEmails'
+            'requestedEmails',
+            'dialogForReschedule'
         ])
     },
     methods: {

@@ -81,7 +81,7 @@ export default {
                 (v) => !!v || 'Password is required',
                 (v) => v.length >= 8 || 'Minimum 8 characters'
             ],
-            showPassword: 'false',
+            showPassword: false,
         }
     },
     computed: {

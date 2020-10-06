@@ -121,6 +121,35 @@ class ParticipantNotificationsController extends Controller
 
     }
 
+    public function reschedule(Request $request)
+    {
+        $request->validate([
+            'event_id' => 'required',
+            'scheduled_date' => 'required',
+            'scheduled_time' => 'required',
+            'timezone' => 'required',
+        ]);
+
+        $event_id = request('event_id');
+
+        $notification = ParticipantNotification::where('event_id', $event_id)
+                                                ->first();
+
+        $date = request('scheduled_date');
+        $notification->scheduled_date = $date;
+        $time = request('scheduled_time');
+        $notification->scheduled_time = $time;
+        $notification->timezone = request('timezone');
+        $notification->status_id = 2;
+        $notification->save();
+
+        //UTCへ変換
+        $datetime = $date.' '.$time.':00';
+        $notification->time_utc = $datetime;
+        $notification->save();
+        
+    }
+
 
     public function test()
     {

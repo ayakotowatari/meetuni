@@ -51,6 +51,7 @@ Vue.component('emailtoparticipantsdialog-component', require('./components/inst/
 Vue.component('emailtoparticipantsdialog2-component', require('./components/inst/participants/EmailToParticipantsDialogComponent.vue').default);
 Vue.component('emailtoparticipantslist-component', require('./components/inst/communications/EmailToParticipantsListComponent.vue').default);
 Vue.component('scheduleemaildialog-component', require('./components/inst/communications/ScheduleEmailDialogComponent.vue').default);
+Vue.component('rescheduleemaildialog-component', require('./components/inst/communications/RescheduleEmailDialogComponent.vue').default);
 
 //Chart
 Vue.component('eventbookingchart-component', require('./components/inst/dashboard/EventBookingChartComponent.vue').default);
