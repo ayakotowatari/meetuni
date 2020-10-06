@@ -78,7 +78,11 @@ export default new Vuex.Store ({
         //     name: [],
         //     email: []
         // },
-        allerror: {},
+        allerror: [],
+        allLoginError: {
+            email: null,
+            password: null
+        }
     },
     getters: {
         //stateの値を加工して、componentで使いたい時。
@@ -199,6 +203,9 @@ export default new Vuex.Store ({
         setallErrors(state, payload){
             state.allerror = payload
         },
+        setallLoginErrors(state, payload){
+            state.allLoginError = payload
+         },
         showDialog(state){
             state.dialog = true;
         },
@@ -268,7 +275,9 @@ export default new Vuex.Store ({
     actions: {
         //非同期処理をする
         //componentsではmethodsで展開
-        async login({state}, payload){
+        async login({state, commit}, payload){
+
+            let allerror = [];
 
             await axios
                 .post(payload.url, {
@@ -279,6 +288,10 @@ export default new Vuex.Store ({
                     // console.log(response);
                     // router.push({path: '/student/main'});
                     window.location = "/inst/events"
+                })
+                .catch(error => {
+                    allerror = error.response.data.errors,
+                    commit('setallLoginErrors', allerror)
                 })
         },
         async fetchUser({ commit }){

@@ -39,7 +39,12 @@
                                 :error-messages="allLoginError.password"
                             ></v-text-field>
                         <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
-                        <v-btn text color="primary" class="pa-0" @click="toRegister()">register</v-btn>
+                        <v-row justify="center">
+                            <v-col cols="12" sm="12" md="12">
+                                <v-btn text color="primary" class="pa-0 mr-4" @click="toRegister()">register</v-btn>
+                                <v-btn text color="grey darken-1" class="pa-0" @click="toReset()">forgot your password?</v-btn>
+                            </v-col>
+                        </v-row>
                     </v-col>
                 </v-row>
                     <!-- <input type="hidden" name="event_id" :value="eventId"> -->
@@ -89,11 +94,12 @@ export default {
                     password: this.password,
                 })
             }
-           
-            
         },
         toRegister(){
             this.$router.push({name: 'student-register'});
+        },
+        toReset(){
+            window.location.href = "/password/student/reset";
         }
     }
 

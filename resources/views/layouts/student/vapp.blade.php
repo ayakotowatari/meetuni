@@ -38,13 +38,13 @@
             </v-btn>
             <v-btn 
                 text color="primary" 
-                href="{{ route('student.login') }}"
+                href="/student/login-main"
             >
                 <span>login</span>
             </v-btn>
             <v-btn 
                 text color="primary" 
-                href="{{ route('student.register') }}"
+                href="/student/register-main"
             >
                 <span>register</span>
             </v-btn>
