@@ -13,7 +13,7 @@
         <v-row justify="center">
             <v-col cols="12" sm="12" md="4">
                 <v-img 
-                    src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/carry-on-colour1200px.png" 
+                    src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/drawkit-list-app-colour1200px.png" 
                     cover 
                 >
                 </v-img>
