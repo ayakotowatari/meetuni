@@ -131,6 +131,7 @@ export default new Vuex.Store ({
             state.event.end_utc = payload.end_utc
             state.event.description = payload.description
             state.event.files = payload.image
+            state.event.absolute_path = payload.absolute_path
             state.event.user_id = payload.user_id
             state.event.status = payload.status
         },
