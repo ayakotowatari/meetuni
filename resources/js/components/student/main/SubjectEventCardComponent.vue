@@ -9,7 +9,7 @@
                 <v-img
                 class="white--text align-end"
                 height="180px"
-                :src="`/storage/${ event.image }`"
+                :src="event.absolute_path"
                 aspect-ratio="1.7"  
                 >
                 </v-img>

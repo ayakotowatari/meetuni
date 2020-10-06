@@ -27,7 +27,8 @@ class Event extends Model
     protected $appends = [
         'liked_by_user',
         'booked_by_user',
-        'title_date'
+        'title_date',
+        'absolute_path'
     ];
 
     public function likes(){
@@ -41,6 +42,16 @@ class Event extends Model
         }
 
         return $this->likes->contains(Auth::guard('student')->user()->id);
+    }
+
+    public function getAbsolutePathAttribute()
+    {
+        if(!$this->image) {
+            return null;
+        }
+
+        // return env('AWS_URL').'/'.$this->image;
+        return config('s3.aws_url').'/'.$this->image;
     }
 
     public function bookings(){

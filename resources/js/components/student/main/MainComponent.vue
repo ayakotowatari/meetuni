@@ -9,7 +9,7 @@
         <v-tabs class="mb-12">
             <v-tab router :to="{name: 'all-events'}">All</v-tab>
             <v-tab router :to="{name: 'recommended-events'}">For You</v-tab>
-            <v-tab router :to="{name: 'search-events'}">Search</v-tab>
+            <!-- <v-tab router :to="{name: 'search-events'}">Search</v-tab> -->
         </v-tabs>
         <router-view 
             v-bind:user="user"

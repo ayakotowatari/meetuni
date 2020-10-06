@@ -10,7 +10,7 @@
                 <v-card flat v-for="event in likedEvents" :key="event.id">
                     <v-row class="pa-3"> 
                         <v-col cols="12" xs="12" md="2">
-                            <v-img :src="`/storage/${ event.image }`"></v-img>
+                            <v-img :src="event.absolute_path"></v-img>
                         </v-col>
                         <v-col cols="12" xs="12" md="2">
                             <div class="caption grey--text">Institution Name</div>

@@ -21,7 +21,7 @@
         ></followdialog-component> 
        
         <v-img 
-            :src="`/storage/${ event.image }`" 
+            :src="event.absolute_path" 
             cover 
             aspect-ratio="2.5"
         >
