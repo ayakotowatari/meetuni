@@ -9,7 +9,7 @@
                 <v-card flat v-for="booking in bookings" :key="booking.title">
                     <v-row class="pa-3"> 
                         <v-col cols="12" xs="12" md="2">
-                            <v-img :src="`https://meetuni.s3-ap-northeast-1.amazonaws.com/${event.image}`" ></v-img>
+                            <v-img :src="`https://meetuni.s3-ap-northeast-1.amazonaws.com/${booking.image}`" ></v-img>
                         </v-col>
                         <v-col cols="12" xs="12" md="2">
                             <div class="caption grey--text">Institution Name</div>

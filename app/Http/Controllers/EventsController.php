@@ -560,7 +560,7 @@ class EventsController extends Controller
 
         $description = request('description');
 
-        // $image = $request->file('image');
+        $image = $request->file('image');
         // $disk = Storage::disk('local');
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
         $disk = Storage::disk('s3');
