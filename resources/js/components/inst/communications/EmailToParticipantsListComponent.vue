@@ -114,7 +114,7 @@ export default {
              this.showDialogForReschedule({
                 event_id: id
             })
-        }
+        },
     }
 
 }
