@@ -45,7 +45,7 @@
     </v-row>
     <v-row justify="center">
         <v-col col="12" sm="12" md="8">
-            <v-img :src="`/storage/${ event.files }`" aspect-ratio="1.7"></v-img>
+            <v-img :src="event.absolute_path" aspect-ratio="1.7"></v-img>
         </v-col>
     </v-row>
     <v-row justify="center">
