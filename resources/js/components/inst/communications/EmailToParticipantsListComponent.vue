@@ -107,12 +107,12 @@ export default {
             console.log('check');
             console.log(id);
             this.showDialogForSchedule({
-                event_id: id
+                email_id: id
             })
         },
         showRescheduleDialog(id){
              this.showDialogForReschedule({
-                event_id: id
+                email_id: id
             })
         },
     }

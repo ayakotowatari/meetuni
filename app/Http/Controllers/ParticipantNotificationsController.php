@@ -72,7 +72,7 @@ class ParticipantNotificationsController extends Controller
                                         ->join('events', 'participant_notifications.event_id', '=', 'events.id')
                                         ->where('participant_notifications.user_id', $user_id)
                                         ->select(
-                                            'events.id',
+                                            'participant_notifications.id',
                                             'events.title', 
                                             'participant_notifications.user_id',  
                                             'participant_notifications.scheduled_date',  
@@ -92,16 +92,16 @@ class ParticipantNotificationsController extends Controller
     public function schedule(Request $request)
     {
         $request->validate([
-            'event_id' => 'required',
+            'email_id' => 'required',
             'scheduled_date' => 'required',
             'scheduled_time' => 'required',
             'timezone' => 'required',
         ]);
 
 
-        $event_id = request('event_id');
+        $email_id = request('email_id');
 
-        $notification = ParticipantNotification::where('event_id', $event_id)
+        $notification = ParticipantNotification::where('id', $email_id)
                                                 ->first();
 
         $date = request('scheduled_date');
@@ -124,15 +124,15 @@ class ParticipantNotificationsController extends Controller
     public function reschedule(Request $request)
     {
         $request->validate([
-            'event_id' => 'required',
+            'email_id' => 'required',
             'scheduled_date' => 'required',
             'scheduled_time' => 'required',
             'timezone' => 'required',
         ]);
 
-        $event_id = request('event_id');
+        $email_id = request('email_id');
 
-        $notification = ParticipantNotification::where('event_id', $event_id)
+        $notification = ParticipantNotification::where('id', $email_id)
                                                 ->first();
 
         $date = request('scheduled_date');

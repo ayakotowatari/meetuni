@@ -8,6 +8,7 @@ export const notifications = {
         events: [],
         requestedEmails: [],
         eventId: '',
+        emailId: '',
         dialog: false,
         dialogForSchedule: false,
         dialogForReschedule: false,
@@ -41,6 +42,9 @@ export const notifications = {
         },
         setEventId(state, payload){
             state.eventId = payload;
+        },
+        setEmailId(state, payload){
+            state.emailId = payload
         },
         setallErrors(state, payload){
             state.allerror = payload;
@@ -128,7 +132,7 @@ export const notifications = {
 
             await axios
                 .post('/inst/schedule-emailstoparticipants', {
-                    event_id: payload.event_id,
+                    email_id: payload.email_id,
                     scheduled_date: payload.scheduled_date,
                     scheduled_time: payload.scheduled_time,
                     timezone: payload.timezone
@@ -143,11 +147,11 @@ export const notifications = {
                 })
         },
         async rescheduleEmailToParticipants({commit}, payload){
-            console.log(payload);
+            // console.log(payload);
 
             await axios
                 .post('/inst/reschedule-emailstoparticipants', {
-                    event_id: payload.event_id,
+                    email_id: payload.email_id,
                     scheduled_date: payload.scheduled_date,
                     scheduled_time: payload.scheduled_time,
                     timezone: payload.timezone
@@ -163,19 +167,19 @@ export const notifications = {
         },
         showDialogForSchedule({state, commit}, payload){
 
-            console.log('dialog');
-            console.log(payload.event_id);
+            // console.log('dialog');
+            // console.log(payload.email_id);
 
-            commit('setEventId', payload.event_id);
+            commit('setEmailId', payload.email_id);
             commit('showDialogForSchedule');
 
         },
         showDialogForReschedule({state, commit}, payload){
 
-            console.log('dialog');
-            console.log(payload.event_id);
+            // console.log('dialog');
+            // console.log(payload.email_id);
 
-            commit('setEventId', payload.event_id);
+            commit('setEmailId', payload.email_id);
             commit('showDialogForReschedule');
 
         }

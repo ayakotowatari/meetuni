@@ -142,7 +142,8 @@ export default {
     },
     computed: {
         ...mapState('notifications',[
-            'allerror'
+            'allerror',
+            'emailId'
         ]),
         ...mapState([
             'timezones'
@@ -167,7 +168,7 @@ export default {
 
             if(this.$refs.form.validate()){
                 this.scheduleEmailToParticipants({
-                    event_id: this.event_id,
+                    email_id: this.emailId,
                     scheduled_date: this.date,
                     scheduled_time: this.time,
                     timezone: this.timezone
