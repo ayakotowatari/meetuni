@@ -13,7 +13,7 @@
                 <v-row justify="center" align="center" class="mb-8">
                     <v-col cols="12" sm="12" md="4">
                         <v-img 
-                            src="/storage/illustration/calendar-colour-1200px.png" 
+                            src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/calendar-colour-1200px.png" 
                             cover 
                         >
                         </v-img>
@@ -31,14 +31,14 @@
                     </v-col>
                     <v-col cols="12" sm="12" md="4" class="hidden-sm-and-down">
                         <v-img 
-                            src="/storage/illustration/drawkit-server-woman-colour-1200px.png" 
+                            src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/drawkit-server-woman-colour-1200px.png" 
                             cover 
                         >
                         </v-img>
                     </v-col>
                     <v-col cols="12" sm="12" md="4" class="hidden-md-and-up">
                         <v-img 
-                            src="/storage/illustration/drawkit-server-woman-colour-1200px.png" 
+                            src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/drawkit-server-woman-colour-1200px.png" 
                             cover 
                         >
                         </v-img>
@@ -52,14 +52,14 @@
                 <v-row justify="center" align="center">
                     <v-col cols="6" sm="6" md="2">
                         <v-img 
-                            src="/storage/illustration/character 15.svg" 
+                            src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/character+15.svg" 
                             cover 
                         >
                         </v-img>
                     </v-col>
                      <v-col cols="6" sm="6" md="2">
                         <v-img 
-                            src="/storage/illustration/character 14.svg" 
+                            src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/character+14.svg" 
                             cover 
                         >
                         </v-img>

@@ -560,13 +560,13 @@ class EventsController extends Controller
 
         $description = request('description');
 
-        $image = $request->file('image');
-        $disk = Storage::disk('local');
+        // $image = $request->file('image');
+        // $disk = Storage::disk('local');
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
-        // $disk = Storage::disk('s3');
+        $disk = Storage::disk('s3');
 
-        $path = $disk->put('public', $image);
-        $filename = ltrim($path, 'public/');
+        $path = $disk->putFile('', $image, 'public');
+        // $filename = ltrim($path, 'public/');
 
         // if($image){
             
@@ -582,7 +582,8 @@ class EventsController extends Controller
         Event::where('events.id', $event_id)
                 ->update([ 
                     'description' => $description, 
-                    'image' => $filename 
+                    // 'image' => $filename 
+                    'image' => $path
                 ]);
 
         $event = Event::where('id', $event_id)
@@ -713,18 +714,19 @@ class EventsController extends Controller
         ]);
 
         $image = $request->file('image');
-        $disk = Storage::disk('local');
+        // $disk = Storage::disk('local');
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
-        // $disk = Storage::disk('s3');
+        $disk = Storage::disk('s3');
 
-        $path = $disk->put('public', $image);
-        $filename = ltrim($path, 'public/');
+        $path = $disk->putFile('', $image, 'public');
+        // $filename = ltrim($path, 'public/');
 
         $event_id = request('id');
 
         Event::where('events.id', $event_id)
                 ->update([ 
-                    'image' => $filename, 
+                    // 'image' => $filename, 
+                    'image' => $path
                 ]);
     }
 

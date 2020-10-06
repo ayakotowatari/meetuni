@@ -12,7 +12,7 @@
             <v-row justify="center">
                 <v-col cols="12" sm="12" md="4">
                     <v-img 
-                        src="/storage/illustration/character 7.svg" 
+                        src="https://meetuni.s3-ap-northeast-1.amazonaws.com/illustration/character+7.svg" 
                         cover 
                     >
                     </v-img>
