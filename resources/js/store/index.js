@@ -44,6 +44,7 @@ export default new Vuex.Store ({
             end_utc: '',
             description: '',
             files: '',
+            absolute_path: '',
             user_id: '',
             status: ''
         },
@@ -138,10 +139,10 @@ export default new Vuex.Store ({
         setEventSubjects(state, payload){
             state.eventSubjects = payload
         },
-        updateEventDescription(state, payload){
+        setEventDescription(state, payload){
             state.event.description = payload
         },
-        updateEventFiles(state, payload){
+        setEventFiles(state, payload){
             state.event.files = payload
         },
         updateEventTitle(state,payload){
@@ -455,8 +456,8 @@ export default new Vuex.Store ({
         },
         async updateEventFiles({state, commit}, payload){
 
-            // console.log(payload.id);
-            // console.log(payload.image);
+            console.log('check');
+            console.log(payload.image);
 
             let allerror = [];
             
