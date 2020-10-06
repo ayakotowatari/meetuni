@@ -565,7 +565,7 @@ class EventsController extends Controller
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
         $disk = Storage::disk('s3');
 
-        $path = $disk->putFile('', $image, 'public');
+        $path = $disk->putFile('event', $image, 'public');
         // $filename = ltrim($path, 'public/');
 
         // if($image){
@@ -718,7 +718,7 @@ class EventsController extends Controller
         // [Tips]設定をすれば下記に書き換えるだけでS3に保存できる
         $disk = Storage::disk('s3');
 
-        $path = $disk->putFile('', $image, 'public');
+        $path = $disk->putFile('event', $image, 'public');
         // $filename = ltrim($path, 'public/');
 
         $event_id = request('id');

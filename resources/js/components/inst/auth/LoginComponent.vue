@@ -26,6 +26,9 @@
                                     label="Email" 
                                     outlined
                                     required
+                                    :rules="emailRules" 
+                                    :error="allLoginError.email"
+                                    :error-messages="allLoginError.email"
                                 ></v-text-field>
                                 <v-text-field 
                                     v-model="password"
@@ -34,9 +37,17 @@
                                     :type="showPassword ? 'text' : 'password'"
                                     outlined
                                     required
+                                    :rules="passwordRules" 
+                                    :error="allLoginError.password"
+                                    :error-messages="allLoginError.password"
                                     @click:append="showPassword = !showPassword"
                                 ></v-text-field>
                                 <v-btn block depressed dark color="primary" class="mb-2" @click="goLogin()">Login</v-btn>
+                                 <v-row justify="center">
+                                    <v-col cols="12" sm="12" md="12">
+                                        <v-btn text color="grey darken-1" class="pa-0" @click="toReset()">forgot your password?</v-btn>
+                                    </v-col>
+                                </v-row>
                             </v-col>
                         </v-row>
                         <!-- <input type="hidden" name="event_id" :value="eventId"> -->
@@ -61,12 +72,22 @@ export default {
     data: function(){
         return{
             email: '',
+            emailRules: [
+                (v) => !!v || 'E-mail is required',
+                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+            ],
             password: '',
+            passwordRules: [
+                (v) => !!v || 'Password is required',
+                (v) => v.length >= 8 || 'Minimum 8 characters'
+            ],
             showPassword: 'false',
         }
     },
     computed: {
-        
+        ...mapState([
+            'allLoginError'
+        ])
     },
     methods: {
         ...mapActions([
@@ -79,6 +100,9 @@ export default {
                 password: this.password,
             })
         },
+        toReset(){
+            window.location.href = "/password/reset";
+        }
     }
 
 

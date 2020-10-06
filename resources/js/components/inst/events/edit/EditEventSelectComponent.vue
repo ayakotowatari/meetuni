@@ -145,7 +145,7 @@ import { mapState } from 'vuex'
 
 export default {
     props: {
-        id: Number,
+        id: String,
         eventRegions: Array,
         eventLevels: Array,
         eventSubjects: Array

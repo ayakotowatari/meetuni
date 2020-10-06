@@ -44,14 +44,9 @@
         </v-col>  
     </v-row>
     <v-row justify="center">
-        <v-col col="12" sm="12" md="8">
-            <v-img :src="event.absolute_path" aspect-ratio="1.7"></v-img>
-        </v-col>
-    </v-row>
-    <v-row justify="center">
         <v-col col="12" sm="12" md="8" class="py-0">
             <v-btn @click="hideFiles = !hideFiles" color="primary" outlined class="py-0">Change</v-btn>
-            <v-btn v-if="!hideFiles" @click="updateFiles" class="ml-4" color="primary" outlined>Save</v-btn>
+            <v-btn v-if="!hideFiles" @click="updateFiles" class="ml-4" color="primary">Save</v-btn>
         </v-col>
     </v-row>
     <v-row justify="center">
@@ -68,6 +63,11 @@
             :error="allerror.image"
             :error-messages="allerror.image">
         </v-file-input>
+        </v-col>
+    </v-row>
+    <v-row justify="center">
+        <v-col col="12" sm="12" md="8">
+            <v-img :src="event.absolute_path" aspect-ratio="1.7"></v-img>
         </v-col>
     </v-row>
     </v-form>
@@ -92,7 +92,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: {
-        id: Number,
+        id: String,
         event: Object
         // description: String,
         // files: String
@@ -122,17 +122,17 @@ export default {
                 return this.$store.state.event.description
             },
             set (value) {
-                this.$store.commit('updateEventDescription', value)
+                this.$store.commit('setEventDescription', value)
             }
         },
-        files: {
-            get(){
-                return this.$store.state.event.files
-            },
-            set(value){
-                this.$store.commit('updateEventFiles', value)
-            }
-        }
+        // files: {
+        //     get(){
+        //         return this.$store.state.event.files
+        //     },
+        //     set(value){
+        //         this.$store.commit('setEventFiles', value)
+        //     }
+        // }
     },
     methods: {
         ...mapActions([

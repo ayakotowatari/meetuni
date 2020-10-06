@@ -1,7 +1,7 @@
 @extends('layouts.student.vapp')
 
 @section('content')
-<<v-main>
+<v-main>
     <v-container>
         <h1 class="h4 text-center pt-8 font-weight-bold">
             {{ __('Login') }}
