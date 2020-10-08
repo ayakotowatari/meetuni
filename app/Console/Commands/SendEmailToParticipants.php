@@ -71,7 +71,7 @@ class SendEmailToParticipants extends Command
         if($messages !== null){
             //Get all messages that their dispatch date is due
             $messages->where('time_utc', $now)->each(function($message) {
-                if($message->status_id !== 10)
+                if($message->status_id == 2)
                 {
                     $bookings = Booking::where('event_id', $message->event_id)
                                         ->where('cancelled', 0)
