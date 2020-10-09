@@ -426,9 +426,9 @@ class EventsController extends Controller
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
                         ->where('insts.id', $id)
                         ->where('events.status_id', 1)
-                        ->whereDoesntHave('bookings', function(Builder $query){
-                            $query->where('student_id', '=', Auth::guard('student')->user()->id);
-                        })
+                        // ->whereDoesntHave('bookings', function(Builder $query){
+                        //     $query->where('student_id', '=', Auth::guard('student')->user()->id);
+                        // })
                         ->select('events.id', 'events.title', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
                         ->get();
 

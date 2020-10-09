@@ -36,7 +36,45 @@
             <v-btn text color="grey darken-1" href="/student/main">
                     <span>top page</span>
             </v-btn>
-            <v-btn 
+            <v-menu
+                top
+                offset-y
+                :close-on-content-click="closeOnContentClick"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            color="primary"
+                            text
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            <span class="mr-1">sign in</span>  
+                        </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                        href="/student/login-main"
+                    >
+                        <v-list-item-action>
+                            <v-icon class="grey--text text--darken-3">mdi-login-variant</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-action>
+                            <v-list-item-title class="grey--text text--darken-3">Log in</v-list-item-title>
+                        </v-list-item-action>
+                    </v-list-item>
+                    <v-list-item
+                        href="/student/register-main"
+                    >
+                        <v-list-item-action>
+                            <v-icon class="grey--text text--darken-3">mdi-account-plus-outline</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-action>
+                            <v-list-item-title class="grey--text text--darken-3">Register</v-list-item-title>
+                        </v-list-item-action>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+            <!-- <v-btn 
                 text color="primary" 
                 href="/student/login-main"
             >
@@ -47,7 +85,7 @@
                 href="/student/register-main"
             >
                 <span>register</span>
-            </v-btn>
+            </v-btn> -->
             </v-app-bar>
         </nav>
    

@@ -44,7 +44,7 @@
                       <v-icon class="grey--text text--darken-3">mdi-account-plus-outline</v-icon>
                   </v-list-item-action>
                   <v-list-item-action>
-                      <v-list-item-title class="grey--text text--darken-3">Reguster</v-list-item-title>
+                      <v-list-item-title class="grey--text text--darken-3">Register</v-list-item-title>
                   </v-list-item-action>
               </v-list-item>
           </v-list>

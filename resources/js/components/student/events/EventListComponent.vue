@@ -1,11 +1,11 @@
 <template>
     <v-container>
-        <h1 class="grey--text mb-8">Events to be organised by<br>
+        <h1 class="grey--text mb-8">Events organised by<br>
             <span class="primary--text">{{ inst.name }}</span>
         </h1>
         
         <v-row>
-            <v-col col="12" sm="12" md="3" class="mb-6" v-for="event in eventsList" :key="event.id">
+            <v-col cols="12" sm="12" md="3" class="mb-6" v-for="event in eventsList" :key="event.id">
                 <v-card
                     class="mx-auto"
                     max-width="400"
