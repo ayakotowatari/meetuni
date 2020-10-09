@@ -94,7 +94,7 @@ export const notifications = {
             // let participants = [];
 
             await axios
-                .post("/inst/email-participants/", {
+                .post("/inst/email-participants", {
                     event_id: payload.event_id,
                     subject: payload.subject,
                     body_text: payload.body_text,
