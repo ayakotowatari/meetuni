@@ -31,7 +31,7 @@
                             :color="event.liked_by_user == true ? 'error' : null"
                             class="like mr-3"
                         >mdi-heart</v-icon>
-                        <v-icon class="mr-1">mdi-share-variant</v-icon>
+                        <!-- <v-icon class="mr-1">mdi-share-variant</v-icon> -->
                         </v-row>
                     </v-list-item>
                 </v-card-actions>
