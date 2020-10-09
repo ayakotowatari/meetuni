@@ -10,16 +10,57 @@
       <v-btn text color="grey darken-1" @click.stop="toTopPage">
             <span>top page</span>
       </v-btn>
+      <v-menu
+          v-if="user == null && $vuetify.breakpoint.xs"
+          top
+          offset-y
+          :close-on-content-click="closeOnContentClick"
+      >
+          <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <span class="mr-1">sign in</span>  
+                  </v-btn>
+          </template>
+          <v-list>
+              <v-list-item
+                  :to="{name:'student-login'}"
+              >
+                  <v-list-item-action>
+                      <v-icon class="grey--text text--darken-3">mdi-login-variant</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-action>
+                      <v-list-item-title class="grey--text text--darken-3">Log in</v-list-item-title>
+                  </v-list-item-action>
+              </v-list-item>
+              <v-list-item
+                  :to="{name:'student-register'}"
+              >
+                  <v-list-item-action>
+                      <v-icon class="grey--text text--darken-3">mdi-account-plus-outline</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-action>
+                      <v-list-item-title class="grey--text text--darken-3">Reguster</v-list-item-title>
+                  </v-list-item-action>
+              </v-list-item>
+          </v-list>
+      </v-menu>
       <v-btn 
-          text color="primary" 
           v-if="user == null"
+          class="hidden-sm-and-down"
+          text color="primary" 
           @click.stop="toLogin"
       >
           <span>Log in</span>
       </v-btn>
       <v-btn 
-          text color="primary" 
           v-if="user == null"
+          class="hidden-sm-and-down"
+          text color="primary" 
           @click.stop="toRegister"
       >
           <span>Register</span>
