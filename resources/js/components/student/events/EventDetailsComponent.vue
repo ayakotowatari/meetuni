@@ -48,14 +48,12 @@
                 <v-col cols="12" sm="12" md="12">
                     <v-btn 
                         v-if="inst.followed_by_user == false"
-                        class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
                         @click="follow(`${inst.id}`, `${event.id}`)"
                     >Follow</v-btn>
                     <v-btn 
                         v-if="inst.followed_by_user == true"
-                        class="ma-2 hidden-sm-and-down" 
                         outlined      
                         color="primary"
                         @click="unfollow(`${inst.id}`)"
