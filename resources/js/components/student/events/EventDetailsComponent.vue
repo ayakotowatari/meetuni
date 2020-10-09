@@ -27,10 +27,26 @@
         >
         </v-img>
         <v-container>
+            <v-row align="center">
+                <v-col cols="12" sm="12" md="6">
+                    <span class="grey--text text--darken-1 institution-title">{{ inst.name }}</span>
+                </v-col>
+                <v-col cols="12" sm="12" md="2">
+                    <v-avatar class="hidden-md-and-up" size="28">
+                        <v-img
+                            :src="`${event.icon}`"
+                        ></v-img>
+                    </v-avatar>
+                    <v-avatar class="hidden-sm-and-down" size="32">
+                        <v-img
+                            :src="`${event.icon}`"
+                        ></v-img>
+                    </v-avatar>
+                </v-col>
+            </v-row>
             <v-row>
-                <v-col col="12" sm="12" md="12">
-                    <div class="grey--text text--darken-1 institution-title">{{ inst.name }}</div>
-                     <v-btn 
+                <v-col cols="12" sm="12" md="12">
+                    <v-btn 
                         v-if="inst.followed_by_user == false"
                         class="ma-2 hidden-sm-and-down" 
                         outlined      
@@ -47,7 +63,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col col="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12">
                     <div class="primary--text event-title mb-2">{{ event.title }}</div>
                 </v-col>
             </v-row>
@@ -60,13 +76,13 @@
                     </v-col>
                 </v-row>
                 <v-row class="mb-6">
-                    <v-col col="12" sm="12" md="12">
+                    <v-col cols="12" sm="12" md="12">
                         <v-icon medium class="mr-8">mdi-calendar-month-outline</v-icon>
                         <span class="event-info">{{ formattedDate(event.date, user.timezone) }}</span>
                     </v-col>
                 </v-row>
                 <v-row class="mb-6">
-                    <v-col col="12" sm="12" md="12">
+                    <v-col cols="12" sm="12" md="12">
                         <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
                         <span class="event-info">
                             {{ formattedStartTime(event.start_utc, user.timezone) }} - 
@@ -90,7 +106,7 @@
                     </v-col>
                 </v-row>
                 <v-row class="mb-6">
-                    <v-col col="12" sm="12" md="12">
+                    <v-col cols="12" sm="12" md="12">
                         <v-icon medium class="mr-8">mdi-clock-time-nine-outline</v-icon>
                         <span class="event-info">
                             {{ formattedStartTime(event.start_utc, event.timezone) }} - 
@@ -100,7 +116,7 @@
                 </v-row>
             </div>
             <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12">
                     <v-icon medium class="mr-8">mdi-book-multiple-outline</v-icon>
                     <span class="event-info mr-4" v-for="subject in subjects" :key=subject.id>
                         {{ subject.subject }}
@@ -108,7 +124,7 @@
                 </v-col>
             </v-row>
             <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12">
                     <v-icon medium class="mr-8">mdi-earth</v-icon>
                     <span class="event-info mr-4" v-for="region in regions" :key=region.id>
                         {{ region.region }}
@@ -116,7 +132,7 @@
                 </v-col>
             </v-row>
             <v-row class="mb-6">
-                <v-col col="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="12">
                     <v-icon medium class="mr-8">mdi-layers-triple-outline</v-icon>
                     <span class="event-info mr-4" v-for="level in levels" :key=level.id>
                         {{ level.level }}
@@ -268,6 +284,12 @@ export default {
 </script>
 
 <style>
+.icon{
+    vertical-align: middle;
+}
+.avatar{
+    line-height: 48px;
+}
 .institution-title{
     font-size: 48px;
 }
@@ -285,10 +307,13 @@ export default {
 
 @media(max-width:780px){
     .institution-title{
-        font-size: 28px;
+        font-size: 24px;
     }
     .event-title{
-        font-size: 24px;
+        font-size: 20px;
+    }
+    .event-info{
+        font-size: 16px;
     }
     .btn-text{
         font-size: 24px;

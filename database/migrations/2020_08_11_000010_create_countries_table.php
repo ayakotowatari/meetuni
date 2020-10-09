@@ -19,6 +19,7 @@
 						$table->string('country',191);
                         $table->bigInteger('region_id')->unsigned();
                         $table->integer('destination');
+                        $table->string('icon',191)->nullable();
 						$table->timestamps();
                         $table->softDeletes();
                         

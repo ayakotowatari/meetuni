@@ -45,12 +45,13 @@ class EventsController extends Controller
 
             $events = Event::with('bookings')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('countries', 'insts.country_id', '=', 'countries.id')
                         ->where('events.status_id', 1)
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id','=', Auth::guard('student')->user()->id);
                         })
                         ->orderBy('events.created_at')
-                        ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
             // return view ('student/test', ['events'=>$events]);
             return response()->json(['events'=>$events],200);
@@ -59,9 +60,10 @@ class EventsController extends Controller
 
             $events = Event::with('bookings')
             ->join('insts', 'events.inst_id', '=', 'insts.id')
+            ->join('countries', 'insts.country_id', '=', 'countries.id')
             ->where('events.status_id', 1)
             ->orderBy('events.created_at')
-            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
             ->get();
             // return view ('student/test', ['events'=>$events]);
             return response()->json(['events'=>$events],200);
@@ -91,9 +93,10 @@ class EventsController extends Controller
     public function fetchSingleEvent(Request $request, $id){
 
         $event = Event::join('insts', 'events.inst_id', '=', 'insts.id')
+                    ->join('countries', 'insts.country_id', '=', 'countries.id')
                     ->where('events.id', $id)
                     ->where('events.status_id', 1)
-                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.timezone', 'events.description', 'events.image')
+                    ->select('events.id', 'events.title', 'insts.name', 'events.inst_id', 'events.date', 'events.start_utc', 'events.end_utc', 'events.timezone', 'events.description', 'events.image', 'countries.icon')
                     ->first();
 
         $regions = Event::join('event_regions', 'events.id', '=', 'event_regions.event_id')
@@ -232,6 +235,7 @@ class EventsController extends Controller
                 $events[] = Event::with('bookings')
                         ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('countries', 'insts.country_id', '=', 'countries.id')
                         ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                         ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
                         ->where('event_subjects.subject_id', $subject->id)
@@ -243,7 +247,7 @@ class EventsController extends Controller
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })
-                        ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
             };
             // DD($events);
@@ -312,7 +316,7 @@ class EventsController extends Controller
                                 ->whereDoesntHave('bookings', function(Builder $query){
                                     $query->where('student_id', '=', Auth::guard('student')->user()->id);
                                 })
-                                ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                                ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                                 ->get();
             }
     
@@ -365,6 +369,7 @@ class EventsController extends Controller
             $events = Event::with('bookings')
                         ->join('event_regions', 'events.id', '=', 'event_regions.event_id')
                         ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('countries', 'insts.country_id', '=', 'countries.id')
                         ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                         ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                         ->where('event_regions.region_id', $region->id)
@@ -378,7 +383,7 @@ class EventsController extends Controller
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })
-                        ->select('events.id', 'insts.name', 'events.title','events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image')
+                        ->select('events.id', 'insts.name', 'events.title','events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
     
             // DD($events);
