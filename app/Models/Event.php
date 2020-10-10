@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use Searchable;
 
     protected $fillable = [
         'title', 
@@ -94,6 +96,29 @@ class Event extends Model
     public function status(){
         return $this->belongsTo('App\Models\Status');
     }
+
+    //Algoriaのサーチ
+    public function searchableAs()
+    {
+        return 'event_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = $this->transform($array);
+
+        return $array;
+    }
+
+    // public function shouldBeSearchable()
+    // {
+        
+    //     if($this->status_id == 1) return true;
+    //     return false;
+
+    // }   
 
     // public function levels(){
     //     return $this->hasMany('App\Models\Level', 'event_levels');

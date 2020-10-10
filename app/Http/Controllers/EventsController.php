@@ -844,6 +844,22 @@ class EventsController extends Controller
         return response()->json(['event' => $event],200);
     }
 
+    //Algoliaでのサーチ
+    public function searchItems(Request $request)
+    {
+        $request->validate([
+            'term' => 'required',
+        ]);
+        
+        $term = request('term');
+        $results = Event::search($term)
+                        ->where('status_id', 1)                
+                        ->get();
+
+        return response()->json(['results' => $results], 200);
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

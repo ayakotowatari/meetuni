@@ -227,6 +227,9 @@ Route::group(['middleware' => ['auth:student', 'can:student']], function(){
     Route::post('/student/update-subjects', 'StudentsController@updateSubjects')->name('student.update.subjects');
 });
 
+//学生イベントサーチ
+Route::post('/student/search-event', 'EventsController@searchItems')->name('student.search');
+
 
 //テスト
 // Route::get('/test', 'HomeController@test');
