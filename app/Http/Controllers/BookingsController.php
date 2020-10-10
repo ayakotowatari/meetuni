@@ -246,20 +246,26 @@ class BookingsController extends Controller
         ]);
 
         $id = request('id');
-        
-        Booking::where('bookings.id', $id)
-        ->update([ 
-            'cancelled' => 1
-        ]);
-
         $currentBooking = Booking::where('bookings.id', $id)->first();
 
-        $updated_at = $currentBooking->updated_at;
-
+        //キャンセルでレコードを削除する場合
         Booking::where('bookings.id', $id)
-            ->update([ 
-                'formatted_updated' => $updated_at 
-        ]);   
+                ->delete();
+
+        //キャンセルをステータスで管理する場合
+        // Booking::where('bookings.id', $id)
+        // ->update([ 
+        //     'cancelled' => 1
+        // ]);
+
+        // $currentBooking = Booking::where('bookings.id', $id)->first();
+
+        // $updated_at = $currentBooking->updated_at;
+
+        // Booking::where('bookings.id', $id)
+        //     ->update([ 
+        //         'formatted_updated' => $updated_at 
+        // ]);   
         
         $student = Auth::guard('student')->user();
 

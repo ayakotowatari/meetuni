@@ -154,10 +154,16 @@
             >booked</v-btn>
         </v-container>
         <v-bottom-navigation class="hidden-md-and-up" background-color="primary" grow dark fixed>
-            <v-btn>
-                <span>book</span>
+            <v-btn
+                v-if="event.booked_by_user == false"
+                @click.stop="showDialog(event.id)"
+            >
+                <span>Book</span>
                 <v-icon>mdi-calendar-check-outline</v-icon>
             </v-btn>
+            <v-btn
+                v-if="event.booked_by_user == true"
+            >Booked</v-btn>
         </v-bottom-navigation>
     </div>
 </template>
