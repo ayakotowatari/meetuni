@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Auth;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Inst extends Model
 {
 
+    use Searchable;
+
     protected $appends = [
-        'followed_by_user'
+        'followed_by_user',
+        'country_name',
+        'country_icon'
     ];
 
     public function follows(){
@@ -25,9 +30,32 @@ class Inst extends Model
         return $this->follows->contains(Auth::guard('student')->user()->id);
     }
 
-    //InstUserモデルのデータを引っ張ってくる。
-    public function instUsers(){
-        return $this->hasMany('App\Models\InstUser');
+    public function events()
+    {
+        return $this->hasMany('App\Models\Event');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Country');
+    }
+
+    public function getCountryNameAttribute()
+    {
+        if(!$this->country_id){
+            return null;
+        }
+
+        return $this->country->country;
+    }
+
+    public function getCountryIconAttribute()
+    {
+        if(!$this->country_id){
+            return null;
+        }
+
+        return $this->country->icon;
     }
     
 }
