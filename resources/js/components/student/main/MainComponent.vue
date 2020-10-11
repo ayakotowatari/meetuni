@@ -6,10 +6,11 @@
                 <h3 class="subline grey--text">Find online university <br class="sm">information sessions <br> and taster lectures.</h3>
             </v-col>
         </v-row>
+        <searchevents-component></searchevents-component>
         <v-tabs class="mb-12">
             <v-tab router :to="{name: 'all-events'}">All</v-tab>
             <v-tab router :to="{name: 'recommended-events'}">For You</v-tab>
-            <v-tab router :to="{name: 'search-events'}">Search</v-tab>
+            <!-- <v-tab router :to="{name: 'search-events'}">Search</v-tab> -->
         </v-tabs>
         <router-view 
             v-bind:user="user"
@@ -20,7 +21,12 @@
 </template>
 
 <script>
+import SearchEvents from './SearchEventsComponent'
+
 export default {
+    components: {
+        SearchEvents
+    },
     props: {
         user: Object,
         isLoggedIn: Boolean

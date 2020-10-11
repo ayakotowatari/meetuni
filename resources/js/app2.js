@@ -42,6 +42,7 @@ Vue.component('regioneventcard-component', require('./components/student/main/Re
 Vue.component('tolikedialog-component', require('./components/student/auth/ToLikeDialogComponent.vue').default);
 Vue.component('tobookdialog-component', require('./components/student/auth/ToBookDialogComponent.vue').default);
 Vue.component('tofollowdialog-component', require('./components/student/auth/ToFollowDialogComponent.vue').default);
+Vue.component('searchevents-component', require('./components/student/main/SearchEventsComponent.vue').default);
 
 
 //Chart

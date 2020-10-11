@@ -15,7 +15,7 @@ import Following from "./components/student/account/FollowingComponent";
 import Liked from "./components/student/account/LikedComponent";
 import StudentProfile from "./components/student/profile/StudentProfileComponent";
 import EventList from "./components/student/events/EventListComponent";
-import SearchEvents from "./components/student/main/SearchEventsComponent";
+import SearchResult from "./components/student/main/SearchResultComponent";
 import LikeLogin from "./components/student/auth/LikeLoginComponent"
 import Login from "./components/student/auth/LoginComponent"
 import BookLogin from "./components/student/auth/BookLoginComponent"
@@ -54,13 +54,6 @@ const routes = [
                     path: "recommended-events",
                     name: "recommended-events",
                     component: RecommendedEvents
-                },
-                {
-                    //RecommendedEvents will be rendered inside Main's <router-view>
-                    //when /main/recommended-events is matched.
-                    path: "search-events",
-                    name: "search-events",
-                    component: SearchEvents
                 },
             ]
     },
@@ -123,6 +116,11 @@ const routes = [
         path: "/student/login-follow/:id",
         name: "student-loginfollow",
         component: FollowLogin
+    },
+    {
+        path: "/student/search-result",
+        name: "search-result",
+        component: SearchResult
     },
 
     //テスト
