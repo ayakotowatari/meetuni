@@ -31,6 +31,9 @@ class Event extends Model
         'booked_by_user',
         'title_date',
         'absolute_path',
+        // 'country_name',
+        // 'country_icon',
+        'inst_name'
     ];
 
     protected $touches = ['inst'];
@@ -102,7 +105,7 @@ class Event extends Model
     //Algoriaのサーチ
     public function inst()
     {
-        return $this->belongsTo('App\Models\Inst');
+        return $this->belongsTo('App\Models\Inst', 'inst_id');
     }
 
     public function searchableAs()
@@ -116,14 +119,29 @@ class Event extends Model
 
         $array = $this->transform($array);
 
-        $array['inst_name'] =$this->inst->name;
+        // $array['inst_name'] =$this->inst->name;
         $array['country_name'] =$this->inst->country_name;
         $array['country_icon'] =$this->inst->country_icon;
 
         return $array;
     }
 
- 
+    // public function getCountryNameAttribute()
+    // {
+    //     return $this->inst->country_name;
+    // }
+
+    // public function getCountryIconAttribute()
+    // {
+    //     return $this->inst->country_icon;
+    // }
+
+    public function getInstNameAttribute()
+    {   
+    //    return $this->inst->name;
+        $inst = $this->inst;
+        return $inst ? $inst->name : null;
+    }
 
 
     // public function shouldBeSearchable()

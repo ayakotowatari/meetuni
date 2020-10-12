@@ -38,24 +38,18 @@
                         <div class="mt-md-10">
                         <v-icon 
                             class="icon" 
-                            :color="event.liked_by_user == true ? 'error' : null"
-                            @click="like(`${event.id}`, event.liked_by_user)"
+                            :color="result.liked_by_user == true ? 'error' : null"
+                            @click="like(`${result.id}`, result.liked_by_user)"
                         >mdi-heart</v-icon>
                         </div>
                     </v-col>
                     <v-col cols="6" xs="6" sm="2" md="1">
                         <div class="mt-md-10">
-                        <v-btn 
-                            v-if='event.booked_by_user == false'
-                            color="primary" 
-                            outlined 
-                            @click="showDialog(`${event.id}`)"
-                        >Book</v-btn>
-                        <v-btn 
-                            v-if='event.booked_by_user == true'
-                            color="grey" 
-                            outlined 
-                        >Booked</v-btn>
+                            <v-btn 
+                                color="primary" 
+                                outlined 
+                                :to="{ name:'event-details', params:{id: result.id}}"
+                            >read more</v-btn>
                         </div>
                     </v-col>
                 </v-row>
@@ -76,6 +70,9 @@
 
 <script>
 import SearchEvents from './SearchEventsComponent'
+import moment from 'moment-timezone'
+
+import { mapState, mapMutations, mapActions} from 'vuex'
 
 export default {
     components: {
@@ -86,9 +83,31 @@ export default {
     },
     data: function(){
         return {
-            results: [],
+            // results: [],
         }
     },
+    mounted(){
+
+    },
+    computed: {
+        ...mapState('search', [
+            'results',
+        ])
+    },
+    methods: {
+        ...mapMutations('search', [
+            'setResults'
+        ]),
+        formattedDate(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("ddd, MMM Do YYYY")
+        },
+        formattedStartTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a")
+        },
+        formattedEndTime(value, timezone){
+            return moment.utc(value).local().tz(timezone).format("h:mm a ([GMT] Z)")
+        },
+    }
 
 
 }

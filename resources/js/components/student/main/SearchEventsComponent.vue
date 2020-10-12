@@ -20,22 +20,24 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
     data: () => ({
         term: '',
-        results: [],
     }),
+    computed: {
+
+    },
     methods: {
+        ...mapActions('search', [
+            'searchEvents'
+        ]),
         search(){
 
-            axios 
-                .post('/student/search-event',{
-                    term: this.term
-                })
-                .then(response => {
-                    this.results = response.data.results
-                    this.$router.push({name: 'search-result'})
-                })
+            this.searchEvents({
+                term: this.term
+            })
 
         }
     }

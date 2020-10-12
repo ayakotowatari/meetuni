@@ -39,7 +39,7 @@
                         </v-list-item>
                     </v-card-actions>
 
-                    <v-card-title>{{ event.name }}</v-card-title>
+                    <v-card-title>{{ event.inst_name }}</v-card-title>
 
                     <v-card-subtitle class="text--primary">
                         <div>{{ event.title }}</div>

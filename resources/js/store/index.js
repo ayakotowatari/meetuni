@@ -13,6 +13,7 @@ import { notifications } from './modules/notifications';
 import { timezone } from './modules/timezone';
 import { chart } from './modules/chart';
 import { studentdetails } from './modules/studentdetails';
+import { search } from './modules/search';
 
 export default new Vuex.Store ({
 
@@ -855,7 +856,8 @@ export default new Vuex.Store ({
         notifications,
         timezone,
         chart,
-        studentdetails
+        studentdetails,
+        search
     }
 
 })
