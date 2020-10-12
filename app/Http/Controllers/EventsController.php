@@ -247,6 +247,7 @@ class EventsController extends Controller
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })
+                        ->orderBy('events.date', 'desc')
                         ->select('subjects.subject', 'events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
             };
@@ -316,6 +317,7 @@ class EventsController extends Controller
                                 ->whereDoesntHave('bookings', function(Builder $query){
                                     $query->where('student_id', '=', Auth::guard('student')->user()->id);
                                 })
+                                ->orderBy('events.date', 'desc')
                                 ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                                 ->get();
             }
@@ -383,6 +385,7 @@ class EventsController extends Controller
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id', '=', Auth::guard('student')->user()->id);
                         })
+                        ->orderBy('events.date', 'desc')
                         ->select('events.id', 'insts.name', 'events.title','events.date', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
     
