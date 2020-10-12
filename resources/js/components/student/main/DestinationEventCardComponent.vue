@@ -4,7 +4,7 @@
             <v-card
                 class="mx-auto"
                 max-width="400"
-                height="440"
+                height="400"
                 @click.prevent="expand(event.id)"
             >
                 <v-img
