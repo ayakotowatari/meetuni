@@ -238,6 +238,7 @@ class EventsController extends Controller
                         ->join('countries', 'insts.country_id', '=', 'countries.id')
                         ->join('event_levels', 'events.id', '=', 'event_levels.event_id')
                         ->join('subjects', 'event_subjects.subject_id', '=', 'subjects.id')
+                        ->where('events.status_id', 1)
                         ->where('event_subjects.subject_id', $subject->id)
                         ->where(function($query){
                             $query->where('event_levels.level_id', 5)
@@ -309,6 +310,7 @@ class EventsController extends Controller
                                 ->join('event_subjects', 'events.id', '=', 'event_subjects.event_id')
                                 ->where('countries.id', $destination->id)
                                 ->where('event_subjects.subject_id', 1)
+                                ->where('events.status_id', 1)
                                 ->where(function($query){
                                     $query->where('event_levels.level_id', 1)
                                           ->orWhere('event_levels.level_id', 5)
