@@ -9,7 +9,7 @@
                 <v-card
                     class="mx-auto"
                     max-width="400"
-                    height="360"
+                    height="440"
                     @click.prevent="expand(event.id)"
                 >
                     <v-img
@@ -40,7 +40,7 @@
                         </v-list-item>
                     </v-card-actions>
 
-                    <v-card-title class="v-card__title">{{ event.name }}</v-card-title>
+                    <v-card-title class="v-card__title pt-0">{{ event.name }}</v-card-title>
 
                     <v-card-subtitle class="text--primary">
                         <div>{{ event.title }}</div>
@@ -153,7 +153,7 @@ export default {
 </script>
 
 <style>
-.likd{
+.like{
     cursor: pointer;
 }
 .v-card__title{
