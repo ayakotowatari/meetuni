@@ -42,12 +42,12 @@
                     <div>{{ event.title }}</div>
                 </v-card-subtitle>
                 
-                <v-card-text v-if="user !== null" class="pb-0">
+                <v-card-text v-if="user !== null">
                     {{ formattedDate(event.date, user.timezone) }} <br> 
                     {{ formattedStartTime(event.start_utc, user.timezone) }}  -  
                     {{ formattedEndTime(event.end_utc, user.timezone) }}
                 </v-card-text>
-                <v-card-text v-if="user === null" class="pb-0">
+                <v-card-text v-if="user === null">
                     {{ formattedDate(event.date, event.timezone) }} <br> 
                     {{ formattedStartTime(event.start_utc, event.timezone) }}  -  
                     {{ formattedEndTime(event.end_utc, event.timezone) }}

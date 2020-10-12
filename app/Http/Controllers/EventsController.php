@@ -50,7 +50,7 @@ class EventsController extends Controller
                         ->whereDoesntHave('bookings', function(Builder $query){
                             $query->where('student_id','=', Auth::guard('student')->user()->id);
                         })
-                        ->orderBy('events.created_at')
+                        ->orderBy('events.date', 'desc')
                         ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
                         ->get();
             // return view ('student/test', ['events'=>$events]);
@@ -59,12 +59,12 @@ class EventsController extends Controller
         }else{
 
             $events = Event::with('bookings')
-            ->join('insts', 'events.inst_id', '=', 'insts.id')
-            ->join('countries', 'insts.country_id', '=', 'countries.id')
-            ->where('events.status_id', 1)
-            ->orderBy('events.created_at')
-            ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
-            ->get();
+                        ->join('insts', 'events.inst_id', '=', 'insts.id')
+                        ->join('countries', 'insts.country_id', '=', 'countries.id')
+                        ->where('events.status_id', 1)
+                        ->orderBy('events.date', 'desc')
+                        ->select('events.id', 'events.title', 'insts.name', 'events.date', 'events.timezone', 'events.start_utc', 'events.end_utc', 'events.description', 'events.image', 'countries.icon')
+                        ->get();
             // return view ('student/test', ['events'=>$events]);
             return response()->json(['events'=>$events],200);
 
