@@ -14,7 +14,7 @@
                 >
                     <v-img
                         class="white--text align-end"
-                        height="100px"
+                        height="180px"
                         :src="event.absolute_path"
                         aspect-ratio="1.7"  
                     >
